@@ -31,5 +31,6 @@ jobs:
 
     - name: Build APK with Buildozer
       run: |
-        buildozer android debug
+        buildozer --log_level=1 android debug
+        
         

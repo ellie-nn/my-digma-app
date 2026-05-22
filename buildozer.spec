@@ -17,6 +17,7 @@ requirements = python3,tinytuya,cryptography
 
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
 android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK
+android.accept_sdk_license = True
 
 # Ориентация экрана
 orientation = portrait

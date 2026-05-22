@@ -7,35 +7,29 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Get Date
-      id: get-date
-      run: |
-        echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
-
-    - name: Cache Buildozer apps
-      uses: actions/cache@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        path: .buildozer
-        key: ${{ runner.os }}-buildozer-${{ steps.get-date.outputs.date }}
+        python-file: 'main.py'
+        python-version: '3.10'
 
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      with:
-        command: buildozer android debug
-        buildozer_version: stable
-    - name: Commit and Push APK to Repo
+    - name: Install System Dependencies
       run: |
-        mkdir -p ready_apk
-        cp bin/*.apk ready_apk/digma_recorder.apk
-        git config --global user.name "GitHub Action"
-        git config --global user.email "action@github.com"
-        git add ready_apk/digma_recorder.apk
-        git commit -m "Автосборка: Готовый APK обновлен"
-        git push
+        sudo apt-get update
+        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libssl-dev libgdbm-dev libsqlite3-dev libbz2-dev libffi-dev tk-dev ibdb5.3-dev libgdbm-compat-dev
+
+    - name: Install Buildozer and Cython
+      run: |
+        pip install --upgrade pip
+        pip install buildozer cython==0.29.36
+
+    - name: Build APK with Buildozer
+      run: |
+        buildozer android debug
         

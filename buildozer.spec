@@ -14,7 +14,7 @@ version = 1.0
 source.include_exts = py,png,jpg,kv,csv
 
 # ТРЕБОВАНИЯ К БИБЛИОТЕКАМ (Сборщик сам скачает их из интернета)
-requirements = python3,tinytuya,cryptography,cffi
+requirements = python3,tinytuya
 
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
 android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK
@@ -26,3 +26,6 @@ fullscreen = 1
 
 # Настройки фонового сервиса (для работы 24/7)
 services = DigmaService:main.py
+
+log_level = 1
+

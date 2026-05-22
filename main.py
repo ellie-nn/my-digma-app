@@ -9,7 +9,7 @@ IP_ADDRESS = '192.168.1.4'
 #IP_ADDRESS = '5.187.86.185'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 # -------------------------------------------
-# ============================
+# =============================
 
 # Инициализируем розетку
 d = tinytuya.OutletDevice(DEVICE_ID, IP_ADDRESS, LOCAL_KEY)

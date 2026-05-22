@@ -39,4 +39,14 @@ jobs:
       run: |
         buildozer --log_level=1 android debug
         
+    - name: Create Release and Upload APK
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: v1.0.0
+        name: Release v1.0.0
+        files: bin/*.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+        
         

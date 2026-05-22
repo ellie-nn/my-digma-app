@@ -25,7 +25,7 @@ jobs:
         key: ${{ runner.os }}-buildozer-${{ steps.get-date.outputs.date }}
 
     - name: Build with Buildozer
-      uses: ArtemSuda/buildozer-action@v1
+      uses: ArtemSBulgakov/buildozer-action@v1
       with:
         command: buildozer android debug
         buildozer_version: stable

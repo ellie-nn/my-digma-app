@@ -9,7 +9,7 @@ from kivy.uix.label import Label
 class DigmaRecorderApp(App):
     def build(self):
         # Проверяем, что мы запустились именно на телефоне, а не на ПК
-        if platform == 'android':
+        if platform == 'android': or 1
             from android import AndroidService
             # Запускаем наш фоновый движок, который мы прописали в buildozer.spec!
             service = AndroidService('DigmaService', 'Running...')

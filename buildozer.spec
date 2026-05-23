@@ -14,7 +14,7 @@ version = 1.0
 source.include_exts = py,png,jpg,kv,csv
 
 # ТРЕБОВАНИЯ К БИБЛИОТЕКАМ (Сборщик сам скачает их из интернета)
-requirements = python3,tinytuya
+requirements = python3,tinytuya,plyer
 
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
 android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, MANAGE_EXTERNAL_STORAGE

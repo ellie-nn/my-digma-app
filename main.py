@@ -8,6 +8,7 @@ import sys
 # Перенаправляем весь вывод и ошибки в файл лога в режиме дозаписи (append)
 sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
 sys.stderr = sys.stdout  
+print('!!! PROGRAM LUNCHED !!!')
 #print(f'Не удалось найти IP адрес розетки.')
 #raise SystemExit
 
@@ -23,12 +24,12 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 
 try:
     # Сканируем эфир 2 секунды и ищем устройство с нашим ID
-    devices = tinytuya.deviceScan(None,2)
-  
+    devices = tinytuya.deviceScan(None,4)
     ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
    
 except:
      print(f'Не удалось найти IP адрес розетки.')
+     print(devices)
      raise SystemExit
 
 # ------------------------------------------# ============================

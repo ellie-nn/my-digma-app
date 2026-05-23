@@ -5,14 +5,26 @@ import tinytuya
 
 # === ВАШИ ЖЕЛЕЗНЫЕ ДАННЫЕ ===
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
-IP_ADDRESS = '192.168.1.4'
+#IP_ADDRESS = '192.168.1.4'
 #IP_ADDRESS = '5.187.86.185'
+#MAC_ADDRESS = '42:4d:fe:8f:04:be'
+
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
-# -------------------------------------------
-# =============================
+
+try:
+    # Сканируем эфир 2 секунды и ищем устройство с нашим ID
+    devices = tinytuya.deviceScan(None,2)
+  
+    ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
+   
+except:
+     print(f'Не удалось найти IP адрес розетки.')
+     raise SystemExit
+
+# ------------------------------------------# ============================
 
 # Инициализируем розетку
-d = tinytuya.OutletDevice(DEVICE_ID, IP_ADDRESS, LOCAL_KEY)
+d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
 d.set_version(3.3)
 d.set_socketTimeout(2)
 

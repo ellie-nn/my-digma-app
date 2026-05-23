@@ -6,6 +6,9 @@ import tinytuya
 import sys
 
 # Перенаправляем весь вывод и ошибки в файл лога в режиме дозаписи (append)
+
+time.sleep(10)
+raise SystemExit
 sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
 sys.stderr = sys.stdout  
 print('!!! PROGRAM LUNCHED !!!')

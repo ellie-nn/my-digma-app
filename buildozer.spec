@@ -27,5 +27,7 @@ fullscreen = 1
 # Настройки фонового сервиса (для работы 24/7)
 services = DigmaService:main.py
 
+android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+
 log_level = 1
 

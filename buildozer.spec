@@ -19,6 +19,8 @@ requirements = python3,tinytuya
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
 android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 android.accept_sdk_license = True
+android.meta_data = "android.requestLegacyExternalStorage=true"
+
 
 # Ориентация экрана
 orientation = portrait

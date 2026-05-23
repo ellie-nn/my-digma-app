@@ -2,10 +2,13 @@ import os
 import time
 import csv
 import tinytuya
-
 import sys
 
 # Перенаправляем весь вывод и ошибки в файл лога в режиме дозаписи (append)
+
+from plyer import notification
+
+notification.notify(title="Digma Recorder", message="Самописец успешно запущен!", timeout=3)
 
 time.sleep(10)
 raise SystemExit

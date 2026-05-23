@@ -3,6 +3,16 @@ import time
 import csv
 import tinytuya
 
+import sys
+
+# Перенаправляем весь вывод и ошибки в файл лога в режиме дозаписи (append)
+sys.stdout = open('app_log.txt', 'a', encoding='utf-8')
+sys.stderr = sys.stdout  
+#print(f'Не удалось найти IP адрес розетки.')
+#raise SystemExit
+
+# Ошибки полетят туда же, куда и обычный print
+
 # === ВАШИ ЖЕЛЕЗНЫЕ ДАННЫЕ ===
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 #IP_ADDRESS = '192.168.1.4'
@@ -29,7 +39,7 @@ d.set_version(3.3)
 d.set_socketTimeout(2)
 
 # Имя файла истории
-file_path = 'power_history.csv'
+file_path = '/storage/emulated/0/power_history.csv'
 
 # Создаем файл с заголовками, если его еще нет
 if not os.path.isfile(file_path):

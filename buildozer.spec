@@ -19,6 +19,7 @@ requirements = python3,tinytuya
 
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
 #android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+#android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE,BLUETOOTH,BLUETOOTH_ADMIN
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,WAKE_LOCK
 #android.accept_sdk_license = True
 #android.meta_data = android.requestLegacyExternalStorage=true
@@ -44,17 +45,15 @@ log_level = 1
 
 # ОЛДСКУЛЬНЫЙ ГЛУШИТЕЛЬ ДЛЯ JAVA И XLINT:
 # Принудительно отключаем панику компилятора из-за устаревшего API
-android.gradle_options = android.lintOptions.abortOnError=false
 android.add_compile_options = "-Xlint:-deprecation", "-Xlint:-options"
+# ИГНОРИРОВАНИЕ ОШИБОК ИНСПЕКТОРА: Приказ Gradle не останавливать сборку
+android.gradle_options = android.lintOptions.abortOnError=false
 
 #-------------
-[app]
+#[app]
 
 # ПРАВА: Добавляем Bluetooth, который так яростно требует Gradle
 #android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE, BLUETOOTH, BLUETOOTH_ADMIN
 
-# ИГНОРИРОВАНИЕ ОШИБОК ИНСПЕКТОРА: Приказ Gradle не останавливать сборку
-#android.gradle_options = android.lintOptions.abortOnError=false
-#------------------
 
 # =====================================================================

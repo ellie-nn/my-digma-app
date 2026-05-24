@@ -17,9 +17,12 @@ source.include_exts = py,png,jpg,kv,csv
 requirements = python3,tinytuya
 
 # РАЗРЕШЕНИЯ ANDROID (Фоновый режим, интернет и локальная сеть)
-android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+#android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,WAKE_LOCK
 android.accept_sdk_license = True
 android.meta_data = android.requestLegacyExternalStorage=true
+android.archs = arm64-v8a
+android.gradle_options = android.lintOptions.abortOnError=false
 
 
 # Ориентация экрана

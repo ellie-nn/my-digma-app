@@ -21,5 +21,5 @@ class DebugApp(App):
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 
-if __name__ == '__main__' or 1:
+if __name__ == '__main__':
     DebugApp().run()

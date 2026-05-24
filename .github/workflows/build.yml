@@ -13,6 +13,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
+    - name: Cache Buildozer
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.buildozer
+          .buildozer
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
+        
+      
     - name: Free Disk Space
       run: |
         sudo rm -rf /usr/local/lib/android

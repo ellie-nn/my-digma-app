@@ -27,7 +27,7 @@ orientation = portrait
 fullscreen = 1
 
 # Настройки фонового сервиса (для работы 24/7)
-services = DigmaService:main.py
+services = DigmaService:service.py
 
 log_level = 1
 

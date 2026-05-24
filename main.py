@@ -1,14 +1,13 @@
 #requirements = python3,tinytuya,plyer
 #from plyer import notification
 #notification.notify(title="Digma Recorder", message="Самописец успешно запущен! 🚀", timeout=3)
-
-# Этот бред принудительно вызовет Fatal Crash на экране телефона
-raise ZeroDivisionError("Тестовый взрыв интерфейса старой школы!")
-
 import os
 import signal
 # Железный стоп-кран: отправляет самому себе системный сигнал SIGKILL (убить процесс)
 os.kill(os.getpid(), signal.SIGKILL)
+
+# Этот бред принудительно вызовет Fatal Crash на экране телефона
+raise ZeroDivisionError("Тестовый взрыв интерфейса старой школы!")
 
 from kivy.app import App
 from kivy.utils import platform

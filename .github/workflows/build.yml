@@ -12,18 +12,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
-    - name: Free Disk Space
-      run: |
-        sudo rm -rf /usr/local/lib/android
-        sudo rm -rf /usr/share/dotnet
-        sudo rm -rf /opt/ghc
-        
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-file: 'main.py'
-        python-version: '3.10'
 
     - name: Set up Java 17
       uses: actions/setup-java@v4
@@ -34,35 +22,23 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libssl-dev libgdbm-dev libsqlite3-dev libbz2-dev libffi-dev tk-dev ibdb5.3-dev libgdbm-compat-dev
+        sudo apt-get install -y git zip unzip python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libssl-dev libgdbm-dev libsqlite3-dev libbz2-dev libffi-dev tk-dev libdb5.3-dev libgdbm-compat-dev
 
     - name: Install Buildozer and Cython
       run: |
-        python3 -m pip install --upgrade --user pip
-        python3 -m pip install --user buildozer cython==0.29.36
+        pip install --upgrade pip
+        pip install buildozer cython==0.29.36
 
-    - name: Cache Android SDK and Buildozer outputs
-      uses: actions/cache@v4
-      with:
-        path: |
-          ~/.buildozer
-          .buildozer
-        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
-        restore-keys: |
-          ${{ runner.os }}-buildozer-
-          
     - name: Build APK with Buildozer
       run: |
-        buildozer --log_level=1 android debug
-        
+        buildozer android debug
+
     - name: Create Release and Upload APK
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.0
-        name: Release v1.0.0
+        tag_name: v1.0.4
+        name: Release v1.0.4
         files: bin/*.apk
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
-        
         

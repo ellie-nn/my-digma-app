@@ -37,10 +37,15 @@ services = DigmaService:service.py
 log_level = 1
 
 # Ищем строку и убираем из нее тяжелые графические требования
-p4a.branch = master
-android.api = 29
-android.minapi = 29
-android.ndk_api = 29
+#p4a.branch = master
+p4a.branch = release-2024.01.21
+
+#android.api = 29
+#android.minapi = 29
+#android.ndk_api = 29
+android.api = 30
+android.minapi = 21
+
 
 # ОЛДСКУЛЬНЫЙ ГЛУШИТЕЛЬ ДЛЯ JAVA И XLINT:
 # Принудительно отключаем панику компилятора из-за устаревшего API

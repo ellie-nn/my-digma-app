@@ -23,7 +23,7 @@ class DebugApp(App):
         current_time = time.strftime('%H:%M:%S')
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        os.kill(os.getpid(), signal.SIGKILL)
+        #os.kill(os.getpid(), signal.SIGKILL)
         #raise ZeroDivisionError("Тестовый взрыв интерфейса старой школы!")
 
 if __name__ == '__main__':

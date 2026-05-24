@@ -21,9 +21,8 @@ requirements = python3,tinytuya
 #android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 #android.permissions = INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE,BLUETOOTH,BLUETOOTH_ADMIN
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,WAKE_LOCK
-#android.accept_sdk_license = True
-#android.meta_data = android.requestLegacyExternalStorage=true
-#android.gradle_options = android.lintOptions.abortOnError=false
+android.accept_sdk_license = True
+android.meta_data = android.requestLegacyExternalStorage=true
 
 # ФИКС ДЛЯ ANDROID 10: Собираем строго под 64-битные современные процессоры
 android.archs = arm64-v8a
@@ -38,10 +37,10 @@ services = DigmaService:service.py
 log_level = 1
 
 # Ищем строку и убираем из нее тяжелые графические требования
-#p4a.branch = master
-#android.api = 29
-#android.minapi = 29
-#android.ndk_api = 29
+p4a.branch = master
+android.api = 29
+android.minapi = 29
+android.ndk_api = 29
 
 # ОЛДСКУЛЬНЫЙ ГЛУШИТЕЛЬ ДЛЯ JAVA И XLINT:
 # Принудительно отключаем панику компилятора из-за устаревшего API

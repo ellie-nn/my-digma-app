@@ -34,7 +34,6 @@ services = DigmaService:service.py
 
 log_level = 1
 
-android.archs = arm64-v8a
 # Ищем строку и убираем из нее тяжелые графические требования
 p4a.branch = master
 android.api = 29

@@ -38,9 +38,9 @@ jobs:
 
     - name: Install Buildozer and Cython
       run: |
-        pip install --upgrade pip
-        pip install buildozer cython==0.29.36
-        
+        python3 -m pip install --upgrade --user pip
+        python3 -m pip install --user buildozer cython==0.29.36
+
     - name: Cache Android SDK and Buildozer outputs
       uses: actions/cache@v4
       with:

@@ -1,6 +1,8 @@
 import time
 import os
 import signal
+import sys
+
 
 from kivy.app import App
 from kivy.uix.label import Label
@@ -25,6 +27,10 @@ class DebugApp(App):
         self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         #os.kill(os.getpid(), signal.SIGKILL)
         #raise ZeroDivisionError("Тестовый взрыв интерфейса старой школы!")
+        sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
+        #sys.stderr = sys.stdout  
+        print('!!! PROGRAM LUNCHED !!!')
+
 
 if __name__ == '__main__':
     DebugApp().run()

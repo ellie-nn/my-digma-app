@@ -18,10 +18,10 @@ class DebugApp(App):
         
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
-        #try:
-        #    sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
-        #except:
-        #    self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ Гонит!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        try:
+            sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
+        except:
+            self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ Гонит!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         #sys.stderr = sys.stdout  
         return self.label
 

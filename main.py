@@ -20,19 +20,20 @@ class DebugApp(App):
         Clock.schedule_interval(self.update_screen, 1.0)
         try:
             sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
+            text = "СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n"
         except:
-            self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ Гонит!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+            text = "СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n"
         #sys.stderr = sys.stdout  
         return self.label
 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        self.label.text = f"{text}!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         #try:
         #    print('!!! PROGRAM LUNCHED !!!')
         #except:
-        #    self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        #    self.label.text = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 
 if __name__ == '__main__':
     DebugApp().run()

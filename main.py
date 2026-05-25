@@ -27,17 +27,17 @@ class DebugApp(App):
                 # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
                 from android.permissions import request_permissions, Permission
                 request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+                try:
+                    base_path = primary_external_storage_path()
+                    sys.stdout = open(base_path+'/Download/app_log.txt', 'a', encoding='utf-8')
+                    self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+                except Exception as e:
+                    self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
+                    #sys.stderr = sys.stdout  
+        
             except Exception as e:
                 self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
         
-        try:
-            base_path = primary_external_storage_path()
-            sys.stdout = open(base_path+'/app_log.txt', 'a', encoding='utf-8')
-            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
-        
-        except Exception as e:
-            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
-        #sys.stderr = sys.stdout  
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
         return self.label

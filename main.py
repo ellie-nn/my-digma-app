@@ -7,6 +7,8 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.utils import platform
+from android.storage import primary_external_storage_path
+    #PUBLIC_DIR = os.path.join(base_path, 'Documents')
 
 
 class DebugApp(App):
@@ -29,7 +31,8 @@ class DebugApp(App):
                 self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
         
         try:
-            sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
+            base_path = primary_external_storage_path()
+            sys.stdout = open(base_path+'/app_log.txt', 'a', encoding='utf-8')
             self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
         
         except Exception as e:

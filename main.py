@@ -1,9 +1,7 @@
-use
 import time
 import os
 import signal
 import sys
-
 
 from kivy.app import App
 from kivy.uix.label import Label

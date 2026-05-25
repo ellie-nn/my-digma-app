@@ -31,7 +31,7 @@ class DebugApp(App):
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
         try:
-            sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
+            sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
         except Exception as e:
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  

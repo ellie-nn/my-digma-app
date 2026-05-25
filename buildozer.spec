@@ -8,6 +8,7 @@ source.include_exts = py,png,jpg,kv,csv
 
 requirements = python3,kivy
 android.permissions = INTERNET, ACCESS_NETWORK_STATE
+INTERNET, ACCESS_NETWORK_STATE, FOREGROUND_SERVICE, WAKE_LOCK, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 android.accept_sdk_license = True
 orientation = portrait
 fullscreen = 1

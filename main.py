@@ -30,10 +30,10 @@ class DebugApp(App):
         
         try:
             sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
         
         except Exception as e:
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
@@ -41,15 +41,15 @@ class DebugApp(App):
 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
-        # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        self.label.text = f"{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        #time.sleep(1)
         try:
             print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'
-        
         except:
-            self.label.text = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-
+            self.ttext = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        # Каждую секунду выводим на экран доказательство, что Python ЖИВ
+        self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        
 if __name__ == '__main__':
     DebugApp().run()
 #---------_---

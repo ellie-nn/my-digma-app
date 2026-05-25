@@ -19,17 +19,17 @@ class DebugApp(App):
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
         try:
-            sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
-            text = "СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n"
+            sys.stdout = open('app_log.txt', 'a', encoding='utf-8')
+            self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'
         except:
-            text = "СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n"
+            self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n'
         #sys.stderr = sys.stdout  
         return self.label
 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        self.label.text = f"{text}!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        self.label.text = f"{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         #try:
         #    print('!!! PROGRAM LUNCHED !!!')
         #except:

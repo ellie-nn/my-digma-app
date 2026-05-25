@@ -6,9 +6,13 @@ import sys
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
+from kivy.utils import platform
+
 
 class DebugApp(App):
     def build(self):
+        self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'
+        
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
@@ -16,11 +20,18 @@ class DebugApp(App):
             halign='center'
         )
         
+        if platform == 'android':
+            try:
+                # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
+                from android.permissions import request_permissions, Permission
+                request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            except Exception as e:
+                self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
+        
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
         try:
             sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
-            self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'
         except Exception as e:
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  
@@ -37,3 +48,18 @@ class DebugApp(App):
 
 if __name__ == '__main__':
     DebugApp().run()
+#---------_---
+  #              # ЗАПУСКАЕМ НАШ СКРЫТЫЙ СЕРВИС СЕКУНДНОГО САМОПИСЦА
+   #    #         from android import AndroidService
+    #            service = AndroidService('DigmaService', 'Идет сбор данных розетки...')
+       #         service.start('service.py')
+      #      except Exception as e:
+    #            pass
+            
+      #  return Label(
+      #      text="⚙️ БОРТОВОЙ САМОПИСЕЦ DIGMA\nМотор запущен в фоне! 🚀\n\nИстория пишется напрямую в Documents!", 
+     #       font_size='16sp',
+    #        halign='center'
+     #   )
+
+                

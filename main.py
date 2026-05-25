@@ -30,10 +30,10 @@ class DebugApp(App):
         current_time = time.strftime('%H:%M:%S')
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        #try:
-        #    print('!!! PROGRAM LUNCHED !!!')
-        #except:
-        #    self.label.text = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        try:
+            print('!!! PROGRAM LUNCHED !!!')
+        except:
+            self.label.text = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 
 if __name__ == '__main__':
     DebugApp().run()

@@ -1,3 +1,4 @@
+use
 import time
 import os
 import signal
@@ -19,18 +20,18 @@ class DebugApp(App):
         
         # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
+        sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
+        #sys.stderr = sys.stdout  
         return self.label
 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        #os.kill(os.getpid(), signal.SIGKILL)
-        #raise ZeroDivisionError("Тестовый взрыв интерфейса старой школы!")
-        sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
-        #sys.stderr = sys.stdout  
-        print('!!! PROGRAM LUNCHED !!!')
-
+        try:
+            print('!!! PROGRAM LUNCHED !!!')
+        except:
+            self.label.text = f"⚙️ СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 
 if __name__ == '__main__':
     DebugApp().run()

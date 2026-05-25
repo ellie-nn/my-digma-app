@@ -28,13 +28,13 @@ class DebugApp(App):
             except Exception as e:
                 self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
         
-        # Запускаем секундный таймер Kivy для вывода отчетов на экран
-        Clock.schedule_interval(self.update_screen, 1.0)
         try:
             sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
         except Exception as e:
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  
+        # Запускаем секундный таймер Kivy для вывода отчетов на экран
+        Clock.schedule_interval(self.update_screen, 1.0)
         return self.label
 
     def update_screen(self, dt):

@@ -23,24 +23,43 @@ class DebugApp(App):
         )
         
         if platform == 'android':
-            try:
-                # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
-                from android.permissions import request_permissions, Permission
-                request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-                try:
-                    base_path = primary_external_storage_path()
-                    sys.stdout = open(base_path+'/Download/app_log.txt', 'a', encoding='utf-8')
-                    self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
-                except Exception as e:
-                    self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
-                    #sys.stderr = sys.stdout  
+            # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
+            from android.permissions import request_permissions, Permission
+    #request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            Clock.schedule_interval(self.check_permissions_loop, 1.0)
+            # Запускаем секундный таймер Kivy для вывода отчетов на экран
         
-            except Exception as e:
-                self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
-        
-        # Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)
         return self.label
+        
+    def check_permissions_loop(self, dt):
+        from android.permissions import check_permission, should_show_permission_rationale, Permission
+        # 1. Проверяем: выданы ли права прямо сейчас?
+        if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+            Clock.unschedule(self.check_permissions_loop)
+            self.label.text = "⚙️ ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
+            self.start_service()
+            
+        # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?
+        elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
+            Clock.unschedule(self.check_permissions_loop)
+            # Шлюз закрыт, пользователь явно нажал "Отклонить" в окошке
+            self.label.text = "❌ ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
+            
+    def start_service(self):
+        #try:
+            try:
+                base_path = primary_external_storage_path()
+                sys.stdout = open(base_path+'/Download/app_log.txt', 'a', encoding='utf-8')
+                self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+            except Exception as e:
+                self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
+                #sys.stderr = sys.stdout  
+        
+           # except Exception as e:
+             #   self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
+                
+        
 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')

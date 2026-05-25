@@ -22,7 +22,7 @@ class DebugApp(App):
             sys.stdout = open('/storage/emulated/0/Documents/app_log.txt', 'a', encoding='utf-8')
             self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'
         except:
-            self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n'
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  
         return self.label
 

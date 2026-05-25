@@ -30,6 +30,8 @@ class DebugApp(App):
         
         try:
             sys.stdout = open('/storage/emulated/0/app_log.txt', 'a', encoding='utf-8')
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+        
         except Exception as e:
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
         #sys.stderr = sys.stdout  
@@ -43,6 +45,8 @@ class DebugApp(App):
         self.label.text = f"{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         try:
             print('!!! PROGRAM LUNCHED !!!')
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'
+        
         except:
             self.label.text = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 

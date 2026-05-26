@@ -12,7 +12,7 @@ from android.storage import primary_external_storage_path
 from kivy.utils import platform
 
 # НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
-def should_show_rationale(permission_string):
+#def should_show_rationale(permission_string):
  #   if platform == 'android':
    #     try:
  #           # Вызываем низкоуровневый Java-класс активности нашего приложения
@@ -26,7 +26,7 @@ def should_show_rationale(permission_string):
 #            print(f"Ошибка низкоуровневого вызова Java: {e}")
 #    return False 
     #tmp = 'mystring'
-    return
+ #   return
  
 class DebugApp(App):
     def build(self):

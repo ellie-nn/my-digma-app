@@ -9,7 +9,7 @@ from kivy.clock import Clock
 from kivy.utils import platform
 from android.storage import primary_external_storage_path
     #PUBLIC_DIR = os.path.join(base_path, 'Documents')
-from kivy.utils import platform
+#from kivy.utils import platform
 
 # НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
 #def should_show_rationale(permission_string):

@@ -12,7 +12,7 @@ from android.storage import primary_external_storage_path
 #from kivy.utils import platform
 
 # НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
-#def should_show_rationale(permission_string):
+def should_show_rationale(permission_string):
  #   if platform == 'android':
    #     try:
  #           # Вызываем низкоуровневый Java-класс активности нашего приложения
@@ -25,8 +25,8 @@ from android.storage import primary_external_storage_path
 #        except Exception as e:
 #            print(f"Ошибка низкоуровневого вызова Java: {e}")
 #    return False 
-    #tmp = 'mystring'
- #   return
+    tmp = 'mystring'
+    return
  
 class DebugApp(App):
     def build(self):
@@ -57,8 +57,8 @@ class DebugApp(App):
         # 1. Проверяем: выданы ли права прямо сейчас?
         #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
            # Clock.unschedule(self.check_permissions_loop)
-        self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-        #self.label.text = should_show_rationale('fvhfchj')
+        #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
+        self.label.text = should_show_rationale('fvhfchj')
         #    self.start_service()
             
         # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?

@@ -25,8 +25,8 @@ def should_show_rationale(permission_string):
 #        except Exception as e:
 #            print(f"Ошибка низкоуровневого вызова Java: {e}")
 #    return False 
-    tmp = 'mystring'
-    return tmp
+    #tmp = 'mystring'
+    return
  
 class DebugApp(App):
     def build(self):

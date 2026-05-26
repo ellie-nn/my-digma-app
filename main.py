@@ -26,7 +26,7 @@ class DebugApp(App):
             # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
             from android.permissions import request_permissions, Permission
 #request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-            #Clock.schedule_interval(self.check_permissions_loop, 1.0)
+            Clock.schedule_interval(self.check_permissions_loop, 1.0)
             # Запускаем секундный таймер Kivy для вывода отчетов на экран
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
@@ -38,16 +38,16 @@ class DebugApp(App):
     def check_permissions_loop(self, dt):
         from android.permissions import check_permission, should_show_permission_rationale, Permission
         # 1. Проверяем: выданы ли права прямо сейчас?
-        if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-            Clock.unschedule(self.check_permissions_loop)
-            self.label.text = "⚙️ ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-            self.start_service()
+        #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+           # Clock.unschedule(self.check_permissions_loop)
+        #    self.label.text = "⚙️ ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
+        #    self.start_service()
             
         # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?
-        elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
-            Clock.unschedule(self.check_permissions_loop)
+     #   elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
+       #     Clock.unschedule(self.check_permissions_loop)
             # Шлюз закрыт, пользователь явно нажал "Отклонить" в окошке
-            self.label.text = "❌ ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
+        #    self.label.text = "❌ ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
             
     def start_service(self):
         #try:

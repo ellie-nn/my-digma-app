@@ -9,7 +9,23 @@ from kivy.clock import Clock
 from kivy.utils import platform
 from android.storage import primary_external_storage_path
     #PUBLIC_DIR = os.path.join(base_path, 'Documents')
+from kivy.utils import platform
 
+# НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
+def should_show_rationale(permission_string):
+    if platform == 'android':
+        try:
+            # Вызываем низкоуровневый Java-класс активности нашего приложения
+            from jnius import autoclass
+            PythonActivity = autoclass('org.kivy.android.PythonActivity')
+            current_activity = PythonActivity.mActivity
+            
+            # Напрямую дергаем родной метод ядра Android, который Kivy забыли импортировать
+            return current_activity.shouldShowRequestPermissionRationale(permission_string)
+        except Exception as e:
+            print(f"Ошибка низкоуровневого вызова Java: {e}")
+    return False
+    
 
 class DebugApp(App):
     def build(self):

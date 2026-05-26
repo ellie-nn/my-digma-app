@@ -27,7 +27,7 @@ def should_show_rationale(permission_string):
 #    return False 
     tmp = 'mystring'
     return tmp
-return 
+ 
 class DebugApp(App):
     def build(self):
         self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'

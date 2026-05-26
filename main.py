@@ -53,7 +53,7 @@ class DebugApp(App):
         return self.label
         
     def check_permissions_loop(self, dt):
-        from android.permissions import check_permission, Permission
+        #from android.permissions import check_permission, Permission
         # 1. Проверяем: выданы ли права прямо сейчас?
         #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
            # Clock.unschedule(self.check_permissions_loop)

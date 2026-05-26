@@ -53,12 +53,12 @@ class DebugApp(App):
         return self.label
         
     def check_permissions_loop(self, dt):
-        from android.permissions import check_permission, should_show_permission_rationale, Permission
+        from android.permissions import check_permission, Permission
         # 1. Проверяем: выданы ли права прямо сейчас?
         #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
            # Clock.unschedule(self.check_permissions_loop)
         #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-        self.label.text = should_show_permission_rationale('fvhfchj')
+        self.label.text = should_show_rationale('fvhfchj')
         #    self.start_service()
             
         # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?

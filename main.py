@@ -47,9 +47,9 @@ class DebugApp(App):
             text="Инициализация Python ядра...\nОжидайте.", 
             font_size='18sp',
             halign='center',
-            valign='top',
-            text_size=(800,None)
+            valign='top'
         )
+        self.label.bind(size=self.label.setter('text_size'))
         
         if platform == 'android':
             # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ

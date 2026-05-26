@@ -103,7 +103,9 @@ class DigmaRecorderApp(App):
         #try:
             try:
                 base_path = primary_external_storage_path()
-                sys.stdout = open(base_path+'/Documents/app_log.txt', 'a', encoding='utf-8')
+                #sys.stdout = open(base_path+'/Documents/app_log.txt', 'a', encoding='utf-8')
+                self.flog = open(base_path+'/Documents/app_log.txt', 'w', encoding='utf-8')
+                
                 self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
             except Exception as e:
                 self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
@@ -118,7 +120,9 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         #time.sleep(1)
         try:
-            print('!!! PROGRAM LUNCHED !!!')
+            self.flog.write(f"[{time.strftime('%H:%M:%S')}]
+                
+            #print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'
         except:
             self.ttext = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."

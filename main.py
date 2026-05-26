@@ -47,7 +47,7 @@ class DebugApp(App):
             text="Инициализация Python ядра...\nОжидайте.", 
             font_size='18sp',
             halign='center',
-            valign='top,
+            valign='top',
             text_size=(800,None)
         )
         

@@ -70,7 +70,7 @@ class DebugApp(App):
         #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
            # Clock.unschedule(self.check_permissions_loop)
         #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-        self.tttext = should_show_rationale(Permission.WRITE_EXTERNAL_STORAGE)
+        self.tttext = check_permission(Permission.WRITE_EXTERNAL_STORAGE)+'/n'+should_show_rationale(Permission.WRITE_EXTERNAL_STORAGE)
         #    self.start_service()
             
         # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?

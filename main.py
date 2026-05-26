@@ -15,18 +15,23 @@ from android.storage import primary_external_storage_path
 def should_show_rationale(permission_string):
     tmp = False
     if platform == 'android':
-    #    try:
+        try:
             # Вызываем низкоуровневый Java-класс активности нашего приложения
             from jnius import autoclass
-        try:
-            PythonActivity = autoclass('org.kivy.android.PythonActivity')
-     #   try:
-            current_activity = PythonActivity.mActivity
+            
+            try:
+                PythonActivity = autoclass('org.kivy.android.PythonActivity')
+                try:
+                    current_activity = PythonActivity.mActivity
+                except:
+                    tmp = 'mystring1'
+            except:
+                    tmp = 'mystring2'
             
             # Напрямую дергаем родной метод ядра Android, который Kivy забыли импортировать
             return current_activity.shouldShowRequestPermissionRationale(permission_string)
         except Exception as e:
-            tmp = 'mystring'
+            tmp = 'mystring3'
             #print(f"Ошибка низкоуровневого вызова Java: {e}")
  #   return False 
  #   tmp = 'mystring'

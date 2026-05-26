@@ -13,11 +13,14 @@ from android.storage import primary_external_storage_path
 
 # НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
 def should_show_rationale(permission_string):
+    tmp = False
     if platform == 'android':
-        try:
+    #    try:
             # Вызываем низкоуровневый Java-класс активности нашего приложения
             from jnius import autoclass
+        try:
             PythonActivity = autoclass('org.kivy.android.PythonActivity')
+     #   try:
             current_activity = PythonActivity.mActivity
             
             # Напрямую дергаем родной метод ядра Android, который Kivy забыли импортировать
@@ -25,9 +28,9 @@ def should_show_rationale(permission_string):
         except Exception as e:
             tmp = 'mystring'
             #print(f"Ошибка низкоуровневого вызова Java: {e}")
-    return False 
+ #   return False 
  #   tmp = 'mystring'
- #   return tmp
+    return tmp
  
 class DebugApp(App):
     def build(self):

@@ -103,7 +103,7 @@ class DigmaRecorderApp(App):
         #try:
             try:
                 base_path = primary_external_storage_path()
-                sys.stdout = open(base_path+'/app_log.txt', 'a', encoding='utf-8')
+                sys.stdout = open(base_path+'/Documents/app_log.txt', 'a', encoding='utf-8')
                 self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
             except Exception as e:
                 self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'

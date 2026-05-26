@@ -17,7 +17,7 @@ from android.storage import primary_external_storage_path
    #     try:
  #           # Вызываем низкоуровневый Java-класс активности нашего приложения
  #           from jnius import autoclass
- ₽           PythonActivity = autoclass('org.kivy.android.PythonActivity')
+ #           PythonActivity = autoclass('org.kivy.android.PythonActivity')
 #            current_activity = PythonActivity.mActivity
  #           
 #            # Напрямую дергаем родной метод ядра Android, который Kivy забыли импортировать

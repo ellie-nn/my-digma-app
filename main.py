@@ -26,7 +26,7 @@ class DebugApp(App):
             # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
             from android.permissions import request_permissions, Permission
 #request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-            Clock.schedule_interval(self.check_permissions_loop, 1.0)
+            #Clock.schedule_interval(self.check_permissions_loop, 1.0)
             # Запускаем секундный таймер Kivy для вывода отчетов на экран
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'

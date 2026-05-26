@@ -120,7 +120,7 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         #time.sleep(1)
         try:
-            self.flog.write(f"[{time.strftime('%H:%M:%S')}]
+            self.flog.write(f"[{time.strftime('%H:%M:%S')}]")
                 
             #print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'

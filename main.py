@@ -126,7 +126,7 @@ class DigmaRecorderApp(App):
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         
 if __name__ == '__main__':
-    DebugApp().run()
+    DigmaRecorderApp().run()
 #-----_---
 
 #---------_---

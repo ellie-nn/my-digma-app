@@ -46,7 +46,9 @@ class DebugApp(App):
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
             font_size='18sp',
-            halign='up'
+            halign='center',
+            valign='top,
+            text_size=(800,None)
         )
         
         if platform == 'android':

@@ -15,8 +15,10 @@ android.archs = arm64-v8a
 android.gradle_options = android.lintOptions.abortOnError=false
 
 # ВКЛЮЧАЕМ ТОТ САМЫЙ ПРОПУСК В КОРЕНЬ ДЛЯ АНДРОИД 10 (СТРОГО БЕЗ ЛИШНИХ КАВЫЧЕК!)
-android.meta_data = android.requestLegacyExternalStorage=true
+#android.meta_data = android.requestLegacyExternalStorage=true
+android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
 
 # Наш фоновый мотор
 services = DigmaService:service.py
+
 

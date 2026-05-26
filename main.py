@@ -8,40 +8,13 @@ from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.utils import platform
 from android.storage import primary_external_storage_path
-    #PUBLIC_DIR = os.path.join(base_path, 'Documents')
-#from kivy.utils import platform
 
-# НАШ СКОПИПАЩЕННЫЙ КОРРЕКТНЫЙ ИНСТРУМЕНТ ПРОВЕРКИ КНОПКИ "ЗАПРЕТИТЬ"
-def should_show_rationale(permission_string):
-    tmp = 'mystring0'
-    if platform == 'android':
-        try:
-            # Вызываем низкоуровневый Java-класс активности нашего приложения
-            from jnius import autoclass
-            
-            try:
-                PythonActivity = autoclass('org.kivy.android.PythonActivity')
-                try:
-                    current_activity = PythonActivity.mActivity
-                except:
-                    tmp = 'mystring1'
-            except:
-                tmp = 'mystring2'
-            
-            # Напрямую дергаем родной метод ядра Android, который Kivy забыли импортировать
-            return current_activity.shouldShowRequestPermissionRationale(permission_string)
-        except Exception as e:
-            tmp = 'mystring3'
-            #print(f"Ошибка низкоуровневого вызова Java: {e}")
- #   return False 
-    else:
-        tmp = 'mystring4'
-    return tmp
- 
-class DebugApp(App):
+from kivy.core.window import Window
+# ИМПОРТИРУЕМ ДАТЧИК ОКНА
+class DigmaRecorderApp(App):
     def build(self):
-        self.ttext = 'СИСТЕМА СТАРОЙ ШКОЛЫ ЖИВА!\n'
-        
+        #self.label = Label(text="⚙️ ОЖИДАНИЕ КЛИКА...", font_size='16sp', halign='center', valign='top')
+        #self.label.bind(size=self.label.setter('text_size'))
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
@@ -50,36 +23,83 @@ class DebugApp(App):
             valign='top'
         )
         self.label.bind(size=self.label.setter('text_size'))
-        
-        if platform == 'android':
-            # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
-            from android.permissions import request_permissions, Permission
-            request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-            Clock.schedule_interval(self.check_permissions_loop, 1.0)
-            # Запускаем секундный таймер Kivy для вывода отчетов на экран
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
-                        
-        Clock.schedule_interval(self.update_screen, 1.0)
-        return self.label
         
-    def check_permissions_loop(self, dt):
+        #Запускаем секундный таймер Kivy для вывода отчетов на экран
+        Clock.schedule_interval(self.update_screen, 1.0)
+        
+        if platform == 'android':
+            # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
+            from android.permissions import check_permission, request_permissions, Permission
+            #from android.permissions import request_permissions, Permission
+        
+            if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+                self.start_background_service()
+            else:
+                # ЗАПОМИНАЕМ, ЧТО ОКНО СЕЙЧАС ПОТЕРЯЕТ ФОКУС
+                self.window_was_unfocused = False
+                # Вешаем системный перехватчик фокуса Kivy
+                Window.bind(on_flip=self.check_window_focus)
+                request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+        else:
+            self.start_background_service()
+            
+        return self.label
+
+# ЭТОТ МЕТОД КИВИ ВЫЗЫВАЕТ АВТОМАТИЧЕСКИ ПРИ КАЖДОМ КАДРЕ И ОБНОВЛЕНИИ ЭКРАНА!
+    def check_window_focus(self, window):
         from android.permissions import check_permission, Permission
-        # 1. Проверяем: выданы ли права прямо сейчас?
-        #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-           # Clock.unschedule(self.check_permissions_loop)
-        #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-        self.tttext = f'{check_permission(Permission.WRITE_EXTERNAL_STORAGE)}\n{should_show_rationale(Permission.WRITE_EXTERNAL_STORAGE)}'
-        #    self.start_service()
+        
+        # Шаг 1: Фиксируем момент, когда всплыло белое окно и наше приложение "уснуло"
+        # (В этот момент Window.focus становится равным False)
+        if not Window.focus:
+            self.window_was_unfocused = True
             
-        # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?
-     #   elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
-       #     Clock.unschedule(self.check_permissions_loop)
-            # Шлюз закрыт, пользователь явно нажал "Отклонить" в окошке
-        #    self.label.text = "ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
+        # Шаг 2: Фиксируем момент, когда белое окно ИСЧЕЗЛО (вы нажали кнопку),
+        # и наше приложение снова вернулось на передний план!
+        elif Window.focus and self.window_was_unfocused:
+            # Сразу отвязываем перехватчик, чтобы не зацикливать
+            Window.unbind(on_flip=self.check_window_focus)
             
-    def start_service(self):
+            # А вот теперь ДЕЛАЕМ СИНХРОННЫЙ ИТОГОВЫЙ ДОСМОТР ПРАВ:
+            if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+                self.label.text = "⚙️ ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
+                self.start_background_service()
+            else:
+                # Если фокус вернулся, но права все еще False — 
+                # значит пользователь ТОЛЬКО ЧТО железно нажал кнопку "ЗАПРЕТИТЬ"!
+                self.label.text = (
+                    "❌ ВЫ НАЖАЛИ 'ЗАПРЕТИТЬ'!\n\n"
+                    "Вы отклонили запрос. Мотор не запущен.\n"
+                    "Перезапустите приложение, чтобы попробовать снова."
+                    ) 
+#-----------
+    #PUBLIC_DIR = os.path.join(base_path, 'Documents')
+#from kivy.utils import platform        
+ #       request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+    # Clock.schedule_interval(self.check_permissions_loop, 1.0)
+        
+#        
+       #return self.label
+        
+ #   def check_permissions_loop(self, dt):
+ #       from android.permissions import check_permission, Permission
+ #       # 1. Проверяем: выданы ли права прямо сейчас?
+  #      #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
+  #         # Clock.unschedule(self.check_permissions_loop)
+  #      #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
+   #     self.tttext = f'{check_permission(Permission.WRITE_EXTERNAL_STORAGE)}\n{should_show_rationale(Permission.WRITE_EXTERNAL_STORAGE)}'
+  #      #    self.start_service()
+            
+   #     # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?
+  #   #   elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
+  #     #     Clock.unschedule(self.check_permissions_loop)
+   #         # Шлюз закрыт, пользователь явно нажал "Отклонить" в окошке
+  #      #    self.label.text = "ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
+            
+    def start_background_service(self):
         #try:
             try:
                 base_path = primary_external_storage_path()
@@ -107,6 +127,8 @@ class DebugApp(App):
         
 if __name__ == '__main__':
     DebugApp().run()
+#-----_---
+
 #---------_---
   #              # ЗАПУСКАЕМ НАШ СКРЫТЫЙ СЕРВИС СЕКУНДНОГО САМОПИСЦА
    #    #         from android import AndroidService

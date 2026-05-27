@@ -54,7 +54,7 @@ jobs:
         #zip -r source_code.zip main.py service.py buildozer.spec tinytuya.py
         # УПАКОВЫВАЕМ ВСЁ ПОДРЯД, НО ВЫКИДЫВАЕМ ГИГАНТСКИЙ КЭШ БИЛДОЗЕРА
         #zip -r source_code.zip . -x ".*" ".buildozer/*"
-        zip -r source_code.zip . -x ".*" ".buildozer/*"
+        zip -r source_code.zip . -x ".buildozer/*"
       
     - name: Create Release and Upload APK
       uses: softprops/action-gh-release@v2

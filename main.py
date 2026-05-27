@@ -34,7 +34,6 @@ class DigmaRecorderApp(App):
             # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
             from android.permissions import check_permission, request_permissions, Permission
             #from android.permissions import request_permissions, Permission
-        
             if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
                 self.start_background_service()
             else:
@@ -43,6 +42,8 @@ class DigmaRecorderApp(App):
                 # Вешаем системный перехватчик фокуса Kivy
                 Window.bind(on_flip=self.check_window_focus)
                 request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+                request_permissions([Permission.READ_MEDIA_IMAGES])
+            
         else:
             self.start_background_service()
             

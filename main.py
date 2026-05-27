@@ -13,7 +13,22 @@ from kivy.core.window import Window
 
 from jnius import autoclass, cast
 
-def write_to_public_documents(filename, text_content):
+# ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
+sys.stdout = MediaStoreStdout()
+sys.stderr = sys.stdout
+
+# СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
+class MediaStoreStdout:
+    def write(self, message):
+        # Если прилетает не пустая строка — отправляем её в наш Java-мост
+        if message and message.strip():
+            # Вызываем вашу отлаженную функцию дозаписи в Documents!
+            append_to_public_documents("app_log.txt", message.strip())
+            
+    def flush(self):
+        pass  # Системная заглушка, обязательная для потоков stdout
+
+def append_to_public_documents(filename, text_content):
     # 1. Импортируем официальные Java-классы Android
     Context = autoclass('org.kivy.android.PythonActivity').mActivity
     ContentValues = autoclass('android.content.ContentValues')
@@ -45,12 +60,10 @@ class DigmaRecorderApp(App):
     def build(self):
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         try:
-            write_to_public_documents('testautoclass.txt','test')
+            append_to_public_documents('testautoclass.txt','test')
         except Exception as e:
             self.tttext = f'autoclass error!\n{e}'
            
-        #self.label = Label(text="⚙️ ОЖИДАНИЕ КЛИКА...", font_size='16sp', halign='center', valign='top')
-        #self.label.bind(size=self.label.setter('text_size'))
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
@@ -66,97 +79,23 @@ class DigmaRecorderApp(App):
         Clock.schedule_interval(self.update_screen, 1.0)
         
         if platform == 'android':
-            # ВЫЗЫВАЕМ СТАНДАРТНОЕ ОКНО ЗАПРОСА ПРАВ НА ПАМЯТЬ
-            from android.permissions import check_permission, request_permissions, Permission
-            #from android.permissions import request_permissions, Permission
-            if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-                self.start_background_service()
-            else:
-                # ЗАПОМИНАЕМ, ЧТО ОКНО СЕЙЧАС ПОТЕРЯЕТ ФОКУС
-                self.window_was_unfocused = False
-                # Вешаем системный перехватчик фокуса Kivy
-                Window.bind(on_flip=self.check_window_focus)
-                request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-                request_permissions([Permission.READ_MEDIA_IMAGES])
-            
+            self.start_background_service()
         else:
             self.start_background_service()
             
         return self.label
 
-# ЭТОТ МЕТОД КИВИ ВЫЗЫВАЕТ АВТОМАТИЧЕСКИ ПРИ КАЖДОМ КАДРЕ И ОБНОВЛЕНИИ ЭКРАНА!
-    def check_window_focus(self, window):
-        from android.permissions import check_permission, Permission
-        
-        # Шаг 1: Фиксируем момент, когда всплыло белое окно и наше приложение "уснуло"
-        # (В этот момент Window.focus становится равным False)
-        if not Window.focus:
-            self.window_was_unfocused = True
-            
-        # Шаг 2: Фиксируем момент, когда белое окно ИСЧЕЗЛО (вы нажали кнопку),
-        # и наше приложение снова вернулось на передний план!
-        elif Window.focus and self.window_was_unfocused:
-            # Сразу отвязываем перехватчик, чтобы не зацикливать
-            Window.unbind(on_flip=self.check_window_focus)
-            
-            # А вот теперь ДЕЛАЕМ СИНХРОННЫЙ ИТОГОВЫЙ ДОСМОТР ПРАВ:
-            if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-                self.label.text = "⚙️ ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-                self.start_background_service()
-            else:
-                # Если фокус вернулся, но права все еще False — 
-                # значит пользователь ТОЛЬКО ЧТО железно нажал кнопку "ЗАПРЕТИТЬ"!
-                self.label.text = (
-                    "❌ ВЫ НАЖАЛИ 'ЗАПРЕТИТЬ'!\n\n"
-                    "Вы отклонили запрос. Мотор не запущен.\n"
-                    "Перезапустите приложение, чтобы попробовать снова."
-                    ) 
-#-----------
-    #PUBLIC_DIR = os.path.join(base_path, 'Documents')
-#from kivy.utils import platform        
- #       request_permissions([Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-    # Clock.schedule_interval(self.check_permissions_loop, 1.0)
-        
-#        
-       #return self.label
-        
- #   def check_permissions_loop(self, dt):
- #       from android.permissions import check_permission, Permission
- #       # 1. Проверяем: выданы ли права прямо сейчас?
-  #      #if check_permission(Permission.WRITE_EXTERNAL_STORAGE):
-  #         # Clock.unschedule(self.check_permissions_loop)
-  #      #self.label.text = "ПРАВА ПОЛУЧЕНЫ!\nЗапускаю фоновый мотор..."
-   #     self.tttext = f'{check_permission(Permission.WRITE_EXTERNAL_STORAGE)}\n{should_show_rationale(Permission.WRITE_EXTERNAL_STORAGE)}'
-  #      #    self.start_service()
-            
-   #     # 2. Проверяем: нажал ли пользователь кнопку "ЗАПРЕТИТЬ"?
-  #   #   elif should_show_permission_rationale(Permission.WRITE_EXTERNAL_STORAGE):
-  #     #     Clock.unschedule(self.check_permissions_loop)
-   #         # Шлюз закрыт, пользователь явно нажал "Отклонить" в окошке
-  #      #    self.label.text = "ОШИБКА ДОСТУПА!\nВы нажали 'Запретить'.\nФоновый мотор заблокирован операционной системой."
-            
     def start_background_service(self):
-        #try:
-            try:
-                base_path = primary_external_storage_path()
-                #sys.stdout = open(base_path+'/Documents/app_log.txt', 'a', encoding='utf-8')
-                self.flog = open(base_path+'/app_log.txt', 'w', encoding='utf-8')
+        try:
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+        except Exception as e:
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
                 
-                self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
-            except Exception as e:
-                self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
-                #sys.stderr = sys.stdout  
-        
-           # except Exception as e:
-             #   self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ без разрешений!\n{e}'
-                
-        
-
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
         #time.sleep(1)
         try:
-            self.flog.write(f"[{time.strftime('%H:%M:%S')}]")
+            append_to_public_documents(f"[{time.strftime('%H:%M:%S')}]")
                 
             #print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'

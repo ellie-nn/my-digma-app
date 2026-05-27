@@ -13,10 +13,6 @@ from kivy.core.window import Window
 
 from jnius import autoclass, cast
 
-# ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
-sys.stdout = MediaStoreStdout()
-sys.stderr = sys.stdout
-
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
@@ -59,8 +55,14 @@ def append_to_public_documents(filename, text_content):
 class DigmaRecorderApp(App):
     def build(self):
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
+        # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+
         try:
-            append_to_public_documents('testautoclass.txt','test')
+            append_to_public_documents('testautoclass.txt','test1')
+            append_to_public_documents('testautoclass.txt','test2')
+    
         except Exception as e:
             self.tttext = f'autoclass error!\n{e}'
            
@@ -95,7 +97,7 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         #time.sleep(1)
         try:
-            append_to_public_documents(f"[{time.strftime('%H:%M:%S')}]")
+            append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
                 
             #print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'

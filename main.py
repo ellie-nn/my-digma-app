@@ -17,7 +17,9 @@ def write_to_public_documents(filename, text_content):
     # 1. Импортируем официальные Java-классы Android
     Context = autoclass('org.kivy.android.PythonActivity').mActivity
     ContentValues = autoclass('android.content.ContentValues')
-    MediaStore = autoclass('android.provider.MediaStore')
+    # К вложенным классам Android в pyjnius всегда обращаются через знак $ !
+    MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
+    #MediaStore = autoclass('android.provider.MediaStore')
     Uri = autoclass('android.net.Uri')
     
     # 2. Создаем структуру параметров (ContentValues)
@@ -28,7 +30,7 @@ def write_to_public_documents(filename, text_content):
     
     # 3. Отправляем запрос в базу данных Android через ContentResolver
     resolver = Context.getContentResolver()
-    collection_uri = MediaStore.Files.getContentUri("external")
+    collection_uri = MediaStoreFiles.getContentUri("external")
     file_uri = resolver.insert(collection_uri, values)
     
     # 4. Открываем системный Java-поток на запись по полученной ссылке

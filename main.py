@@ -10,9 +10,43 @@ from kivy.utils import platform
 from android.storage import primary_external_storage_path
 
 from kivy.core.window import Window
+
+from jnius import autoclass, cast
+
+def write_to_public_documents(filename, text_content):
+    # 1. Импортируем официальные Java-классы Android
+    Context = autoclass('org.kivy.android.PythonActivity').mActivity
+    ContentValues = autoclass('android.content.ContentValues')
+    MediaStore = autoclass('android.provider.MediaStore')
+    Uri = autoclass('android.net.Uri')
+    
+    # 2. Создаем структуру параметров (ContentValues)
+    values = ContentValues()
+    values.put("_display_name", filename)        # Имя файла
+    values.put("mime_type", "text/plain")         # Тип (текст)
+    values.put("relative_path", "Documents/")     # Куда кладем [↑]
+    
+    # 3. Отправляем запрос в базу данных Android через ContentResolver
+    resolver = Context.getContentResolver()
+    collection_uri = MediaStore.Files.getContentUri("external")
+    file_uri = resolver.insert(collection_uri, values)
+    
+    # 4. Открываем системный Java-поток на запись по полученной ссылке
+    output_stream = resolver.openOutputStream(file_uri)
+    
+    # 5. Превращаем наш Python-текст в байты и пишем напрямую в корень!
+    output_stream.write(bytes(text_content, 'utf-8'))
+    output_stream.close()
+    
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
+        try:
+            write_to_public_documents('testautoclass.txt','test')
+        except Exception as e:
+            self.tttext = f'autoclass error!\n{e}'
+           
         #self.label = Label(text="⚙️ ОЖИДАНИЕ КЛИКА...", font_size='16sp', halign='center', valign='top')
         #self.label.bind(size=self.label.setter('text_size'))
         # Создаем на экране большую текстовую панель
@@ -25,7 +59,6 @@ class DigmaRecorderApp(App):
         self.label.bind(size=self.label.setter('text_size'))
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
-        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 1.0)

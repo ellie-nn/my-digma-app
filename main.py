@@ -26,7 +26,7 @@ def write_to_public_documents(filename, text_content):
     values = ContentValues()
     values.put("_display_name", filename)        # Имя файла
     values.put("mime_type", "text/plain")         # Тип (текст)
-    values.put("relative_path", "Documents/")     # Куда кладем [↑]
+    values.put("relative_path", "")     # Куда кладем [↑]
     
     # 3. Отправляем запрос в базу данных Android через ContentResolver
     resolver = Context.getContentResolver()

@@ -38,7 +38,8 @@ def append_to_public_documents(filename, text_content):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
-            values.put("mime_type", "text/plain")
+            #values.put("mime_type", "text/plain")
+            values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/")
             file_uri = resolver.insert(collection_uri, values)
         
@@ -113,7 +114,7 @@ class DigmaRecorderApp(App):
         #time.sleep(1)
         try:
             append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
-                
+            
             #print('!!! PROGRAM LUNCHED !!!')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'
         except:

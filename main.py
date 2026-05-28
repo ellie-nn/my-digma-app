@@ -96,12 +96,12 @@ class DigmaRecorderApp(App):
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
-        Clock.schedule_interval(self.update_screen, 1.0)
+   #     Clock.schedule_interval(self.update_screen, 1.0)
         
-        if platform == 'android':
-            self.start_background_service()
-        else:
-            self.start_background_service()
+    #    if platform == 'android':
+    #        self.start_background_service()
+     #   else:
+    #        self.start_background_service()
             
         return self.label
 

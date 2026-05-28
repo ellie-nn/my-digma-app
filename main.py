@@ -1,9 +1,11 @@
+import tinytuya
 import time
 import os
 import signal
 import sys
 import csv
 #import tinytuya
+#if 'tinytuya' in sys.modules:
 
 from kivy.app import App
 from kivy.uix.label import Label
@@ -106,7 +108,7 @@ class DigmaRecorderApp(App):
   #          self.start_background_service()
  #       else:
   #          self.start_background_service()
-        import tinytuya    
+        #import tinytuya    
         return self.label
 
     def start_background_service(self):

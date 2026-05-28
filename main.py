@@ -15,6 +15,10 @@ from kivy.core.window import Window
 
 from jnius import autoclass, cast
 
+from plyer import notification
+
+notification.notify(title="Digma Recorder", message="Самописец успешно запущен!", timeout=3)
+
 def append_to_public_documents(filename, text_content):
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity

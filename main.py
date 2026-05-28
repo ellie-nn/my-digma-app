@@ -122,7 +122,7 @@ class DigmaRecorderApp(App):
         except:
              print(f'Не удалось найти IP адрес розетки.')
              print(devices)
-             raise SystemExit
+             #raise SystemExit
 
         # Инициализируем розетку
         d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)

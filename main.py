@@ -100,12 +100,12 @@ class DigmaRecorderApp(App):
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
-   #     Clock.schedule_interval(self.update_screen, 1.0)
+        Clock.schedule_interval(self.update_screen, 1.0)
         
-    #    if platform == 'android':
-    #        self.start_background_service()
-     #   else:
-    #        self.start_background_service()
+#        if platform == 'android':
+  #          self.start_background_service()
+ #       else:
+  #          self.start_background_service()
             
         return self.label
 
@@ -155,51 +155,7 @@ class DigmaRecorderApp(App):
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
 
-        try:
-            # Быстрый пингующий запрос к чипу розетки
-            d.updatedps()
-            time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
         
-            # Забираем свежий статус
-            data = d.status()
-        
-            if data and 'dps' in data:
-                dps = data['dps']
-                
-                # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
-                raw_vatt = dps.get('19', 0)
-                vatt = raw_vatt / 10.0
-            
-                # Если 17-й параметр есть - берем его, если скрыт - пишем -1
-                kwh_17 = dps.get('17', -1)
-            
-                current_time = time.strftime('%H:%M:%S')
-            
-                # ЛОГИКА ФИЛЬТРАЦИИ НУЛЕЙ
-                if raw_vatt == 0:
-                    if not was_last_zero:
-                        # Записываем ТОЛЬКО ПЕРВЫЙ ноль, чтобы зафиксировать выключение
-                        append_to_public_documents(FILE_CSV,f"{current_time}, {vatt}, {kwh_17}\n")
-                        #with open(FILE_CSV, mode='a', newline='', encoding='utf-8') as f:
-                        #    csv.writer(f).writerow([current_time, vatt, kwh_17])
-                        print(f"[{current_time}] Прибор отключен (0.0 Вт). Запись приостановлена.")
-                        was_last_zero = True
-                    else:
-                        # Если ноль продолжается - просто пропускаем секунду, не забивая файл
-                        pass
-                else:
-                    # Нагрузка есть (или появилась) — пишем данные каждую секунду
-                    was_last_zero = False
-                    append_to_public_documents(FILE_CSV,f"{current_time}, {vatt}, {kwh_17}\n")
-                    #with open(file_path, mode='a', newline='', encoding='utf-8') as f:
-                    #    csv.writer(f).writerow([current_time, vatt, kwh_17])
-                    print(f"[{current_time}] Мощность: {vatt:<5} Вт | Параметр_17: {kwh_17}")
-                
-        except Exception as e:
-            print(f"Ошибка связи: {e}")
-        
-        time.sleep(0.9)  # Добиваем шаг цикла ровно до 1 секунды
-            
 if __name__ == '__main__':
     DigmaRecorderApp().run()
 #-----_---

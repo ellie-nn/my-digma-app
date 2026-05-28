@@ -106,7 +106,7 @@ class DigmaRecorderApp(App):
   #          self.start_background_service()
  #       else:
   #          self.start_background_service()
-            
+        import tinytuya    
         return self.label
 
     def start_background_service(self):

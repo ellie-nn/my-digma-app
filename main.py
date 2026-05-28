@@ -13,6 +13,46 @@ from kivy.core.window import Window
 
 from jnius import autoclass, cast
 
+def append_to_public_documents(filename, text_content):
+    try:
+        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        ContentValues = autoclass('android.content.ContentValues')
+        MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
+        resolver = Context.getContentResolver()
+        collection_uri = MediaStoreFiles.getContentUri("external")
+        
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        
+        if cursor and cursor.moveToFirst():
+            # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
+            file_id = cursor.getLong(cursor.getColumnIndex("_id"))
+            ContentUris = autoclass('android.content.ContentUris')
+            # Превращаем ID в ту самую старую, живую ссылку Uri
+            file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            cursor.close()
+        else:
+            # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
+            if cursor: cursor.close()
+            values = ContentValues()
+            values.put("_display_name", filename)
+            values.put("mime_type", "text/plain")
+            values.put("relative_path", "Documents/")
+            file_uri = resolver.insert(collection_uri, values)
+        
+        # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+        output_stream = resolver.openOutputStream(file_uri, "wa")
+        output_stream.write(bytes(text_content + "\n", 'utf-8'))
+        output_stream.close()
+        
+    except Exception as e:
+        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write(text_content + "\n")
+        
+
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
@@ -24,32 +64,7 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
-def append_to_public_documents(filename, text_content):
-    # 1. Импортируем официальные Java-классы Android
-    Context = autoclass('org.kivy.android.PythonActivity').mActivity
-    ContentValues = autoclass('android.content.ContentValues')
-    # К вложенным классам Android в pyjnius всегда обращаются через знак $ !
-    MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
-    #MediaStore = autoclass('android.provider.MediaStore')
-    Uri = autoclass('android.net.Uri')
-    
-    # 2. Создаем структуру параметров (ContentValues)
-    values = ContentValues()
-    values.put("_display_name", filename)        # Имя файла
-    values.put("mime_type", "text/plain")         # Тип (текст)
-    values.put("relative_path", "Documents/")     # Куда кладем [↑]
-    
-    # 3. Отправляем запрос в базу данных Android через ContentResolver
-    resolver = Context.getContentResolver()
-    collection_uri = MediaStoreFiles.getContentUri("external")
-    file_uri = resolver.insert(collection_uri, values)
-    
-    # 4. Открываем системный Java-поток на запись по полученной ссылке
-    output_stream = resolver.openOutputStream(file_uri)
-    
-    # 5. Превращаем наш Python-текст в байты и пишем напрямую в корень!
-    output_stream.write(bytes(text_content, 'utf-8'))
-    output_stream.close()
+
     
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):

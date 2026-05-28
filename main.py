@@ -2,7 +2,7 @@ import time
 import os
 import signal
 import csv
-import tinytuya
+#import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:
@@ -82,7 +82,7 @@ class DigmaRecorderApp(App):
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-
+        import tinytuya
         try:
             append_to_public_documents('testautoclass.txt','test1')
             append_to_public_documents('testautoclass.txt','test2')

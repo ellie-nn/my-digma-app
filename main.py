@@ -2,7 +2,7 @@ import time
 import os
 import signal
 import csv
-#import tinytuya
+import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:

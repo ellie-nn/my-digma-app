@@ -2,7 +2,7 @@ import time
 import os
 import signal
 import csv
-import tinytuya
+#import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:
@@ -113,32 +113,7 @@ class DigmaRecorderApp(App):
 
     def start_background_service(self):
         print('!!! PROGRAM LUNCHED !!!')
-        DEVICE_ID = 'bf1a864dc80b65d878lv65'
-        LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
-
-        try:
-            # Сканируем эфир (None, секунды) и ищем устройство с нашим ID
-            devices = tinytuya.deviceScan(None,4)
-            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-   
-        except:
-             print(f'Не удалось найти IP адрес розетки.')
-             print(devices)
-             #raise SystemExit
-
-        # Инициализируем розетку
-        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-        d.set_version(3.3)
-        d.set_socketTimeout(2)
-
-        # Имя файла истории
-        FILE_CSV = 'power_history.csv'
-
-        print(">>> Бортовой самописец запущен и ждет нагрузку... <<<\n")
-
-        # Флаг для отслеживания нулевой мощности
-        was_last_zero = False
-
+        
         try:
             self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
         except Exception as e:

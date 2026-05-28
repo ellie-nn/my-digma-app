@@ -1,10 +1,10 @@
-import tinytuya
 import time
 import os
 import signal
-import sys
 import csv
-#import tinytuya
+import tinytuya
+import sys
+
 #if 'tinytuya' in sys.modules:
 
 from kivy.app import App

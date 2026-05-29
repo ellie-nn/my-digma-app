@@ -2,7 +2,7 @@ import time
 import os
 import signal
 import csv
-import tinytuya
+#import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:
@@ -88,7 +88,7 @@ class DigmaRecorderApp(App):
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        
+        import tinytuya
         devices = MyTinytuya.deviceScan(None,5)
         print('devices')
         print(devices)

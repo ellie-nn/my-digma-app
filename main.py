@@ -1,3 +1,8 @@
+#import warnings
+# ДАЕМ КОМАНДУ ПИТОНУ: ПОЛНОСТЬЮ ИГНОРИРОВАТЬ ЛЮБЫЕ ДЕКОРАТИВНЫЕ WARNINGS
+#warnings.filterwarnings("ignore")
+
+import tinytuya
 import time
 import os
 import signal
@@ -93,26 +98,8 @@ class DigmaRecorderApp(App):
         devices = tinytuya.deviceScan(None,5)
         print('devices')
         print(devices)
-        #ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-        # Забираем первый найденный IP-адрес из Wi-Fi сети смартфона
-        ip_address = list(devices.keys())[0] if devices else "192.168.1.15"
-        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-        for ip_address in devices.keys():
-            d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-            data = d.status()
-            print('ip')
-        
-            if 'dps' in data:
-                dps = data['dps']
-                vatt = dps.get('19', 0) / 10.0
-                kwh_17 = dps.get('17', -1)
-                print('item')
-        
-                print(f'{ip_address} {vatt}\n')
-            else:
-                print(f'{ip_address}\n{d}\n{data}\n')
-            
-                
+        ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
+                        
         d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
         d.set_version(3.3)
         d.set_socketTimeout(2)
@@ -166,7 +153,26 @@ class DigmaRecorderApp(App):
             self.ttext = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-
+        
+        d.updatedps()
+        time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
+        
+        # Забираем свежий статус
+        data = d.status()
+        
+        if data and 'dps' in data:
+            dps = data['dps']
+            
+            # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
+            raw_vatt = dps.get('19', 0)
+            vatt = raw_vatt / 10.0
+            
+            # Если 17-й параметр есть - берем его, если скрыт - пишем -1
+            kwh_17 = dps.get('17', -1)
+            
+            current_time = time.strftime('%H:%M:%S')
+        self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
+            
         
 if __name__ == '__main__':
     DigmaRecorderApp().run()

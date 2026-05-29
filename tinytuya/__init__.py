@@ -89,9 +89,9 @@
 
 """
 
-from core import *
-from core import __version__
-from core import __author__
+from tinytuya.core import *
+from tinytuya.core import __version__
+from tinytuya.core import __author__
 
 from OutletDevice import OutletDevice
 from CoverDevice import CoverDevice

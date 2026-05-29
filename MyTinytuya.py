@@ -3,21 +3,55 @@ import json
 import time
 import os
 
-# 1. ЧЕСТНЫЙ АВТОПОИСК РОЗЕТКИ ПО СЕТЕВОМУ КЭШУ ANDROID 10
 def deviceScan(tuyadevices=None, timeout=2):
     devices = {}
+    
+    # ОТКРЫВАЕМ НАСТОЯЩЕЕ UDP-УХО ДЛЯ СБОРА РАДИОСИГНАЛОВ РОЗЕТОК
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.settimeout(timeout)
+    
     try:
-        # Читаем живой соседский кэш ядра Linux смартфона
-        with os.popen("ip neigh show") as f:
-            for line in f:
-                parts = line.split()
-                if parts and len(parts) > 0:
-                    ip = parts[0]
-                    # Записываем найденный IP как ключ, имитируя структуру оригинальной туи
-                    devices[ip] = {'gwId': 'auto_found', 'ip': ip, 'version': '3.3'}
+        # Привязываемся к официальному порту Tuya, куда розетка шлет вещание
+        s.bind(('0.0.0.0', 6666))
     except:
-        pass
+        try:
+            s.bind(('0.0.0.0', 6667))
+        except:
+            return devices
+
+    start_time = time.time()
+    while time.time() - start_time < timeout:
+        try:
+            # Ловим сырые байты из эфира домашней сети
+            data, addr = s.recvfrom(2048)
+            ip = addr[0]
+            
+            # Ищем границы JSON внутри шифрованного пакета розетки Digma
+            if b'{' in data:
+                start = data.find(b'{')
+                end = data.rfind(b'}') + 1
+                json_str = data[start:end].decode('utf-8', errors='ignore')
+                
+                # Декодируем живой паспорт розетки
+                payload = json.loads(json_str)
+                real_gwId = payload.get('gwId')
+                
+                if real_gwId:
+                    # УРА! Записываем в структуру ЕЁ НАСТОЯЩИЙ ЖЕЛЕЗНЫЙ ID И ВЕРСИЮ!
+                    devices[ip] = {
+                        'gwId': real_gwId,
+                        'ip': ip,
+                        'version': payload.get('version', '3.3')
+                    }
+        except socket.timeout:
+            break
+        except:
+            pass
+            
+    s.close()
     return devices
+
 
 # 2. КЛАСС-ЭМУЛЯТОР УСТРОЙСТВА DIGMA НА ЧИСТЫХ СОКЕТАХ
 class OutletDevice:
@@ -55,3 +89,5 @@ class OutletDevice:
     def status(self):
         return self.latest_status
                   
+#_-------------
+                

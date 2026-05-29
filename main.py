@@ -90,6 +90,7 @@ class DigmaRecorderApp(App):
         sys.stderr = sys.stdout
         
         devices = MyTinytuya.deviceScan(None,5)
+        print('devices')
         print(devices)
         #ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
         # Забираем первый найденный IP-адрес из Wi-Fi сети смартфона
@@ -98,10 +99,14 @@ class DigmaRecorderApp(App):
         for ip_address in devices.keys():
             d = MyTinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
             data = d.status()
+            print('ip')
+        
             if 'dps' in data:
                 dps = data['dps']
                 vatt = dps.get('19', 0) / 10.0
                 kwh_17 = dps.get('17', -1)
+                print('item')
+        
                 print(f'{ip_address} {vatt}\n')
             else:
                 print(f'{ip_address}\n{d}\n{data}\n')

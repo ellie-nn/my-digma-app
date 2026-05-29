@@ -94,7 +94,7 @@ class DigmaRecorderApp(App):
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        import tinytuya
+        
         devices = tinytuya.deviceScan(None,5)
         print('devices')
         print(devices)

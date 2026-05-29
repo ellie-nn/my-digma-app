@@ -2,6 +2,7 @@ import time
 import os
 import signal
 import csv
+import pyaes
 #import tinytuya
 import sys
 

@@ -36,7 +36,7 @@ for clib in ('pyca/cryptography', 'PyCryptodomex', 'PyCrypto', 'pyaes'):
     except ImportError:
         continue
 if CRYPTOLIB is None:
-    raise ModuleNotFoundError('No crypto library found, please "pip install" cryptography, pycryptodome, or pyaes')
+    raise ModuleNotFoundError(f'No crypto library {clib} found, please "pip install" cryptography, pycryptodome, or pyaes')
 
 log = logging.getLogger(__name__)
 

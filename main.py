@@ -8,7 +8,6 @@ import os
 import signal
 import csv
 import pyaes
-#import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:
@@ -24,7 +23,6 @@ from kivy.core.window import Window
 from jnius import autoclass, cast
 
 #from plyer import notification
-
 #notification.notify(title="Digma Recorder", message="Самописец успешно запущен!", timeout=3)
 
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
@@ -81,11 +79,8 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             append_to_public_documents("app_log.txt", message.strip())
-            
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-
-
     
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
@@ -94,24 +89,22 @@ class DigmaRecorderApp(App):
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        
-        devices = tinytuya.deviceScan(None,5)
-        print('devices')
-        print(devices)
-        ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-                        
-        self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-        self.rosette.set_version(3.3)
-        self.rosette.set_socketTimeout(2)
-        self.rosette.updatedps()
-        
+
         try:
-            append_to_public_documents('testautoclass.txt','test1')
-            append_to_public_documents('testautoclass.txt','test2')
-    
+            devices = tinytuya.deviceScan(None,5)
+            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
         except Exception as e:
-            self.tttext = f'autoclass error!\n{e}'
-           
+           print(f'Can''t find ip\n{e}\nDevices={devices}\n')
+           #raise SysExit
+        try:               
+            self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+            self.rosette.set_version(3.3)
+            self.rosette.set_socketTimeout(2)
+            self.rosette.updatedps()
+        except Exception as e:
+            print(f'First interaction error:\n{e}')
+            #raise SysExit
+    
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
@@ -143,20 +136,14 @@ class DigmaRecorderApp(App):
                 
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')
-        #time.sleep(1)
-        try:
-            append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
+        append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
             
-            #print('!!! PROGRAM LUNCHED !!!')
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n{e}'
-        except:
-            self.ttext = f"СИСТЕМА СТАРОЙ ШКОЛЫ ЛАЖАЕТ!\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        #print('!!! PROGRAM LUNCHED !!!')
+        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
+        
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        
-        
-        #time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
-        
+    
         # Забираем свежий статус
         data = self.rosette.status()
         
@@ -174,23 +161,5 @@ class DigmaRecorderApp(App):
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
         self.rosette.updatedps()
             
-        
 if __name__ == '__main__':
     DigmaRecorderApp().run()
-#-----_---
-
-#---------_---
-  #              # ЗАПУСКАЕМ НАШ СКРЫТЫЙ СЕРВИС СЕКУНДНОГО САМОПИСЦА
-   #    #         from android import AndroidService
-    #            service = AndroidService('DigmaService', 'Идет сбор данных розетки...')
-       #         service.start('service.py')
-      #      except Exception as e:
-    #            pass
-            
-      #  return Label(
-      #      text="⚙️ БОРТОВОЙ САМОПИСЕЦ DIGMA\nМотор запущен в фоне! 🚀\n\nИстория пишется напрямую в Documents!", 
-     #       font_size='16sp',
-    #        halign='center'
-     #   )
-
-                

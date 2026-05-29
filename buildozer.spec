@@ -6,7 +6,7 @@ package.domain = org.oldschool
 version = 1.0.4
 source.include_exts = py,png,jpg,kv,csv
 
-requirements = python3,kivy
+requirements = python3,kivy,pyaes
 #android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,WAKE_LOCK, WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,WAKE_LOCK,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES,READ_MEDIA_AUDIO,READ_MEDIA_VIDEO
 android.accept_sdk_license = True

@@ -103,8 +103,8 @@ class DigmaRecorderApp(App):
         self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
         self.rosette.set_version(3.3)
         self.rosette.set_socketTimeout(2)
+        self.rosette.updatedps()
         
-        #import tinytuya
         try:
             append_to_public_documents('testautoclass.txt','test1')
             append_to_public_documents('testautoclass.txt','test2')
@@ -154,8 +154,8 @@ class DigmaRecorderApp(App):
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         
-        self.rosette.updatedps()
-        time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
+        
+        #time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
         
         # Забираем свежий статус
         data = self.rosette.status()
@@ -172,6 +172,7 @@ class DigmaRecorderApp(App):
             
             current_time = time.strftime('%H:%M:%S')
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
+        self.rosette.updatedps()
             
         
 if __name__ == '__main__':

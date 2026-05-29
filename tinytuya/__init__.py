@@ -93,7 +93,7 @@ from tinytuya.core import *
 from tinytuya.core import __version__
 from tinytuya.core import __author__
 
-from OutletDevice import OutletDevice
-from CoverDevice import CoverDevice
-from BulbDevice import BulbDevice
-from Cloud import Cloud
+from tinytuya.OutletDevice import OutletDevice
+from tinytuya.CoverDevice import CoverDevice
+from tinytuya.BulbDevice import BulbDevice
+from tinytuya.Cloud import Cloud

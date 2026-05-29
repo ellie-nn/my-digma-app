@@ -91,8 +91,22 @@ class DigmaRecorderApp(App):
         
         devices = MyTinytuya.deviceScan(None,5)
         print(devices)
-        ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-
+        #ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
+        # Забираем первый найденный IP-адрес из Wi-Fi сети смартфона
+        ip_address = list(devices.keys())[0] if devices else "192.168.1.15"
+        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+        for ip_address in devices.keys():
+            d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+            data = d.status()
+            if 'dps' in data:
+                dps = data['dps']
+                vatt = dps.get('19', 0) / 10.0
+                kwh_17 = dps.get('17', -1)
+                print(f'{ip_address} {vatt}\n')
+            else:
+                print(f'{ip_address} skip')
+            
+                
         d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
         d.set_version(3.3)
         d.set_socketTimeout(2)

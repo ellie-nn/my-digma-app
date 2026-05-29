@@ -43,7 +43,7 @@ def append_to_public_documents(filename, text_content):
         # Составляем SQL-запрос к Android: имя файла и папка Documents
         selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
-        
+        print(f'Cursor\n{cursor}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))

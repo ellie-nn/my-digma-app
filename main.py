@@ -2,7 +2,7 @@ import time
 import os
 import signal
 import csv
-import MyTinytuya
+import tinytuya
 import sys
 
 #if 'tinytuya' in sys.modules:
@@ -95,9 +95,9 @@ class DigmaRecorderApp(App):
         #ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
         # Забираем первый найденный IP-адрес из Wi-Fi сети смартфона
         ip_address = list(devices.keys())[0] if devices else "192.168.1.15"
-        d = MyTinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
         for ip_address in devices.keys():
-            d = MyTinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+            d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
             data = d.status()
             print('ip')
         
@@ -112,7 +112,7 @@ class DigmaRecorderApp(App):
                 print(f'{ip_address}\n{d}\n{data}\n')
             
                 
-        d = MyTinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
         d.set_version(3.3)
         d.set_socketTimeout(2)
         

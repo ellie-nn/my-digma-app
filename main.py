@@ -100,9 +100,9 @@ class DigmaRecorderApp(App):
         print(devices)
         ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
                         
-        d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-        d.set_version(3.3)
-        d.set_socketTimeout(2)
+        self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+        self.rosette.set_version(3.3)
+        self.rosette.set_socketTimeout(2)
         
         #import tinytuya
         try:
@@ -154,11 +154,11 @@ class DigmaRecorderApp(App):
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         
-        d.updatedps()
+        self.rosette.updatedps()
         time.sleep(0.1)  # Крошечная пауза, чтобы розетка успела ответить
         
         # Забираем свежий статус
-        data = d.status()
+        data = self.rosette.status()
         
         if data and 'dps' in data:
             dps = data['dps']

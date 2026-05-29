@@ -28,9 +28,9 @@ FILE_CSV = 'power_history.csv'
 devices = tinytuya.deviceScan(None,5)
 ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
 
-d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-d.set_version(3.3)
-d.set_socketTimeout(2)
+#d = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+#d.set_version(3.3)
+#d.set_socketTimeout(2)
 
 def append_to_public_documents(filename, text_content):
     try:

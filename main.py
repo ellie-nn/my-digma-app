@@ -90,7 +90,7 @@ class DigmaRecorderApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         import tinytuya
-        devices = MyTinytuya.deviceScan(None,5)
+        devices = tinytuya.deviceScan(None,5)
         print('devices')
         print(devices)
         #ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]

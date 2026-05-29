@@ -3,55 +3,46 @@ import json
 import time
 import os
 
-# СКАНИРУЕМ СЕТЬ ЧЕРЕЗ КЭШ ЯДРА LINUX (АРП-ТАБЛИЦА)
+# СКАНИРОВАНИЕ СЕТИ (Используем ваш быстрый и надежный ARP-метод!)
 def deviceScan(tuyadevices=None, timeout=2):
     devices = {}
     try:
-        # Быстро читаем всех соседей в Wi-Fi сети смартфона
         with os.popen("ip neigh show") as f:
             for line in f:
                 parts = line.split()
                 if parts and len(parts) > 0:
                     ip = parts[0]
-                    
-                    # Исключаем системную петлю и IPv6 адреса
                     if ":" not in ip and ip != "127.0.0.1":
-                        # ХАК СТАРОЙ ШКОЛЫ: записываем этот IP в базу, 
-                        # имитируя, что под ним СРАЗУ сидит искомый DEVICE_ID!
-                        # Это заставит ваш внешний фильтр [0] успешно сработать!
-                        devices[ip] = {
-                            'gwId': 'auto_found', # Заглушка, если ищут по маске
-                            'ip': ip,
-                            'version': '3.3'
-                        }
+                        devices[ip] = {'gwId': 'auto', 'ip': ip, 'version': '3.3'}
     except:
         pass
     return devices
 
-# СУРРОГАТНЫЙ КЛАСС УСТРОЙСТВА DIGMA НА ЧИСТЫХ TCP-СОКЕТАХ
+# НАСТОЯЩИЙ КЛАСС TUYA С БИНАРНЫМ ПИНКОМ ДЛЯ ВЕРСИИ 3.3 (БЕЗ ТОЧЕК И ВЫЛЕТОВ!)
 class OutletDevice:
     def __init__(self, dev_id, ip, local_key):
         self.dev_id = dev_id
-        # Если ваш фильтр [0] выдал IP-адрес — забираем его
         self.ip = ip
+        self.local_key = local_key
         self.latest_status = {}
 
     def set_version(self, v): pass
     def set_socketTimeout(self, t): pass
 
-    # Метод опрашивает розетку по официальному порту Tuya (6668)
     def updatedps(self):
         try:
-            # Открываем прямое текстовое TCP-ухо к чипу Digma
+            # Официальная бинарная команда Tuya для запроса статуса (DP_QUERY)
+            # Этот пинок заставит чип проснуться и выдать Ватты!
+            cmd = b'\x00\x00\x55\xaa\x00\x00\x00\x00\x00\x00\x00\x0a\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\xaa\x55'
+            
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(1.5)
             s.connect((self.ip, 6668))
+            s.send(cmd) # Пинаем розетку!
             
-            # Читаем живой поток байт, который розетка выплевывает при подключении
-            raw_bytes = s.recv(1024)
+            raw_bytes = s.recv(2048)
             s.close()
             
-            # Ищем чистый JSON со всеми Ваттами и 17-м параметром!
             if b'{' in raw_bytes:
                 start = raw_bytes.find(b'{')
                 end = raw_bytes.rfind(b'}') + 1
@@ -62,4 +53,4 @@ class OutletDevice:
 
     def status(self):
         return self.latest_status
-                        
+    

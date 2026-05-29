@@ -12,13 +12,13 @@ def deviceScan(tuyadevices=None, timeout=2):
             for line in f:
                 parts = line.split()
                 if parts and len(parts) > 0:
-                    ip = parts
-                    if ":" not in ip and ip != "127.0.0.1":
-                        devices[ip] = {'gwId': 'auto', 'ip': ip, 'version': '3.3'}
+                    ip = parts[0]
+                    #if ":" not in ip and ip != "127.0.0.1":
+                    devices[ip] = {'gwId': 'auto', 'ip': ip, 'version': '3.3'}
     except:
         pass
     return devices
-
+                    
 # 2. МИКРО-ДВИЖОК AES ШИФРОВАНИЯ ДЛЯ TUYA v3.3 (НА ЧИСТОМ PYTHON)
 class TuyaCipher:
     def __init__(self, key):

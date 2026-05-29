@@ -104,7 +104,7 @@ class DigmaRecorderApp(App):
                 kwh_17 = dps.get('17', -1)
                 print(f'{ip_address} {vatt}\n')
             else:
-                print(f'{ip_address} skip')
+                print(f'{ip_address}\n{d}\n{data}\n')
             
                 
         d = MyTinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)

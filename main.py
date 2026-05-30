@@ -152,7 +152,7 @@ class DigmaRecorderApp(App):
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
+        #self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
     
         # Забираем свежий статус
         data = self.rosette.status()

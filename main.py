@@ -3,14 +3,13 @@
 #warnings.filterwarnings("ignore")
 
 
-import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
+#import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-logging.disable(logging.CRITICAL)
-
-# И только теперь идут ваши отлаженные импорты:
-import tinytuya
+#logging.disable(logging.CRITICAL)
 
 import tinytuya
+#if 'tinytuya' in sys.modules:
+
 import time
 import os
 import signal
@@ -18,7 +17,6 @@ import csv
 import pyaes
 import sys
 
-#if 'tinytuya' in sys.modules:
 
 from kivy.app import App
 from kivy.uix.label import Label
@@ -113,6 +111,8 @@ class DigmaRecorderApp(App):
             self.rosette.set_version(3.3)
             self.rosette.set_socketTimeout(2)
             self.rosette.updatedps()
+            time.sleep(0.1)
+        
         except Exception as e:
             print(f'First interaction error:\n{e}')
             #raise SysExit
@@ -172,6 +172,7 @@ class DigmaRecorderApp(App):
             current_time = time.strftime('%H:%M:%S')
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
         self.rosette.updatedps()
+        time.sleep(0.1)
             
 if __name__ == '__main__':
     DigmaRecorderApp().run()

@@ -95,7 +95,7 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
-        global vatt_sum = 0
+        self.vatt_sum = 0
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()

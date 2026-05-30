@@ -2,6 +2,14 @@
 # ДАЕМ КОМАНДУ ПИТОНУ: ПОЛНОСТЬЮ ИГНОРИРОВАТЬ ЛЮБЫЕ ДЕКОРАТИВНЫЕ WARNINGS
 #warnings.filterwarnings("ignore")
 
+
+import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
+# 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
+logging.disable(logging.CRITICAL)
+
+# И только теперь идут ваши отлаженные импорты:
+import tinytuya
+
 import tinytuya
 import time
 import os

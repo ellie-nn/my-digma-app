@@ -128,8 +128,8 @@ class DigmaRecorderApp(App):
         self.label.bind(size=self.label.setter('text_size'))
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
-        global last_time = time.time()
-        global vatt_sum = 0
+        self.last_time = time.time()
+        self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
         Clock.schedule_interval(self.update_screen, 5.0)
         
@@ -171,8 +171,8 @@ class DigmaRecorderApp(App):
             
             current_time = time.strftime('%H:%M:%S')
             
-            global vatt_sum += vatt*(time-last_time)
-            global last_time = time
+            self.vatt_sum += vatt*(time-self.last_time)
+            self.last_time = time
             append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {vatt_sum} {kwh_17}")
             
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'

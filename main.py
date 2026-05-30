@@ -114,16 +114,16 @@ class MediaStoreStdout:
 class DigmaRecorderApp(App):
     def build(self):
         try:
-                # мост к Java-службам Android
-                from android import AndroidService
+            # мост к Java-службам Android
+            from android import AndroidService
                 
-                # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-                service = AndroidService('DigmaService', 'Служба работает в фоне...')
+            # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
+            service = AndroidService('DigmaService', 'Служба работает в фоне...')
                 
-                # Запускаем файл service.py в изолированном потоке памяти
-                service.start('service.py')
-            except Exception as e:
-                label.text = f"Ошибка запуска службы: {e}"
+            # Запускаем файл service.py в изолированном потоке памяти
+            service.start('service.py')
+        except Exception as e:
+            label.text = f"Ошибка запуска службы: {e}"
                 
         #return label
         

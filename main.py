@@ -38,12 +38,16 @@ def append_to_public_documents(filename, text_content):
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
         resolver = Context.getContentResolver()
         collection_uri = MediaStoreFiles.getContentUri("external")
-        print(f'Collection\n{collection_uri}\n')
+        
+        #print(f'Collection\n{collection_uri}\n')
         # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
         # Составляем SQL-запрос к Android: имя файла и папка Documents
-        selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        # Ищем файл по имени, а папку — по маске "содержит слово Documents"
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
+
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
-        print(f'Cursor\n{cursor}\n{cursor.moveToFirst()}\n')
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))

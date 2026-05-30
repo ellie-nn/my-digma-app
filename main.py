@@ -173,7 +173,7 @@ class DigmaRecorderApp(App):
             
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
-            append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {vatt_sum} {kwh_17}")
+            append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum} {kwh_17}")
             
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ

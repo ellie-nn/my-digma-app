@@ -142,7 +142,6 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
             
-        print('!!! PROGRAM LUNCHED !!!')
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
@@ -150,7 +149,8 @@ class DigmaRecorderApp(App):
     
         # Забираем свежий статус
         data = self.rosette.status()
-        
+        print('!!! PROGRAM LUNCHED !!!')
+       
         if data and 'dps' in data:
             dps = data['dps']
             

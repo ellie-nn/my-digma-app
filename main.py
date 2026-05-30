@@ -142,7 +142,7 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         append_to_public_documents('digmaspy.log',f"[{time.strftime('%H:%M:%S')}]")
             
-        #print('!!! PROGRAM LUNCHED !!!')
+        print('!!! PROGRAM LUNCHED !!!')
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ

@@ -12,8 +12,8 @@ import tinytuya
 
 import time
 import os
-import signal
-import csv
+#import signal
+#import csv
 import pyaes
 import sys
 
@@ -22,11 +22,29 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.utils import platform
-from android.storage import primary_external_storage_path
+#from android.storage import primary_external_storage_path
 
 from kivy.core.window import Window
 
-from jnius import autoclass, cast
+from jnius import autoclass #, cast
+
+# === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
+# import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]
+# import signal        # Удален, фоновый мотор гасится штатными средствами Android [↑]
+# from jnius import cast # Лишний метод, для Java-моста достаточно только autoclass [↑]
+# from android.storage import primary_external_storage_path # Путь заблокирован ядром Linux [↑]
+
+# ОСТАВЛЯЕМ ЗДЕСЬ СТРОГО ДЛЯ ГРАФИКИ И СТАРТА:
+#from kivy.app import App
+#from kivy.uix.label import Label
+#from kivy.clock import Clock          # Чтобы раз в секунду читать лог службы
+#from kivy.utils import platform       # Проверка, что мы на Android, а не на ПК
+#from kivy.core.window import Window   # Наш шедевральный датчик фокуса окон
+
+# ПЕРЕНОСИМ СЮДА ДЛЯ ЧЕРНОВОЙ РАБОТЫ В ФОНЕ:
+#import os                             # Для os.getcwd() или системных проверок
+#import sys                            # Для sys.stdout/sys.stderr и перехвата print()
+#from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
 
 #from plyer import notification
 #notification.notify(title="Digma Recorder", message="Самописец успешно запущен!", timeout=3)

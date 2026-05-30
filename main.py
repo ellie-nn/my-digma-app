@@ -151,9 +151,6 @@ class DigmaRecorderApp(App):
         
         self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
-        # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        #self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-    
         # Забираем свежий статус
         data = self.rosette.status()
         print('!!! PROGRAM LUNCHED !!!')
@@ -169,9 +166,11 @@ class DigmaRecorderApp(App):
             kwh_17 = dps.get('17', -1)
             
             current_time = time.strftime('%H:%M:%S')
-            append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {kwh_17}\n")
+            append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {kwh_17}")
             
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'
+        # Каждую секунду выводим на экран доказательство, что Python ЖИВ
+        self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
         self.rosette.updatedps()
         time.sleep(0.1)
             

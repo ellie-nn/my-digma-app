@@ -156,7 +156,7 @@ class DigmaRecorderApp(App):
         
         # Забираем свежий статус
         data = self.rosette.status()
-        time = time.time()
+        time_ = time.time()
         print('!!! PROGRAM LUNCHED !!!')
        
         if data and 'dps' in data:
@@ -171,8 +171,8 @@ class DigmaRecorderApp(App):
             
             current_time = time.strftime('%H:%M:%S')
             
-            self.vatt_sum += vatt*(time-self.last_time)
-            self.last_time = time
+            self.vatt_sum += vatt*(time_-self.last_time)
+            self.last_time = time_
             append_to_public_documents('digmaspy.log',f"{time.strftime('%H:%M:%S')} {vatt} {vatt_sum} {kwh_17}")
             
         self.tttext = f'[{current_time}] {vatt} {kwh_17}\n'

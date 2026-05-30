@@ -113,6 +113,20 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        try:
+                # мост к Java-службам Android
+                from android import AndroidService
+                
+                # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
+                service = AndroidService('MyBackgroundService', 'Служба работает в фоне...')
+                
+                # Запускаем файл service.py в изолированном потоке памяти
+                service.start('service.py')
+            except Exception as e:
+                label.text = f"Ошибка запуска службы: {e}"
+                
+        #return label
+        
         self.vatt_sum = 0
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON

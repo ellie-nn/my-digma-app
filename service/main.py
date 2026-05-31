@@ -1,5 +1,4 @@
 import time
-#from android import AndroidService  # Импортируем управление службой
 import os                            # Для os.getcwd() или системных проверок
 import sys       # Для sys.stdout/sys.stderr и перехвата print()
 from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
@@ -20,10 +19,6 @@ except Exception as vib_err:
     print(f"Ошибка вибромотора: {vib_err}")
 # ==========================================
 
-# Объявляем Android, что наша служба — бессмертная (Foreground Service)
-# В шторке телефона зажжется неудаляемое уведомление. Без этого Android прибьет процесс через минуту.
-#service = AndroidService()
-#service.start('DigmaService', 'Идет непрерывный сбор данных...')
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -38,15 +33,10 @@ def append_to_public_documents(filename, text_content):
         resolver = Context.getContentResolver()
         collection_uri = MediaStoreFiles.getContentUri("external")
         
-        #print(f'Collection\n{collection_uri}\n')
-        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
-        # Составляем SQL-запрос к Android: имя файла и папка Documents
-        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
-        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
@@ -59,7 +49,6 @@ def append_to_public_documents(filename, text_content):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
-            #values.put("mime_type", "text/plain")
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/")
             file_uri = resolver.insert(collection_uri, values)

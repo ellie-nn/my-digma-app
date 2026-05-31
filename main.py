@@ -116,8 +116,9 @@ class DigmaRecorderApp(App):
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
     # 1. Достаем контекст живой фоновой службы Kivy
-            Context = autoclass('org.kivy.android.PythonService').mService
-    
+            #Context = autoclass('org.kivy.android.PythonService').mService
+            Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        
     # 2. Вызываем официальную системную службу вибрации Android
             vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     

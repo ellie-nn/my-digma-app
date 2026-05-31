@@ -203,14 +203,14 @@ class DigmaRecorderApp(App):
                 from android import AndroidService
                 service = AndroidService('digmaservice', 'Служба работает в фоне...')
                 service.start('service.py')
-                self.label.text = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
+                self.ttext = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
             except Exception as e:
                 self.ttext = f" Ошибка старта: {e}"
         else:
             self.ttext = " Вы отказали в правах. Служба заблокирована системой!"
         return   
     def start_background_service(self):
-        print('!!! PROGRAM LUNCHED !!!')
+        print('!!! -PROGRAM LUNCHED- !!!')
         
         try:
             self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'

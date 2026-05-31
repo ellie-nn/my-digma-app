@@ -60,12 +60,6 @@ class MediaStoreStdout:
 
 class Service(Svc):
     def build():
-        append_to_public_documents('servicework.txt', 'start')
-        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-        print('stdoutstart')
-        
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy
@@ -80,7 +74,12 @@ class Service(Svc):
             # Если мы упали на старте — этот принт улетит в системный Logcat
             print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
-
+        
+        append_to_public_documents('servicework.txt', 'start')
+        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+        print('stdoutstart')
         
         try:
             devices = tinytuya.deviceScan(None,5)

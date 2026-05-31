@@ -157,10 +157,10 @@ class DigmaRecorderApp(App):
    #         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
                 
     def update_screen(self, dt):
-        #current_time = time.strftime('%H:%M:%S')
+        current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
-        data = self.rosette.status()
+        #data = self.rosette.status()
         time_ = time.time()
         print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"

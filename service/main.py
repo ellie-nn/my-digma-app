@@ -81,7 +81,7 @@ class Service:
         sys.stderr = sys.stdout
 
         print('stdouttest')
-        while true
+        while true:
             append_to_public_documents('servicework.txt', 'text_content')
             update_data()
             time.sleep(1.0)

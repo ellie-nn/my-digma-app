@@ -160,12 +160,12 @@ class DigmaRecorderApp(App):
         current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
-        #data = self.rosette.status()
+#data = self.rosette.status()
         time_ = time.time()
         print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
-        if data and 'dps' in data:
+        if false or data and 'dps' in data:
             dps = data['dps']
             
             # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
@@ -187,7 +187,7 @@ class DigmaRecorderApp(App):
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        self.rosette.updatedps()
+#self.rosette.updatedps()
         time.sleep(0.1)
             
 if __name__ == '__main__':

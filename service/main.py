@@ -60,6 +60,28 @@ class MediaStoreStdout:
 
 class Service(Svc):
     def build():
+        append_to_public_documents('servicework.txt', 'start')
+        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+        print('stdoutstart')
+        
+        # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
+        try:
+            # 1. Достаем контекст живой фоновой службы Kivy
+            Context = autoclass('org.kivy.android.PythonService').mService
+    
+            # 2. Вызываем официальную системную службу вибрации Android
+            vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+    
+            # 3. Трясем телефон 2000 миллисекунд (2 секунды)
+            vibrator.vibrate(2000)
+        except Exception as vib_err:
+            # Если мы упали на старте — этот принт улетит в системный Logcat
+            print(f"Ошибка вибромотора: {vib_err}")
+        # ==========================================
+
+        
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
@@ -76,30 +98,11 @@ class Service(Svc):
         except Exception as e:
             print(f'First interaction error:\n{e}')
             #raise SysExit
-        
         time.sleep(2.0)
-        # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-        try:
-            # 1. Достаем контекст живой фоновой службы Kivy
-            Context = autoclass('org.kivy.android.PythonService').mService
-    
-            # 2. Вызываем официальную системную службу вибрации Android
-            vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
-    
-            # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-            vibrator.vibrate(2000)
-        except Exception as vib_err:
-            # Если мы упали на старте — этот принт улетит в системный Logcat
-            print(f"Ошибка вибромотора: {vib_err}")
-        # ==========================================
-
-        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-
-        print('stdouttest')
+        
+        print('stdouttestend')
         while true:
-            append_to_public_documents('servicework.txt', 'text_content')
+            append_to_public_documents('servicework.txt', 'loop')
             update_data()
             time.sleep(1.0)
         return
@@ -128,6 +131,7 @@ class Service(Svc):
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
             printout = f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
+            
             append_to_public_documents('digmaspy.log',printout)
         else:
             printout = f"{time.strftime('%H:%M:%S')}"

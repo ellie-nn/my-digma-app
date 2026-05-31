@@ -1,5 +1,5 @@
 import time
-from android import AndroidService  # Импортируем управление службой
+#from android import AndroidService  # Импортируем управление службой
 import os                            # Для os.getcwd() или системных проверок
 import sys       # Для sys.stdout/sys.stderr и перехвата print()
 from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
@@ -19,10 +19,12 @@ except Exception as vib_err:
     print(f"Ошибка вибромотора: {vib_err}")
 # ==========================================
 
+
+    
 # Объявляем Android, что наша служба — бессмертная (Foreground Service)
 # В шторке телефона зажжется неудаляемое уведомление. Без этого Android прибьет процесс через минуту.
-service = AndroidService()
-service.start('DigmaService', 'Идет непрерывный сбор данных...')
+#service = AndroidService()
+#service.start('DigmaService', 'Идет непрерывный сбор данных...')
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:

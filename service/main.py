@@ -106,7 +106,7 @@ class Service(Svc):
             time.sleep(1.0)
         return
 
-    def update_data():
+    def update_data(self):
         #current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус

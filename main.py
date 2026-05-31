@@ -109,7 +109,14 @@ class MediaStoreStdout:
             append_to_public_documents("app_log.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-    
+
+class DigmaRecorderApp(App):
+    def build(self):
+        self.label = Label(text=" ПРОВЕРКА СИСТЕМНЫХ ПРАВ...", font_size='16sp')
+        
+        return self.label
+
+        
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
@@ -121,6 +128,16 @@ class DigmaRecorderApp(App):
       #  except Exception as vib_err:
       #      print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
+        
+        # Запускаем официальный менеджер разрешений Android
+        from android.permissions import request_permissions, Permission
+        
+        # Просим права на уведомления (без них Android 10+ блокирует службы!)
+        request_permissions([
+            Permission.FOREGROUND_SERVICE,
+            Permission.POST_NOTIFICATIONS
+        ], self.check_permissions_callback)
+        
              
         try:
             # мост к Java-службам Android
@@ -183,7 +200,21 @@ class DigmaRecorderApp(App):
         #import tinytuya    
         
         return self.label
-
+        
+    def check_permissions_callback(self, permissions, grants):
+        # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!
+        if all(grants):
+            self.label.text = "Права получены! Поджигаем фитиль..."
+            try:
+                from android import AndroidService
+                service = AndroidService('digmaservice', 'Служба работает в фоне...')
+                service.start('service.py')
+                self.label.text = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
+            except Exception as e:
+                self.label.text = f" Ошибка старта: {e}"
+        else:
+            self.label.text = " Вы отказали в правах. Служба заблокирована системой!"
+            
     def start_background_service(self):
         print('!!! PROGRAM LUNCHED !!!')
         

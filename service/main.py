@@ -59,7 +59,7 @@ class MediaStoreStdout:
         pass  # Системная заглушка, обязательная для потоков stdout
 
 class Service(Svc):
-    def build():
+    def build(self):
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy
@@ -141,8 +141,8 @@ class Service(Svc):
         print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
         self.rosette.updatedps()
         return
-
-Service().run()
+if __name__ == '__main__':
+    Service().run()
 # НАШ БЕСКОНЕЧНЫЙ ФОНОВЫЙ ЦИКЛ
 #while True:
     # --------------------------------------------------

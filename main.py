@@ -130,30 +130,20 @@ class DigmaRecorderApp(App):
       #  except Exception as vib_err:
       #      print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
-        
-        # Запускаем официальный менеджер разрешений Android
-        from android.permissions import request_permissions, Permission
-        
-        # Просим права на уведомления (без них Android 10+ блокирует службы!)
-        request_permissions([
-            Permission.FOREGROUND_SERVICE,
-            Permission.POST_NOTIFICATIONS
-        ], self.check_permissions_callback)
-        
-             
-        #try:
+           
+        try:
             # мост к Java-службам Android
-          #  from android import AndroidService
+            from android import AndroidService
                 
             # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-          #  service = AndroidService('digmaservice', 'fore ground')
+            service = AndroidService('digmaservice', 'fore ground')
                 
             # Запускаем файл service.py в изолированном потоке памяти
-         #   service.start('service.py')
-          #  self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
+            service.start('service')
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
         
-       # except Exception as e:
-         #   self.ttext = f"Ошибка запуска службы: {e}"
+        except Exception as e:
+            self.ttext = f"Ошибка запуска службы: {e}"
                         
         #return label
         

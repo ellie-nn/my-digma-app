@@ -113,6 +113,15 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        # Создаем на экране большую текстовую панель
+        self.label = Label(
+            text="Инициализация Python ядра...\nОжидайте.", 
+            font_size='18sp',
+            halign='center',
+            valign='top'
+        )
+        self.label.bind(size=self.label.setter('text_size'))
+        
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
       #  try:
     #        Context = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -171,14 +180,6 @@ class DigmaRecorderApp(App):
             print(f'First interaction error:\n{e}')
             #raise SysExit
     
-        # Создаем на экране большую текстовую панель
-        self.label = Label(
-            text="Инициализация Python ядра...\nОжидайте.", 
-            font_size='18sp',
-            halign='center',
-            valign='top'
-        )
-        self.label.bind(size=self.label.setter('text_size'))
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         #self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.last_time = time.time()
@@ -204,10 +205,10 @@ class DigmaRecorderApp(App):
                 service.start('service.py')
                 self.label.text = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
             except Exception as e:
-                self.label.text = f" Ошибка старта: {e}"
+                self.ttext = f" Ошибка старта: {e}"
         else:
-            self.label.text = " Вы отказали в правах. Служба заблокирована системой!"
-            
+            self.ttext = " Вы отказали в правах. Служба заблокирована системой!"
+        return   
     def start_background_service(self):
         print('!!! PROGRAM LUNCHED !!!')
         

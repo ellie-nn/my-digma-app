@@ -128,7 +128,7 @@ class DigmaRecorderApp(App):
             service = AndroidService('digmaservice', 'fore ground')
                 
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start('service',self.rosette)
+            service.start('service')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
         
         except Exception as e:

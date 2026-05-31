@@ -113,20 +113,6 @@ class DigmaRecorderApp(App):
         )
         self.label.bind(size=self.label.setter('text_size'))
         
-        try:
-            # мост к Java-службам Android
-            from android import AndroidService
-                
-            # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-            service = AndroidService('digmaservice', 'fore ground')
-                
-            # Запускаем файл service.py в изолированном потоке памяти
-            service.start('service')
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
-        
-        except Exception as e:
-            self.ttext = f"Ошибка запуска службы: {e}"
-        
         self.vatt_sum = 0
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
@@ -149,7 +135,21 @@ class DigmaRecorderApp(App):
         except Exception as e:
             print(f'First interaction error:\n{e}')
             #raise SysExit
-    
+        
+        try:
+            # мост к Java-службам Android
+            from android import AndroidService
+                
+            # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
+            service = AndroidService('digmaservice', 'fore ground')
+                
+            # Запускаем файл service.py в изолированном потоке памяти
+            service.start('service',self.rosette)
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
+        
+        except Exception as e:
+            self.ttext = f"Ошибка запуска службы: {e}"
+        
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         #self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.last_time = time.time()

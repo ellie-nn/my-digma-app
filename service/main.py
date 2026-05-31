@@ -58,7 +58,7 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
-class Service:
+class Service(Svc):
     def build():
         time.sleep(2.0)
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
@@ -121,7 +121,8 @@ class Service:
         print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
         self.rosette.updatedps()
         return
-    
+
+Service().run()
 # НАШ БЕСКОНЕЧНЫЙ ФОНОВЫЙ ЦИКЛ
 #while True:
     # --------------------------------------------------

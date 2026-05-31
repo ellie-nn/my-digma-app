@@ -3,6 +3,18 @@ import os                            # Для os.getcwd() или системн�
 import sys       # Для sys.stdout/sys.stderr и перехвата print()
 from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
 
+import tinytuya
+#if 'tinytuya' in sys.modules:
+
+import pyaes
+
+from kivy.app import App
+from kivy.uix.label import Label
+from kivy.clock import Clock
+from kivy.utils import platform
+
+from kivy.core.window import Window
+
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:

@@ -70,13 +70,13 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
-class Service(Svc):
-    def build(self):
+class DigmaServiceEngine:
+    def __init__(self):
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy
             Context = autoclass('org.kivy.android.PythonService').mService
-    
+            
             # 2. Вызываем официальную системную службу вибрации Android
             vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
@@ -92,6 +92,10 @@ class Service(Svc):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('stdoutstart')
+        
+        self.filename = "servicework.txt"
+        self.device_id = "ВАШ_ID"
+        self.local_key = "ВАШ_КЛЮЧ"
         
         try:
             devices = tinytuya.deviceScan(None,5)
@@ -154,7 +158,11 @@ class Service(Svc):
         self.rosette.updatedps()
         return
 if __name__ == '__main__':
-    Service().run()
+    engine = DigmaServiceEngine()
+    
+#-----------
+
+        
 # НАШ БЕСКОНЕЧНЫЙ ФОНОВЫЙ ЦИКЛ
 #while True:
     # --------------------------------------------------

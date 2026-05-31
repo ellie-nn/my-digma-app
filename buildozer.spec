@@ -20,6 +20,6 @@ android.gradle_options = android.lintOptions.abortOnError=false
 android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
 
 # Наш фоновый мотор
-services = DigmaService:service.py
+services = digmaservice:service.py
 
 

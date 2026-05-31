@@ -113,7 +113,6 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
-        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
         try:
             # мост к Java-службам Android
@@ -124,6 +123,8 @@ class DigmaRecorderApp(App):
                 
             # Запускаем файл service.py в изолированном потоке памяти
             service.start('service.py')
+            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
+        
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"
                         

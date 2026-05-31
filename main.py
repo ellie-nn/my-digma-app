@@ -109,13 +109,6 @@ class MediaStoreStdout:
             append_to_public_documents("app_log.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-
-class DigmaRecorderApp(App):
-    def build(self):
-        self.label = Label(text=" ПРОВЕРКА СИСТЕМНЫХ ПРАВ...", font_size='16sp')
-        
-        return self.label
-
         
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
@@ -139,19 +132,19 @@ class DigmaRecorderApp(App):
         ], self.check_permissions_callback)
         
              
-        try:
+        #try:
             # мост к Java-службам Android
-            from android import AndroidService
+          #  from android import AndroidService
                 
             # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-            service = AndroidService('digmaservice', 'fore ground')
+          #  service = AndroidService('digmaservice', 'fore ground')
                 
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start('service.py')
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
+         #   service.start('service.py')
+          #  self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
         
-        except Exception as e:
-            self.ttext = f"Ошибка запуска службы: {e}"
+       # except Exception as e:
+         #   self.ttext = f"Ошибка запуска службы: {e}"
                         
         #return label
         

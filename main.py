@@ -119,22 +119,6 @@ class DigmaRecorderApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
 
-        try:
-            devices = tinytuya.deviceScan(None,5)
-            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-        except Exception as e:
-           print(f'Can''t find ip\n{e}\nDevices={devices}\n')
-           #raise SysExit
-        try:               
-            self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-            self.rosette.set_version(3.3)
-            self.rosette.set_socketTimeout(2)
-            self.rosette.updatedps()
-            time.sleep(0.1)
-        
-        except Exception as e:
-            print(f'First interaction error:\n{e}')
-            #raise SysExit
         
         try:
             # мост к Java-службам Android

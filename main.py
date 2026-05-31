@@ -161,7 +161,7 @@ class DigmaRecorderApp(App):
         )
         self.label.bind(size=self.label.setter('text_size'))
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
-        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
+        #self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.last_time = time.time()
         self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран

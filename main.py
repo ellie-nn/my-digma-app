@@ -127,7 +127,7 @@ class DigmaRecorderApp(App):
             from android import AndroidService
                 
             # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-            service = AndroidService('DigmaService', 'Служба работает в фоне...')
+            service = AndroidService('digmaservice', 'Служба работает в фоне...')
                 
             # Запускаем файл service.py в изолированном потоке памяти
             service.start('service.py')

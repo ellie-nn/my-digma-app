@@ -165,7 +165,7 @@ class DigmaRecorderApp(App):
         print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
-        if false or data and 'dps' in data:
+        if False or data and 'dps' in data:
             dps = data['dps']
             
             # Извлекаем Ватты (19) и Счетчик кВт*ч (17)

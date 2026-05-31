@@ -8,10 +8,15 @@ from jnius import autoclass           # Наш ультимативный мос
 # В шторке телефона зажжется неудаляемое уведомление. Без этого Android прибьет процесс через минуту.
 service = AndroidService()
 service.start('MyBackgroundService', 'Идет непрерывный сбор данных...')
-
 def append_to_public_documents(filename, text_content):
     try:
-        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
+        # Сначала пытаемся взять контекст фоновой службы, а если мы на ПК — берем окно
+        try:
+            Context = autoclass('org.kivy.android.PythonService').mService
+        except:
+            Context = autoclass('org.kivy.android.PythonActivity').mActivity
+            
         ContentValues = autoclass('android.content.ContentValues')
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
         resolver = Context.getContentResolver()
@@ -63,7 +68,11 @@ class MediaStoreStdout:
             append_to_public_documents("app_log.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-    
+
+# АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
+sys.stdout = MediaStoreStdout()
+sys.stderr = sys.stdout
+
 # НАШ БЕСКОНЕЧНЫЙ ФОНОВЫЙ ЦИКЛ
 while True:
     # --------------------------------------------------

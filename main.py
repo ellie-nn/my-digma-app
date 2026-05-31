@@ -113,6 +113,8 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
+        
         try:
             # мост к Java-службам Android
             from android import AndroidService
@@ -123,8 +125,8 @@ class DigmaRecorderApp(App):
             # Запускаем файл service.py в изолированном потоке памяти
             service.start('service.py')
         except Exception as e:
-            label.text = f"Ошибка запуска службы: {e}"
-                
+            self.ttext = f"Ошибка запуска службы: {e}"
+                        
         #return label
         
         self.vatt_sum = 0
@@ -184,7 +186,6 @@ class DigmaRecorderApp(App):
     def update_screen(self, dt):
         #current_time = time.strftime('%H:%M:%S')
         
-        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ пишет!\n'
         
         # Забираем свежий статус
         data = self.rosette.status()

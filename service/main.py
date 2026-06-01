@@ -91,17 +91,17 @@ class DigmaServiceEngine:
             vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
             # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-            vibrator.vibrate(2000)
+            vibrator.vibrate(500)
         except Exception as vib_err:
             # Если мы упали на старте — этот принт улетит в системный Logcat
             print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
         
-        append_to_public_documents(FDATA_NAME, 'start')
+        #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        print('stdoutstart')
+        #print('stdoutstart')
     
         try:
             devices = tinytuya.deviceScan(None,5)
@@ -121,11 +121,11 @@ class DigmaServiceEngine:
             #raise SysExit
         time.sleep(2.0)
         
-        print('stdouttestend')
+        #print('stdouttestend')
         self.last_time = time.time()
         self.vatt_sum = 0
         while True:
-            append_to_public_documents(FDATA_NAME, 'loop')
+            #append_to_public_documents(FDATA_NAME, 'loop')
             self.update_data()
             time.sleep(1.0)
         return
@@ -136,7 +136,7 @@ class DigmaServiceEngine:
         # Забираем свежий статус
         data = self.rosette.status()
         time_ = time.time()
-        print('!!! SERVICE LUNCHED !!!')
+        #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
         if data and 'dps' in data:
@@ -153,16 +153,16 @@ class DigmaServiceEngine:
             
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
+                
             printout = f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
-            
             append_to_public_documents(FDATA_NAME,printout)
         else:
-            printout = f"{time.strftime('%H:%M:%S')}"
+            printout = f"{time.strftime('%H:%M:%S') -1 -1 -1}"
         
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         #self.label.text = 
-        print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
+        #print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
         self.rosette.updatedps()
         return
 if __name__ == '__main__':

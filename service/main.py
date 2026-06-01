@@ -15,6 +15,11 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
+FDATA_NAME = "servicework.txt"
+FSVC_LOG = "srv_log.txt"
+DEVICE_ID = "bf1a864dc80b65d878lv65"
+LOCAL_KEY = "X@o=_T>sgCfWGeEz"
+        
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -66,12 +71,13 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            append_to_public_documents("srv_log.txt", message.strip())
+            append_to_public_documents(FSVC_LOG, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
 class DigmaServiceEngine:
     def __init__(self):
+        
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy
@@ -87,16 +93,12 @@ class DigmaServiceEngine:
             print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
         
-        append_to_public_documents('servicework.txt', 'start')
+        append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('stdoutstart')
-        
-        self.filename = "servicework.txt"
-        self.device_id = "ВАШ_ID"
-        self.local_key = "ВАШ_КЛЮЧ"
-        
+    
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
@@ -116,8 +118,8 @@ class DigmaServiceEngine:
         time.sleep(2.0)
         
         print('stdouttestend')
-        while true:
-            append_to_public_documents('servicework.txt', 'loop')
+        while True:
+            append_to_public_documents(FDATA_NAME, 'loop')
             update_data()
             time.sleep(1.0)
         return
@@ -147,7 +149,7 @@ class DigmaServiceEngine:
             self.last_time = time_
             printout = f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
             
-            append_to_public_documents('digmaspy.log',printout)
+            append_to_public_documents(FDATA_NAME,printout)
         else:
             printout = f"{time.strftime('%H:%M:%S')}"
         

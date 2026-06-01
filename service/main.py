@@ -140,7 +140,7 @@ class DigmaServiceEngine:
         
         # Забираем свежий статус
         data = self.rosette.status()
-        utime = time.time()
+        utime = time.time()*1.0
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             

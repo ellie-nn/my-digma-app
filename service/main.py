@@ -118,6 +118,7 @@ class DigmaServiceEngine:
         time.sleep(2.0)
         
         print('stdouttestend')
+        self.vatt_sum = 0
         while True:
             append_to_public_documents(FDATA_NAME, 'loop')
             self.update_data()

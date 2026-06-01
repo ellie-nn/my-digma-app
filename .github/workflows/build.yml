@@ -59,8 +59,8 @@ jobs:
     - name: Create Release and Upload APK
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.9
-        name: Release v1.0.9
+        tag_name: v1.0.10
+        name: Release v1.0.10
         # АВТОНУМЕРАЦИЯ: каждый коммит создаст уникальный тег (v1.0.блок_счетчика)
         #tag_name: v1.0.${{ github.run_number }}
         #name: Release v1.0.${{ github.run_number }}

@@ -140,7 +140,7 @@ class DigmaServiceEngine:
         
         # Забираем свежий статус
         data = self.rosette.status()
-        time_ = time.time()
+        utime = time.time()
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
@@ -156,22 +156,22 @@ class DigmaServiceEngine:
             
             current_time = time.strftime('%H:%M:%S')
             
-            self.vatt_sum += vatt*(time_-self.last_time)/3600
-            self.last_time = time_
+            self.vatt_sum += vatt*(utime-self.last_time)/3600
+            self.last_time = utime
             self.counter += 1
                 
-            printout = f"{self.counter} {time_} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
                 
             try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
             # Префикс b'/rosette_packet' — это имя нашей радиоволны
-                send_message(b'/rosette_packet', [self.counter, vatt, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
+                send_message(b'/rosette_packet', [self.counter, utime, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
             except Exception as e:
                 pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
                 print(f'Не удалось отправить пакет\n{e}')
             
         else:
-            printout = f"{self.counter} {time_} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
+            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
                     
         append_to_public_documents(FDATA_NAME,printout)            
         self.tttext = printout

@@ -120,7 +120,7 @@ class DigmaServiceEngine:
         print('stdouttestend')
         while True:
             append_to_public_documents(FDATA_NAME, 'loop')
-            update_data()
+            self.update_data()
             time.sleep(1.0)
         return
 

@@ -171,7 +171,7 @@ class DigmaServiceEngine:
                 print(f'Не удалось отправить пакет\n{e}')
             
         else:
-            printout = f"{self.counter} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
+            printout = f"{self.counter} {time_} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
                     
         append_to_public_documents(FDATA_NAME,printout)            
         self.tttext = printout

@@ -157,24 +157,7 @@ class DigmaRecorderApp(App):
    #         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
                 
     def update_screen(self, dt):
-        # 1. Открываем файл истории на чтение ("r")
-        input_stream = resolver.openInputStream(file_uri)
-
-# 2. Олдскульный трюк: читаем последние 1024 байта (этого с запасом хватит на CSV-строку)
-# Сначала узнаем общий размер файла
-file_size = input_stream.available()
-if file_size > 1024:
-    # Прыгаем сразу к концу файла, пропуская начало
-    input_stream.skip(file_size - 1024)
-
-# 3. Забираем этот хвостовой кусок в память Python
-raw_bytes = input_stream.read()
-input_stream.close()
-
-# 4. Превращаем байты в текст и берем самую последнюю строку
-tail_text = raw_bytes.decode('utf-8', errors='ignore')
-last_line = tail_text.strip().splitlines()[-1]
-
+        
         current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус

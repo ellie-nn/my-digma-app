@@ -162,7 +162,7 @@ class DigmaRecorderApp(App):
         # Забираем свежий статус
 #data = self.rosette.status()
         time_ = time.time()
-        print('!!! PROGRAM LUNCHED !!!')
+        print('!!! CYCLE WORKS !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
         if False: # or data and 'dps' in data:

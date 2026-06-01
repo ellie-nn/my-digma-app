@@ -77,7 +77,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        
+        self.ttext = 'ttext'
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy

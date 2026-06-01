@@ -157,7 +157,7 @@ class DigmaServiceEngine:
             current_time = time.strftime('%H:%M:%S')
             
             self.vatt_sum += vatt*(time_-self.last_time)/3600
-            self.last_time = time_
+            self.last_time = time_+self.counter
             self.counter += 1
                 
             printout = f"{self.counter} {time_} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"

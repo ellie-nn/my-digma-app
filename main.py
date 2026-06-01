@@ -25,6 +25,9 @@ from kivy.core.window import Window
 
 from jnius import autoclass #, cast
 
+from oscpy.server import OSCThreadServer
+
+
 # === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
 # import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]
 # import signal        # Удален, фоновый мотор гасится штатными средствами Android [↑]
@@ -139,7 +142,14 @@ class DigmaRecorderApp(App):
         self.last_time = time.time()
         self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
-        Clock.schedule_interval(self.update_screen, 5.0)
+        #Clock.schedule_interval(self.update_screen, 5.0)
+
+        # 1. Включаем наш внутренний радиоприемник
+        self.server = OSCThreadServer()
+        self.server.listen(address='127.0.0.1', port=3000, default=True)
+        
+        # 2. Намертво привязываем нашу волну к функции обновления экрана
+        self.server.bind(b'/rosette_packet', self.display_live_data)
         
 #        if platform == 'android':
   #          self.start_background_service()
@@ -155,9 +165,13 @@ class DigmaRecorderApp(App):
  #           self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
  #       except Exception as e:
    #         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
-                
+    
+    def display_live_data(self, vatt, integral):
+        # Эта функция сама мгновенно сработает в ту же миллисекунду, 
+        # когда служба пришлет свежий замер розетки!
+        self.label.text = f"⚡ Живой поток Ватт:\nМощность: {vatt} Вт\nИнтеграл: {integral} Вт·ч"
+                    
     def update_screen(self, dt):
-        
         current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус

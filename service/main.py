@@ -19,6 +19,10 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
+from oscpy.client import send_message
+
+            
+
 FDATA_NAME = "servicework.txt"
 FSVC_LOG = "srv_log.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
@@ -156,6 +160,15 @@ class DigmaServiceEngine:
                 
             printout = f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
             append_to_public_documents(FDATA_NAME,printout)
+                
+            try:
+            # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
+            # Префикс b'/rosette_packet' — это имя нашей радиоволны
+                send_message(b'/rosette_packet', [vatt, integral], '127.0.0.1', 3000)
+            except:
+                pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
+                print('Не удалось отправить пакет')
+            
         else:
             printout = f"{time.strftime('%H:%M:%S') -1 -1 -1}"
         

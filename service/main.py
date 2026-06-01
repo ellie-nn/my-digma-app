@@ -160,7 +160,7 @@ class DigmaServiceEngine:
             self.last_time = time_
             self.counter += 1
                 
-            printout = f"{self.counter} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            printout = f"{self.counter} {time_} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
                 
             try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000

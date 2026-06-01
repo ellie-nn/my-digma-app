@@ -169,8 +169,8 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
-        self.label.text = f"N = {count}\ntstamp\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        #print(self.label.text)
+        self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
+        print(self.label.text)
         
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')

@@ -172,7 +172,8 @@ class DigmaRecorderApp(App):
         time_=time.strftime('%H:%M:%S', time.localtime(tstamp))
     
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"print(self.label.text)
+        self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
+        print(self.label.text)
         
     def update_screen(self, dt):
         current_time = time.strftime('%H:%M:%S')

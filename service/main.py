@@ -161,7 +161,6 @@ class DigmaServiceEngine:
             self.counter += 1
                 
             printout = f"{self.counter} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-            append_to_public_documents(FDATA_NAME,printout)
                 
             try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
@@ -172,8 +171,9 @@ class DigmaServiceEngine:
                 print(f'Не удалось отправить пакет\n{e}')
             
         else:
-            printout = f"{time.strftime('%H:%M:%S') -1 -1 -1}"
-        
+            printout = f"{self.counter} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
+                    
+        append_to_public_documents(FDATA_NAME,printout)            
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         #self.label.text = 

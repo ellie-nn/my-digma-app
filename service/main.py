@@ -164,10 +164,10 @@ class DigmaServiceEngine:
             try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
             # Префикс b'/rosette_packet' — это имя нашей радиоволны
-                send_message(b'/rosette_packet', [vatt, integral], '127.0.0.1', 3000)
-            except:
+                send_message(b'/rosette_packet', [vatt, kwh_17], '127.0.0.1', 3000)
+            except Exception as e:
                 pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
-                print('Не удалось отправить пакет')
+                print(f'Не удалось отправить пакет\n{e}')
             
         else:
             printout = f"{time.strftime('%H:%M:%S') -1 -1 -1}"

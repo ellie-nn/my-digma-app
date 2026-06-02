@@ -27,7 +27,8 @@ FDATA_NAME = "servicework.txt"
 FSVC_LOG = "srv_log.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
-        
+SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -140,7 +141,7 @@ class DigmaServiceEngine:
         
         # Забираем свежий статус
         data = self.rosette.status()
-        utime = time.time()*1.0
+        utime = time.time()
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
@@ -165,7 +166,7 @@ class DigmaServiceEngine:
             try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
             # Префикс b'/rosette_packet' — это имя нашей радиоволны
-                send_message(b'/rosette_packet', [self.counter, utime, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
+                send_message(b'/rosette_packet', [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
             except Exception as e:
                 pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
                 print(f'Не удалось отправить пакет\n{e}')

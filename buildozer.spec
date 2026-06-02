@@ -9,8 +9,9 @@ source.include_exts = py,png,jpg,kv,csv
 requirements = python3,kivy,pyaes,oscpy
 #,schedule
 #android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,WAKE_LOCK, WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
-android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,POST_NOTIFICATIONS,WAKE_LOCK,VIBRATE,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES,READ_MEDIA_AUDIO,READ_MEDIA_VIDEO
+android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,POST_NOTIFICATIONS,WAKE_LOCK,VIBRATE,FOREGROUND_SERVICE_DATA_SYNC,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES,READ_MEDIA_AUDIO,READ_MEDIA_VIDEO
 #android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,POST_NOTIFICATIONS,WAKE_LOCK,VIBRATE
+
 android.accept_sdk_license = True
 orientation = portrait
 fullscreen = 1
@@ -23,4 +24,5 @@ android.manifest.application_arguments = android:requestLegacyExternalStorage="t
 
 # Наш фоновый мотор
 #services = digmaservice:service.py:foreground
-services = digmaservice:service/main.py:foreground
+services = digmaservice:service/main.py:foreground:foregroundServiceType=dataSync
+

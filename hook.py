@@ -1,46 +1,56 @@
-# hook.py — ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК МАНИФЕСТОВ ДЛЯ СЕРВЕРА ACTIONS
+# hook.py — ЗРЯЧИЙ КОВРОВЫЙ ПЕРЕХВАТЧИК МАНИФЕСТОВ
 import os
 from pythonforandroid.toolchain import ToolchainCL
 
 def after_apk_build(toolchain: ToolchainCL):
-    print("=== [HOOK] ТОТАЛЬНАЯ ЗАЧИСТКА МАНИФЕСТОВ ЗАПУЩЕНА! ===")
+    print("=== [HOOK] ТОТАЛЬНАЯ ЗАЧИСТКА МАНИФЕСТОВ СТАРТОВАЛА ===")
     
-    # 1. Задаем корень поиска — всю папку сборки python-for-android
-    search_root = toolchain.build_dir
-    print(f"=== [HOOK] Сканируем папку: {search_root} ===")
-    
-    # Наш точный поисковый маркер Java-класса службы
-    # (Замените 'org.oldschool.digmarecorder' на ваш package.domain + name)
-    target = 'android:name="org.oldschool.digmarecorder.ServiceDigmaservice"'
-    
-    modified_count = 0
-    
-    # 2. Обходим абсолютно все папки на сервере в поисках Manifest файлов
-    for root, dirs, files in os.walk(search_root):
-        for file in files:
-            if file == "AndroidManifest.xml":
-                manifest_path = os.path.join(root, file)
-                try:
-                    # Читаем каждый найденный манифест
-                    with open(manifest_path, "r", encoding="utf-8") as f:
-                        text = f.read()
+    try:
+        # 1. Задаем корень поиска — всю папку сборки python-for-android
+        search_root = toolchain.build_dir
+        print(f"=== [HOOK] Корень сканирования: {search_root} ===")
+        
+        # Наш поисковый маркер Java-класса службы
+        # ВНИМАНИЕ: Проверьте, что здесь написан именно ваш package.domain + package.name
+        target = 'android:name="org.oldschool.digmarecorder.ServiceDigmaservice"'
+        
+        modified_count = 0
+        
+        # 2. Обходим все папки на сервере
+        for root, dirs, files in os.walk(search_root):
+            for file in files:
+                # Фильтруем жестко: ищем ТОЛЬКО файлы манифеста, игнорируя бинарный мусор! [↑]
+                if file == "AndroidManifest.xml":
+                    manifest_path = os.path.join(root, file)
                     
-                    # Если внутри этого файла живет наша служба
-                    if target in text and 'android:foregroundServiceType' not in text:
-                        print(f"=== [HOOK] Нашли совпадение в: {manifest_path}! Модифицируем...")
+                    try:
+                        # Открываем файл в безопасном режиме 'r', игнорируя любые ошибки кодировок
+                        with open(manifest_path, "r", encoding="utf-8", errors="ignore") as f:
+                            text = f.read()
                         
-                        pos = text.find(target)
-                        end = text.find("/>", pos)
-                        
-                        # Врезаем тип dataSync прямо перед закрытием тега
-                        text = text[:end] + ' android:foregroundServiceType="dataSync"' + text[end:]
-                        
-                        # Перезаписываем файл
-                        with open(manifest_path, "w", encoding="utf-8") as f:
-                            f.write(text)
+                        # Если нашли нашу службу и в ней ЕЩЕ НЕТ типа foregroundServiceType
+                        if target in text and 'android:foregroundServiceType' not in text:
+                            print(f"=== [HOOK] МАРКЕР НАЙДЕН в файле: {manifest_path} ===")
                             
-                        modified_count += 1
-                except Exception as e:
-                    pass
-
-    print(f"=== [HOOK] ТОТАЛЬНАЯ ЗАЧИСТКА ЗАВЕРШЕНА! Успешно изменено файлов: {modified_count} ===")
+                            pos = text.find(target)
+                            end = text.find("/>", pos)
+                            
+                            if end != -1:
+                                # Врезаем тип dataSync прямо перед закрытием тега />
+                                text = text[:end] + ' android:foregroundServiceType="dataSync"' + text[end:]
+                                
+                                with open(manifest_path, "w", encoding="utf-8") as f:
+                                    f.write(text)
+                                    
+                                print(f"=== [HOOK] УСПЕХ: Файл {manifest_path} успешно модифицирован! ===")
+                                modified_count += 1
+                                
+                    except Exception as file_err:
+                        # Если конкретный файл занят или не читается — выводим ошибку и идем дальше
+                        print(f"=== [HOOK] Предупреждение по файлу {file}: {file_err} ===")
+                        
+        print(f"=== [HOOK] ЗАЧИСТКА СЕРВЕРА ЗАВЕРШЕНА. Изменено файлов: {modified_count} ===")
+        
+    except Exception as global_err:
+        # ЕСЛИ СКРИПТ ПАДАЛ — теперь эта строчка ЖЕЛЕЗНО прольется в логи сборки на GitHub!
+        print(f"=== [HOOK] КРИТИЧЕСКАЯ ОШИБКА ВСЕГО ХУКА: {global_err} ===")

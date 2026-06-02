@@ -23,4 +23,4 @@ android.manifest.application_arguments = android:requestLegacyExternalStorage="t
 
 # Наш фоновый мотор
 #services = digmaservice:service.py:foreground
-services = digmaservice:service/main.py
+services = digmaservice:service/main.py:foreground

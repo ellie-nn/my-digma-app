@@ -52,6 +52,11 @@ from oscpy.server import OSCThreadServer
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
+SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+
+
+
+code_compile_time = 
 
 
 
@@ -170,6 +175,7 @@ class DigmaRecorderApp(App):
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
+        tstamp += SUB_TIME
     
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"

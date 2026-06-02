@@ -181,6 +181,11 @@ class DigmaServiceEngine:
         
         #print('stdoutstart')
         SetBkgddStatus()
+
+        while True:
+            time.sleep(1.0)
+                    
+#----------  Далее блок Туи ...
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]

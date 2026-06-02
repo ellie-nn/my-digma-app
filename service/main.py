@@ -28,7 +28,8 @@ FSVC_LOG = "srv_log.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-vibrator = autoclass('org.kivy.android.PythonService').mService.getSystemService(Context.VIBRATOR_SERVICE)
+Context = autoclass('org.kivy.android.PythonService').mService
+vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
 def vibro():
     # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===

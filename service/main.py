@@ -29,6 +29,34 @@ DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
+def SetBkgdStatus():
+    # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
+    try:
+    # 1. Получаем контекст живой фоновой службы Kivy
+        Context = autoclass('org.kivy.android.PythonService').mService
+    
+    # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
+    # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
+        pack_mgr = Context.getPackageManager()
+        pack_info = pack_mgr.getPackageInfo(Context.getPackageName(), 0)
+        app_icon = pack_info.applicationInfo.icon
+    
+    # 3. Строим легальное системное уведомление для шторки Android
+        NotificationBuilder = autoclass('android.app.Notification$Builder')
+    # Передаем контекст службы (для Android 10+ каналы создаются Kivy автоматически)
+        builder = NotificationBuilder(Context)
+        builder.setSmallIcon(app_icon)
+        builder.setContentTitle("Мониторинг розеток Digma")
+        builder.setContentText("Служба непрерывно собирает Ватты в фоне...")
+    
+    # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
+    # Число 101 — это уникальный ID нашего уведомления в шторке
+        Context.startForeground(101, builder.build())
+    
+        print("[LOG] Системный значок в шторке успешно зажжен!")
+    except Exception as fgs_err:
+        print(f"[LOG] Ошибка активации Foreground-значка: {fgs_err}")
+
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -86,6 +114,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
+        SetBkgdStatus()
         self.ttext = 'ttext'
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:

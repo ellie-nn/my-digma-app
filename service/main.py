@@ -39,8 +39,8 @@ def vibro():
         vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
         # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-        vibrator.vibrate(500)
-     except Exception as vib_err:
+        vibrator.vibrate(500) 
+    except Exception as vib_err:
         # Если мы упали на старте — этот принт улетит в системный Logcat
         print(f"Ошибка вибромотора: {vib_err}")
      # ==========================================

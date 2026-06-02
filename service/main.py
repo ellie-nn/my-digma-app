@@ -28,15 +28,16 @@ FSVC_LOG = "srv_log.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-
+vibrator = autoclass('org.kivy.android.PythonService').mService.getSystemService(Context.VIBRATOR_SERVICE)
+    
 def vibro():
     # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
     try:
         # 1. Достаем контекст живой фоновой службы Kivy
-        Context = autoclass('org.kivy.android.PythonService').mService
+        #Context = autoclass('org.kivy.android.PythonService').mService
             
         # 2. Вызываем официальную системную службу вибрации Android    
-        vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+        #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
         # 3. Трясем телефон 2000 миллисекунд (2 секунды)
         vibrator.vibrate(500) 

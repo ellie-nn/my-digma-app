@@ -54,12 +54,6 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
-
-
-code_compile_time = 
-
-
-
 def append_to_public_documents(filename, text_content):
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity

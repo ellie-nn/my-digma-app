@@ -28,6 +28,7 @@ services = digmaservice:service/main.py:foreground
 #:foregroundServiceType=dataSync
 
 # Прямая легальная вставка атрибута для нашей Java-службы в Манифест!
-#android.manifest.service_attributes = android:foregroundServiceType="dataSync"
+#android.manifest.service_attributes = android
+#:foregroundServiceType="dataSync"
 
-p4a.hook = hook.py
+#p4a.hook = hook.py

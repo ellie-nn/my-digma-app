@@ -79,7 +79,7 @@ def SetBkgddStatus():
     # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
     # Число 101 — это уникальный ID нашего уведомления в шторке
         
-        Context.startForeground(101, builder.build(), service_type)
+        Context.startForeground(101, builder.build())
         
         vibro()
         

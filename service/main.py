@@ -56,7 +56,7 @@ def SetBkgdStatus():
         pack_mgr = Context.getPackageManager()
         pack_info = pack_mgr.getPackageInfo(Context.getPackageName(), 0)
         app_icon = pack_info.applicationInfo.icon
-    
+        vibro()
     # 3. Строим легальное системное уведомление для шторки Android
         NotificationBuilder = autoclass('android.app.Notification$Builder')
     # Передаем контекст службы (для Android 10+ каналы создаются Kivy автоматически)
@@ -67,7 +67,7 @@ def SetBkgdStatus():
     
     # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
     # Число 101 — это уникальный ID нашего уведомления в шторке
-        vibro()
+        
         Context.startForeground(101, builder.build())
         vibro()
         print("[LOG] Системный значок в шторке успешно зажжен!")

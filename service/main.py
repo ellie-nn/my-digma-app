@@ -51,10 +51,10 @@ def vibro():
 def SetBkgddStatus():
     # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
     try:
-        vibro()
+        
     # 1. Получаем контекст живой фоновой службы Kivy
         Context = autoclass('org.kivy.android.PythonService').mService
-        vibro()
+        
     # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
     # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
         pack_mgr = Context.getPackageManager()
@@ -68,7 +68,7 @@ def SetBkgddStatus():
         builder.setSmallIcon(app_icon)
         builder.setContentTitle("Мониторинг розеток Digma")
         builder.setContentText("Служба непрерывно собирает Ватты в фоне...")
-    
+        vibro()
     # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
     # Число 101 — это уникальный ID нашего уведомления в шторке
         
@@ -136,14 +136,14 @@ class DigmaServiceEngine:
     def __init__(self):
         
         self.ttext = 'ttext'
-        vibro()
-        vibro()
+        
+        
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         sys.stdout = MediaStoreStdout()
-        vibro()
+        
         sys.stderr = sys.stdout
-        vibro()
+        
         #print('stdoutstart')
         SetBkgddStatus()
         try:

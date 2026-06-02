@@ -54,18 +54,39 @@ def SetBkgddStatus():
         
     # 1. Получаем контекст живой фоновой службы Kivy
         Context = autoclass('org.kivy.android.PythonService').mService
+
+    
+                # 1. СОЗДАЕМ КАНАЛ УВЕДОМЛЕНИЙ (Жесткое требование Android 10+)
+        # Нам нужны классы менеджера, канала и важности
+        NotificationManager = autoclass('android.app.NotificationManager')
+        NotificationChannel = autoclass('android.app.NotificationChannel')
+
+        channel_id = "digma_service_channel"
+        channel_name = "Мониторинг розетки Digma"
+                # Важность IMPORTANCE_LOW (2) — чтобы служба не пищала динамиком каждую секунду
+        importance = NotificationManager.IMPORTANCE_LOW 
+      
+                # Строим сам канал
+        channel = NotificationChannel(channel_id, channel_name, importance)
+      
+                # Регистрируем канал внутри операционной системы Android
+        notification_manager = Context.getSystemService(Context.NOTIFICATION_SERVICE)
+        notification_manager.createNotificationChannel(channel)
          
     # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
     # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
         pack_mgr = Context.getPackageManager()
         pack_info = pack_mgr.getPackageInfo(Context.getPackageName(), 0)
         app_icon = pack_info.applicationInfo.icon
-        
+                
+                # 2. ВЫТАСКИВАЕМ ИКОНКУ ПРИЛОЖЕНИЯ (как раньше)
+                
         vibro()
     # 3. Строим легальное системное уведомление для шторки Android
         NotificationBuilder = autoclass('android.app.Notification$Builder')
     # Передаем контекст службы (для Android 10+ каналы создаются Kivy автоматически)
-        builder = NotificationBuilder(Context)
+        #builder = NotificationBuilder(Context)
+        builder = NotificationBuilder(Context, channel_id)
         builder.setSmallIcon(app_icon)
         builder.setContentTitle("Мониторинг розеток Digma")
         builder.setContentText("Служба непрерывно собирает Ватты в фоне...")
@@ -75,17 +96,22 @@ def SetBkgddStatus():
     # ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC равен числу 1 (0x00000001)
         ServiceInfo = autoclass('android.content.pm.ServiceInfo')
         service_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+                
         vibro()
     # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
     # Число 101 — это уникальный ID нашего уведомления в шторке
         
-        Context.startForeground(101, builder.build(), service_type)
+        Context.startForeground(101, builder.build())
+
         
         vibro()
         
         print("[LOG] Бессмертный режим успешно активирован по законам Android 10!")
     except Exception as fgs_err:
         print(f"[LOG] Ошибка активации Foreground: {fgs_err}")
+        
+#‐---'ччччччяяр------'ч
+#^^^^^^^^&&&&&&&&&&&&&&^
 
 def append_to_public_documents(filename, text_content):
     try:

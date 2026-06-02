@@ -29,6 +29,22 @@ DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
+def vibro():
+    # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
+    try:
+        # 1. Достаем контекст живой фоновой службы Kivy
+        Context = autoclass('org.kivy.android.PythonService').mService
+            
+        # 2. Вызываем официальную системную службу вибрации Android    
+        vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+    
+        # 3. Трясем телефон 2000 миллисекунд (2 секунды)
+        vibrator.vibrate(500)
+     except Exception as vib_err:
+        # Если мы упали на старте — этот принт улетит в системный Logcat
+        print(f"Ошибка вибромотора: {vib_err}")
+     # ==========================================
+
 def SetBkgdStatus():
     # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
     try:
@@ -51,8 +67,9 @@ def SetBkgdStatus():
     
     # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
     # Число 101 — это уникальный ID нашего уведомления в шторке
+        vibro()
         Context.startForeground(101, builder.build())
-    
+        vibro()
         print("[LOG] Системный значок в шторке успешно зажжен!")
     except Exception as fgs_err:
         print(f"[LOG] Ошибка активации Foreground-значка: {fgs_err}")
@@ -100,8 +117,7 @@ def append_to_public_documents(filename, text_content):
         # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
         with open(filename, 'a', encoding='utf-8') as f:
             f.write(text_content + "\n")
-        
-
+                        
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
@@ -116,21 +132,7 @@ class DigmaServiceEngine:
     def __init__(self):
         
         self.ttext = 'ttext'
-        # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-        try:
-            # 1. Достаем контекст живой фоновой службы Kivy
-            Context = autoclass('org.kivy.android.PythonService').mService
-            
-            # 2. Вызываем официальную системную службу вибрации Android
-            vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
-    
-            # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-            vibrator.vibrate(500)
-        except Exception as vib_err:
-            # Если мы упали на старте — этот принт улетит в системный Logcat
-            print(f"Ошибка вибромотора: {vib_err}")
-        # ==========================================
-        
+        vibro()
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         sys.stdout = MediaStoreStdout()

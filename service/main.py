@@ -114,7 +114,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        SetBkgdStatus()
+        
         self.ttext = 'ttext'
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
@@ -136,7 +136,7 @@ class DigmaServiceEngine:
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         #print('stdoutstart')
-    
+        SetBkgdStatus()
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]

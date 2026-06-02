@@ -33,3 +33,7 @@ services = digmaservice:service/main.py:foreground
 android.manifest_template = AndroidManifest.xml
 
 #p4a.hook = hook.py
+
+# КАТЕГОРИЧЕСКИЙ ПРИКАЗ КИВИ: НЕ УБИВАТЬ СЛУЖБУ ПРИ СМАХИВАНИИ ОКНА!
+android.services_stop_on_task_removed = False
+

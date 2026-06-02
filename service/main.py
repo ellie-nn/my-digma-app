@@ -184,6 +184,7 @@ class DigmaServiceEngine:
 
         while True:
             time.sleep(1.0)
+            vibro()
                     
 #----------  Далее блок Туи ...
         try:

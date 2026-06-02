@@ -27,7 +27,9 @@
         <service android:name="org.kivy.android.PythonService"
                  android:process=":service_digmaservice"
                  android:foregroundServiceType="dataSync"
+                 android:stopWithTask="false"
                  android:exported="false" />
+
 
     </application>
 </manifest>

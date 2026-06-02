@@ -48,9 +48,10 @@ def vibro():
 def SetBkgdStatus():
     # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
     try:
+        vibro()
     # 1. Получаем контекст живой фоновой службы Kivy
         Context = autoclass('org.kivy.android.PythonService').mService
-    
+        vibro()
     # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
     # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
         pack_mgr = Context.getPackageManager()

@@ -45,7 +45,7 @@ def vibro():
         print(f"Ошибка вибромотора: {vib_err}")
      # ==========================================
 
-def SetBkgdStatus():
+def SetBkgddStatus():
     # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
     try:
         vibro()
@@ -134,12 +134,15 @@ class DigmaServiceEngine:
         
         self.ttext = 'ttext'
         vibro()
+        vibro()
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         sys.stdout = MediaStoreStdout()
+        vibro()
         sys.stderr = sys.stdout
+        vibro()
         #print('stdoutstart')
-        SetBkgdStatus()
+        SetBkgddStatus()
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]

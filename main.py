@@ -87,8 +87,7 @@ def append_to_public_documents(filename, text_content):
         ContentValues = autoclass('android.content.ContentValues')
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
         resolver = Context.getContentResolver()
-        collection_uri = MediaStore
-Files.getContentUri("external")
+        collection_uri = MediaStoreFiles.getContentUri("external")
         
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"

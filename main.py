@@ -250,5 +250,5 @@ class DigmaRecorderApp(App):
 #self.rosette.updatedps()
         time.sleep(0.1)
             
-if __name__ == '__main__':
-    DigmaRecorderApp().run()
+#if __name__ == '__main__':
+ #   DigmaRecorderApp().run()

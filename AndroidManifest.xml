@@ -15,8 +15,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application android:label="{app_name}" android:icon="@drawable/icon" android:allowBackup="true">
-        android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
-
+        
         <activity android:name="org.kivy.android.PythonActivity" android:label="{app_name}" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode|screenSize|smallestScreenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

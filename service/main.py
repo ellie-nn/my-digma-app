@@ -102,7 +102,16 @@ def SetBkgddStatus():
     # Число 101 — это уникальный ID нашего уведомления в шторке
         
         Context.startForeground(101, builder.build())
-
+        
+        # === УЛЬТИМАТИВНЫЙ ХАК: ДЕЛАЕМ СЛУЖБУ "ЛИПКОЙ" (START_STICKY) ===
+        # Вытаскиваем системную константу START_STICKY (она равна числу 1)
+        Service = autoclass('android.app.Service')
+        sticky_flag = Service.START_STICKY
+        
+        # Принудительно перезаписываем внутреннее состояние службы Android
+        # Теперь, даже если Kivy попытается сделать суицид при смахивании, 
+        # ядро Android мгновенно (в ту же секунду) воскресит наш файл service/main.py в памяти!
+        Context.setSticky(True) # Если метод поддерживается Kivy-оболочкой
         
         vibro()
         

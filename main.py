@@ -61,10 +61,12 @@ from jnius import autoclass
 
 class EmptyWindowApp(App):
     def build(self):
-        try:
-            sys.stdout = MediaStoreStdout()
-            sys.stderr = sys.stdout
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+        print('Lunched')
         
+        try:
+            
             # 1. Достаем контекст активности окна
             Context = autoclass('org.kivy.android.PythonActivity').mActivity
             

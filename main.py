@@ -128,7 +128,7 @@ class EmptyWindowApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('Lunched')
-
+        
         try:
             
             # 1. Достаем контекст активности окна
@@ -140,7 +140,8 @@ class EmptyWindowApp(App):
             # 2. Напрямую вызываем нашу кастомную Java-службу!
             Intent = autoclass('android.content.Intent')
           #  ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
-            ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
+          #  ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
+            ServiceClass = autoclass("org.kivy.android.PythonService")
             
             
             intent = Intent(Context, ServiceClass)

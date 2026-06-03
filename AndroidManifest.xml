@@ -24,12 +24,16 @@
         </activity>
 
         <!-- ЖЕСТКИЙ ОЛДСКУЛЬНЫЙ ЗАЖИМ: НАША БЕССМЕРТНАЯ СЛУЖБА С ТИПОМ DATA_SYNC! -->
-        <service android:name="org.kivy.android.PythonService"
+        <!-- service android:name="org.kivy.android.PythonService"
                  android:process=":service"
                  android:foregroundServiceType="dataSync"
                  android:stopWithTask="false"
+                 android:exported="false" / -->
+
+        <service android:name="org.oldschool.digmarecorder.DigmaJavaService"
+                 android:process=":service"
+                 android:stopWithTask="false"
                  android:exported="false" />
-
-
+    
     </application>
 </manifest>

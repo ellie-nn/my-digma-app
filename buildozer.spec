@@ -24,7 +24,7 @@ android.manifest.application_arguments = android:requestLegacyExternalStorage="t
 
 # Наш фоновый мотор
 #services = digmaservice:service.py:foreground
-services = digmaservice:service/main.py:foreground
+#services = digmaservice:service/main.py:foreground
 #:foregroundServiceType=dataSync
 
 # Прямая легальная вставка атрибута для нашей Java-службы в Манифест!
@@ -36,4 +36,7 @@ android.manifest_template = AndroidManifest.xml
 
 # КАТЕГОРИЧЕСКИЙ ПРИКАЗ КИВИ: НЕ УБИВАТЬ СЛУЖБУ ПРИ СМАХИВАНИИ ОКНА!
 android.services_stop_on_task_removed = False
+
+android.add_src = src
+
 

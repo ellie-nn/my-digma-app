@@ -24,7 +24,7 @@
         </activity>
 
         <!-- ЖЕСТКИЙ ОЛДСКУЛЬНЫЙ ЗАЖИМ: НАША БЕССМЕРТНАЯ СЛУЖБА С ТИПОМ DATA_SYNC! -->
-        <service android:name="org.oldschool.digmarecorder.DigmaJavaService"
+        <service android:name=".{app_name}Service"
                  android:process=":service"
                  android:stopWithTask="false"
                  android:exported="false" />

@@ -61,7 +61,7 @@ from jnius import autoclass
 
 class EmptyWindowApp(App):
     def build(self):
-        Context = autoclass('org.kivy.android.PythonService').mService   
+        Context = autoclass('org.kivy.android.PythonService').mActivity
         vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
         vibrator.vibrate(500) 
         time.sleep(1.0)

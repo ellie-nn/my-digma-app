@@ -61,9 +61,17 @@ from jnius import autoclass
 
 class EmptyWindowApp(App):
     def build(self):
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-        print('Lunched')
+        self.label = Label(
+            text="Инициализация Python ядра...\nОжидайте.", 
+            font_size='18sp',
+            halign='center',
+            valign='top'
+        )
+        self.label.bind(size=self.label.setter('text_size'))
+        
+        #sys.stdout = MediaStoreStdout()
+        #sys.stderr = sys.stdout
+        #print('Lunched')
         
         try:
             
@@ -149,6 +157,7 @@ class DigmaRecorderApp(App):
         
         self.vatt_sum = 0
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
+        
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout

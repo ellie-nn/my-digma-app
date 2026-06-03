@@ -66,14 +66,14 @@ class EmptyWindowApp(App):
         vibrator.vibrate(500) 
         time.sleep(1.0)
     
-        self.label = Label(
-            text="Инициализация Python ядра...\nОжидайте.", 
-            font_size='18sp',
-            halign='center',
-            valign='top'
-        )
-        self.label.bind(size=self.label.setter('text_size'))
-        time.sleep(5.0)
+       # self.label = Label(
+        #    text="Инициализация Python ядра...\nОжидайте.", 
+        #    font_size='18sp',
+      #      halign='center',
+    #        valign='top'
+    #    )
+     #   self.label.bind(size=self.label.setter('text_size'))
+     #   time.sleep(5.0)
         #sys.stdout = MediaStoreStdout()
         #sys.stderr = sys.stdout
         #print('Lunched')
@@ -89,8 +89,15 @@ class EmptyWindowApp(App):
             
             intent = Intent(Context, ServiceClass)
             Context.startForegroundService(intent) # Поджигаем фитиль!
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
+            
             print("=== [MAIN] JAVA-СЛУЖБА УСПЕШНО ЗАПУЩЕНА ЧЕРЕЗ СТАРТ-ИНТЕНТ ===")
         except Exception as e:
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
             print(f"Ошибка запуска: {e}")
             
         return Widget() # Возвращаем абсолютно пустой графический виджет

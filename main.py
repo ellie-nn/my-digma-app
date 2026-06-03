@@ -77,15 +77,20 @@ class EmptyWindowApp(App):
         #sys.stdout = MediaStoreStdout()
         #sys.stderr = sys.stdout
         #print('Lunched')
-        
+
         try:
             
             # 1. Достаем контекст активности окна
             Context = autoclass('org.kivy.android.PythonActivity').mActivity
+
+            # Динамически вычисляем точное имя пакета прямо из памяти телефона!
+            package_name = Context.getPackageName() # Получим 'org.oldschool.digmarecorder'
             
             # 2. Напрямую вызываем нашу кастомную Java-службу!
             Intent = autoclass('android.content.Intent')
-            ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
+          #  ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
+            ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
+            
             
             intent = Intent(Context, ServiceClass)
             result = Context.startForegroundService(intent) # Поджигаем фитиль!

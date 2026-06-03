@@ -54,13 +54,41 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+from kivy.app import App
+from kivy.uix.widget import Widget
+from jnius import autoclass
+
+class EmptyWindowApp(App):
+    def build(self):
+        try:
+            # 1. Достаем контекст активности окна
+            Context = autoclass('org.kivy.android.PythonActivity').mActivity
+            
+            # 2. Напрямую вызываем нашу кастомную Java-службу!
+            Intent = autoclass('android.content.Intent')
+            ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
+            
+            intent = Intent(Context, ServiceClass)
+            Context.startForegroundService(intent) # Поджигаем фитиль!
+            print("=== [MAIN] JAVA-СЛУЖБА УСПЕШНО ЗАПУЩЕНА ЧЕРЕЗ СТАРТ-ИНТЕНТ ===")
+        except Exception as e:
+            print(f"Ошибка запуска: {e}")
+            
+        return Widget() # Возвращаем абсолютно пустой графический виджет
+
+if __name__ == '__main__':
+    EmptyWindowApp().run()
+    
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def append_to_public_documents(filename, text_content):
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
         resolver = Context.getContentResolver()
-        collection_uri = MediaStoreFiles.getContentUri("external")
+        collection_uri = MediaStore
+Files.getContentUri("external")
         
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"

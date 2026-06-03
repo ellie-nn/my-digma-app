@@ -68,7 +68,7 @@ class EmptyWindowApp(App):
             valign='top'
         )
         self.label.bind(size=self.label.setter('text_size'))
-        
+        time.sleep(5.0)
         #sys.stdout = MediaStoreStdout()
         #sys.stderr = sys.stdout
         #print('Lunched')

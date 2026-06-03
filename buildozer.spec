@@ -37,6 +37,7 @@ android.manifest_template = AndroidManifest.xml
 # КАТЕГОРИЧЕСКИЙ ПРИКАЗ КИВИ: НЕ УБИВАТЬ СЛУЖБУ ПРИ СМАХИВАНИИ ОКНА!
 android.services_stop_on_task_removed = False
 
-android.add_src = src
+android.add_src = java
+services = digmaservice:service_motor.py:foreground
 
 

@@ -1,5 +1,8 @@
 fuck off
 это блокнот
+
+#==================
+java/org/kivy/android/PythonService.java
 #--------------------
 package org.kivy.android; // СТРОГО РОДНОЙ ПАКЕТ KIVY!
 

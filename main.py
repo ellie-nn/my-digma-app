@@ -88,7 +88,8 @@ class EmptyWindowApp(App):
             ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
             
             intent = Intent(Context, ServiceClass)
-            Context.startForegroundService(intent) # Поджигаем фитиль!
+            result = Context.startForegroundService(intent) # Поджигаем фитиль!
+            if not result: raise Exception('Не удалось запустить службу')
             vibrator.vibrate(500) 
             time.sleep(1.0)
             vibrator.vibrate(500) 

@@ -20,8 +20,9 @@ android.gradle_options = android.lintOptions.abortOnError=false
 
 # ВКЛЮЧАЕМ ТОТ САМЫЙ ПРОПУСК В КОРЕНЬ ДЛЯ АНДРОИД 10 (СТРОГО БЕЗ ЛИШНИХ КАВЫЧЕК!)
 #android.meta_data = android.requestLegacyExternalStorage=true
-android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
-android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
+#android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
+#android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
+android.manifest.application_arguments = android:requestLegacyExternalStorage="true" <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
 
 
 # Наш фоновый мотор

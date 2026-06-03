@@ -38,6 +38,6 @@ android.manifest_template = AndroidManifest.xml
 android.services_stop_on_task_removed = False
 
 android.add_src = java
-services = digmaservice:service_motor.py:foreground
-
+#services = digmaservice:service_motor.py:foreground
+services = DigmaJavaService:service_motor.py:foreground
 

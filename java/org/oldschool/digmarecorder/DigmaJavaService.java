@@ -21,11 +21,15 @@ public class DigmaJavaService extends Service {
             NotificationManager manager = getSystemService(NotificationManager.class);
             if (manager != null) manager.createNotificationChannel(channel);
         }
-
+    
+        // ЗАМЕНЯЕМ СТАРЫЙ КУСОК НА СИСТЕМНЫЙ ИКОНОЧНЫЙ ЯКОРЬ ANDROID
+        // android.R.drawable.stat_sys_warning — это стандартный системный значок, 
+        // который железно зашит в ядро Android и доступен в любую микросекунду!
         Notification.Builder builder = new Notification.Builder(this, "digma_channel")
             .setContentTitle("Digma Service")
             .setContentText("Фоновый мотор розетки работает...")
-            .setSmallIcon(getApplicationInfo().icon);
+            //.setSmallIcon(getApplicationInfo().icon);
+            .setSmallIcon(android.R.drawable.stat_sys_warning); // Чистый андроид-ресурс!
 
         startForeground(101, builder.build());
 

@@ -73,22 +73,40 @@ jobs:
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
 
-    - name: Hack Internal Kivy Manifest Template
-      run: |
-        echo "=== [STEP 2] ХИРУРГИЧЕСКИЙ ПЕРЕХВАТ РАСПАКОВАННОГО ШАБЛОНА ==="
+ #   - name: Hack Internal Kivy Manifest Template
+  #    run: |
+    #    echo "=== [STEP 2] ХИРУРГИЧЕСКИЙ ПЕРЕХВАТ РАСПАКОВАННОГО ШАБЛОНА ==="
         # Теперь шаблоны гарантированно лежат на диске сервера! Находим оригинальный файл Kivy
-        TEMPLATE_PATH=$(find .buildozer/ -name "AndroidManifest.tmpl.xml" -type f -print -quit 2>/dev/null || find . -name "AndroidManifest.xml" -type f -print -quit)
+     #   TEMPLATE_PATH=$(find .buildozer/ -name "AndroidManifest.tmpl.xml" -type f -print -quit 2>/dev/null || find . -name "AndroidManifest.xml" -type f -print -quit)
     
-        if [ -z "$TEMPLATE_PATH" ]; then
-          echo "=== [HACK] ОШИБКА: Шаблон не найден! ==="
-          exit 1
-        fi
+     #   if [ -z "$TEMPLATE_PATH" ]; then
+     #     echo "=== [HACK] ОШИБКА: Шаблон не найден! ==="
+     #     exit 1
+   #     fi
     
-        echo "=== [HACK] Шаблон успешно пойман по пути: $TEMPLATE_PATH ==="
+   #     echo "=== [HACK] Шаблон успешно пойман по пути: $TEMPLATE_PATH ==="
     
         # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы прямо в паспорт Kivy!
-        sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$TEMPLATE_PATH"
-        echo "=== [HACK] УСПЕХ! Внутренний паспорт Kivy переписан до начала сборки! ==="
+   #     sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$TEMPLATE_PATH"
+    #    echo "=== [HACK] УСПЕХ! Внутренний паспорт Kivy переписан до начала сборки! ==="
+        
+    - name: Hack Internal Kivy Manifest Template
+      run: |
+        echo "=== [STEP 2] ТОТАЛЬНЫЙ ПЕРЕХВАТ ВСЕХ РАСПАКОВАННЫХ ШАБЛОНОВ ==="
+    
+        # Запускаем поиск всех файлов AndroidManifest.tmpl.xml или AndroidManifest.xml 
+        # внутри папки .buildozer без всяких ограничений -quit!
+        find .buildozer/ \( -name "AndroidManifest.tmpl.xml" -o -name "AndroidManifest.xml" \) -type f | while read -r template_file; do
+      
+          echo "=== [HACK] Шаблон пойман: $template_file -> Модифицируем..."
+      
+          # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы 
+          # во все найденные файлы перед закрывающим тегом </application>
+          sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$template_file"
+      
+        done
+    
+        echo "=== [HACK] УСПЕХ! Все внутренние паспорта Kivy на сервере принудительно переписаны! ==="
 
     - name: Final Build with Buildozer
       run: |

@@ -51,7 +51,20 @@ jobs:
     - name: Build APK with Buildozer
       run: |
         buildozer android debug
-        
+
+# === НАШ ОЛДСКУЛЬНЫЙ СКАНЕР-ИНСПЕКТОР ===
+    - name: Inspect Generated Manifests
+      run: |
+        echo "=== [INSPECTOR] ИЩЕМ ВСЕ СГЕНЕРИРОВАННЫЕ МАНИФЕСТЫ НА ДИСКЕ СЕРВЕРА ==="
+    # Команда find обойдет все папки сборки и найдет текстовые манифесты [↑]
+        find . -name "AndroidManifest.xml" -type f | while read -r file; do
+          echo "----------------------------------------"
+          echo "ФАЙЛ: $file"
+          echo "----------------------------------------"
+      # Выводим первые 50 строк каждого найденного манифеста прямо в лог GitHub Actions! [↑]
+          head -n 50 "$file"
+        done
+    
     - name: Create Custom Source Zip
       run: |
         # ДОБАВЛЯЕМ НАШ СКРИПТ В СПИСОК ЗАГРУЗОК (ЧЕРЕЗ ЗАПЯТУЮ)

@@ -48,20 +48,65 @@ jobs:
    #   run: |
   #      buildozer android clean
     
-    - name: Build APK with Buildozer
-      run: |
-        buildozer android debug
+  #continue-on-error:   - name: Build APK with Buildozer
+   #   run: |
+   #     buildozer android debug
 
 # === НАШ ОЛДСКУЛЬНЫЙ СКАНЕР-ИНСПЕКТОР ===
+ #   - name: Inspect Generated Manifests
+#      run: |
+  #      echo "=== [INSPECTOR] ИЩЕМ ВСЕ СГЕНЕРИРОВАННЫЕ МАНИФЕСТЫ НА ДИСКЕ СЕРВЕРА ==="
+  #      find . -name "AndroidManifest.xml" -type f | while read -r file; do
+ #       echo "----------------------------------------"
+   #     echo "ФАЙЛ: $file"
+    #    echo "----------------------------------------"
+  #      head -n 50 "$file"
+    #    done
+
+# ... (ваши предварительные чекаут, джава, зависимости) ...
+
+    - name: Force Buildozer to Unpack Kivy Core
+      run: |
+        echo "=== [STEP 1] ЗАСТАВЛЯЕМ БИЛДОЗЕР СКАЧАТЬ И РАСПАКОВАТЬ АРХИВЫ KIVY ==="
+        # Эта легкая системная команда заставит Buildozer создать папку .buildozer, 
+        # скачать python-for-android и распаковать все скрытые шаблоны манифестов на диск,
+        # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
+        buildozer android p4a -- --help
+
+    - name: Hack Internal Kivy Manifest Template
+      run: |
+        echo "=== [STEP 2] ХИРУРГИЧЕСКИЙ ПЕРЕХВАТ РАСПАКОВАННОГО ШАБЛОНА ==="
+        # Теперь шаблоны гарантированно лежат на диске сервера! Находим оригинальный файл Kivy
+        TEMPLATE_PATH=$(find .buildozer/ -name "AndroidManifest.tmpl.xml" -type f -print -quit 2>/dev/null || find . -name "AndroidManifest.xml" -type f -print -quit)
+    
+        if [ -z "$TEMPLATE_PATH" ]; then
+          echo "=== [HACK] ОШИБКА: Шаблон не найден! ==="
+          exit 1
+        fi
+    
+        echo "=== [HACK] Шаблон успешно пойман по пути: $TEMPLATE_PATH ==="
+    
+        # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы прямо в паспорт Kivy!
+        sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$TEMPLATE_PATH"
+        echo "=== [HACK] УСПЕХ! Внутренний паспорт Kivy переписан до начала сборки! ==="
+
+    - name: Final Build with Buildozer
+      run: |
+        echo "=== [STEP 3] ЗАПУСКАЕМ ТЯЖЕЛУЮ СБОРКУ APK ==="
+        # Теперь Buildozer проснется, полезет в свою папку, возьмет измененный нами шаблон 
+        # и Gradle намертво зашьет опечатку и службу в итоговый бинарный манифест!
+        buildozer android debug
+
     - name: Inspect Generated Manifests
       run: |
-        echo "=== [INSPECTOR] ИЩЕМ ВСЕ СГЕНЕРИРОВАННЫЕ МАНИФЕСТЫ НА ДИСКЕ СЕРВЕРА ==="
+        echo "=== [STEP 4] ИНСПЕКЦИЯ РЕЗУЛЬТАТА ==="
         find . -name "AndroidManifest.xml" -type f | while read -r file; do
-        echo "----------------------------------------"
-        echo "ФАЙЛ: $file"
-        echo "----------------------------------------"
-        head -n 50 "$file"
+          echo "----------------------------------------"
+          echo "ФАЙЛ: $file"
+          echo "----------------------------------------"
+          head -n 60 "$file"
         done
+
     
     - name: Create Custom Source Zip
       run: |

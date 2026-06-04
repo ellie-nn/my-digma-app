@@ -103,7 +103,8 @@ jobs:
           # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы 
           # во все найденные файлы перед закрывающим тегом </application>
           #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$template_file"
-          sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
+          #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
+          sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
 
         done
     

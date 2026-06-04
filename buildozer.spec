@@ -42,7 +42,7 @@ android.manifest.application_arguments = android:requestLegacyExternalStorage="t
    #p4a.hook = hook.py
 
 # КАТЕГОРИЧЕСКИЙ ПРИКАЗ КИВИ: НЕ УБИВАТЬ СЛУЖБУ ПРИ СМАХИВАНИИ ОКНА!
-#android.services_stop_on_task_removed = False
+android.services_stop_on_task_removed = False
 
 
    #services = digmaservice:service_motor.py:foreground

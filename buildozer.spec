@@ -18,33 +18,42 @@ fullscreen = 1
 android.archs = arm64-v8a
 android.gradle_options = android.lintOptions.abortOnError=false
 
-# ВКЛЮЧАЕМ ТОТ САМЫЙ ПРОПУСК В КОРЕНЬ ДЛЯ АНДРОИД 10 (СТРОГО БЕЗ ЛИШНИХ КАВЫЧЕК!)
-#android.meta_data = android.requestLegacyExternalStorage=true
+   # ВКЛЮЧАЕМ ТОТ САМЫЙ ПРОПУСК В КОРЕНЬ ДЛЯ АНДРОИД 10 (СТРОГО БЕЗ ЛИШНИХ КАВЫЧЕК!)
+   #android.meta_data = android.requestLegacyExternalStorage=true
 android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
  
-#android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
-#android.manifest.application_arguments = android:requestLegacyExternalStorage="true" <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
-#android.manifest.application_xml = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
-#android.manifest.application_xml =
-#    <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+   #android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
+   #android.manifest.application_arguments = android:requestLegacyExternalStorage="true" <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
+   #android.manifest.application_xml = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
+   #android.manifest.application_xml =
+   #    <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 
 
-# Наш фоновый мотор
-#services = digmaservice:service.py:foreground
-#services = digmaservice:service/main.py:foreground
-#:foregroundServiceType=dataSync
+   # Наш фоновый мотор
+   #services = digmaservice:service.py:foreground
+   #services = digmaservice:service/main.py:foreground
+   #:foregroundServiceType=dataSync
 
-# Прямая легальная вставка атрибута для нашей Java-службы в Манифест!
-#android.manifest.service_attributes = android
-#:foregroundServiceType="dataSync"
-android.manifest_template = AndroidManifest.xml
+   # Прямая легальная вставка атрибута для нашей Java-службы в Манифест!
+   #android.manifest.service_attributes = android
+   #:foregroundServiceType="dataSync"
+   #android.manifest_template = AndroidManifest.xml
 
-#p4a.hook = hook.py
+   #p4a.hook = hook.py
 
 # КАТЕГОРИЧЕСКИЙ ПРИКАЗ КИВИ: НЕ УБИВАТЬ СЛУЖБУ ПРИ СМАХИВАНИИ ОКНА!
 android.services_stop_on_task_removed = False
 
+
+   #services = digmaservice:service_motor.py:foreground
+   #services = DigmaJavaService:service_motor.py:foreground
+   
+# ПОЛНОСТЬЮ СТИРАЕМ ИЛИ КОММЕНТИРУЕМ ВСЕ НАШИ ПРОШЛЫЕ ЭКСПЕРИМЕНТЫ:
+   # android.manifest_template = ...
+   # android.manifest.application_xml = ...
+   # android.manifest.application_arguments = ...
+   # services = ...
+
+  # Оставляем только подключение Java-кода:
 android.add_src = java
-#services = digmaservice:service_motor.py:foreground
-#services = DigmaJavaService:service_motor.py:foreground
 

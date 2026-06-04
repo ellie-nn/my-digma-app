@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://android.com"
     package="{package}"
     android:versionCode="{version_code}"
-    android:versionName="{version_name}">
+    android:versionName="{version_name}"
+    xmlns:tools="http://android.com">
 
     <uses-sdk android:minSdkVersion="{min_sdk}" android:targetSdkVersion="{target_sdk}" />
 
@@ -24,10 +25,15 @@
         </activity>
 
         <!-- ЖЕСТКИЙ ОЛДСКУЛЬНЫЙ ЗАЖИМ: НАША БЕССМЕРТНАЯ СЛУЖБА С ТИПОМ DATA_SYNC! -->
-        <service android:name=".{app_name}SerEEEErvice"
+                <!-- НАШ УЛЬТИМАТИВНЫЙ РУЧНОЙ ЗАЖИМ ДЛЯ GRADLE -->
+        <!-- Атрибут tools:node="replace" заставит Manifest Merger полностью уничтожить 
+             стандартный Kivy-сервис в процессе слияния и вклеить нашу службу с опечаткой! -->
+        <service android:name="org.kivy.android.DimaJavaService"
                  android:process=":service"
                  android:stopWithTask="false"
-                 android:exported="false" />
+                 android:exported="false"
+                 tools:node="replace" />
+
     
     </application>
 </manifest>

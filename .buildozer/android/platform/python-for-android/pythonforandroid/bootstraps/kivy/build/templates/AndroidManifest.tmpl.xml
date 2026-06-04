@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://android.com"
+          package="{package}"
+          android:versionCode="{version_code}"
+          android:versionName="{version_name}">
+
+    <uses-sdk android:minSdkVersion="{min_sdk}" android:targetSdkVersion="{target_sdk}" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application android:label="{app_name}" 
+                 android:icon="@drawable/icon" 
+                 android:allowBackup="true"
+                 android:requestLegacyExternalStorage="true">
+        
+        <activity android:name="org.kivy.android.PythonActivity" android:label="{app_name}" android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|fontScale|uiMode|screenSize|smallestScreenSize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.action.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- НАШ ОКОНЧАТЕЛЬНЫЙ МАРКЕРНЫЙ ЗАЖИМ ВНУТРИ ЯДРА KIVY -->
+        <service android:name="org.kivy.android.DigmaJavaService"
+                 android:process=":service"
+                 android:stopWithTask="false"
+                 android:exported="false" />
+
+        <!-- Намеренная опечатка для проверки пробития кэша -->
+        <meta-data android:name="test_marker" android:value="dimarecorder" />
+
+    </application>
+</manifest>

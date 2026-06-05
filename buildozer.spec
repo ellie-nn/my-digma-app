@@ -69,8 +69,10 @@ android.manifest.application_arguments = android:requestLegacyExternalStorage="t
 # 2. ОФИЦИАЛЬНЫЙ СИТ ПРЕДОХРАНИТЕЛЯ PROGUARD
 # Эта легальная строчка принудительно запрещает Gradle оптимизировать, 
 # сжимать или вырезать любые кастомные Java-классы из нашего проекта!
-android.meta_data = proguard-rules.pro
+#android.meta_data = proguard-rules.pro
 
 # 3. Легально вшиваем тег службы в манифест (с одинарными кавычками!)
-android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+#android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+# Легальный, штатный запуск файла защиты без конфликтов split('=')!
+android.proguard_rules = proguard-rules.pro
 

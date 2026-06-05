@@ -63,3 +63,14 @@ android.gradle_dependencies = 'com.android.tools.build:gradle:7.4.2'
 android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
 #android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 
+# 1. Подключаем нашу Java-папку с кодом службы
+##android.add_src = java
+
+# 2. ОФИЦИАЛЬНЫЙ СИТ ПРЕДОХРАНИТЕЛЯ PROGUARD
+# Эта легальная строчка принудительно запрещает Gradle оптимизировать, 
+# сжимать или вырезать любые кастомные Java-классы из нашего проекта!
+android.meta_data = proguard-rules.pro
+
+# 3. Легально вшиваем тег службы в манифест (с одинарными кавычками!)
+android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+

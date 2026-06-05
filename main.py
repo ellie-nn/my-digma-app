@@ -108,8 +108,10 @@ class MediaStoreStdout:
 from kivy.app import App
 from kivy.uix.widget import Widget
 from jnius import autoclass
+# Импортируем официальный Android-модуль Kivy для запроса прав
+from android.permissions import request_permissions, Permission
 
-class EmptyWindowApp(App):
+class EmptyWindowApp(App): 
     def build(self):
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
@@ -128,7 +130,18 @@ class EmptyWindowApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('Lunched')
-        
+            
+        # 1. ЖЕСТКИЙ ЗАЖИМ БЕЗОПАСНОСТИ: Запрашиваем Runtime-права у Android!
+        # Мы просим систему легально выдать нам допуск к фоновой синхронизации данных
+        try:
+            request_permissions([
+                Permission.FOREGROUND_SERVICE,
+                Permission.FOREGROUND_SERVICE_DATA_SYNC
+            ])
+            print("[LOG] Запрос фоновых разрешений успешно отправлен на экран смартфона!")
+        except Exception as perm_err:
+            print(f"[LOG] Ошибка запроса прав (возможно, запуск не на Android): {perm_err}")
+
         try:
             from jnius import autoclass
             # 1. Достаем контекст активности окна
@@ -143,8 +156,6 @@ class EmptyWindowApp(App):
           #  ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
           #  ServiceClass = autoclass("org.kivy.android.PythonService")
             ServiceClass = autoclass("org.kivy.android.DigmaJavaService")
-            
-            
             
             intent = Intent(Context, ServiceClass)
             result = Context.startForegroundService(intent) # Поджигаем фитиль!

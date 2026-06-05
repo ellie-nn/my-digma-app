@@ -20,7 +20,7 @@ android.gradle_options = android.lintOptions.abortOnError=false
 
    # ВКЛЮЧАЕМ ТОТ САМЫЙ ПРОПУСК В КОРЕНЬ ДЛЯ АНДРОИД 10 (СТРОГО БЕЗ ЛИШНИХ КАВЫЧЕК!)
    #android.meta_data = android.requestLegacyExternalStorage=true
-android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
+#android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
  
    #android.manifest.application_arguments = <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
    #android.manifest.application_arguments = android:requestLegacyExternalStorage="true" <service android:name="org.kivy.android.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />
@@ -61,5 +61,5 @@ android.add_src = java
 # Эти аргументы запрещают оптимизатору R8 сжимать, обфусцировать или вырезать наш Java-класс!
 android.gradle_dependencies = 'com.android.tools.build:gradle:7.4.2'
 android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
-android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+#android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 

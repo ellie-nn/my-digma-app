@@ -4,7 +4,8 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Vibrator;
-import android.os.Context;
+//import android.os.Context;
+import android.content.Context;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Notification;
@@ -14,7 +15,9 @@ public class DigmaJavaService extends Service {
     // Вспомогательный метод для быстрой вибрации на чистом Java
     private void javaVibrate(int ms) {
         try {
-            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            //Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
             if (v != null) {
                 v.vibrate(ms);
             }

@@ -105,7 +105,7 @@ jobs:
           #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$template_file"
           #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
           #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
-          sed -i "s|<\/application>|<service android:name='org.kivi.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
+          #sed -i "s|<\/application>|<service android:name='org.kivi.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
 
         done
     

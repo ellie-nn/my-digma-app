@@ -54,6 +54,12 @@ android.services_stop_on_task_removed = False
    # android.manifest.application_arguments = ...
    # services = ...
 
-  # Оставляем только подключение Java-кода:
+# 1. Подключаем нашу Java-папку с кодом службы
 android.add_src = java
+
+# 2. ЖЕСТКИЙ ПРАВИЛО-ЩИТ ДЛЯ GRADLE (ProGuard Keep Rules)
+# Эти аргументы запрещают оптимизатору R8 сжимать, обфусцировать или вырезать наш Java-класс!
+android.gradle_dependencies = 'com.android.tools.build:gradle:7.4.2'
+android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
+android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 

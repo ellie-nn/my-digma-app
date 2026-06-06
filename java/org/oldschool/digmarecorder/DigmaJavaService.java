@@ -14,7 +14,9 @@ import android.app.Notification;
 //public class DigmaJavaService extends Service {
 // Было: public class DigmaJavaService extends Service
 // СТАНОВИТСЯ (Наследуем Kivy, чтобы Питон не падал при линковке!):
-public class DigmaJavaService extends PythonService {
+//public class DigmaJavaService extends PythonService {
+// Теперь Kivy-ядро не сможет совершить суицид внутри нашей службы!
+public class DigmaJavaService extends Service {
     
     // Вспомогательный метод для быстрой вибрации на чистом Java
     private void javaVibrate(int ms) {

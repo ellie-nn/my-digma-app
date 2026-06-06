@@ -77,3 +77,5 @@ android.manifest.application_xml = <service android:name='org.oldschool.digmarec
 # Легальный, штатный запуск файла защиты без конфликтов split('=')!
 android.proguard_rules = proguard-rules.pro
 
+# Приказываем Buildozer официально активировать правила ProGuard к нашей сборке!
+android.proguard = True

@@ -23,7 +23,7 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
-from jnius import autoclass #, cast
+#from jnius import autoclass #, cast
 
 from oscpy.server import OSCThreadServer
 
@@ -57,6 +57,7 @@ SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время с�
         
 def append_to_public_documents(filename, text_content):
     try:
+        from jnius import autoclass
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
@@ -107,12 +108,13 @@ class MediaStoreStdout:
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 from kivy.app import App
 from kivy.uix.widget import Widget
-from jnius import autoclass
+#from jnius import autoclass
 # Импортируем официальный Android-модуль Kivy для запроса прав
 from android.permissions import request_permissions, Permission
 
 class EmptyWindowApp(App): 
     def build(self):
+        from jnius import autoclass
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
         vibrator.vibrate(500) 
@@ -143,7 +145,7 @@ class EmptyWindowApp(App):
       #      print(f"[LOG] Ошибка запроса прав (возможно, запуск не на Android): {perm_err}")
 
         try:
-            from jnius import autoclass
+            #from jnius import autoclass
             # 1. Достаем контекст активности окна
         #    Context = autoclass('org.kivy.android.PythonActivity').mActivity
 
@@ -178,6 +180,7 @@ if __name__ == '__main__':
     
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def vibro():
+    from jnius import autoclass
     # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
     try:
         # 1. Достаем контекст живой фоновой службы Kivy
@@ -196,6 +199,7 @@ def vibro():
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        from jnius import autoclass
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

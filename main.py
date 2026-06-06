@@ -155,8 +155,8 @@ class EmptyWindowApp(App):
           #  ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
           #  ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
           #  ServiceClass = autoclass("org.kivy.android.PythonService")
-            ServiceClass = autoclass("org.kivy.android.DigmaJavaService")
-            
+          #  ServiceClass = autoclass("org.kivy.android.DigmaJavaService")
+            ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
             intent = Intent(Context, ServiceClass)
             result = Context.startForegroundService(intent) # Поджигаем фитиль!
             if not result: raise Exception('Не удалось запустить службу')

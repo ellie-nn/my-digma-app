@@ -1,4 +1,5 @@
 package org.oldschool.digmarecorder;
+import org.kivy.android.PythonService; // ДОБАВИТЬ ЭТУ СТРОКУ ИМПОРТА!
 
 import android.app.Service;
 import android.content.Intent;
@@ -10,7 +11,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.Notification;
 
-public class DigmaJavaService extends Service {
+//public class DigmaJavaService extends Service {
+// Было: public class DigmaJavaService extends Service
+// СТАНОВИТСЯ (Наследуем Kivy, чтобы Питон не падал при линковке!):
+public class DigmaJavaService extends PythonService {
     
     // Вспомогательный метод для быстрой вибрации на чистом Java
     private void javaVibrate(int ms) {

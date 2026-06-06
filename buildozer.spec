@@ -79,7 +79,10 @@ android.manifest.application_xml = <service android:name='org.oldschool.digmarec
 #android.proguard_rules = proguard-rules.pro
 # Было: android.proguard_rules = proguard-rules.pro
 # СТАНОВИТСЯ (Указываем точный системный путь к корню нашего репозитория!):
-android.proguard_rules = %(android_add_src)s/proguard-rules.pro
+#android.proguard_rules = %(android_add_src)s/proguard-rules.pro
+# Было: android.proguard_rules = %(android_add_src)s/proguard-rules.pro
+# СТАНОВИТСЯ (Кристально чистый, легальный путь без капризов парсера!):
+android.proguard_rules = java/proguard-rules.pro
 
 # Приказываем Buildozer официально активировать правила ProGuard к нашей сборке!
 android.proguard = True

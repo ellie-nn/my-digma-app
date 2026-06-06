@@ -133,14 +133,14 @@ class EmptyWindowApp(App):
             
         # 1. ЖЕСТКИЙ ЗАЖИМ БЕЗОПАСНОСТИ: Запрашиваем Runtime-права у Android!
         # Мы просим систему легально выдать нам допуск к фоновой синхронизации данных
-        try:
-            request_permissions([
-                Permission.FOREGROUND_SERVICE,
-                Permission.FOREGROUND_SERVICE_DATA_SYNC
-            ])
-            print("[LOG] Запрос фоновых разрешений успешно отправлен на экран смартфона!")
-        except Exception as perm_err:
-            print(f"[LOG] Ошибка запроса прав (возможно, запуск не на Android): {perm_err}")
+  #      try:
+     #       request_permissions([
+          #      Permission.FOREGROUND_SERVICE,
+        #        Permission.FOREGROUND_SERVICE_DATA_SYNC
+     #       ])
+     #       print("[LOG] Запрос фоновых разрешений успешно отправлен на экран смартфона!")
+      #  except Exception as perm_err:
+      #      print(f"[LOG] Ошибка запроса прав (возможно, запуск не на Android): {perm_err}")
 
         try:
             from jnius import autoclass

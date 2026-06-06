@@ -75,7 +75,11 @@ android.manifest.application_xml = <service android:name='org.oldschool.digmarec
 # 3. Легально вшиваем тег службы в манифест (с одинарными кавычками!)
 #android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 # Легальный, штатный запуск файла защиты без конфликтов split('=')!
-android.proguard_rules = proguard-rules.pro
+
+#android.proguard_rules = proguard-rules.pro
+# Было: android.proguard_rules = proguard-rules.pro
+# СТАНОВИТСЯ (Указываем точный системный путь к корню нашего репозитория!):
+android.proguard_rules = %(android_add_src)s/proguard-rules.pro
 
 # Приказываем Buildozer официально активировать правила ProGuard к нашей сборке!
 android.proguard = True

@@ -145,7 +145,7 @@ class EmptyWindowApp(App):
         try:
             from jnius import autoclass
             # 1. Достаем контекст активности окна
-            Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        #    Context = autoclass('org.kivy.android.PythonActivity').mActivity
 
             # Динамически вычисляем точное имя пакета прямо из памяти телефона!
           #  package_name = Context.getPackageName() # Получим 'org.oldschool.digmarecorder'

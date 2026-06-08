@@ -19,7 +19,7 @@ jobs:
         path: |
           ~/.buildozer
           .buildozer
-        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v1012
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v1013
       
     - name: Free Disk Space
       run: |
@@ -92,8 +92,8 @@ jobs:
     - name: Create Release and Upload APK
       uses: softprops/action-gh-release@v2
       with:
-        tag_name: v1.0.10.3
-        name: Release v1.0.10.3
+        tag_name: v1.0.10.12
+        name: Release v1.0.10.12
         # АВТОНУМЕРАЦИЯ: каждый коммит создаст уникальный тег (v1.0.блок_счетчика)
         #tag_name: v1.0.${{ github.run_number }}
         #name: Release v1.0.${{ github.run_number }}

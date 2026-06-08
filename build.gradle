@@ -5,12 +5,18 @@ project.afterEvaluate {
             // doFirst срабатывает строго ДО фиксации манифеста компилятором [↑]
             output.processManifestProvider.get().doFirst {
                 // Берем наш скопированный из APK файл с версией 1.0.4.1 из корня
-                var sourceManifest = new File("${projectDir}/../../../../AndroidManifest.xml")
+                //var sourceManifest = new File("${projectDir}/../../../../AndroidManifest.xml")
+                var sourceManifest = new File(project.rootDir, "AndroidManifest.xml")
+
                 var targetManifest = new File(getMultiApkManifestOutputDirectory().get().asFile, "AndroidManifest.xml")
                 
                 if (sourceManifest.exists()) {
                     targetManifest.text = sourceManifest.text
                     println("=== [GRADLE] MANIFEST SWAPPED TO 1.0.4.1 SUCCESS === ")
+                } else {
+                    // Страховка: если файл не найдется, Gradle принудительно уронит сборку с красным кружком,
+                    // и мы мгновенно поймем ошибку, а не будем гадать в темноте!
+                    throw new GradleException("=== [GRADLE] КРИТИЧЕСКАЯ ОШИБКА: Ручной AndroidManifest.xml не найден в rootDir! ===")
                 }
             }
         }

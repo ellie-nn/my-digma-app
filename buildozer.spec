@@ -3,7 +3,7 @@ source.dir = .
 title = Digma Recorder
 package.name = digmarecorder
 package.domain = org.oldschool
-version = 1.0.4
+version = 1.0.5
 source.include_exts = py,png,jpg,kv,csv
 
 requirements = python3,kivy,pyaes,oscpy

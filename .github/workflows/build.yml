@@ -122,7 +122,17 @@ jobs:
 
         done
         echo "=== [HACK] УСПЕХ! Все внутренние паспорта Kivy на сервере принудительно переписаны! ==="
-  
+        
+    - name: Inspect Generated Manifests
+      run: |
+        echo "=== [STEP 4] ИНСПЕКЦИЯ РЕЗУЛЬТАТА ==="
+        find . -name "AndroidManifest.xml" -type f | while read -r file; do
+          echo "----------------------------------------"
+          echo "ФАЙЛ: $file"
+          echo "----------------------------------------"
+          head -n 600 "$file"
+        done
+
     - name: Final Build with Buildozer
       run: |
         echo "=== [STEP 3] ЗАПУСКАЕМ ТЯЖЕЛУЮ СБОРКУ APK ==="

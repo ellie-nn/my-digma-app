@@ -89,8 +89,8 @@ android.proguard_rules = java/proguard-rules.pro
 android.proguard = True
 
 # ЖЕСТКИЙ ПРИКАЗ ПОДМЕНЫ ДЛЯ GRADLE (Пишется строго в одну монолитную строчку!):
-android.gradle_dependencies = "android.applicationVariants.all { variant -> variant.outputs.all { output -> output.processManifestProvider.get().doFirst { var sourceManifest = new File('${projectDir}/../../../../AndroidManifest.xml'); var targetManifest = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (sourceManifest.exists()) { targetManifest.text = sourceManifest.text; println('=== [GRADLE] МАНИФЕСТ ХИРУРГИЧЕСКИ ПОДМЕНЕН НА НАШ ФАЙЛ! ===') } } } }"
-android.add_src = java
+    #android.gradle_dependencies = "android.applicationVariants.all { variant -> variant.outputs.all { output -> output.processManifestProvider.get().doFirst { var sourceManifest = new File('${projectDir}/../../../../AndroidManifest.xml'); var targetManifest = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (sourceManifest.exists()) { targetManifest.text = sourceManifest.text; println('=== [GRADLE] МАНИФЕСТ ХИРУРГИЧЕСКИ ПОДМЕНЕН НА НАШ ФАЙЛ! ===') } } } }"
+    #android.add_src = java
 
 # УЛЬТИМАТИВНЫЙ ЭКРАНИРОВАННЫЙ ЗАЖИМ:
 # Мы полностью замаскировали фигурные скобки под коды \u007b и \u007d, а кавычки экранировали обратным слэшем \". 

@@ -115,9 +115,9 @@ jobs:
           #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
           #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
           #sed -i "s|<\/application>|<service android:name='org.kivi.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
-          #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
+          sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' tools:node='replace' />\n<\/application>|g" "$template_file"
           # Врезаем тег службы с флагом tools:node="replace" и уникальным индексом файла! [↑]
-          sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' tools:node='replace' />\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />\n<\/application>|g" "$template_file"
+          #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' tools:node='replace' />\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />\n<\/application>|g" "$template_file"
           #fi
 
         done

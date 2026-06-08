@@ -19,7 +19,7 @@ jobs:
         path: |
           ~/.buildozer
           .buildozer
-        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v1010
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v1011
       
     - name: Free Disk Space
       run: |
@@ -43,26 +43,6 @@ jobs:
         pip install --upgrade pip
         pip install buildozer cython==0.29.36
         
-    #- name: Total clean
-   #   run: |
-  #      buildozer android clean
-    
-  #continue-on-error:   - name: Build APK with Buildozer
-   #   run: |
-   #     buildozer android debug
-
-# === НАШ ОЛДСКУЛЬНЫЙ СКАНЕР-ИНСПЕКТОР ===
- #   - name: Inspect Generated Manifests
-#      run: |
-  #      echo "=== [INSPECTOR] ИЩЕМ ВСЕ СГЕНЕРИРОВАННЫЕ МАНИФЕСТЫ НА ДИСКЕ СЕРВЕРА ==="
-  #      find . -name "AndroidManifest.xml" -type f | while read -r file; do
- #       echo "----------------------------------------"
-   #     echo "ФАЙЛ: $file"
-    #    echo "----------------------------------------"
-  #      head -n 50 "$file"
-    #    done
-
-# ... (ваши предварительные чекаут, джава, зависимости) ...
 
     - name: Force Buildozer to Unpack Kivy Core
       run: |
@@ -72,62 +52,6 @@ jobs:
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
 
- #   - name: Hack Internal Kivy Manifest Template
-  #    run: |
-    #    echo "=== [STEP 2] ХИРУРГИЧЕСКИЙ ПЕРЕХВАТ РАСПАКОВАННОГО ШАБЛОНА ==="
-        # Теперь шаблоны гарантированно лежат на диске сервера! Находим оригинальный файл Kivy
-     #   TEMPLATE_PATH=$(find .buildozer/ -name "AndroidManifest.tmpl.xml" -type f -print -quit 2>/dev/null || find . -name "AndroidManifest.xml" -type f -print -quit)
-    
-     #   if [ -z "$TEMPLATE_PATH" ]; then
-     #     echo "=== [HACK] ОШИБКА: Шаблон не найден! ==="
-     #     exit 1
-   #     fi
-    
-   #     echo "=== [HACK] Шаблон успешно пойман по пути: $TEMPLATE_PATH ==="
-    
-        # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы прямо в паспорт Kivy!
-   #     sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$TEMPLATE_PATH"
-    #    echo "=== [HACK] УСПЕХ! Внутренний паспорт Kivy переписан до начала сборки! ==="
-        
-    - name: Hack Internal Kivy Manifest Template
-      run: |
-        echo "=== [STEP 2] ТОТАЛЬНЫЙ ПЕРЕХВАТ ВСЕХ РАСПАКОВАННЫХ ШАБЛОНОВ ==="
-        # Заводим внутренний счетчик обработанных файлов
-        FILE_COUNT=0
-  
-        # Запускаем поиск всех файлов AndroidManifest.tmpl.xml или AndroidManifest.xml 
-        # внутри папки .buildozer без всяких ограничений -quit!
-        find .buildozer/ \( -name "AndroidManifest.tmpl.xml" -o -name "AndroidManifest.xml" \) -type f | while read -r template_file; do
-      
-          echo "=== [HACK] Шаблон пойман: $template_file -> Модифицируем..."
-          #  # Защита: если наша служба уже вшита в этот файл, пропускаем его, чтобы не плодить дубликаты! [↑]
-          #if grep -q "DigmaJavaService" "$template_file"; then
-          #echo "=== [HACK] Пропускаем: наша служба уже вшита в этот файл! ==="
-          #else
-          FILE_COUNT=$((FILE_COUNT + 1))
-          echo "=== [HACK] Чистый шаблон! Присваиваем номер файла: #$FILE_COUNT ==="
-          # Добавляем пространство имен tools, чтобы Gradle не смел вырезать тег [↑]
-          sed -i 's|<manifest|<manifest xmlns:tools="http://android.com"|g' "$template_file"
-     
-          # 2. Вшиваем номер файла прямо на входе в блок <application> (ближе к началу!)
-          #sed -i "s|<application|<application>\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />|g" "$template_file"
-          sed -i "s|android:versionName=\"1.0.4|android:versionName=\"1.0.4.$FILE_COUNT|g" "$template_file"
-
-          # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы 
-          # во все найденные файлы перед закрывающим тегом </application>
-          #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='test_marker' android:value='dimarecorder' />\n<\/application>|g" "$template_file"
-          #sed -i "s|<\/application>|<service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
-          #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
-          #sed -i "s|<\/application>|<service android:name='org.kivi.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<\/application>|g" "$template_file"
-          #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' tools:node='replace' />\n<\/application>|g" "$template_file"
-          sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />\n<\/application>|g" "$template_file"
-          # Врезаем тег службы с флагом tools:node="replace" и уникальным индексом файла! [↑]
-          #sed -i "s|<\/application>|<service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' tools:node='replace' />\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />\n<\/application>|g" "$template_file"
-          #\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />
-          #fi
-
-        done
-        echo "=== [HACK] УСПЕХ! Все внутренние паспорта Kivy на сервере принудительно переписаны! ==="
         
     - name: Inspect Generated Manifests
       run: |

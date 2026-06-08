@@ -111,7 +111,7 @@ jobs:
      
           # 2. Вшиваем номер файла прямо на входе в блок <application> (ближе к началу!)
           #sed -i "s|<application|<application>\n<meta-data android:name='hack_file_index' android:value='HACK_FILE_$FILE_COUNT' />|g" "$template_file"
-          sed -i "s|android:versionName=""1.0.4|android:versionName=""1.0.4.$FILE_COUNT|g" "$template_file"
+          sed -i "s|android:versionName=\"1.0.4|android:versionName=\"1.0.4.$FILE_COUNT|g" "$template_file"
 
           # Врезаем нашу маркерную опечатку "dimarecorder" и тег нашей бессмертной службы 
           # во все найденные файлы перед закрывающим тегом </application>

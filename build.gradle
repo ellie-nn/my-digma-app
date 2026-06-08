@@ -1,21 +1,28 @@
-// ОФИЦИАЛЬНЫЙ ГЛОБАЛЬНЫЙ ПЕРЕХВАТЧИК GRADLE
+// УЛЬТИМАТИВНЫЙ ПЕРЕХВАТЧИК СЛИЯНИЯ GRADLE
 project.afterEvaluate {
+    // ВСТАВКА (Строго первая строчка внутри блока, которая сразу прольётся в лог Гитхаба!):
+    println("=== [GRADLE INIT] ХАК-СКРИПТ УСПЕШНО ЗАПУЩЕН НА ВЕРХНЕМ УРОВНЕ ПРОЕКТА ===")
     android.applicationVariants.all { variant ->
-        variant.outputs.all { output ->
+        // Намертво подключаемся к официальному системному таску слияния манифестов от Google
+        variant.processManifestProvider.get().doLast { task ->
+            // Получаем прямой доступ к итоговой папке, куда Gradle СЕЙЧАС сохранил результат
+            def manifestDir = task.manifestOutputDirectory.get().asFile
             
-            // ЖЕСТКИЙ ЗАЖИМ: Срабатывает строго ПОСЛЕ того, как все генераторы Buildozer отработали! [↑]
-            output.processManifestProvider.get().doLast {
-                
-                // Находим итоговый сгенерированный манифест, который пойдет прямо в APK [↑]
-                var targetManifest = new File(output.processManifestProvider.get().manifestOutputDirectory.get().asFile, "AndroidManifest.xml")
-                var sourceManifest = new File(project.rootDir, "AndroidManifest.xml")
-                
-                if (sourceManifest.exists() && targetManifest.exists()) {
-                    // Силой Groovy намертво перезаписываем финальный файл нашим идеальным манифестом 1.0.4.1! [↑]
-                    targetManifest.text = sourceManifest.text
-                    println("=== [GRADLE] ФИНАЛЬНЫЙ МАНИФЕСТ НАМЕРТВО ЗАМЕНЕН НА ВЕРСИЮ 1.0.4.1 === ")
-                } else if (!sourceManifest.exists()) {
-                    throw new GradleException("=== [GRADLE] ОШИБКА: Ручной AndroidManifest.xml не найден в корне! ===")
+            // Запускаем тотальный поиск файла AndroidManifest.xml во всех скрытых подпапках кэша Gradle
+            fileTree(dir: manifestDir, include: "**/AndroidManifest.xml").each { manifestFile ->
+                if (manifestFile.exists()) {
+                    def text = manifestFile.text
+                    
+                    # 1. Хирургически меняем дефолтную версию Kivy на вашу победную 1.0.4.1!
+                    text = text.replace('android:versionName="1.0.4"', 'android:versionName="1.0.4.1"')
+                    
+                    # 2. Врезаем тег нашей JOOD-службы строго перед закрывающим тегом приложения
+                    def serviceTag = '<service android:name="org.oldschool.digmarecorder.DigmaJavaService" android:process=":service" android:stopWithTask="false" android:exported="false" />'
+                    text = text.replace('</application>', "${serviceTag}\n</application>")
+                    
+                    // Перезаписываем текст прямо в кэше Gradle! Сбежать от этого зажима компилятор не сможет.
+                    manifestFile.text = text
+                    println("=== [GRADLE SUCCESS] МАНЕРТВО ВШИТА ВЕРСИЯ 1.0.4.1 И СЛУЖБА JOOD! ===")
                 }
             }
         }

@@ -59,30 +59,35 @@ android.add_src = java
 
 # 2. ЖЕСТКИЙ ПРАВИЛО-ЩИТ ДЛЯ GRADLE (ProGuard Keep Rules)
 # Эти аргументы запрещают оптимизатору R8 сжимать, обфусцировать или вырезать наш Java-класс!
-#android.gradle_dependencies = 'com.android.tools.build:gradle:7.4.2'
+    #android.gradle_dependencies = 'com.android.tools.build:gradle:7.4.2'
+
 android.manifest.application_arguments = android:requestLegacyExternalStorage="true"
-#android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
-#android.manifest.application_xml = <service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+    #android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+    #android.manifest.application_xml = <service android:name='org.oldschool.digmarecorder.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 
 # 1. Подключаем нашу Java-папку с кодом службы
-##android.add_src = java
+    ##android.add_src = java
 
 # 2. ОФИЦИАЛЬНЫЙ СИТ ПРЕДОХРАНИТЕЛЯ PROGUARD
 # Эта легальная строчка принудительно запрещает Gradle оптимизировать, 
 # сжимать или вырезать любые кастомные Java-классы из нашего проекта!
-#android.meta_data = proguard-rules.pro
+    #android.meta_data = proguard-rules.pro
 
 # 3. Легально вшиваем тег службы в манифест (с одинарными кавычками!)
-#android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
+    #android.manifest.application_xml = <service android:name='org.kivy.android.DigmaJavaService' android:process=':service' android:stopWithTask='false' android:exported='false' />
 # Легальный, штатный запуск файла защиты без конфликтов split('=')!
 
-#android.proguard_rules = proguard-rules.pro
+    #android.proguard_rules = proguard-rules.pro
 # Было: android.proguard_rules = proguard-rules.pro
 # СТАНОВИТСЯ (Указываем точный системный путь к корню нашего репозитория!):
-#android.proguard_rules = %(android_add_src)s/proguard-rules.pro
+    #android.proguard_rules = %(android_add_src)s/proguard-rules.pro
 # Было: android.proguard_rules = %(android_add_src)s/proguard-rules.pro
 # СТАНОВИТСЯ (Кристально чистый, легальный путь без капризов парсера!):
 android.proguard_rules = java/proguard-rules.pro
 
 # Приказываем Buildozer официально активировать правила ProGuard к нашей сборке!
 android.proguard = True
+
+# ЖЕСТКИЙ ПРИКАЗ ПОДМЕНЫ ДЛЯ GRADLE (Пишется строго в одну монолитную строчку!):
+android.gradle_dependencies = "android.applicationVariants.all { variant -> variant.outputs.all { output -> output.processManifestProvider.get().doFirst { var sourceManifest = new File('${projectDir}/../../../../AndroidManifest.xml'); var targetManifest = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (sourceManifest.exists()) { targetManifest.text = sourceManifest.text; println('=== [GRADLE] МАНИФЕСТ ХИРУРГИЧЕСКИ ПОДМЕНЕН НА НАШ ФАЙЛ! ===') } } } }"
+

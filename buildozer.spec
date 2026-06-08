@@ -106,4 +106,10 @@ android.proguard = True
 # УЛЬТИМАТИВНЫЙ ГЛОБАЛЬНЫЙ ЗАЖИМ BASE64:
 # Мы перекодировали скрипт с директивой project.afterEvaluate. 
 # Теперь код легально вырвется из блока dependencies и намертво перезапишет манифест файлом 1.0.4.1 из корня!
-android.gradle_dependencies = "byte[] d = java.util.Base64.getDecoder().decode('cHJvamVjdC5hZnRlckV2YWx1YXRlIHsgYW5kcm9pZC5hcHBsaWNhdGlvblZhcmlhbnRzLmFsbCB7IHYgLT4gdi5vdXRwdXRzLmFsbCB7IG8gLT4gby5wcm9jZXNzTWFuaWZlc3RQcm92aWRlci5nZXQoKS5kb0ZpcnN0IHsgdmFyIHMgPSBuZXcgRmlsZSgnLi4vLi4vLi4vLi4vQW5kcm9pZE1hbmlmZXN0LnhtbCcpOyB2YXIgdCA9IG5ldyBGaWxlKGdldE11bHRpQXBrTWFuaWZlc3RPdXRwdXREaXJlY3RvcnkoKS5nZXQoKS5hc0ZpbGUsICdBbmRyb2lkTWFuaWZlc3QueG1sJyk7IGlmIChzLmV4aXN0cygpKSB7IHQudGV4dCA9IHMudGV4dDsgcHJpbnRsbihbJz09PSBbR1JBRExFXSBNQU5JRkVTVCBTV0FQUEVEXSA9PT0nXSk7IH0gfSB9IH0gfSB9'); new GroovyShell(project.class.classLoader).evaluate(new String(d))"
+    #android.gradle_dependencies = "byte[] d = java.util.Base64.getDecoder().decode('cHJvamVjdC5hZnRlckV2YWx1YXRlIHsgYW5kcm9pZC5hcHBsaWNhdGlvblZhcmlhbnRzLmFsbCB7IHYgLT4gdi5vdXRwdXRzLmFsbCB7IG8gLT4gby5wcm9jZXNzTWFuaWZlc3RQcm92aWRlci5nZXQoKS5kb0ZpcnN0IHsgdmFyIHMgPSBuZXcgRmlsZSgnLi4vLi4vLi4vLi4vQW5kcm9pZE1hbmlmZXN0LnhtbCcpOyB2YXIgdCA9IG5ldyBGaWxlKGdldE11bHRpQXBrTWFuaWZlc3RPdXRwdXREaXJlY3RvcnkoKS5nZXQoKS5hc0ZpbGUsICdBbmRyb2lkTWFuaWZlc3QueG1sJyk7IGlmIChzLmV4aXN0cygpKSB7IHQudGV4dCA9IHMudGV4dDsgcHJpbnRsbihbJz09PSBbR1JBRExFXSBNQU5JRkVTVCBTV0FQUEVEXSA9PT0nXSk7IH0gfSB9IH0gfSB9'); new GroovyShell(project.class.classLoader).evaluate(new String(d))"
+android.add_src = java
+
+# БРОНЕБОЙНАЯ ИНЪЕКЦИЯ КАВЫЧЕК BASE64:
+# Мы силой закрываем метод implementation с помощью '); }, а в конце открывать пустой вызов, чтобы не сломать парсер Gradle.
+# Код гарантированно вырвется на глобальный уровень проекта и намертво подменит манифест файлом 1.0.4.1 из корня!
+android.gradle_dependencies = "dummy'); }; project.afterEvaluate { android.applicationVariants.all { v -> v.outputs.all { o -> o.processManifestProvider.get().doFirst { var s = new File('../../../../AndroidManifest.xml'); var t = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (s.exists()) { t.text = s.text; println('=== [GRADLE] MANIFEST SWAPPED ==='); } } } } }; dependencies { implementation('dummy"

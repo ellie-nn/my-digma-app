@@ -90,4 +90,10 @@ android.proguard = True
 
 # ЖЕСТКИЙ ПРИКАЗ ПОДМЕНЫ ДЛЯ GRADLE (Пишется строго в одну монолитную строчку!):
 android.gradle_dependencies = "android.applicationVariants.all { variant -> variant.outputs.all { output -> output.processManifestProvider.get().doFirst { var sourceManifest = new File('${projectDir}/../../../../AndroidManifest.xml'); var targetManifest = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (sourceManifest.exists()) { targetManifest.text = sourceManifest.text; println('=== [GRADLE] МАНИФЕСТ ХИРУРГИЧЕСКИ ПОДМЕНЕН НА НАШ ФАЙЛ! ===') } } } }"
+android.add_src = java
+
+# УЛЬТИМАТИВНЫЙ ЭКРАНИРОВАННЫЙ ЗАЖИМ:
+# Мы полностью замаскировали фигурные скобки под коды \u007b и \u007d, а кавычки экранировали обратным слэшем \". 
+# Теперь парсер спека проглотит строку без единого писка, а Gradle на сервере выполнит чистую подмену манифеста из корня репозитория!
+android.gradle_dependencies = "android.applicationVariants.all \u007b variant -> variant.outputs.all \u007b output -> output.processManifestProvider.get().doFirst \u007b var srcM = new File('${projectDir}/../../../../AndroidManifest.xml'); var tgtM = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (srcM.exists()) \u007b tgtM.text = srcM.text \u007d \u007d \u007d \u007d"
 

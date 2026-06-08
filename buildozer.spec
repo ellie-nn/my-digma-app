@@ -55,7 +55,7 @@ android.services_stop_on_task_removed = False
    # services = ...
 
 # 1. Подключаем нашу Java-папку с кодом службы
-android.add_src = java
+   #android.add_src = java
 
 # 2. ЖЕСТКИЙ ПРАВИЛО-ЩИТ ДЛЯ GRADLE (ProGuard Keep Rules)
 # Эти аргументы запрещают оптимизатору R8 сжимать, обфусцировать или вырезать наш Java-класс!

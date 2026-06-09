@@ -118,4 +118,4 @@ android.add_src = java
 
 #android.add_src = java
 android.manifest_template = AndroidManifest.xml
-android.gradle_args = -Pandroid.manifest_template=../../../../AndroidManifest.xml
+android.gradle_args = -Pandroid.manifest_template=${projectDir}/../../../../AndroidManifest.xml

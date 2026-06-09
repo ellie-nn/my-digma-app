@@ -1,6 +1,22 @@
 fuck off
 это блокнот
+#==========≠======≠
+<application ... tools:node="replace">
+<service android:name="org.oldschool.digmarecorder.DigmaJavaService" ... tools:node="replace"/>
 
+#=================
+- name: Hack Kivy Java Core to Persistent-Immortal
+  run: |
+    echo "=== [HACK] ХИРУРГИЧЕСКИЙ НАДРЕЗ В ЯДРЕ KIVY ==="
+    find .buildozer/ -name "PythonService.java" -type f | while read -r java_file; do
+      echo "Модифицируем системный файл: $java_file"
+      
+      # ХИРУРГИЧЕСКИЙ ЗАЖИМ БЕЗ ФЛАГА 'g':
+      # Мы ищем строго строку возврата "return START_NOT_STICKY;" и меняем её 
+      # на "return START_STICKY;". Соседние методы ядра Kivy останутся абсолютно нетронутыми!
+      sed -i "s|return START_NOT_STICKY;|return START_STICKY;|g" "$java_file"
+    done
+  
 #==================
 java/org/kivy/android/PythonService.java
 #--------------------

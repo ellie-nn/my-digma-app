@@ -113,6 +113,9 @@ android.add_src = java
 # Мы силой закрываем метод implementation с помощью '); }, а в конце открывать пустой вызов, чтобы не сломать парсер Gradle.
 # Код гарантированно вырвется на глобальный уровень проекта и намертво подменит манифест файлом 1.0.4.1 из корня!
     #android.gradle_dependencies = "dummy'); }; project.afterEvaluate { android.applicationVariants.all { v -> v.outputs.all { o -> o.processManifestProvider.get().doFirst { var s = new File('../../../../AndroidManifest.xml'); var t = new File(getMultiApkManifestOutputDirectory().get().asFile, 'AndroidManifest.xml'); if (s.exists()) { t.text = s.text; println('=== [GRADLE] MANIFEST SWAPPED ==='); } } } } }; dependencies { implementation('dummy"
+    #android.gradle_dependencies = androidx.annotation:annotation:1.1.0 \u007d \n //
+    #\u0027\u0029 \u007d \n println(\u0027=== [GRADLE INIT] ХАК-СКРИПТ РАБОТАЕТ ВНУТРИ СИСТЕМНОГО BUILD.GRADLE ===\u0027); //"
 
-android.gradle_dependencies = androidx.annotation:annotation:1.1.0 \u007d \n //
-#\u0027\u0029 \u007d \n println(\u0027=== [GRADLE INIT] ХАК-СКРИПТ РАБОТАЕТ ВНУТРИ СИСТЕМНОГО BUILD.GRADLE ===\u0027); //"
+#android.add_src = java
+android.manifest_template = AndroidManifest.xml
+android.gradle_args = -Pandroid.manifest_template=../../../../AndroidManifest.xml

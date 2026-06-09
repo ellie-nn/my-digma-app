@@ -12,6 +12,8 @@ import tinytuya
 
 import time
 import os
+#import signal
+#import csv
 import pyaes
 import sys
 
@@ -20,13 +22,11 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.utils import platform
+#from android.storage import primary_external_storage_path
 
 from kivy.core.window import Window
 
-#from jnius import autoclass #, cast
-
-from oscpy.server import OSCThreadServer
-
+from jnius import autoclass #, cast
 
 # === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
 # import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]
@@ -52,22 +52,26 @@ from oscpy.server import OSCThreadServer
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
-SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
-        
+
+
 def append_to_public_documents(filename, text_content):
     try:
-        from jnius import autoclass
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')
         MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
         resolver = Context.getContentResolver()
         collection_uri = MediaStoreFiles.getContentUri("external")
         
+        #print(f'Collection\n{collection_uri}\n')
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
@@ -80,6 +84,7 @@ def append_to_public_documents(filename, text_content):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
+            #values.put("mime_type", "text/plain")
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/")
             file_uri = resolver.insert(collection_uri, values)
@@ -104,102 +109,10 @@ class MediaStoreStdout:
             append_to_public_documents("app_log.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-       
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-from kivy.app import App
-from kivy.uix.widget import Widget
-#from jnius import autoclass
-# Импортируем официальный Android-модуль Kivy для запроса прав
-from android.permissions import request_permissions, Permission
-
-class EmptyWindowApp(App): 
-    def build(self):
-        from jnius import autoclass
-        Context = autoclass('org.kivy.android.PythonActivity').mActivity
-        vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
-        vibrator.vibrate(500) 
-        time.sleep(1.0)
-    
-       # self.label = Label(
-        #    text="Инициализация Python ядра...\nОжидайте.", 
-        #    font_size='18sp',
-      #      halign='center',
-    #        valign='top'
-    #    )
-     #   self.label.bind(size=self.label.setter('text_size'))
-     #   time.sleep(5.0)
         
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-        print('Lunched')
-            
-        # 1. ЖЕСТКИЙ ЗАЖИМ БЕЗОПАСНОСТИ: Запрашиваем Runtime-права у Android!
-        # Мы просим систему легально выдать нам допуск к фоновой синхронизации данных
-  #      try:
-     #       request_permissions([
-          #      Permission.FOREGROUND_SERVICE,
-        #        Permission.FOREGROUND_SERVICE_DATA_SYNC
-     #       ])
-     #       print("[LOG] Запрос фоновых разрешений успешно отправлен на экран смартфона!")
-      #  except Exception as perm_err:
-      #      print(f"[LOG] Ошибка запроса прав (возможно, запуск не на Android): {perm_err}")
-
-        try:
-            #from jnius import autoclass
-            # 1. Достаем контекст активности окна
-        #    Context = autoclass('org.kivy.android.PythonActivity').mActivity
-
-            # Динамически вычисляем точное имя пакета прямо из памяти телефона!
-          #  package_name = Context.getPackageName() # Получим 'org.oldschool.digmarecorder'
-            
-            # 2. Напрямую вызываем нашу кастомную Java-службу!
-            Intent = autoclass('android.content.Intent')
-          #  ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
-          #  ServiceClass = autoclass(f"{package_name}.DigmaJavaService")
-          #  ServiceClass = autoclass("org.kivy.android.PythonService")
-          #  ServiceClass = autoclass("org.kivy.android.DigmaJavaService")
-            ServiceClass = autoclass('org.oldschool.digmarecorder.DigmaJavaService')
-            intent = Intent(Context, ServiceClass)
-            result = Context.startForegroundService(intent) # Поджигаем фитиль!
-            if not result: raise Exception('Не удалось запустить службу')
-            vibrator.vibrate(500) 
-            time.sleep(1.0)
-            vibrator.vibrate(500) 
-            time.sleep(1.0)
-            
-            print("=== [MAIN] JAVA-СЛУЖБА УСПЕШНО ЗАПУЩЕНА ЧЕРЕЗ СТАРТ-ИНТЕНТ ===")
-        except Exception as e:
-            vibrator.vibrate(500) 
-            time.sleep(1.0)
-            print(f"Ошибка запуска: {e}")
-            
-        return Widget() # Возвращаем абсолютно пустой графический виджет
-
-if __name__ == '__main__':
-    EmptyWindowApp().run()
-    
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-def vibro():
-    from jnius import autoclass
-    # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-    try:
-        # 1. Достаем контекст живой фоновой службы Kivy
-        #Context = autoclass('org.kivy.android.PythonService').mService
-            
-        # 2. Вызываем официальную системную службу вибрации Android    
-        #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
-    
-        # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-        vibrator.vibrate(500) 
-        time.sleep(1.0)
-    except Exception as vib_err:
-        # Если мы упали на старте — этот принт улетит в системный Logcat
-        print(f"Ошибка вибромотора: {vib_err}")
- 
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
-        from jnius import autoclass
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 
@@ -209,14 +122,15 @@ class DigmaRecorderApp(App):
         )
         self.label.bind(size=self.label.setter('text_size'))
         
-        self.vatt_sum = 0
-        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
-        
-        # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-
-        
+        # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
+      #  try:
+    #        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+      #      vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+       #     vibrator.vibrate(2000)
+      #  except Exception as vib_err:
+      #      print(f"Ошибка вибромотора: {vib_err}")
+        # ==========================================
+           
         try:
             # мост к Java-службам Android
             from android import AndroidService
@@ -230,56 +144,80 @@ class DigmaRecorderApp(App):
         
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"
+                        
+        #return label
         
+        self.vatt_sum = 0
+        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
+        # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+
+        try:
+            devices = tinytuya.deviceScan(None,5)
+            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
+        except Exception as e:
+           print(f'Can''t find ip\n{e}\nDevices={devices}\n')
+           #raise SysExit
+        try:               
+            self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
+            self.rosette.set_version(3.3)
+            self.rosette.set_socketTimeout(2)
+            self.rosette.updatedps()
+            time.sleep(0.1)
+        
+        except Exception as e:
+            print(f'First interaction error:\n{e}')
+            #raise SysExit
+    
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         #self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.last_time = time.time()
         self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
-        #Clock.schedule_interval(self.update_screen, 5.0)
-
-        # 1. Включаем наш внутренний радиоприемник
-        self.server = OSCThreadServer()
-        self.server.listen(address='127.0.0.1', port=3000, default=True)
-        
-        # 2. Намертво привязываем нашу волну к функции обновления экрана
-        self.server.bind(b'/rosette_packet', self.display_live_data)
+        Clock.schedule_interval(self.update_screen, 5.0)
         
 #        if platform == 'android':
   #          self.start_background_service()
  #       else:
   #          self.start_background_service()
+        #import tinytuya    
         
         return self.label
         
- #   def start_background_service(self):
-  #      print('!!! -PROGRAM LUNCHED- !!!')
+    def check_permissions_callback(self, permissions, grants):
+        # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!
+        if all(grants):
+            self.label.text = "Права получены! Поджигаем фитиль..."
+            try:
+                from android import AndroidService
+                service = AndroidService('digmaservice', 'Служба работает в фоне...')
+                service.start('service.py')
+                self.ttext = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
+            except Exception as e:
+                self.ttext = f" Ошибка старта: {e}"
+        else:
+            self.ttext = " Вы отказали в правах. Служба заблокирована системой!"
+        return   
+    def start_background_service(self):
+        print('!!! -PROGRAM LUNCHED- !!!')
         
- #       try:
- #           self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
- #       except Exception as e:
-   #         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
-    
-    def display_live_data(self,count,tstamp, vatt, integral,kwh):
-        # Эта функция сама мгновенно сработает в ту же миллисекунду, 
-        # когда служба пришлет свежий замер розетки!
-        #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
-        tstamp += SUB_TIME
-    
-        #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        print(self.label.text)
-        
+        try:
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+        except Exception as e:
+            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
+                
     def update_screen(self, dt):
-        current_time = time.strftime('%H:%M:%S')
+        #current_time = time.strftime('%H:%M:%S')
+        
         
         # Забираем свежий статус
-#data = self.rosette.status()
+        data = self.rosette.status()
         time_ = time.time()
-        print('!!! CYCLE WORKS !!!')
+        print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
-        if False: # or data and 'dps' in data:
+        if data and 'dps' in data:
             dps = data['dps']
             
             # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
@@ -301,8 +239,8 @@ class DigmaRecorderApp(App):
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-#self.rosette.updatedps()
+        self.rosette.updatedps()
         time.sleep(0.1)
             
-#if __name__ == '__main__':
- #   DigmaRecorderApp().run()
+if __name__ == '__main__':
+    DigmaRecorderApp().run()

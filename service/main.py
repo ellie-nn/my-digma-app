@@ -1,127 +1,29 @@
-import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
-# 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-logging.disable(logging.CRITICAL)
-
 import time
+#from android import AndroidService  # Импортируем управление службой
 import os                            # Для os.getcwd() или системных проверок
 import sys       # Для sys.stdout/sys.stderr и перехвата print()
 from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
 
-import tinytuya
-#if 'tinytuya' in sys.modules:
-
-import pyaes
-
-from kivy.app import App
-from kivy.uix.label import Label
-from kivy.clock import Clock
-from kivy.utils import platform
-
-from kivy.core.window import Window
-
-from oscpy.client import send_message
-
-            
-
-FDATA_NAME = "servicework.txt"
-FSVC_LOG = "srv_log.txt"
-DEVICE_ID = "bf1a864dc80b65d878lv65"
-LOCAL_KEY = "X@o=_T>sgCfWGeEz"
-SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-Context = autoclass('org.kivy.android.PythonService').mService
-vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+time.sleep(2.0)
+# === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
+try:
+    # 1. Достаем контекст живой фоновой службы Kivy
+    Context = autoclass('org.kivy.android.PythonService').mService
     
-def vibro():
-    # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-    try:
-        # 1. Достаем контекст живой фоновой службы Kivy
-        #Context = autoclass('org.kivy.android.PythonService').mService
-            
-        # 2. Вызываем официальную системную службу вибрации Android    
-        #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+    # 2. Вызываем официальную системную службу вибрации Android
+    vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
-        # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-        vibrator.vibrate(500) 
-        time.sleep(1.0)
-    except Exception as vib_err:
-        # Если мы упали на старте — этот принт улетит в системный Logcat
-        print(f"Ошибка вибромотора: {vib_err}")
-     # ==========================================
+    # 3. Трясем телефон 2000 миллисекунд (2 секунды)
+    vibrator.vibrate(2000)
+except Exception as vib_err:
+    # Если мы упали на старте — этот принт улетит в системный Logcat
+    print(f"Ошибка вибромотора: {vib_err}")
+# ==========================================
 
-def SetBkgddStatus():
-    # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
-    try:
-        
-    # 1. Получаем контекст живой фоновой службы Kivy
-        Context = autoclass('org.kivy.android.PythonService').mService
-
-    
-                # 1. СОЗДАЕМ КАНАЛ УВЕДОМЛЕНИЙ (Жесткое требование Android 10+)
-        # Нам нужны классы менеджера, канала и важности
-        NotificationManager = autoclass('android.app.NotificationManager')
-        NotificationChannel = autoclass('android.app.NotificationChannel')
-
-        channel_id = "digma_service_channel"
-        channel_name = "Мониторинг розетки Digma"
-                # Важность IMPORTANCE_LOW (2) — чтобы служба не пищала динамиком каждую секунду
-        importance = NotificationManager.IMPORTANCE_LOW 
-      
-                # Строим сам канал
-        channel = NotificationChannel(channel_id, channel_name, importance)
-      
-                # Регистрируем канал внутри операционной системы Android
-        notification_manager = Context.getSystemService(Context.NOTIFICATION_SERVICE)
-        notification_manager.createNotificationChannel(channel)
-         
-    # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
-    # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
-        pack_mgr = Context.getPackageManager()
-        pack_info = pack_mgr.getPackageInfo(Context.getPackageName(), 0)
-        app_icon = pack_info.applicationInfo.icon
-                
-                # 2. ВЫТАСКИВАЕМ ИКОНКУ ПРИЛОЖЕНИЯ (как раньше)
-                
-        vibro()
-    # 3. Строим легальное системное уведомление для шторки Android
-        NotificationBuilder = autoclass('android.app.Notification$Builder')
-    # Передаем контекст службы (для Android 10+ каналы создаются Kivy автоматически)
-        #builder = NotificationBuilder(Context)
-        builder = NotificationBuilder(Context, channel_id)
-        builder.setSmallIcon(app_icon)
-        builder.setContentTitle("Мониторинг розеток Digma")
-        builder.setContentText("Служба непрерывно собирает Ватты в фоне...")
-        
-        vibro()
-    # 4. ВЫЗЫВАЕМ СИСТЕМНУЮ КОНСТАНТУ ТИПА СЛУЖБЫ ИЗ СЕРДЦА ANDROID
-    # ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC равен числу 1 (0x00000001)
-        ServiceInfo = autoclass('android.content.pm.ServiceInfo')
-        service_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
-                
-        vibro()
-    # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
-    # Число 101 — это уникальный ID нашего уведомления в шторке
-        
-        Context.startForeground(101, builder.build())
-        
-        # === УЛЬТИМАТИВНЫЙ ХАК: ДЕЛАЕМ СЛУЖБУ "ЛИПКОЙ" (START_STICKY) ===
-        # Вытаскиваем системную константу START_STICKY (она равна числу 1)
-        Service = autoclass('android.app.Service')
-        sticky_flag = Service.START_STICKY
-        
-        # Принудительно перезаписываем внутреннее состояние службы Android
-        # Теперь, даже если Kivy попытается сделать суицид при смахивании, 
-        # ядро Android мгновенно (в ту же секунду) воскресит наш файл service/main.py в памяти!
-        Context.setSticky(True) # Если метод поддерживается Kivy-оболочкой
-        
-        vibro()
-        
-        print("[LOG] Бессмертный режим успешно активирован по законам Android 10!")
-    except Exception as fgs_err:
-        print(f"[LOG] Ошибка активации Foreground: {fgs_err}")
-        
-#‐---'ччччччяяр------'ч
-#^^^^^^^^&&&&&&&&&&&&&&^
-
+# Объявляем Android, что наша служба — бессмертная (Foreground Service)
+# В шторке телефона зажжется неудаляемое уведомление. Без этого Android прибьет процесс через минуту.
+#service = AndroidService()
+#service.start('DigmaService', 'Идет непрерывный сбор данных...')
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -136,10 +38,15 @@ def append_to_public_documents(filename, text_content):
         resolver = Context.getContentResolver()
         collection_uri = MediaStoreFiles.getContentUri("external")
         
+        #print(f'Collection\n{collection_uri}\n')
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
@@ -152,6 +59,7 @@ def append_to_public_documents(filename, text_content):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
+            #values.put("mime_type", "text/plain")
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/")
             file_uri = resolver.insert(collection_uri, values)
@@ -165,122 +73,30 @@ def append_to_public_documents(filename, text_content):
         # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
         with open(filename, 'a', encoding='utf-8') as f:
             f.write(text_content + "\n")
-                        
+        
+
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            append_to_public_documents(FSVC_LOG, message.strip())
+            append_to_public_documents("srv_log.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
-class DigmaServiceEngine:
-    def __init__(self):
-        
-        self.ttext = 'ttext'
-        
-        
-        #append_to_public_documents(FDATA_NAME, 'start')
-        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
-        sys.stdout = MediaStoreStdout()
-        
-        sys.stderr = sys.stdout
-        
-        #print('stdoutstart')
-        SetBkgddStatus()
+# АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
+sys.stdout = MediaStoreStdout()
+sys.stderr = sys.stdout
 
-        while True:
-            time.sleep(1.0)
-            vibro()
-                    
-#----------  Далее блок Туи ...
-        try:
-            devices = tinytuya.deviceScan(None,5)
-            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-        except Exception as e:
-           print(f'Can''t find ip\n{e}\nDevices={devices}\n')
-           #raise SysExit
-        try:               
-            self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-            self.rosette.set_version(3.3)
-            self.rosette.set_socketTimeout(2)
-            self.rosette.updatedps()
-            time.sleep(0.1)
-        
-        except Exception as e:
-            print(f'First interaction error:\n{e}')
-            #raise SysExit
-        time.sleep(2.0)
-        
-        #print('stdouttestend')
-        self.last_time = time.time()
-        self.vatt_sum = 0
-        self.counter = 0 
-        while True:
-            #append_to_public_documents(FDATA_NAME, 'loop')
-            self.update_data()
-            time.sleep(1.0)
-        return
+print('stdouttest')
 
-    def update_data(self):
-        #current_time = time.strftime('%H:%M:%S')
-        
-        # Забираем свежий статус
-        data = self.rosette.status()
-        utime = time.time()
-        #print('!!! SERVICE LUNCHED !!!')
-        printout = f"{time.strftime('%H:%M:%S')}"
-            
-        if data and 'dps' in data:
-            dps = data['dps']
-            
-            # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
-            raw_vatt = dps.get('19', 0)
-            vatt = raw_vatt / 10.0
-            
-            # Если 17-й параметр есть - берем его, если скрыт - пишем -1
-            kwh_17 = dps.get('17', -1)
-            
-            current_time = time.strftime('%H:%M:%S')
-            
-            self.vatt_sum += vatt*(utime-self.last_time)/3600
-            self.last_time = utime
-            self.counter += 1
-                
-            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-                
-            try:
-            # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
-            # Префикс b'/rosette_packet' — это имя нашей радиоволны
-                pass        
-                #send_message(b'/rosette_packet', [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
-            except Exception as e:
-                pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
-                print(f'Не удалось отправить пакет\n{e}')
-            
-        else:
-            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {-1} {self.vatt_sum} {-1}"
-                    
-        append_to_public_documents(FDATA_NAME,printout)            
-        self.tttext = printout
-        # Каждую секунду выводим на экран доказательство, что Python ЖИВ
-        #self.label.text = 
-        #print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
-        self.rosette.updatedps()
-        return
-if __name__ == '__main__':
-    engine = DigmaServiceEngine()
-    
-#-----------
-
-        
 # НАШ БЕСКОНЕЧНЫЙ ФОНОВЫЙ ЦИКЛ
-#while True:
+while True:
     # --------------------------------------------------
     # ЗДЕСЬ ИДЕТ ЛЮБАЯ ВАША ФОНОВАЯ РАБОТА (Запись логов, сокеты, интегралы)
     # --------------------------------------------------
+    append_to_public_documents('servicework.txt', 'text_content')
     # Железное правило: фоновый цикл ОБЯЗАН спать хотя бы секунду, 
     # чтобы не раскалять процессор телефона до 100% и не жрать батарею!
-  #  time.sleep(1.0)
+    time.sleep(1.0)

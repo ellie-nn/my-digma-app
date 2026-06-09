@@ -71,7 +71,7 @@ jobs:
           # ХИРУРГИЧЕСКИЙ ЗАЖИМ БЕЗ ФЛАГА 'g':
           # Мы ищем строго строку возврата "return START_NOT_STICKY;" и меняем её 
           # на "return START_STICKY;". Соседние методы ядра Kivy останутся абсолютно нетронутыми!
-          sed -i "s|return START_NOT_STICKY;|return START_STICKY;|g" "$java_file"
+          sed -i "s|return START_NOT_STICKY;|return START_STICKY;|g|w /dev/stdout" "$java_file"
         done
   
     - name: Final Build with Buildozer

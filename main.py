@@ -154,12 +154,12 @@ class DigmaRecorderApp(App):
         sys.stderr = sys.stdout
 
         try:
-            devices = tinytuya.deviceScan(None,5)
+            devices = tinytuya.deviceScan(None,10)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
             print(f'Ip found: {ip_address}')
         except Exception as e:
-           print(f'Can''t find ip\n{e}\nDevices={devices}\n')
-           #raise SysExit
+            print(f'Can''t find ip\n{e}\nDevices={devices}\n')
+            #raise SysExit
         try:               
             self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
             self.rosette.set_version(3.3)

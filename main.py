@@ -52,6 +52,7 @@ from jnius import autoclass #, cast
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
+SUB_DIR = "v11/"
 
 
 
@@ -68,7 +69,8 @@ def append_to_public_documents(filename, text_content):
         # Составляем SQL-запрос к Android: имя файла и папка Documents
         #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
-        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
+        relpath = "Documents/"+SUB_DIR
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
@@ -86,7 +88,7 @@ def append_to_public_documents(filename, text_content):
             values.put("_display_name", filename)
             #values.put("mime_type", "text/plain")
             values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Documents/")
+            values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
         
         # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"

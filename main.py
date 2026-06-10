@@ -213,7 +213,11 @@ class DigmaRecorderApp(App):
         
         
         # Забираем свежий статус
-        data = self.rosette.status()
+        data = False
+        try:
+            data = self.rosette.status()
+        except:
+            print('line 219, probably no self.rosette')
         time_ = time.time()
         print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
@@ -240,7 +244,8 @@ class DigmaRecorderApp(App):
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        self.rosette.updatedps()
+        if data:
+            self.rosette.updatedps()
         time.sleep(0.1)
             
 if __name__ == '__main__':

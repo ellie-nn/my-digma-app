@@ -1,6 +1,6 @@
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-logging.disable(logging.CRITICAL)
+#logging.disable(logging.CRITICAL)
 
 import time
 import os                            # Для os.getcwd() или системных проверок

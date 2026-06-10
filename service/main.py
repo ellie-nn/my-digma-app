@@ -134,6 +134,7 @@ class DigmaServiceEngine:
         #current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
+        data = False
         try:
             data = self.rosette.status()
         except:

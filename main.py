@@ -5,7 +5,7 @@
 
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-logging.disable(logging.CRITICAL)
+#logging.disable(logging.CRITICAL)
 
 import tinytuya
 #if 'tinytuya' in sys.modules:

@@ -221,7 +221,7 @@ class DigmaRecorderApp(App):
         time_ = time.time()
         print('!!! PROGRAM LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
-            
+        current_time = time.strftime('%H:%M:%S')    
         if data and 'dps' in data:
             dps = data['dps']
             
@@ -231,8 +231,6 @@ class DigmaRecorderApp(App):
             
             # Если 17-й параметр есть - берем его, если скрыт - пишем -1
             kwh_17 = dps.get('17', -1)
-            
-            current_time = time.strftime('%H:%M:%S')
             
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_

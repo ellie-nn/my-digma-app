@@ -12,8 +12,6 @@ import tinytuya
 
 import time
 import os
-#import signal
-#import csv
 import pyaes
 import sys
 
@@ -22,7 +20,6 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.clock import Clock
 from kivy.utils import platform
-#from android.storage import primary_external_storage_path
 
 from kivy.core.window import Window
 
@@ -63,15 +60,10 @@ def append_to_public_documents(filename, text_content):
         resolver = Context.getContentResolver()
         collection_uri = MediaStoreFiles.getContentUri("external")
         
-        #print(f'Collection\n{collection_uri}\n')
-        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
-        # Составляем SQL-запрос к Android: имя файла и папка Documents
-        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
-        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
@@ -84,7 +76,6 @@ def append_to_public_documents(filename, text_content):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
-            #values.put("mime_type", "text/plain")
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/")
             file_uri = resolver.insert(collection_uri, values)
@@ -122,15 +113,13 @@ class DigmaRecorderApp(App):
         )
         self.label.bind(size=self.label.setter('text_size'))
         
-        # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-      #  try:
-    #        Context = autoclass('org.kivy.android.PythonActivity').mActivity
-      #      vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
-       #     vibrator.vibrate(2000)
-      #  except Exception as vib_err:
-      #      print(f"Ошибка вибромотора: {vib_err}")
-        # ==========================================
-           
+        self.vatt_sum = 0
+        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
+        # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+
+        
         try:
             # мост к Java-службам Android
             from android import AndroidService
@@ -144,33 +133,7 @@ class DigmaRecorderApp(App):
         
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"
-                        
-        #return label
         
-        self.vatt_sum = 0
-        self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
-        # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-
-        try:
-            devices = tinytuya.deviceScan(None,10)
-            ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
-            print(f'Ip found: {ip_address}')
-        except Exception as e:
-            print(f'Can''t find ip\n{e}\nDevices={devices}\n')
-            #raise SysExit
-        try:               
-            self.rosette = tinytuya.OutletDevice(DEVICE_ID, ip_address, LOCAL_KEY)
-            self.rosette.set_version(3.3)
-            self.rosette.set_socketTimeout(2)
-            self.rosette.updatedps()
-            time.sleep(0.1)
-        
-        except Exception as e:
-            print(f'First interaction error:\n{e}')
-            #raise SysExit
-    
         self.text = f'СИСТЕМА СТАРОЙ ШКОЛЫ Ψ!\n'
         #self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ tt!\n'
         self.last_time = time.time()
@@ -182,43 +145,28 @@ class DigmaRecorderApp(App):
   #          self.start_background_service()
  #       else:
   #          self.start_background_service()
-        #import tinytuya    
         
         return self.label
         
-    def check_permissions_callback(self, permissions, grants):
-        # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!
-        if all(grants):
-            self.label.text = "Права получены! Поджигаем фитиль..."
-            try:
-                from android import AndroidService
-                service = AndroidService('digmaservice', 'Служба работает в фоне...')
-                service.start('service.py')
-                self.ttext = "СЛУЖБА ЗАПУЩЕНА!\nПроверяйте шторку телефона."
-            except Exception as e:
-                self.ttext = f" Ошибка старта: {e}"
-        else:
-            self.ttext = " Вы отказали в правах. Служба заблокирована системой!"
-        return   
-    def start_background_service(self):
-        print('!!! -PROGRAM LUNCHED- !!!')
+ #   def start_background_service(self):
+  #      print('!!! -PROGRAM LUNCHED- !!!')
         
-        try:
-            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
-        except Exception as e:
-            self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
+ #       try:
+ #           self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ НЕсбоит!\n{e}'
+ #       except Exception as e:
+   #         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ сбоит!\n{e}'
                 
     def update_screen(self, dt):
-        #current_time = time.strftime('%H:%M:%S')
         
+        current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
-        data = self.rosette.status()
+#data = self.rosette.status()
         time_ = time.time()
-        print('!!! PROGRAM LUNCHED !!!')
+        print('!!! CYCLE WORKS !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
-        if data and 'dps' in data:
+        if False: # or data and 'dps' in data:
             dps = data['dps']
             
             # Извлекаем Ватты (19) и Счетчик кВт*ч (17)
@@ -240,8 +188,9 @@ class DigmaRecorderApp(App):
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         self.label.text = f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус."
-        self.rosette.updatedps()
+#self.rosette.updatedps()
         time.sleep(0.1)
             
 if __name__ == '__main__':
     DigmaRecorderApp().run()
+        

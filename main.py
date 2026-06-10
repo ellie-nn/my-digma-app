@@ -156,6 +156,7 @@ class DigmaRecorderApp(App):
         try:
             devices = tinytuya.deviceScan(None,5)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
+            print(f'Ip found: {ip_address}')
         except Exception as e:
            print(f'Can''t find ip\n{e}\nDevices={devices}\n')
            #raise SysExit

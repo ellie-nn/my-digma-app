@@ -134,7 +134,10 @@ class DigmaServiceEngine:
         #current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
-        data = self.rosette.status()
+        try:
+            data = self.rosette.status()
+        except:
+            print('line 140, probably no self.rosette')
         time_ = time.time()
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
@@ -163,7 +166,8 @@ class DigmaServiceEngine:
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ
         #self.label.text = 
         #print(f"{self.tttext}\n{self.ttext}\nТекущее время: {current_time}\n\nОкно открыто и держит фокус.")
-        self.rosette.updatedps()
+        if data:
+            self.rosette.updatedps()
         return
 if __name__ == '__main__':
     engine = DigmaServiceEngine()

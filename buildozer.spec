@@ -5,6 +5,7 @@ package.name = digmarecorder
 package.domain = org.oldschool
 version = 1.0.5
 source.include_exts = py,png,jpg,kv,csv
+icon.filename = socket.png
 
 requirements = python3,kivy,pyaes,oscpy
 #,schedule

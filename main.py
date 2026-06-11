@@ -61,7 +61,7 @@ from kivy.uix.button import Button
 from kivy_garden.graph import Graph, LinePlot
 
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
-LOG_PATH = SUB_DIR+'servicework1.txt'
+LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 
 def append_to_public_documents(filename, text_content):
     try:
@@ -131,7 +131,7 @@ if True:
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,
             xmin=0, xmax=20,  
-            ymin=200, ymax=250 
+            ymin=0, ymax=300
         )
 
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
@@ -142,11 +142,10 @@ if True:
                 with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
                     x_index = 0
                     for line in f:
-                        if "voltage" in line.lower():
+                        if True:
                             try:
                                 # Хирургический вырез значения вольтажа из строки лога
-                                raw_part = line.split("'voltage':")[1].split(",")[0]
-                                voltage_value = float(raw_part.strip())
+                                voltage_value = float(line.split()[2])
                                 points.append((x_index, voltage_value))
                                 x_index += 1
                             except Exception:

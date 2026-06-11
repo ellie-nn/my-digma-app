@@ -82,12 +82,12 @@ def freadln_range(uri,min,max):
         # ПУЛЬСИРУЮЩИЙ ПОСТРОЧНЫЙ ПЕРЕБОР:
         # Память телефона не нагружается, файл не блокируется для фонового мотора!
         line_count = 0
-        target_line = 50  # Допустим, нам нужна строго 50-я строка
+        #target_line = min  # Допустим, нам нужна строго 50-я строка
         while True:
             line = reader.readLine()
             if line is None: 
                 break  # Файл закончился
-            if line_count == target_line:
+            if line_count == min:
                 print(f"[LOG] Найдена нужная строка: {line}")
                 # ... здесь отдаем строку на наш график ...
                 break

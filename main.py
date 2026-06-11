@@ -5,7 +5,7 @@
 
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-#logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 import tinytuya
 #if 'tinytuya' in sys.modules:
@@ -178,7 +178,7 @@ class DigmaRecorderApp(App):
         self.last_time = time.time()
         self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
-        Clock.schedule_interval(self.update_screen, 5.0)
+        Clock.schedule_interval(self.update_screen, 1.0)
         
 #        if platform == 'android':
   #          self.start_background_service()

@@ -119,11 +119,11 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     
-if False:
+if True:
     def build_voltage_graph(file_path):
-        """
-        ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
-        """
+        #"""
+        #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
+        #"""
         graph = Graph(
             xlabel='Время', ylabel='Вольты',
             x_ticks_minor=1, x_ticks_major=5,

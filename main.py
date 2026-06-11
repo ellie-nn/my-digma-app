@@ -55,10 +55,10 @@ FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
 
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.button import Button
+#from kivy.uix.floatlayout import FloatLayout
+#from kivy.uix.button import Button
 # Импортируем легальный Kivy-движок для графиков
-from kivy_garden.graph import Graph, LinePlot
+#from kivy_garden.graph import Graph, LinePlot
 
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 LOG_PATH = SUB_DIR+'servicework.txt'

@@ -122,3 +122,8 @@ android.add_src = java
 #android.add_src = java
 android.manifest_template = AndroidManifest.xml
 android.gradle_args = -Pandroid.manifest_template=${projectDir}/../../../../AndroidManifest.xml
+
+# УЛЬТИМАТИВНЫЙ ФЛАГ ОТКЛЮЧЕНИЯ ИЗОЛЯЦИИ ДЛЯ ANDROID 10:
+# Этот аргумент принудительно заставит Android 10 работать по старым правилам, 
+# открыв нашему графическому окну полный зрячий доступ на чтение папки Documents!
+android.manifest.application_xml = <application android:requestLegacyExternalStorage="true" />

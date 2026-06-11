@@ -9,7 +9,6 @@ source.include_exts = py,png,jpg,kv,csv
 
 requirements = python3,kivy,pyaes,oscpy,kivy,kivy_garden.graph
 # ТРЕБОВАНИЯ НАШЕГО ПРИЛОЖЕНИЯ:
-requirements = python3,kivy,kivy_garden.graph
 
 #,schedule
 #android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,WAKE_LOCK, WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE

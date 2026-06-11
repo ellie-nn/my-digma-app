@@ -119,94 +119,9 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     
-if True:
-    def build_voltage_graph(file_path):
-        #"""
-        #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
-        #"""
-        graph = Graph(
-            xlabel='Время', ylabel='Вольты',
-            x_ticks_minor=1, x_ticks_major=5,
-            y_ticks_minor=5, y_ticks_major=10,
-            y_grid_label=True, x_grid_label=True,
-            padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=20,  
-            ymin=200, ymax=250 
-        )
-
-        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
-        points = []
+#if True:
+#    def build_voltage_graph(file_path):
         
-        if os.path.exists(file_path):
-            try:
-                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                    x_index = 0
-                    for line in f:
-                        if "voltage" in line.lower():
-                            try:
-                                # Хирургический вырез значения вольтажа из строки лога
-                                raw_part = line.split("'voltage':")[1].split(",")[0]
-                                voltage_value = float(raw_part.strip())
-                                points.append((x_index, voltage_value))
-                                x_index += 1
-                            except Exception:
-                                continue
-                if len(points) > 20:
-                    graph.xmax = len(points)
-            except Exception as e:
-                print(f"[ERR] Ошибка чтения файла: {e}")
-        
-        # Заглушка, если мотор еще не успел создать файл на чистой установке
-        if not points:
-            points = [(0, 220), (20, 220)]
-
-        plot.points = points
-        graph.add_plot(plot)
-        return graph
-
-    def clear_log_file(self, instance):
-        return
-        
-    def g_init():
-        # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        main_layout = FloatLayout()
-        
-        # ========================================================
-        # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
-        # ========================================================
-        graph_widget = build_voltage_graph(LOG_PATH)
-        # Занимает 100% ширины и 100% высоты окна [↑]
-        graph_widget.size_hint = (1.0, 1.0) 
-        graph_widget.pos_hint = {'x': 0, 'y': 0}
-        main_layout.add_widget(graph_widget)
-        
-        # ========================================================
-        # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
-        # ========================================================
-        status_label = Label(
-            text="Digma R12: Мониторинг сети",
-            size_hint=(0.6, 0.08),            # 60% ширины экрана, 8% высоты [↑]
-            pos_hint={'x': 0.2, 'y': 0.9},     # Центрируем сверху (отступ 20% слева, 90% вверх) [↑]
-            color=[1, 1, 1, 0.8],             # Белый цвет с легкой прозрачностью 80%
-            font_size=16
-        )
-        main_layout.add_widget(status_label)
-        
-        # ========================================================
-        # СЛОЙ 3 (ВЕРХНИЙ): КНОПКА ОЧИСТКИ ПОВЕРХ ГРАФИКА ВНИЗУ [↑]
-        # ========================================================
-        btn_clear = Button(
-            text="Очистить лог розетки",
-            size_hint=(0.5, 0.08),            # 50% ширины экрана, 8% высоты [↑]
-            pos_hint={'x': 0.25, 'y': 0.05},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
-            background_color=[1, 0, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
-        )
-        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
-        btn_clear.bind(on_release=clear_log_file)
-        main_layout.add_widget(btn_clear)
-        
-        return main_layout
-    
     
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
@@ -214,10 +129,10 @@ class DigmaRecorderApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('START')
-        try:
-            self.mywin = g_init()
-            sleep(10.0)
-        except: pass
+       # try:
+       #     self.mywin = g_init()
+       #     sleep(10.0)
+        #except: pass
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

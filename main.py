@@ -281,7 +281,9 @@ class DigmaRecorderApp(App):
         sys.stderr = sys.stdout
         print('START')
         #try:
-        #self.mywin = g_init()
+        print(append_to_public_documents('servicework.txt', '', 1,2))
+        time.sleep(10.0)
+        self.mywin = g_init()
         print(append_to_public_documents('servicework.txt', '', 1,2))
         time.sleep(10.0)
         #except: pass

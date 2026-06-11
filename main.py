@@ -209,6 +209,9 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+
         try:
             self.mywin = g_init()
             sleep(10.0)
@@ -250,9 +253,7 @@ class DigmaRecorderApp(App):
         self.vatt_sum = 0
         self.tttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ TTT!\n'
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-
+       
         try:
             devices = tinytuya.deviceScan(None,10)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]

@@ -1,6 +1,6 @@
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
-#logging.disable(logging.CRITICAL)
+logging.disable(logging.CRITICAL)
 
 import time
 import os                            # Для os.getcwd() или системных проверок
@@ -81,6 +81,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
+        self.count = 0
         self.ttext = 'ttext'
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
@@ -131,6 +132,7 @@ class DigmaServiceEngine:
         return
 
     def update_data(self):
+        self.count +=1
         #current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
@@ -158,10 +160,10 @@ class DigmaServiceEngine:
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
                 
-            printout = f"{time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
+            printout = f"{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
             append_to_public_documents(FDATA_NAME,printout)
         else:
-            printout = f"{time.strftime('%H:%M:%S')} -1 -1 -1"
+            printout = f"{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
         
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ

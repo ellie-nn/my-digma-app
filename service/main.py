@@ -23,7 +23,7 @@ FDATA_NAME = "servicework.txt"
 FSVC_LOG = "srv_log.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
-        
+SUB_DIR = "v11/"
 def append_to_public_documents(filename, text_content):
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
@@ -39,7 +39,7 @@ def append_to_public_documents(filename, text_content):
         collection_uri = MediaStoreFiles.getContentUri("external")
         
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
-        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents%'"
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
         if cursor and cursor.moveToFirst():
@@ -55,7 +55,7 @@ def append_to_public_documents(filename, text_content):
             values = ContentValues()
             values.put("_display_name", filename)
             values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Documents/")
+            values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
         
         # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"

@@ -52,7 +52,8 @@ from jnius import autoclass #, cast
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
-SUB_DIR = ""
+SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
+
 
 
 

@@ -99,9 +99,19 @@ def freadln_range(uri,min,max):
     return line
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
+    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+    vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+    vibrator.vibrate(500) 
+    time.sleep(1.0)
+    
     #if text_content: range = False
     range = str(min).isdigit() and str(max).isdigit() and not text_content
     if not (range or text_content): return
+    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+    vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+    vibrator.vibrate(500) 
+    time.sleep(1.0)
+    
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')
@@ -126,6 +136,11 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             # Превращаем ID в ту самую старую, живую ссылку Uri
             file_uri = ContentUris.withAppendedId(collection_uri, file_id)
             cursor.close()
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
         else:
             if not text_content: return
             # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
@@ -143,7 +158,17 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             output_stream.write(bytes(text_content + "\n", 'utf-8'))
             output_stream.close()
         else:
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
             if not range: return
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
             return freadln_range(file_uri,min,max)
         
     except Exception as e:

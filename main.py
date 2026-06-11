@@ -282,7 +282,7 @@ class DigmaRecorderApp(App):
         print('START')
         #try:
         #self.mywin = g_init()
-        print(append_to_puboic_documents('servicework.txt', '', 1,2))
+        print(append_to_public_documents('servicework.txt', '', 1,2))
         time.sleep(10.0)
         #except: pass
         # Создаем на экране большую текстовую панель

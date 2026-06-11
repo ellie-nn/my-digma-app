@@ -150,11 +150,6 @@ if True:
     def clear_log_file(self, instance):
         return
         
-if __name__ == '__main__':
-    DigmaFloatApp().run()
-
-
-
 def append_to_public_documents(filename, text_content):
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -215,6 +210,7 @@ class MediaStoreStdout:
 class DigmaRecorderApp(App):
     def build(self):
         self.mywin = g_init()
+        sleep(10.0)
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

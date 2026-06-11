@@ -151,11 +151,14 @@ if True:
                                 x_index += 1
                             except Exception:
                                 continue
-                if len(points) > 20:
+                    if len(points) > 20:
                     graph.xmax = len(points)
             except Exception as e:
                 print(f"[ERR] Ошибка чтения файла: {e}")
-        
+                for i in range(1, 11):
+                    voltage_value = i
+                    x_index = i
+                    points.append((x_index, voltage_value))
         # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 220), (20, 220)]
@@ -216,7 +219,7 @@ class DigmaRecorderApp(App):
         print('START')
         #try:
         self.mywin = g_init()
-        sleep(10.0)
+        time.sleep(10.0)
         #except: pass
         # Создаем на экране большую текстовую панель
         self.label = Label(

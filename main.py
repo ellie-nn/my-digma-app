@@ -52,7 +52,8 @@ from jnius import autoclass #, cast
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
-SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
+#SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
+SUB_DIR = ''
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -62,6 +63,62 @@ from kivy_garden.graph import Graph, LinePlot
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 LOG_PATH = SUB_DIR+'servicework.txt'
 
+def append_to_public_documents(filename, text_content):
+    try:
+        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        ContentValues = autoclass('android.content.ContentValues')
+        MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
+        resolver = Context.getContentResolver()
+        collection_uri = MediaStoreFiles.getContentUri("external")
+        
+        #print(f'Collection\n{collection_uri}\n')
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        # Ищем файл по имени, а папку — по маске "содержит слово Documents"
+        relpath = "Documents/"+SUB_DIR
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
+
+        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
+        if cursor and cursor.moveToFirst():
+            # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
+            file_id = cursor.getLong(cursor.getColumnIndex("_id"))
+            ContentUris = autoclass('android.content.ContentUris')
+            # Превращаем ID в ту самую старую, живую ссылку Uri
+            file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            cursor.close()
+        else:
+            # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
+            if cursor: cursor.close()
+            values = ContentValues()
+            values.put("_display_name", filename)
+            #values.put("mime_type", "text/plain")
+            values.put("mime_type", "application/octet-stream")
+            values.put("relative_path", "Documents/"+SUB_DIR)
+            file_uri = resolver.insert(collection_uri, values)
+        
+        # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+        output_stream = resolver.openOutputStream(file_uri, "wa")
+        output_stream.write(bytes(text_content + "\n", 'utf-8'))
+        output_stream.close()
+        
+    except Exception as e:
+        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write(text_content + "\n")
+        
+
+# СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
+class MediaStoreStdout:
+    def write(self, message):
+        # Если прилетает не пустая строка — отправляем её в наш Java-мост
+        if message and message.strip():
+            # Вызываем вашу отлаженную функцию дозаписи в Documents!
+            append_to_public_documents("app_log.txt", message.strip())
+    def flush(self):
+        pass  # Системная заглушка, обязательная для потоков stdout
+    
 if True:
     def build_voltage_graph(file_path):
         """
@@ -150,68 +207,13 @@ if True:
         
         return main_layout
     
-def append_to_public_documents(filename, text_content):
-    try:
-        Context = autoclass('org.kivy.android.PythonActivity').mActivity
-        ContentValues = autoclass('android.content.ContentValues')
-        MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
-        resolver = Context.getContentResolver()
-        collection_uri = MediaStoreFiles.getContentUri("external")
-        
-        #print(f'Collection\n{collection_uri}\n')
-        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
-        # Составляем SQL-запрос к Android: имя файла и папка Documents
-        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
-        # Ищем файл по имени, а папку — по маске "содержит слово Documents"
-        relpath = "Documents/"+SUB_DIR
-        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
-
-        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
-        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
-        if cursor and cursor.moveToFirst():
-            # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
-            file_id = cursor.getLong(cursor.getColumnIndex("_id"))
-            ContentUris = autoclass('android.content.ContentUris')
-            # Превращаем ID в ту самую старую, живую ссылку Uri
-            file_uri = ContentUris.withAppendedId(collection_uri, file_id)
-            cursor.close()
-        else:
-            # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
-            if cursor: cursor.close()
-            values = ContentValues()
-            values.put("_display_name", filename)
-            #values.put("mime_type", "text/plain")
-            values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Documents/"+SUB_DIR)
-            file_uri = resolver.insert(collection_uri, values)
-        
-        # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
-        output_stream = resolver.openOutputStream(file_uri, "wa")
-        output_stream.write(bytes(text_content + "\n", 'utf-8'))
-        output_stream.close()
-        
-    except Exception as e:
-        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
-        with open(filename, 'a', encoding='utf-8') as f:
-            f.write(text_content + "\n")
-        
-
-# СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
-class MediaStoreStdout:
-    def write(self, message):
-        # Если прилетает не пустая строка — отправляем её в наш Java-мост
-        if message and message.strip():
-            # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            append_to_public_documents("app_log.txt", message.strip())
-    def flush(self):
-        pass  # Системная заглушка, обязательная для потоков stdout
-        
+    
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-
+        print('START')
         try:
             self.mywin = g_init()
             sleep(10.0)

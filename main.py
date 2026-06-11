@@ -154,11 +154,18 @@ if True:
                 if len(points) > 20:
                     graph.xmax = len(points)
             except Exception as e:
-                print(f"[ERR] Ошибка чтения файла: {e}")
+                print(f"[ERR] Ошибка чтения файла1: {e}")
                 for i in range(1, 11):
                     voltage_value = i
                     x_index = i
                     points.append((x_index, voltage_value))
+        else:
+            print(f"[ERR] Ошибка чтения файла2: {e}")
+            for i in range(1, 11):
+                voltage_value = i
+                x_index = i
+                points.append((x_index, voltage_value))
+        
         # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 220), (20, 220)]

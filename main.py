@@ -62,6 +62,7 @@ from kivy_garden.graph import Graph, LinePlot
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 LOG_PATH = SUB_DIR+'servicework.txt'
 
+if True:
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
@@ -213,6 +214,7 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
+        self.mywin = g_init()
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

@@ -65,6 +65,39 @@ from kivy_garden.graph import Graph, LinePlot
 #LOG_PATH = "/Documents/servicework.txt"
 LOG_PATH = "/storage/emulated/0/Documents/servicework.txt"
 
+def freadln_range(uri,min,max):
+    # Подключаем официальные Java-инструменты Android
+    context = autoclass('org.kivy.android.PythonActivity').mActivity
+    content_resolver = context.getContentResolver()
+    # Предположим, у вас есть URI-ссылка на наш текстовый лог розетки
+    # uri = ... (полученный от системы Android URI)
+
+    try:
+        # 1. Открываем легальный андроидный поток чтения по URI
+        input_stream = content_resolver.openInputStream(uri)
+        # 2. Оборачиваем его в быстрый Java-буфер, который умеет читать ПОСТРОЧНО
+        InputStreamReader = autoclass('java.io.InputStreamReader')
+        BufferedReader = autoclass('java.io.BufferedReader')
+        reader = BufferedReader(InputStreamReader(input_stream, "UTF-8"))
+        # ПУЛЬСИРУЮЩИЙ ПОСТРОЧНЫЙ ПЕРЕБОР:
+        # Память телефона не нагружается, файл не блокируется для фонового мотора!
+        line_count = 0
+        target_line = 50  # Допустим, нам нужна строго 50-я строка
+        while True:
+            line = reader.readLine()
+            if line is None: 
+                break  # Файл закончился
+            if line_count == target_line:
+                print(f"[LOG] Найдена нужная строка: {line}")
+                # ... здесь отдаем строку на наш график ...
+                break
+            line_count += 1
+            # Обязательно закрываем шлюз за собо
+            reader.close()
+    except Exception as e:
+        print(f"[ERR] Ошибка чтения через URI-поток: {e}")
+    return line
+
 def append_to_public_documents(filename, text_content):
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity

@@ -174,7 +174,7 @@ if True:
         graph.add_plot(plot)
         return graph
 
-    def clear_log_file(self, instance):
+    def clear_log_file(instance):
         return
         
     def g_init():

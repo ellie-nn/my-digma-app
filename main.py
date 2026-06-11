@@ -151,7 +151,7 @@ if True:
                                 x_index += 1
                             except Exception:
                                 continue
-                    if len(points) > 20:
+                if len(points) > 20:
                     graph.xmax = len(points)
             except Exception as e:
                 print(f"[ERR] Ошибка чтения файла: {e}")

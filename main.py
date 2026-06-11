@@ -160,7 +160,7 @@ if True:
                     x_index = i
                     points.append((x_index, voltage_value))
         else:
-            print(f"[ERR] Ошибка чтения файла2: {e}")
+            print(f"[ERR] Ошибка чтения файла2")
             for i in range(1, 11):
                 voltage_value = i
                 x_index = i

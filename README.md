@@ -1,6 +1,84 @@
 fuck off
 это блокнот
 #==========≠======≠
+import os
+
+# 1. Узнаем package.name (например: 'digmatwelve')
+package_name = os.environ.get('ANDROID_ARGUMENT', '')
+
+# 2. Узнаем ПУТЬ к нашей приватной папке приложения на диске телефона
+# Там внутри как раз зашит полный бинарный паспорт (domain + name)!
+# Выведет строку вида: "/data/data/org.oldschool.digmatwelve/files/app"
+app_private_dir = os.environ.get('ANDROID_APP_PATH', '')
+
+print(f"[LOG] Имя пакета из спека: {package_name}")
+print(f"[LOG] Полный бинарный путь: {app_private_dir}")
+
+#-------------------
+import os
+
+def get_spec_param(param_name, default_value=""):
+    """
+    Универсальный парсер buildozer.spec. 
+    Находит любой параметр, полностью игнорируя комментарии '#' и пробелы.
+    """
+    spec_path = "buildozer.spec"
+    
+    if not os.path.exists(spec_path):
+        return default_value
+
+    try:
+        with open(spec_path, "r", encoding="utf-8", errors="ignore") as f:
+            for line in f:
+                # 1. СРАЗУ ОТРЕЗАЕМ КОММЕНТАРИИ: разбиваем строку по первому знаку '#' 
+                # и забираем только левую, "живую" часть кода!
+                raw_code = line.split('#', 1)[0]
+                
+                # Очищаем кусок кода от концевых пробелов и переносов строк
+                clean_line = raw_code.strip()
+                
+                # Если строка была чистым комментарием или оказалась пустой — пропускаем
+                if not clean_line:
+                    continue
+                
+                # 2. ЖЕСТКАЯ ПРОВЕРКА НА СОВПАДЕНИЕ ПАРАМЕТРА:
+                # Ищем знак равенства, чтобы точно отделить имя параметра от значения
+                if "=" in clean_line:
+                    name_part, value_part = clean_line.split("=", 1)
+                    
+                    # Сверяем имя параметра (очистив от случайных пробелов вокруг него)
+                    if name_part.strip() == param_name:
+                        # Возвращаем идеально вычищенное текстовое значение!
+                        return value_part.strip()
+                        
+    except Exception as e:
+        print(f"[ERR] Ошибка парсинга buildozer.spec: {e}")
+        
+    return default_value
+
+#-------------------
+- name: Force Buildozer to Unpack Kivy Core
+  run: |
+    buildozer android p4a -- --help
+
+- name: Hack Kivy Java Core to Persistent-Immortal
+  run: |
+    find .buildozer/ -name "PythonService.java" -type f | while read -r java_file; do
+      sed -i "s|return START_NOT_STICKY;|return START_STICKY;|gw /dev/stdout" "$java_file"
+    done
+
+# === НАШ НОВЫЙ ИЗЯЩНЫЙ ХАК: КОПИРУЕМ СПЕК В КАЧЕСТВЕ ДАННЫХ ===
+- name: Embed Spec File as App Data
+  run: |
+    echo "=== [HACK] Копируем spec под видом файла данных ==="
+    # Копируем оригинальный спек текущей сборки в обычный текстовый файл
+    cp buildozer.spec app_config.txt
+    
+- name: Build with Buildozer
+  run: |
+    buildozer android debug
+
+#==========≠======≠
 <application ... tools:node="replace">
 <service android:name="org.oldschool.digmarecorder.DigmaJavaService" ... tools:node="replace"/>
 

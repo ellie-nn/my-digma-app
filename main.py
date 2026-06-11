@@ -52,7 +52,7 @@ from jnius import autoclass #, cast
 DEVICE_ID = 'bf1a864dc80b65d878lv65'
 LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
-SUB_DIR = "v11/"
+SUB_DIR = ""
 
 
 

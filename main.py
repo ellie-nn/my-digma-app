@@ -56,7 +56,7 @@ FILE_CSV = 'power_history.csv'
 SUB_DIR = ''
 
 from kivy.uix.floatlayout import FloatLayout
-#from kivy.uix.button import Button
+from kivy.uix.button import Button
 # Импортируем легальный Kivy-движок для графиков
 #from kivy_garden.graph import Graph, LinePlot
 

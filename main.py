@@ -98,7 +98,10 @@ def freadln_range(uri,min,max):
         print(f"[ERR] Ошибка чтения через URI-поток: {e}")
     return line
 
-def append_to_public_documents(filename, text_content):
+def append_to_public_documents(filename, text_content, min = None, max = None):
+    #if text_content: range = False
+    range = str(min).isdigit() and str(max).isdigit() and not text_content
+    if not (range or text_content): return
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')
@@ -124,6 +127,7 @@ def append_to_public_documents(filename, text_content):
             file_uri = ContentUris.withAppendedId(collection_uri, file_id)
             cursor.close()
         else:
+            if not text_content: return
             # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
             if cursor: cursor.close()
             values = ContentValues()
@@ -133,10 +137,14 @@ def append_to_public_documents(filename, text_content):
             values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
         
-        # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
-        output_stream = resolver.openOutputStream(file_uri, "wa")
-        output_stream.write(bytes(text_content + "\n", 'utf-8'))
-        output_stream.close()
+        if text_content:
+            # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+            output_stream = resolver.openOutputStream(file_uri, "wa")
+            output_stream.write(bytes(text_content + "\n", 'utf-8'))
+            output_stream.close()
+        else:
+            if not range: return
+            return freadln_range(file_uri,min,max)
         
     except Exception as e:
         # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
@@ -273,7 +281,8 @@ class DigmaRecorderApp(App):
         sys.stderr = sys.stdout
         print('START')
         #try:
-        self.mywin = g_init()
+        #self.mywin = g_init()
+        append_to_puboic_document('servicework.txt', '', 1,2)
         time.sleep(10.0)
         #except: pass
         # Создаем на экране большую текстовую панель

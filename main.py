@@ -297,7 +297,7 @@ class DigmaRecorderApp(App):
   #          self.start_background_service()
         #import tinytuya    
         
-        return self.label
+        return self.mywin
         
     def check_permissions_callback(self, permissions, grants):
         # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!

@@ -214,10 +214,10 @@ class DigmaRecorderApp(App):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
         print('START')
-       # try:
-       #     self.mywin = g_init()
-       #     sleep(10.0)
-        #except: pass
+        try:
+            self.mywin = g_init()
+            sleep(10.0)
+        except: pass
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

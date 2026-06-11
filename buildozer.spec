@@ -7,7 +7,10 @@ version = 1.0.5
 source.include_exts = py,png,jpg,kv,csv
 #icon.filename = socket.png
 
-requirements = python3,kivy,pyaes,oscpy
+requirements = python3,kivy,pyaes,oscpy,kivy,kivy_garden.graph
+# ТРЕБОВАНИЯ НАШЕГО ПРИЛОЖЕНИЯ:
+requirements = python3,kivy,kivy_garden.graph
+
 #,schedule
 #android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,WAKE_LOCK, WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 android.permissions = INTERNET,ACCESS_NETWORK_STATE,FOREGROUND_SERVICE,POST_NOTIFICATIONS,WAKE_LOCK,VIBRATE,FOREGROUND_SERVICE_DATA_SYNC,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE,READ_MEDIA_IMAGES,READ_MEDIA_AUDIO,READ_MEDIA_VIDEO

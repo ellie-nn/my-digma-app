@@ -209,8 +209,9 @@ class MediaStoreStdout:
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
-        self.mywin = g_init()
-        sleep(10.0)
+        try:
+            self.mywin = g_init()
+            sleep(10.0)
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

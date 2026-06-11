@@ -138,7 +138,15 @@ if True:
 
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
         points = []
-        
+        #import os
+
+# Родной андроидный хак для новичков:
+# На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
+# правильный абсолютный путь к вашей внутренней памяти (уже со всеми нужными слэшами!)
+        base_dir = os.environ.get('EXTERNAL_STORAGE', '/storage/emulated/0')
+
+# Собираем путь в лоб, без ручных слэшей
+        file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
         if os.path.exists(file_path):
             try:
                 with open(file_path, "r", encoding="utf-8", errors="ignore") as f:

@@ -212,6 +212,7 @@ class DigmaRecorderApp(App):
         try:
             self.mywin = g_init()
             sleep(10.0)
+        except: pass
         # Создаем на экране большую текстовую панель
         self.label = Label(
             text="Инициализация Python ядра...\nОжидайте.", 

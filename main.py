@@ -61,7 +61,7 @@ from kivy.uix.button import Button
 from kivy_garden.graph import Graph, LinePlot
 
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
-LOG_PATH = SUB_DIR+'servicework.txt'
+LOG_PATH = SUB_DIR+'servicework1.txt'
 
 def append_to_public_documents(filename, text_content):
     try:
@@ -165,10 +165,11 @@ if True:
                 voltage_value = i
                 x_index = i
                 points.append((x_index, voltage_value))
+            points = [(0, 120), (20, 220)]
         
         # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
-            points = [(0, 220), (20, 220)]
+            points = [(0, 120), (20, 220)]
 
         plot.points = points
         graph.add_plot(plot)

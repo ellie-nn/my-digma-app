@@ -130,6 +130,11 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
             ContentUris = autoclass('android.content.ContentUris')
@@ -142,6 +147,11 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             time.sleep(1.0)
     
         else:
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(2000) 
+            time.sleep(3.0)
+    
             if not text_content: return
             # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
             if cursor: cursor.close()

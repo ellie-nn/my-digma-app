@@ -101,7 +101,7 @@ def freadln_range(uri,min,max):
 def append_to_public_documents(filename, text_content, min = None, max = None):
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-    vibrator.vibrate(500) 
+    if min == 1: vibrator.vibrate(500) 
     time.sleep(1.0)
     
     #if text_content: range = False
@@ -109,7 +109,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     if not (range or text_content): return
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-    vibrator.vibrate(500) 
+    if min == 1: vibrator.vibrate(500) 
     time.sleep(1.0)
     
     try:
@@ -138,7 +138,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             cursor.close()
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            vibrator.vibrate(500) 
+            if min == 1: vibrator.vibrate(500) 
             time.sleep(1.0)
     
         else:
@@ -160,13 +160,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            vibrator.vibrate(500) 
+            if min == 1: vibrator.vibrate(500) 
             time.sleep(1.0)
     
             if not range: return
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            vibrator.vibrate(500) 
+            if min == 1: vibrator.vibrate(500) 
             time.sleep(1.0)
     
             return freadln_range(file_uri,min,max)

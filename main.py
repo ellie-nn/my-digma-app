@@ -54,7 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
-LOG_FN = 'app_lloooggg.txt'
+LOG_FN = 'app_llloooggg.txt'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -146,8 +146,9 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         #cursor = resolver.query(collection_uri, ["_id"], selection, selection_args, None)
 
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
-        pfd == None
+        ffound = False
         if cursor and cursor.moveToFirst():
+            ffound = True
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(500) 
@@ -228,7 +229,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             resolver.update(file_uri, values, None, None)
         
         if text_content:
-            if not pfd:
+            if not ffound:
                 # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
                 output_stream = resolver.openOutputStream(file_uri, "wa")
                 output_stream.write(bytes(text_content + "\n", 'utf-8'))

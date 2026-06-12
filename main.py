@@ -169,12 +169,12 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
-            #values.put("is_pending", 0)
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
-            resolver.update(uri,ContentValues.put("is_pending",0),None,None)
-       
+            values.clear(); 
+            values.put("is_pending", 0); 
+            resolver.update(file_uri, values, None, None)
         
         if text_content:
             # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"

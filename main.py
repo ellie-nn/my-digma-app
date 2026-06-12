@@ -144,6 +144,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         #cursor = resolver.query(collection_uri, ["_id"], selection, selection_args, None)
 
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
+        pfd == None
         if cursor and cursor.moveToFirst():
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
@@ -225,9 +226,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             resolver.update(file_uri, values, None, None)
         
         if text_content:
-            try:
-                if pfd: pass
-            except:
+            if not pfd:
                 # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
                 output_stream = resolver.openOutputStream(file_uri, "wa")
                 output_stream.write(bytes(text_content + "\n", 'utf-8'))
@@ -258,7 +257,7 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            append_to_public_documents("app_looggg.txt", message.strip())
+            append_to_public_documents("app_loooggg.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     

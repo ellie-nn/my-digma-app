@@ -123,14 +123,17 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
         # Составляем SQL-запрос к Android: имя файла и папка Documents
         #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         relpath = "Documents/"+SUB_DIR
+        
         #selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
         # 1. Зажимаем жесткий, универсальный фильтр:
         # Ищем файл СТРОГО по его имени и текстовому пути к папке Documents.
         # Символ '?' — это легальные SQL-заглушки, которые защищают запрос от синтаксических сбоев.
         #selection = "display_name = ? AND relative_path = ?"
         selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%' AND is_pending >= 0"
+        
         # 2. Передаем точные значения для наших SQL-заглушек '?'
         # Важно: relative_path обязан заканчиваться косым слэшем '/'!
         selection_args = ["app_log.txt", "Documents/"]
@@ -152,6 +155,18 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             ContentUris = autoclass('android.content.ContentUris')
             # Превращаем ID в ту самую старую, живую ссылку Uri
             file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            # Наш ContentValues у вас уже присвоен в начале функции.
+
+            # Как только query() нашел старый _id файла после переустановки:
+            values = ContentValues()
+            #values.clear()
+            values.put("is_pending", 0) # Принудительно открываем файл
+
+            # ГЕНИАЛЬНЫЙ СЛИВ: Обновляем строку файла в базе данных через егоfile_uri.
+            # Android 10 автоматически перепишет поле Owner UID на наше НОВОЕ приложение, 
+            # и вызов openOutputStream("wa") мгновенно начнет дописывать логи без всяких капризов прав!
+            resolver.update(file_uri, values, None, None)
+
             # НАШ ПОБЕДНЫЙ ПЕРЕХВАТ ПРАВ ДЛЯ ANDROID 10:
             # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.
             # Цифры 1 и 2 — это системные бинарные константы Intent.FLAG_GRANT_READ_URI_PERMISSION 

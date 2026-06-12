@@ -125,9 +125,26 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
         relpath = "Documents/"+SUB_DIR
-        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
+        #selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
+        # 1. Зажимаем жесткий, универсальный фильтр:
+        # Ищем файл СТРОГО по его имени и текстовому пути к папке Documents.
+        # Символ '?' — это легальные SQL-заглушки, которые защищают запрос от синтаксических сбоев.
+        selection = "display_name = ? AND relative_path = ?"
 
-        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        # 2. Передаем точные значения для наших SQL-заглушек '?'
+        # Важно: relative_path обязан заканчиваться косым слэшем '/'!
+        selection_args = ["app_log_digmatwelve.txt", "Documents/"]
+
+        #cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        # 3. ВЫЗЫВАЕМ ЗРЯЧИЙ SQL-ЗАПРОС:
+        # Передаем обновленный selection и selection_args в вашresolver.query()
+        cursor = resolver.query(
+            collection_uri, 
+            ["_id"], 
+            selection, 
+            selection_args, # Обязательно подставляем аргументы сюда!
+         т  None)
+
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity

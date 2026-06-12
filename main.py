@@ -143,7 +143,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             ["_id"], 
             selection, 
             selection_args, # Обязательно подставляем аргументы сюда!
-         т  None)
+            None)
 
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         if cursor and cursor.moveToFirst():

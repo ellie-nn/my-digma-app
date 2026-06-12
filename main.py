@@ -54,6 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
+LOG_FN = 'app_lloooggg.txt'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -99,6 +100,7 @@ def freadln_range(uri,min,max):
     return line
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
+    if filename != LOG_FN: return
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500) 
@@ -257,7 +259,7 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            append_to_public_documents("app_loooggg.txt", message.strip())
+            append_to_public_documents(LOG_FN, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     

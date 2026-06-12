@@ -100,7 +100,7 @@ def freadln_range(uri,min,max):
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-    vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     vibrator.vibrate(500) 
     time.sleep(1.0)
     
@@ -108,7 +108,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     range = str(min).isdigit() and str(max).isdigit() and not text_content
     if not (range or text_content): return
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-    vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     vibrator.vibrate(500) 
     time.sleep(1.0)
     
@@ -137,7 +137,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             file_uri = ContentUris.withAppendedId(collection_uri, file_id)
             cursor.close()
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             vibrator.vibrate(500) 
             time.sleep(1.0)
     
@@ -159,13 +159,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             output_stream.close()
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             vibrator.vibrate(500) 
             time.sleep(1.0)
     
             if not range: return
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(Context.VIBRATOR_SERVICE)
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             vibrator.vibrate(500) 
             time.sleep(1.0)
     

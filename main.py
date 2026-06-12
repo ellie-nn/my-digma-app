@@ -54,7 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
-LOG_FN = 'app_llloooggg.txt'
+LOG_FN = 'app_loog.txt'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -99,7 +99,7 @@ def freadln_range(uri,min,max):
         print(f"[ERR] Ошибка чтения через URI-поток: {e}")
     return line
 
-def append_to_public_documents(filename, text_content, min = None, max = None):
+def append_to_public_documents1(filename, text_content, min = None, max = None):
     if filename != LOG_FN: return
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
@@ -252,6 +252,138 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
         with open(filename, 'a', encoding='utf-8') as f:
             f.write(text_content + "\n")
+            
+def append_to_public_documents(filename, text_content, min = None, max = None):
+    if filename != LOG_FN: return
+    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+    if min == 1: vibrator.vibrate(500) 
+    time.sleep(1.0)
+    
+    #if text_content: range = False
+    range = str(min).isdigit() and str(max).isdigit() and not text_content
+    if not (range or text_content): return
+    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+    if min == 1: vibrator.vibrate(500) 
+    time.sleep(1.0)
+    
+    try:
+        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        ContentValues = autoclass('android.content.ContentValues')
+        MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
+        resolver = Context.getContentResolver()
+        collection_uri = MediaStoreFiles.getContentUri("external")
+        
+        #print(f'Collection\n{collection_uri}\n')
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        
+        # Ищем файл по имени, а папку — по маске "содержит слово Documents"
+        relpath = "Documents/"+SUB_DIR
+        
+        #selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
+        # 1. Зажимаем жесткий, универсальный фильтр:
+        # Ищем файл СТРОГО по его имени и текстовому пути к папке Documents.
+        # Символ '?' — это легальные SQL-заглушки, которые защищают запрос от синтаксических сбоев.
+        #selection = "display_name = ? AND relative_path = ?"
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%' AND is_pending >= 0"
+        
+        # 2. Передаем точные значения для наших SQL-заглушек '?'
+        # Важно: relative_path обязан заканчиваться косым слэшем '/'!
+        selection_args = ["app_log.txt", "Documents/"]
+
+        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        # 3. ВЫЗЫВАЕМ ЗРЯЧИЙ SQL-ЗАПРОС:
+        # Передаем обновленный selection и selection_args в вашresolver.query()
+        #cursor = resolver.query(collection_uri, ["_id"], selection, selection_args, None)
+
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
+        
+        if cursor and cursor.moveToFirst():
+            
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+            # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
+            file_id = cursor.getLong(cursor.getColumnIndex("_id"))
+            ContentUris = autoclass('android.content.ContentUris')
+            # Превращаем ID в ту самую старую, живую ссылку Uri
+            file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            # Наш ContentValues у вас уже присвоен в начале функции.
+
+            # Как только query() нашел старый _id файла после переустановки:
+            #values = ContentValues()
+       #     #values.clear()
+            #values.put("is_pending", 0) # Принудительно открываем файл
+
+            # ГЕНИАЛЬНЫЙ СЛИВ: Обновляем строку файла в базе данных через егоfile_uri.
+            # Android 10 автоматически перепишет поле Owner UID на наше НОВОЕ приложение, 
+            # и вызов openOutputStream("wa") мгновенно начнет дописывать логи без всяких капризов прав!
+            #resolver.update(file_uri, values, None, None)
+
+            # НАШ ПОБЕДНЫЙ ПЕРЕХВАТ ПРАВ ДЛЯ ANDROID 10:
+            # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.
+            # Цифры 1 и 2 — это системные бинарные константы Intent.FLAG_GRANT_READ_URI_PERMISSION 
+            # и Intent.FLAG_GRANT_WRITE_URI_PERMISSION.
+            #try:
+            #    resolver.takePersistableUriPermission(file_uri, 1 | 2)
+            #except: pass
+            #cursor.close()
+
+                    # === МЫ ВНУТРИ БЛОКА, КОГДА QUERY УСПЕШНО НАШЁЛ СУЩЕСТВУЮЩИЙ ФАЙЛ ===
+            cursor.close()
+        
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+        else:
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(2000) 
+            time.sleep(3.0)
+    
+            if not text_content: return
+            # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
+            if cursor: cursor.close()
+            values = ContentValues()
+            values.put("_display_name", filename)
+            values.put("mime_type", "application/octet-stream")
+            values.put("relative_path", "Documents/"+SUB_DIR)
+            file_uri = resolver.insert(collection_uri, values)
+            values.clear(); 
+            values.put("is_pending", 0); 
+            resolver.update(file_uri, values, None, None)
+        
+        if text_content:
+            if True:
+                # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+                output_stream = resolver.openOutputStream(file_uri, "wa")
+                output_stream.write(bytes(text_content + "\n", 'utf-8'))
+                output_stream.close()
+        else:
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+            if not range: return
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+            return freadln_range(file_uri,min,max)
+        
+    except Exception as e:
+        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write(text_content + "\n")
         
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
@@ -261,6 +393,7 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             append_to_public_documents(LOG_FN, message.strip())
+            append_to_public_documents1(LOG_FN, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     

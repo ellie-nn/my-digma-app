@@ -152,6 +152,11 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             ContentUris = autoclass('android.content.ContentUris')
             # Превращаем ID в ту самую старую, живую ссылку Uri
             file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            # НАШ ПОБЕДНЫЙ ПЕРЕХВАТ ПРАВ ДЛЯ ANDROID 10:
+            # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.
+            # Цифры 1 и 2 — это системные бинарные константы Intent.FLAG_GRANT_READ_URI_PERMISSION 
+            # и Intent.FLAG_GRANT_WRITE_URI_PERMISSION.
+            resolver.takePersistableUriPermission(file_uri, 1 | 2)
             cursor.close()
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)

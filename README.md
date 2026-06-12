@@ -2,6 +2,27 @@ fuck off
 это блокнот
 #==========≠======≠
 import os
+from android.storage import primary_external_storage_text
+
+# 1. Вычисляем чистый физический путь к файлу лога (без ухищрений базы данных) [↑]:
+base_path = primary_external_storage_text()
+physical_log_path = os.path.join(base_path, "Documents", "app_log_digmatwelve.txt")
+
+# 2. ЖЕСТКАЯ ПРОВЕРКА РЕАЛЬНОСТИ:
+# Если физического файла на диске НЕТ (вы его удалили руками или его еще не было),
+# мы ПРИНУДИТЕЛЬНО очищаем базу данных Android от старых призраков и вызываем insert()!
+if not os.path.exists(physical_log_path):
+    print("[LOG] Файла физически нет на диске! Очищаем старые SQL-следы...")
+    # Очищаем старую застрявшую строку в базе через наш resolver, чтобы insert() прошел легально [↑]:
+    resolver.delete(collection_uri, "display_name = ?", ["app_log_digmatwelve.txt"])
+    
+    # Теперь спокойно вызываем ваш легальный insert(), создавая чистый файл с нуля [↑]!
+    file_uri = resolver.insert(collection_uri, values)
+else:
+    print("[LOG] Файл реально существует. Переходим к query и дозаписи...")
+
+#==========≠======≠
+import os
 
 # 1. Узнаем package.name (например: 'digmatwelve')
 package_name = os.environ.get('ANDROID_ARGUMENT', '')

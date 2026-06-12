@@ -156,7 +156,9 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.
             # Цифры 1 и 2 — это системные бинарные константы Intent.FLAG_GRANT_READ_URI_PERMISSION 
             # и Intent.FLAG_GRANT_WRITE_URI_PERMISSION.
-            resolver.takePersistableUriPermission(file_uri, 1 | 2)
+            try:
+                resolver.takePersistableUriPermission(file_uri, 1 | 2)
+            except: pass
             cursor.close()
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)

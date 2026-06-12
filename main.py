@@ -169,7 +169,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             if cursor: cursor.close()
             values = ContentValues()
             values.put("_display_name", filename)
-            #values.put("mime_type", "text/plain")
+            values.put("is_pending", 0)
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)

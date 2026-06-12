@@ -174,7 +174,33 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             #try:
             #    resolver.takePersistableUriPermission(file_uri, 1 | 2)
             #except: pass
+            #cursor.close()
+
+                    # === МЫ ВНУТРИ БЛОКА, КОГДА QUERY УСПЕШНО НАШЁЛ СУЩЕСТВУЮЩИЙ ФАЙЛ ===
             cursor.close()
+        
+            # 1. НАШ ПОБЕДНЫЙ SAF-ПЕРЕХВАТ ДОЗАПИСИ (Вставляем вместо openOutputStream!):
+            # Запрашиваем у системы низкоуровневый файловый дескриптор в режиме дозаписи "wa".
+            # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
+            pfd = resolver.openFileDescriptor(file_uri, "wa")
+        
+            # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
+            from jnius import autoclass
+            FileOutputStream = autoclass('java.io.FileOutputStream')
+        
+            # Подключаем поток напрямую к физическому дескриптору файла
+            java_output_stream = FileOutputStream(pfd.getFileDescriptor())
+        
+            # 3. ПИШЕМ ДАННЫЕ СИМВОЛ В СИМВОЛ, КАК У ВАС И БЫЛО:
+            # Переводим текст в байты и отправляем в наш легальный Java-поток
+            java_output_stream.write(bytes(text_content + "\n", 'utf-8'))
+        
+            # УЛЬТИМАТИВНЫЙ ФИНАЛ: Закрываем за собой все шлюзы, чтобы спасти файл от повреждения
+            java_output_stream.close()
+            pfd.close()
+        
+            #print("[LOG] Дозапись через openFileDescriptor после переустановки выполнена!")
+
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(500) 
@@ -199,10 +225,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             resolver.update(file_uri, values, None, None)
         
         if text_content:
-            # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
-            output_stream = resolver.openOutputStream(file_uri, "wa")
-            output_stream.write(bytes(text_content + "\n", 'utf-8'))
-            output_stream.close()
+            try:
+                if pfd: pass
+            except:
+                # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+                output_stream = resolver.openOutputStream(file_uri, "wa")
+                output_stream.write(bytes(text_content + "\n", 'utf-8'))
+                output_stream.close()
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)

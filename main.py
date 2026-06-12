@@ -337,10 +337,10 @@ class DigmaRecorderApp(App):
         sys.stderr = sys.stdout
         print('START')
         #try:
-        print(append_to_public_documents("app_log.txt", "", 1,2))
-        time.sleep(10.0)
+        #print(append_to_public_documents("app_log.txt", "", 1,2))
+        #time.sleep(10.0)
         self.mywin = g_init()
-        print(append_to_public_documents('servicework.txt', '', 1,2))
+        #print(append_to_public_documents('servicework.txt', '', 1,2))
         time.sleep(10.0)
         #except: pass
         # Создаем на экране большую текстовую панель

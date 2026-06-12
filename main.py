@@ -158,14 +158,14 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             # Наш ContentValues у вас уже присвоен в начале функции.
 
             # Как только query() нашел старый _id файла после переустановки:
-            values = ContentValues()
-            #values.clear()
-            values.put("is_pending", 0) # Принудительно открываем файл
+            #values = ContentValues()
+       #     #values.clear()
+            #values.put("is_pending", 0) # Принудительно открываем файл
 
             # ГЕНИАЛЬНЫЙ СЛИВ: Обновляем строку файла в базе данных через егоfile_uri.
             # Android 10 автоматически перепишет поле Owner UID на наше НОВОЕ приложение, 
             # и вызов openOutputStream("wa") мгновенно начнет дописывать логи без всяких капризов прав!
-            resolver.update(file_uri, values, None, None)
+            #resolver.update(file_uri, values, None, None)
 
             # НАШ ПОБЕДНЫЙ ПЕРЕХВАТ ПРАВ ДЛЯ ANDROID 10:
             # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.

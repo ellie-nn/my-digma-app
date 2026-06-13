@@ -108,8 +108,17 @@ def apd(filename, text_content, min = None, max = None):
     #if min == 1: 
     vibrator.vibrate(500) 
     time.sleep(1.0)
-    return
+
+    #if text_content: range = False
+    range = str(min).isdigit() and str(max).isdigit() and not text_content
+    if not (range or text_content): return
+    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+    if min == 1: vibrator.vibrate(500) 
+    time.sleep(1.0)
     
+    return
+
 def append_to_public_documents(filename, text_content, min = None, max = None):
     if filename != LOG_FN+".txt": return
     text_content = filename+" "+text_content

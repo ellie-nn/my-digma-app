@@ -55,7 +55,7 @@ FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
 #LOG_FN = 'app_aaf' #loogg'
-LOG_FN = str(time.time()//10)
+LOG_FN = str(time.time()//100)
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -261,7 +261,8 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     text_content = filename+" "+text_content
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-    if min == 1: vibrator.vibrate(500) 
+    #if min == 1: 
+    vibrator.vibrate(500) 
     time.sleep(1.0)
     
     #if text_content: range = False

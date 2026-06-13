@@ -194,7 +194,7 @@ def apd(filename, text_content, min = None, max = None):
             FileOutputStream = autoclass('java.io.FileOutputStream')
         
             # Подключаем поток напрямую к физическому дескриптору файла
-            java_output_stream = FileOutputStream(pfd.getFileDescriptor())
+            #java_output_stream = FileOutputStream(pfd.getFileDescriptor())
         
             # 3. ПИШЕМ ДАННЫЕ СИМВОЛ В СИМВОЛ, КАК У ВАС И БЫЛО:
             # Переводим текст в байты и отправляем в наш легальный Java-поток

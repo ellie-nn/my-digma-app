@@ -101,7 +101,7 @@ def freadln_range(uri,min,max):
     return line
 
 def append_to_public_documentsx(filename, text_content, min = None, max = None):
-    if filename != LOG_FN+"x.txt": return
+    #if filename != LOG_FN+"x.txt": return
     text_content = filename+" "+text_content  
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)

@@ -190,18 +190,18 @@ def apd(filename, text_content, min = None, max = None):
             # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
             pfd = resolver.openFileDescriptor(file_uri, "wa")
         # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
-            from jnius import autoclass
-            #FileOutputStream = autoclass('java.io.FileOutputStream')
+            #from jnius import autoclass
+            FileOutputStream = autoclass('java.io.FileOutputStream')
         
             # Подключаем поток напрямую к физическому дескриптору файла
-            #java_output_stream = FileOutputStream(pfd.getFileDescriptor())
+            java_output_stream = FileOutputStream(pfd.getFileDescriptor())
         
             # 3. ПИШЕМ ДАННЫЕ СИМВОЛ В СИМВОЛ, КАК У ВАС И БЫЛО:
             # Переводим текст в байты и отправляем в наш легальный Java-поток
-            #java_output_stream.write(bytes(text_content + "\n", 'utf-8'))
+            java_output_stream.write(bytes(text_content + "\n", 'utf-8'))
         
             # УЛЬТИМАТИВНЫЙ ФИНАЛ: Закрываем за собой все шлюзы, чтобы спасти файл от повреждения
-            #java_output_stream.close()
+            java_output_stream.close()
            
             pfd.close()
         

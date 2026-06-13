@@ -396,14 +396,17 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
+        try:
+            self.i +=1000
+        except:
+            self.i =0
+        
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            global LOG_FN_
-            LOG_FN_ +=1000
             #t=str(time.time())+"_.txt"
-            append_to_public_documents(str(LOG_FN_)+".txt", message.strip())
-            append_to_public_documents(str(LOG_FN_)+".txt", message.strip())
+            append_to_public_documents(str(LOG_FN_+self.i)+".txt", message.strip())
+            append_to_public_documents(str(LOG_FN_+self.i)+".txt", message.strip())
             #time.sleep(1.0)
             apd(LOG_FN+"x.txt", message.strip())
             apd(LOG_FN+"x.txt", message.strip())

@@ -116,7 +116,66 @@ def apd(filename, text_content, min = None, max = None):
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500) 
     time.sleep(1.0)
+
+    try:
+        Context = autoclass('org.kivy.android.PythonActivity').mActivity
+        ContentValues = autoclass('android.content.ContentValues')
+        MediaStoreFiles = autoclass('android.provider.MediaStore$Files')
+        resolver = Context.getContentResolver()
+        collection_uri = MediaStoreFiles.getContentUri("external")
+        
+        #print(f'Collection\n{collection_uri}\n')
+        # 1. ОЛДСКУЛЬНЫЙ ИНСПЕКТОР БАЗЫ ДАННЫХ (Ищем старый файл по имени)
+        # Составляем SQL-запрос к Android: имя файла и папка Documents
+        #selection = f"_display_name='{filename}' AND relative_path='Documents/'"
+        
+        # Ищем файл по имени, а папку — по маске "содержит слово Documents"
+        relpath = "Documents/"+SUB_DIR
+        
+        #selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
+        # 1. Зажимаем жесткий, универсальный фильтр:
+        # Ищем файл СТРОГО по его имени и текстовому пути к папке Documents.
+        # Символ '?' — это легальные SQL-заглушки, которые защищают запрос от синтаксических сбоев.
+        #selection = "display_name = ? AND relative_path = ?"
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%' AND is_pending >= 0"
+        
+        # 2. Передаем точные значения для наших SQL-заглушек '?'
+        # Важно: relative_path обязан заканчиваться косым слэшем '/'!
+        selection_args = ["app_log.txt", "Documents/"]
+
+        cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
+        # 3. ВЫЗЫВАЕМ ЗРЯЧИЙ SQL-ЗАПРОС:
+        # Передаем обновленный selection и selection_args в вашresolver.query()
+        #cursor = resolver.query(collection_uri, ["_id"], selection, selection_args, None)
+
+        #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
+        ffound = False
+        
+        if text_content:
+            if not ffound:
+                # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
+                output_stream = resolver.openOutputStream(file_uri, "wa")
+                output_stream.write(bytes(text_content + "\n", 'utf-8'))
+                output_stream.close()
+        else:
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
     
+            if not range: return
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+            return freadln_range(file_uri,min,max)
+        
+    except Exception as e:
+        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
+        with open(filename, 'a', encoding='utf-8') as f:
+            f.write(text_content + "\n")
+    return
     return
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
@@ -124,8 +183,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     text_content = filename+" "+text_content
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-    #if min == 1: 
-    vibrator.vibrate(500) 
+    #if min == 1: vibrator.vibrate(500) 
     time.sleep(1.0)
     
     #if text_content: range = False

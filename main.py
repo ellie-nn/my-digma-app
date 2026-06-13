@@ -150,6 +150,69 @@ def apd(filename, text_content, min = None, max = None):
 
         #print(f'Cursor\n{cursortostring(Cursor)}\n{cursor.moveToFirst()}\n')
         ffound = False
+        if cursor and cursor.moveToFirst():
+            ffound = True
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
+            # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
+            file_id = cursor.getLong(cursor.getColumnIndex("_id"))
+            ContentUris = autoclass('android.content.ContentUris')
+            # Превращаем ID в ту самую старую, живую ссылку Uri
+            file_uri = ContentUris.withAppendedId(collection_uri, file_id)
+            # Наш ContentValues у вас уже присвоен в начале функции.
+
+            # Как только query() нашел старый _id файла после переустановки:
+            #values = ContentValues()
+       #     #values.clear()
+            #values.put("is_pending", 0) # Принудительно открываем файл
+
+            # ГЕНИАЛЬНЫЙ СЛИВ: Обновляем строку файла в базе данных через егоfile_uri.
+            # Android 10 автоматически перепишет поле Owner UID на наше НОВОЕ приложение, 
+            # и вызов openOutputStream("wa") мгновенно начнет дописывать логи без всяких капризов прав!
+            #resolver.update(file_uri, values, None, None)
+
+            # НАШ ПОБЕДНЫЙ ПЕРЕХВАТ ПРАВ ДЛЯ ANDROID 10:
+            # Мы силой забираем у системы вечные флаги на ЧТЕНИЕ и ЗАПИСЬ этого старого файла.
+            # Цифры 1 и 2 — это системные бинарные константы Intent.FLAG_GRANT_READ_URI_PERMISSION 
+            # и Intent.FLAG_GRANT_WRITE_URI_PERMISSION.
+            #try:
+            #    resolver.takePersistableUriPermission(file_uri, 1 | 2)
+            #except: pass
+            #cursor.close()
+
+                    # === МЫ ВНУТРИ БЛОКА, КОГДА QUERY УСПЕШНО НАШЁЛ СУЩЕСТВУЮЩИЙ ФАЙЛ ===
+            cursor.close()
+        
+            # 1. НАШ ПОБЕДНЫЙ SAF-ПЕРЕХВАТ ДОЗАПИСИ (Вставляем вместо openOutputStream!):
+            # Запрашиваем у системы низкоуровневый файловый дескриптор в режиме дозаписи "wa".
+            # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
+            pfd = resolver.openFileDescriptor(file_uri, "wa")
+        
+            # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
+            from jnius import autoclass
+            FileOutputStream = autoclass('java.io.FileOutputStream')
+        
+            # Подключаем поток напрямую к физическому дескриптору файла
+            java_output_stream = FileOutputStream(pfd.getFileDescriptor())
+        
+            # 3. ПИШЕМ ДАННЫЕ СИМВОЛ В СИМВОЛ, КАК У ВАС И БЫЛО:
+            # Переводим текст в байты и отправляем в наш легальный Java-поток
+            java_output_stream.write(bytes(text_content + "\n", 'utf-8'))
+        
+            # УЛЬТИМАТИВНЫЙ ФИНАЛ: Закрываем за собой все шлюзы, чтобы спасти файл от повреждения
+            java_output_stream.close()
+            pfd.close()
+        
+            #print("[LOG] Дозапись через openFileDescriptor после переустановки выполнена!")
+
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+    
         
         if text_content:
             if not ffound:

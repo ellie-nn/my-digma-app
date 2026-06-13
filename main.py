@@ -99,7 +99,7 @@ def freadln_range(uri,min,max):
         print(f"[ERR] Ошибка чтения через URI-поток: {e}")
     return line
 
-def append_to_public_documents1(filename, text_content, min = None, max = None):
+def append_to_public_documentsx(filename, text_content, min = None, max = None):
     if filename != LOG_FN+"1.txt": return
     text_content = filename+" "+text_content  
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -256,6 +256,7 @@ def append_to_public_documents1(filename, text_content, min = None, max = None):
             
 def append_to_public_documents(filename, text_content, min = None, max = None):
     if filename != LOG_FN+".txt": return
+    text_content = filename+" "+text_content
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500) 
@@ -394,7 +395,7 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             append_to_public_documents(LOG_FN+".txt", message.strip())
-            append_to_public_documents1(LOG_FN+"1.txt", message.strip())
+            append_to_public_documentsx(LOG_FN+"1.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     

@@ -106,8 +106,7 @@ def apd(filename, text_content, min = None, max = None):
     text_content = filename+" "+text_content  
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-    #if min == 1: 
-    vibrator.vibrate(500) 
+    #if min == 1: vibrator.vibrate(500) 
     time.sleep(1.0)
 
     #if text_content: range = False
@@ -190,6 +189,13 @@ def apd(filename, text_content, min = None, max = None):
             # Запрашиваем у системы низкоуровневый файловый дескриптор в режиме дозаписи "wa".
             # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
             pfd = resolver.openFileDescriptor(file_uri, "wa")
+            if not pfd:
+                vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+                vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+                if min == 1: vibrator.vibrate(500) 
+                time.sleep(1.0)
+
+                pass
         # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
             #from jnius import autoclass
             FileOutputStream = autoclass('java.io.FileOutputStream')
@@ -402,8 +408,9 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             #t=str(time.time())+"_.txt"
-            append_to_public_documents(fn, message.strip())
-            append_to_public_documents(fn, message.strip())
+            #append_to_public_documents(fn, message.strip())
+            #append_to_public_documents(fn, message.strip())
+            append_to_public_documents("log"+LOG_FN+".txt", message.strip())
             #time.sleep(1.0)
             apd(LOG_FN+"x.txt", message.strip())
             #apd(LOG_FN+"x.txt", message.strip())

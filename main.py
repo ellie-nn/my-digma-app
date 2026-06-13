@@ -185,7 +185,20 @@ def apd(filename, text_content, min = None, max = None):
 
                     # === МЫ ВНУТРИ БЛОКА, КОГДА QUERY УСПЕШНО НАШЁЛ СУЩЕСТВУЮЩИЙ ФАЙЛ ===
             cursor.close()
+        # 1. НАШ ПОБЕДНЫЙ SAF-ПЕРЕХВАТ ДОЗАПИСИ (Вставляем вместо openOutputStream!):
+            # Запрашиваем у системы низкоуровневый файловый дескриптор в режиме дозаписи "wa".
+            # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
+            pfd = resolver.openFileDescriptor(file_uri, "wa")
         
+             pfd.close()
+        
+            #print("[LOG] Дозапись через openFileDescriptor после переустановки выполнена!")
+
+            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            if min == 1: vibrator.vibrate(500) 
+            time.sleep(1.0)
+      
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)

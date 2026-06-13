@@ -56,6 +56,7 @@ FILE_CSV = 'power_history.csv'
 SUB_DIR = ''
 #LOG_FN = 'app_aaf' #loogg'
 LOG_FN = str(time.time()//300)
+LOG_FN_ = time.time()
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -398,9 +399,11 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            t=str(time.time())+"_.txt"
-            append_to_public_documents(t, message.strip())
-            append_to_public_documents(t, message.strip())
+            global LOG_FN_
+            LOG_FN_ +=1000
+            #t=str(time.time())+"_.txt"
+            append_to_public_documents(str(LOG_FN_)+".txt", message.strip())
+            append_to_public_documents(str(LOG_FN_)+".txt", message.strip())
             #time.sleep(1.0)
             apd(LOG_FN+"x.txt", message.strip())
             apd(LOG_FN+"x.txt", message.strip())

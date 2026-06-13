@@ -190,7 +190,7 @@ def apd(filename, text_content, min = None, max = None):
             # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
             pfd = resolver.openFileDescriptor(file_uri, "wa")
         
-             pfd.close()
+            pfd.close()
         
             #print("[LOG] Дозапись через openFileDescriptor после переустановки выполнена!")
 

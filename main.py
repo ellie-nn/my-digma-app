@@ -398,7 +398,7 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            t=str(time.time())+".txt")
+            t=str(time.time())+".txt"
             append_to_public_documents(t, message.strip())
             append_to_public_documents(t, message.strip())
             #time.sleep(1.0)

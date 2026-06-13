@@ -398,10 +398,11 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            t=str(time.time())+".txt"
+            t=str(time.time())+"_.txt"
             append_to_public_documents(t, message.strip())
             append_to_public_documents(t, message.strip())
             #time.sleep(1.0)
+            apd(LOG_FN+"x.txt", message.strip())
             apd(LOG_FN+"x.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout

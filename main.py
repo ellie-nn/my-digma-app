@@ -54,7 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
-LOG_FN = 'app_aae' #loogg'
+LOG_FN = 'app_aad' #loogg'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button

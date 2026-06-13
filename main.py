@@ -191,7 +191,7 @@ def apd(filename, text_content, min = None, max = None):
             pfd = resolver.openFileDescriptor(file_uri, "wa")
         # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
             from jnius import autoclass
-            FileOutputStream = autoclass('java.io.FileOutputStream')
+            #FileOutputStream = autoclass('java.io.FileOutputStream')
         
             # Подключаем поток напрямую к физическому дескриптору файла
             #java_output_stream = FileOutputStream(pfd.getFileDescriptor())

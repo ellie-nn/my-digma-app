@@ -54,7 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
-LOG_FN = 'app_aac' #loogg'
+LOG_FN = 'app_aad' #loogg'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -101,7 +101,7 @@ def freadln_range(uri,min,max):
 
 def append_to_public_documents1(filename, text_content, min = None, max = None):
     if filename != LOG_FN+"1.txt": return
-        
+    text_content = filename+" "+text_content  
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500) 

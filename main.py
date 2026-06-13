@@ -186,7 +186,7 @@ def apd(filename, text_content, min = None, max = None):
                     # === МЫ ВНУТРИ БЛОКА, КОГДА QUERY УСПЕШНО НАШЁЛ СУЩЕСТВУЮЩИЙ ФАЙЛ ===
             cursor.close()
         
-              else:
+        else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(2000) 

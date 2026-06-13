@@ -54,7 +54,7 @@ LOCAL_KEY = 'X@o=_T>sgCfWGeEz'
 FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
-LOG_FN = 'app_aaa' #loogg'
+LOG_FN = 'app_aab' #loogg'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -393,7 +393,7 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             append_to_public_documents(LOG_FN+".txt", message.strip())
-            #append_to_public_documents1(LOG_FN+"1.txt", message.strip())
+            append_to_public_documents1(LOG_FN+"1.txt", message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     

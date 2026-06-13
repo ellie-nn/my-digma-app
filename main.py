@@ -398,7 +398,7 @@ class MediaStoreStdout:
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            #append_to_public_documents(LOG_FN+".txt", message.strip())
+            append_to_public_documents(LOG_FN+".txt", message.strip())
             #time.sleep(1.0)
             apd(LOG_FN+"x.txt", message.strip())
     def flush(self):

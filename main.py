@@ -55,8 +55,8 @@ FILE_CSV = 'power_history.csv'
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR = ''
 #LOG_FN = 'app_aaf' #loogg'
-LOG_FN = str(time.time()//300)
-LOG_FNw = str(time.time()//60)
+LOG_FNw = str(time.time()//300)
+LOG_FN = str(time.time()//60)
 
 
 from kivy.uix.floatlayout import FloatLayout

@@ -56,6 +56,8 @@ FILE_CSV = 'power_history.csv'
 SUB_DIR = ''
 #LOG_FN = 'app_aaf' #loogg'
 LOG_FN = str(time.time()//300)
+LOG_FNw = str(time.time()//60)
+
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -269,7 +271,7 @@ if True:
 
 # Собираем путь в лоб, без ручных слэшей
         #file_path = os.path.join(base_dir, 'Documents', 'work.txt')
-        with open("/storage/emulated/0/Documents/work"+LOG_FN+".txt", "a", encoding="utf-8", errors="ignore") as f:
+        with open("/storage/emulated/0/Documents/work"+LOG_FNw+".txt", "a", encoding="utf-8", errors="ignore") as f:
             tmpl='10 20 30 40'
             f.write((tmpl+'\n')*3+tmpl)
             f.flush

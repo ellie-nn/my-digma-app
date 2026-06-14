@@ -270,7 +270,7 @@ if True:
 
 # Собираем путь в лоб, без ручных слэшей
         #file_path = os.path.join(base_dir, 'Documents', 'work.txt')
-        with open("/storage/emulated/0/Documents/work.txt", "a", encoding="utf-8", errors="ignore") as f:
+        with open("/storage/emulated/0/Documents/work"+LOG_FN+".txt", "a", encoding="utf-8", errors="ignore") as f:
             tmpl='10 20 30 40'
             f.write((tmpl+'\n')*3+tmpl)
             f.flush

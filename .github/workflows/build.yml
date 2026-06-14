@@ -115,4 +115,18 @@ jobs:
           source_code.zip          
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: ONE_TIME_GENERATE_PASSPORT
+      run: |
+        echo "=== ГЕНЕРИРУЕМ ОФИЦИАЛЬНЫЙ ПАСПОРТ ПРИЛОЖЕНИЯ ==="
+        # Создаем стандартный debug-ключ, который понимает Android и Buildozer
+        keytool -genkey -v -keystore $HOME/digma.keystore \
+          -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
+          -storepass android -keypass android \
+          -dname "CN=Android Debug, O=Android, C=US"
+        
+        echo "=== ВЫВОДИМ ЕГО НА ЭКРАН В ВИДЕ ТЕКСТА (BASE64) ==="
+        # Эта команда превратит файл ключа в длинную текстовую строку букв и цифр!
+        base64 -w 0 $HOME/digma.keystore
+        echo ""
+
 #-_--------_-

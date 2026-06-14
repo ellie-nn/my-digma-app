@@ -241,8 +241,8 @@ class MediaStoreStdout:
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             append_to_public_documents("log"+LOG_FN+".txt", message.strip())
-        def flush(self):
-            pass  # Системная заглушка, обязательная для потоков stdout
+    def flush(self):
+        pass  # Системная заглушка, обязательная для потоков stdout
     
 if True:
     def build_voltage_graph(file_path):

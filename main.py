@@ -106,7 +106,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     #if min == 1: vibrator.vibrate(500) 
-    time.sleep(1.0)
+    #time.sleep(1.0)
     
     #if text_content: range = False
     range = str(min).isdigit() and str(max).isdigit() and not text_content
@@ -114,7 +114,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500) 
-    time.sleep(1.0)
+    #time.sleep(1.0)
     
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -154,7 +154,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
+            #time.sleep(1.0)
     
             # ФАЙЛ НАЙДЕН в базе! Достаем его уникальный числовой ID
             file_id = cursor.getLong(cursor.getColumnIndex("_id"))
@@ -188,13 +188,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
+            #time.sleep(1.0)
     
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
             if min == 1: vibrator.vibrate(2000) 
-            time.sleep(3.0)
+            #time.sleep(3.0)
     
             if not text_content: return
             # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
@@ -223,8 +223,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             if not range: return
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
+            if min == 1: vibrator.vibrate(500); time.sleep(1.0)
     
             return freadln_range(file_uri,min,max)
         

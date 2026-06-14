@@ -1,6 +1,26 @@
 fuck off
 это блокнот
 #==========≠======≠
+    # 1. ХИРУРГИЧЕСКИЙ ЗАЖИМ СТАРЫХ ИНСТРУМЕНТОВ ANDROID SDK И NDK
+    - name: Set up Android SDK & NDK for API 28
+      run: |
+        echo "=== [HACK] Подменяем современный NDK на олдскульный r19c ==="
+        # Скачиваем официальный стабильный архив NDK r19c с серверов Google
+        wget -q https://google.com
+        unzip -q android-ndk-r19c-linux-x86_64.zip -d $HOME
+        
+        # Прописываем системные переменные окружения, чтобы Buildozer 
+        # намертво зацепил именно этот старый NDK r19c при сборке Си-библиотек Kivy!
+        echo "ANDROID_NDK_HOME=$HOME/android-ndk-r19c" >> $GITHUB_ENV
+        echo "ANDROID_NDK_PATH=$HOME/android-ndk-r19c" >> $GITHUB_ENV
+
+    # 2. ВАШ СТАНДАРТНЫЙ ШАГ ЗАПУСКА СБОРКИ (Остается в одну строку, но с подменой путей)
+    - name: Build with Buildozer
+      run: |
+        # Мы явно передаем Билдозеру пути к нашему старому скачанному NDK через аргументы командной строки!
+        buildozer android debug --android.ndk_path=$HOME/android-ndk-r19c --android.target_sdk=28
+
+#==========≠======≠
 import os
 from android.storage import primary_external_storage_text
 

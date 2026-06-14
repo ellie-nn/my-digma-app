@@ -274,6 +274,7 @@ if True:
             tmpl='10 20 30 40'
             f.write((tmpl+'\n')*3+tmpl)
             f.flush
+            f.close
         file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
         if os.path.exists(file_path):
             try:

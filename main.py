@@ -189,81 +189,6 @@ def apd(filename, text_content, min = None, max = None):
             # Запрашиваем у системы низкоуровневый файловый дескриптор в режиме дозаписи "wa".
             # Этот вызов Android 10 обязан пропустить, так как имя пакета совпадает со старым владельцем!
             pfd = resolver.openFileDescriptor(file_uri, "wa")
-            if not pfd:
-                vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-                vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-                if min == 1: vibrator.vibrate(500) 
-                time.sleep(1.0)
-
-                pass
-        # 2. Оборачиваем дескриптор в стандартный Java-поток вывода (FileOutputStream)
-            #from jnius import autoclass
-            FileOutputStream = autoclass('java.io.FileOutputStream')
-        
-            # Подключаем поток напрямую к физическому дескриптору файла
-            java_output_stream = FileOutputStream(pfd.getFileDescriptor())
-        
-            # 3. ПИШЕМ ДАННЫЕ СИМВОЛ В СИМВОЛ, КАК У ВАС И БЫЛО:
-            # Переводим текст в байты и отправляем в наш легальный Java-поток
-            java_output_stream.write(bytes(text_content + "\n", 'utf-8'))
-        
-            # УЛЬТИМАТИВНЫЙ ФИНАЛ: Закрываем за собой все шлюзы, чтобы спасти файл от повреждения
-            java_output_stream.close()
-           
-            pfd.close()
-        
-            #print("[LOG] Дозапись через openFileDescriptor после переустановки выполнена!")
-
-            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
-      
-        else:
-            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(2000) 
-            time.sleep(3.0)
-    
-            if not text_content: return
-            # ФАЙЛА ЕЩЕ НЕТ — регистрируем новую строку в Documents/
-            if cursor: cursor.close()
-            values = ContentValues()
-            values.put("_display_name", filename)
-            values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Documents/"+SUB_DIR)
-            file_uri = resolver.insert(collection_uri, values)
-            values.clear(); 
-            values.put("is_pending", 0); 
-            resolver.update(file_uri, values, None, None)
-       
-        
-        if text_content:
-            if not ffound:
-                # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"
-                output_stream = resolver.openOutputStream(file_uri, "wa")
-                output_stream.write(bytes(text_content + "\n", 'utf-8'))
-                output_stream.close()
-        else:
-            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
-    
-            if not range: return
-            vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-            vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
-    
-            return freadln_range(file_uri,min,max)
-        
-    except Exception as e:
-        # Если тестируем на ПК в Pydroid — пишем обычным Си-методом дозаписи
-        with open(filename, 'a', encoding='utf-8') as f:
-            f.write(text_content + "\n")
-    
-    return
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
     if filename[:3] != "log": return
@@ -402,20 +327,12 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
     def write(self, message):
-        fn="log"+str(time.time())+".txt"
-        
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            #t=str(time.time())+"_.txt"
-            #append_to_public_documents(fn, message.strip())
-            #append_to_public_documents(fn, message.strip())
             append_to_public_documents("log"+LOG_FN+".txt", message.strip())
-            #time.sleep(1.0)
-            apd(LOG_FN+"x.txt", message.strip())
-            #apd(LOG_FN+"x.txt", message.strip())
-    def flush(self):
-        pass  # Системная заглушка, обязательная для потоков stdout
+        def flush(self):
+            pass  # Системная заглушка, обязательная для потоков stdout
     
 if True:
     def build_voltage_graph(file_path):

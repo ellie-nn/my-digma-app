@@ -5,7 +5,7 @@ package.name = digmarecorderx
 package.domain = org.oldschool
 version = 1.0.5
 source.include_exts = py,png,jpg,kv,csv
-android.target_sdk = 28
+#android.target_sdk = 28
 #icon.filename = socket.png
 
 requirements = python3,kivy,pyaes,oscpy,kivy,kivy_garden.graph

@@ -19,8 +19,8 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
-FDATA_NAME = "servicework.txt"
-FSVC_LOG = "srv_log.txt"
+FDATA_NAME = "servicework1.txt"
+FSVC_LOG = "srv_log1.txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''

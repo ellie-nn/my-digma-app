@@ -367,7 +367,7 @@ class DigmaRecorderApp(App):
         #try:
         #print(append_to_public_documents("app_log.txt", "", 1,2))
         #time.sleep(10.0)
-        self.mywin = g_init()
+        #self.mywin = g_init()
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         time.sleep(10.0)
         #except: pass
@@ -442,7 +442,7 @@ class DigmaRecorderApp(App):
   #          self.start_background_service()
         #import tinytuya    
         
-        return self.mywin
+        return #self.mywin
         
     def check_permissions_callback(self, permissions, grants):
         # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!

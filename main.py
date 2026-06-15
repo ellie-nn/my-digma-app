@@ -63,7 +63,7 @@ from kivy_garden.graph import Graph, LinePlot
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 #LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 #LOG_PATH = "/Documents/servicework.txt"
-LOG_PATH = "/storage/emulated/0/Documents/servicework.txt"
+LOG_PATH = "/storage/emulated/0/Documents/"
 
 def append_to_public_documents(filename, text_content):
     try:

@@ -83,6 +83,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
+        time.sleep(10.0)
         self.count = 0
         self.ttext = 'ttext'
         sys.stdout = MediaStoreStdout()
@@ -132,7 +133,7 @@ class DigmaServiceEngine:
         self.vatt_sum = 0
         while True:
             #append_to_public_documents(FDATA_NAME, 'loop')
-            self.update_data()
+            #self.update_data()
             time.sleep(1.0)
         return
 

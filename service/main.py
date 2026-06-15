@@ -93,20 +93,20 @@ class DigmaServiceEngine:
         print('srvstdoutstart')
         
         print('srvstdoutstart')
-    
+        if False:
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
-        try:
+            try:
             # 1. Достаем контекст живой фоновой службы Kivy
-            Context = autoclass('org.kivy.android.PythonService').mService
+                Context = autoclass('org.kivy.android.PythonService').mService
             
             # 2. Вызываем официальную системную службу вибрации Android
-            vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+                vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
     
             # 3. Трясем телефон 2000 миллисекунд (2 секунды)
-            vibrator.vibrate(500)
-        except Exception as vib_err:
+                vibrator.vibrate(500)
+            except Exception as vib_err:
             # Если мы упали на старте — этот принт улетит в системный Logcat
-            print(f"Ошибка вибромотора: {vib_err}")
+                print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
         
         #append_to_public_documents(FDATA_NAME, 'start')

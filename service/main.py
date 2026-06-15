@@ -161,9 +161,9 @@ class DigmaServiceEngine:
             self.last_time = time_
                 
             printout = f"{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
-            append_to_public_documents(FDATA_NAME,printout)
         else:
             printout = f"{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
+        append_to_public_documents(FDATA_NAME,printout)
         
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ

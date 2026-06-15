@@ -399,9 +399,11 @@ class DigmaRecorderApp(App):
             # Запускаем файл service.py в изолированном потоке памяти
             service.start('service')
             self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
-        
+            print('Успех запуска службы')
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"
+            print(self.ttext)
+        
                         
         #return label
         

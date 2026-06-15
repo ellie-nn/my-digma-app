@@ -90,7 +90,7 @@ class DigmaServiceEngine:
         sys.stderr = sys.stdout
         
         print('srvstdoutstart')
-        time.sleep(10.0)
+        
         print('srvstdoutstart')
     
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
@@ -107,7 +107,7 @@ class DigmaServiceEngine:
             # Если мы упали на старте — этот принт улетит в системный Logcat
             print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
-        
+        time.sleep(30.0)
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         

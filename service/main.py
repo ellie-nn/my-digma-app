@@ -88,8 +88,9 @@ class DigmaServiceEngine:
         self.ttext = 'ttext'
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        time.sleep(10.0)
+        
         print('srvstdoutstart')
+        time.sleep(10.0)
         print('srvstdoutstart')
     
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===

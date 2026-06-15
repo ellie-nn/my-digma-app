@@ -404,7 +404,7 @@ class DigmaRecorderApp(App):
             self.ttext = f"Ошибка запуска службы: {e}"
             print(self.ttext)
         
-                        
+        time.sleep(30.0)                
         #return label
         
         self.vatt_sum = 0

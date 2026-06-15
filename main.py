@@ -1,3 +1,4 @@
+#search1
 #import warnings
 # ДАЕМ КОМАНДУ ПИТОНУ: ПОЛНОСТЬЮ ИГНОРИРОВАТЬ ЛЮБЫЕ ДЕКОРАТИВНЫЕ WARNINGS
 #warnings.filterwarnings("ignore")

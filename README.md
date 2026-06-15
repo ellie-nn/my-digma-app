@@ -1,5 +1,5 @@
 fuck off
-это блокнот
+это блокнот search1
 #==========≠======≠
 <application ... tools:node="replace">
 <service android:name="org.oldschool.digmarecorder.DigmaJavaService" ... tools:node="replace"/>

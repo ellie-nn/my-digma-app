@@ -1,5 +1,5 @@
 fuck off
-это блокнот
+это блокнот search 2
 #==========≠======≠
 import os
 from android.storage import primary_external_storage_text

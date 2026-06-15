@@ -5,7 +5,7 @@ logging.disable(logging.CRITICAL)
 import time
 import os                            # Для os.getcwd() или системных проверок
 import sys       # Для sys.stdout/sys.stderr и перехвата print()
-from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
+#from jnius import autoclass           # Наш ультимативный мост к Java-базе MediaStore
 
 import tinytuya
 #if 'tinytuya' in sys.modules:
@@ -27,6 +27,7 @@ SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' e
 SUB_DIR=''
 
 def append_to_public_documents(filename, text_content):
+    from jnius import autoclass
     try:
         # ХИРУРГИЧЕСКИЙ ФИКС ДЛЯ СЛУЖБЫ:
         # Сначала пытаемся взять контекст фоновой службы, а если мы на ПК — берем окно
@@ -83,7 +84,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        
+        from jnius import autoclass
         self.count = 0
         self.ttext = 'ttext'
         sys.stdout = MediaStoreStdout()
@@ -107,7 +108,7 @@ class DigmaServiceEngine:
             # Если мы упали на старте — этот принт улетит в системный Logcat
             print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
-        time.sleep(30.0)
+        
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
         
@@ -129,7 +130,7 @@ class DigmaServiceEngine:
             print(f'First interaction error:\n{e}')
             #raise SysExit
         time.sleep(2.0)
-        
+        time.sleep(30.0)
         #print('stdouttestend')
         self.last_time = time.time()
         self.vatt_sum = 0

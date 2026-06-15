@@ -83,11 +83,12 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        time.sleep(10.0)
+        
         self.count = 0
         self.ttext = 'ttext'
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
+        time.sleep(10.0)
         print('srvstdoutstart')
         print('srvstdoutstart')
     

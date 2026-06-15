@@ -19,8 +19,8 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
-FDATA_NAME = "servicework1.txt"
-FSVC_LOG = "srv_log1.txt"
+FDATA_NAME = "servicework"+str(time.time()//60))+".txt"
+FSVC_LOG = "srv_log"+str(time.time()//60))+".txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
@@ -83,6 +83,11 @@ class DigmaServiceEngine:
     def __init__(self):
         self.count = 0
         self.ttext = 'ttext'
+        sys.stdout = MediaStoreStdout()
+        sys.stderr = sys.stdout
+        print('srvstdoutstart')
+        print('srvstdoutstart')
+    
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
         try:
             # 1. Достаем контекст живой фоновой службы Kivy
@@ -100,9 +105,7 @@ class DigmaServiceEngine:
         
         #append_to_public_documents(FDATA_NAME, 'start')
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТЧИК ОШИБОК СЛУЖБЫ В ФОНЕ
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
-        #print('stdoutstart')
+        
     
         try:
             devices = tinytuya.deviceScan(None,5)

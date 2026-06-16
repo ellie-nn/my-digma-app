@@ -19,7 +19,7 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
-FDATA_NAME = "servicework"+str(time.time()//300)+".txt"
+FDATA_NAME = "servicework.txt" #+str(time.time()//300)+".txt"
 FSVC_LOG = "srv_log"+str(time.time()//300)+".txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"

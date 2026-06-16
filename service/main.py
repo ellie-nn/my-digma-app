@@ -23,7 +23,7 @@ FDATA_NAME = "servicework"+str(time.time()//60)+".txt"
 FSVC_LOG = "srv_log"+str(time.time()//60)+".txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
-SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
+#SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
 
 def append_to_public_documents(filename, text_content):

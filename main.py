@@ -385,6 +385,7 @@ class DigmaRecorderApp(App):
         # Grabs indices 2 and 4 from each line
         m = [(w[1], w[3]) for line in tcut.splitlines() if (w := line.split())]
         print(m)
+        print(m[0][0])
         #time.sleep(10.0)
         self.mywin = g_init()
         #print(append_to_public_documents('servicework.txt', '', 1,2))

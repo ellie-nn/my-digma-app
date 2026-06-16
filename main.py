@@ -371,7 +371,7 @@ class DigmaRecorderApp(App):
         print('.3 20:29:13 11.1 0.006 -1')
         print('.4 20:29:15 11.1 0.011 -1')
         print('.5 20:29:11 0.0 0.001 -1')
-        print('.START1')
+        print('START1')
         print('START2')
         print('START3')
         print('START4')
@@ -383,7 +383,7 @@ class DigmaRecorderApp(App):
 
         print(tcut)
         # Grabs indices 2 and 4 from each line
-        m = [(w[2], w[4]) for line in tcut.splitlines() if (w := line.split()) and line[0]=="."]
+        m = [(w[1], w[3]) for line in tcut.splitlines() if (w := line.split())]
         print(m)
         #time.sleep(10.0)
         self.mywin = g_init()

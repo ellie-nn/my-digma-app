@@ -205,9 +205,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             values.put("mime_type", "application/octet-stream")
             values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
-            values.clear(); 
-            values.put("is_pending", 0); 
-            resolver.update(file_uri, values, None, None)
+            try:
+                values.clear(); 
+                values.put("is_pending", 0)
+                resolver.update(file_uri, values, None, None)
+            except:
+                pass
+            
         
         if text_content:
             if True:

@@ -84,7 +84,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow)
+        append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
         
         from jnius import autoclass
         self.count = 0

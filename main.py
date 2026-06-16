@@ -93,7 +93,7 @@ def freadln_range(uri,min,max):
                 break  # Файл закончился
             if line_count >= min:
                 retline += line+'\n'
-            if line_count = max:
+            if line_count == max:
                 #print(f"[LOG] Найдена нужная строка: {line}")
                 # ... здесь отдаем строку на наш график ...
                 break

@@ -379,9 +379,9 @@ class DigmaRecorderApp(App):
         print('START6')
         tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
-        #m = [(w[2], w[4]) for line in text.splitlines() if len(w := line.split()) > 4]
-
         print(tcut)
+        m = [(w[2], w[4]) for line in text.splitlines() if len(w := line.split()) > 4]
+        print(m)
         # Grabs indices 2 and 4 from each line
         m = [(w[2], w[3]) for line in tcut.splitlines() if (w := line.split())]
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))

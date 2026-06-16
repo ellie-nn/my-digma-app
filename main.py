@@ -103,7 +103,7 @@ def freadln_range(uri,min,max):
         reader.close()
     except Exception as e:
         print(f"[ERR] Ошибка чтения через URI-поток: строка {line_count}\n{e}")
-    return retline
+    return retline[:-1]
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
     if filename[:3] != "log": return

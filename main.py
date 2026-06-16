@@ -308,7 +308,7 @@ if True:
         # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 120), (20, 220)]
-
+        print(points)
         plot.points = points
         graph.add_plot(plot)
         return graph

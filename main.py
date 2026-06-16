@@ -91,12 +91,14 @@ def freadln_range(uri,min,max):
             line = reader.readLine()
             if line is None: 
                 break  # Файл закончился
-            if line_count == min:
-                print(f"[LOG] Найдена нужная строка: {line}")
+            if line_count >= min:
+                retline += line+'\n'
+            if line_count = max:
+                #print(f"[LOG] Найдена нужная строка: {line}")
                 # ... здесь отдаем строку на наш график ...
                 break
             line_count += 1
-            # Обязательно закрываем шлюз за собо
+        # Обязательно закрываем шлюз за собо
         reader.close()
     except Exception as e:
         print(f"[ERR] Ошибка чтения через URI-поток: строка {line_count}\n{e}")

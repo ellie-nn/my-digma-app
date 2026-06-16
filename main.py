@@ -93,7 +93,7 @@ def freadln_range(uri,min,max):
             if line is None: 
                 break  # Файл закончился
             if line_count >= min:
-                if retline: renline+='\n'
+                if retline: retline+='\n'
                 retline += line
             if line_count == max:
                 #print(f"[LOG] Найдена нужная строка: {line}")

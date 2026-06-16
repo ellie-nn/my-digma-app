@@ -84,6 +84,8 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
+        append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow)
+        
         from jnius import autoclass
         self.count = 0
         self.ttext = 'ttext'
@@ -135,7 +137,7 @@ class DigmaServiceEngine:
         self.last_time = time.time()
         self.vatt_sum = 0
         while True:
-            append_to_public_documents(FDATA_NAME, 'loop')
+            #append_to_public_documents(FDATA_NAME, 'loop')
             self.update_data()
             time.sleep(1.0)
         return
@@ -169,9 +171,9 @@ class DigmaServiceEngine:
             self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
                 
-            printout = f"{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
+            printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
         else:
-            printout = f"{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
+            printout = f".{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
         append_to_public_documents(FDATA_NAME,printout)
         
         self.tttext = printout

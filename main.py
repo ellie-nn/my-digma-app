@@ -97,9 +97,9 @@ def freadln_range(uri,min,max):
                 break
             line_count += 1
             # Обязательно закрываем шлюз за собо
-            reader.close()
+        reader.close()
     except Exception as e:
-        print(f"[ERR] Ошибка чтения через URI-поток: {e}")
+        print(f"[ERR] Ошибка чтения через URI-поток: строка {line_count}\n{e}")
     return line
 
 def append_to_public_documents(filename, text_content, min = None, max = None):

@@ -102,7 +102,7 @@ def freadln_range(uri,min,max):
         reader.close()
     except Exception as e:
         print(f"[ERR] Ошибка чтения через URI-поток: строка {line_count}\n{e}")
-    return line
+    return retline
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
     if filename[:3] != "log": return
@@ -366,8 +366,14 @@ class DigmaRecorderApp(App):
         print('START4')
         print('START5')
         print('START6')
-        #try:
-        print(append_to_public_documents("log"+LOG_FN+".txt", "", 1,2))
+        tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,2)
+        #try:# Grabs indices 2 and 4 from each line
+        #m = [(w[2], w[4]) for line in text.splitlines() if len(w := line.split()) > 4]
+
+        print(tcut)
+        # Grabs indices 2 and 4 from each line
+        m = [(w[2], w[4]) for line in tcut.splitlines() if (w := line.split()) and line[0]=="."]
+        print(m)
         #time.sleep(10.0)
         self.mywin = g_init()
         #print(append_to_public_documents('servicework.txt', '', 1,2))

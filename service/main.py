@@ -131,8 +131,8 @@ class DigmaServiceEngine:
         except Exception as e:
             print(f'First interaction error:\n{e}')
             #raise SysExit
-        time.sleep(2.0)
-        time.sleep(30.0)
+        #time.sleep(2.0)
+        #time.sleep(30.0)
         #print('stdouttestend')
         self.last_time = time.time()
         self.vatt_sum = 0
@@ -151,7 +151,7 @@ class DigmaServiceEngine:
         try:
             data = self.rosette.status()
         except:
-            print('line 140, probably no self.rosette')
+            print('line 154, probably no self.rosette')
         time_ = time.time()
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"

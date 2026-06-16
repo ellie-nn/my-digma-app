@@ -219,8 +219,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         else:
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
             vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-            if min == 1: vibrator.vibrate(500) 
-            time.sleep(1.0)
+            if min == 1: vibrator.vibrate(500); time.sleep(1.0)
     
             if not range: return
             vContext = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -369,7 +368,7 @@ class DigmaRecorderApp(App):
         #time.sleep(10.0)
         self.mywin = g_init()
         #print(append_to_public_documents('servicework.txt', '', 1,2))
-        time.sleep(10.0)
+        #time.sleep(10.0)
         #except: pass
         # Создаем на экране большую текстовую панель
         self.label = Label(

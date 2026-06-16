@@ -362,9 +362,14 @@ class DigmaRecorderApp(App):
     def build(self):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        print('START')
+        print('START1')
+        print('START2')
+        print('START3')
+        print('START4')
+        print('START5')
+        print('START6')
         #try:
-        #print(append_to_public_documents("app_log.txt", "", 1,2))
+        print(append_to_public_documents("log"+LOG_FN+".txt", "", 1,2))
         #time.sleep(10.0)
         self.mywin = g_init()
         #print(append_to_public_documents('servicework.txt', '', 1,2))

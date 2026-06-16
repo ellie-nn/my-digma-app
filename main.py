@@ -86,6 +86,7 @@ def freadln_range(uri,min,max):
         # ПУЛЬСИРУЮЩИЙ ПОСТРОЧНЫЙ ПЕРЕБОР:
         # Память телефона не нагружается, файл не блокируется для фонового мотора!
         line_count = 0
+        retline = ""
         #target_line = min  # Допустим, нам нужна строго 50-я строка
         while True:
             line = reader.readLine()

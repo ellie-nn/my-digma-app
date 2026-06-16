@@ -360,13 +360,18 @@ class DigmaRecorderApp(App):
     def build(self):
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
-        print('START1')
+        print('.﻿1 20:29:10 11.4 0.001 -1')
+        print('.2 20:29:11 0.0 0.001 -1')
+        print('.3 20:29:13 11.1 0.006 -1')
+        print('.4 20:29:15 11.1 0.011 -1')
+        print('.5 20:29:11 0.0 0.001 -1')
+        print('.START1')
         print('START2')
         print('START3')
         print('START4')
         print('START5')
         print('START6')
-        tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,2)
+        tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
         #m = [(w[2], w[4]) for line in text.splitlines() if len(w := line.split()) > 4]
 

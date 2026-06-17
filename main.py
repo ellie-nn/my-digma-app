@@ -286,7 +286,7 @@ if True:
        #     f.write((tmpl+'\n')*3+tmpl)
         #    f.flush
      #       f.close
-        tcut=append_to_public_documents("mock.txt, "", 1,100)
+        tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]

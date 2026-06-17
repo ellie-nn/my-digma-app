@@ -286,37 +286,56 @@ if True:
        #     f.write((tmpl+'\n')*3+tmpl)
         #    f.flush
      #       f.close
-        file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
-        if os.path.exists(file_path):
-            try:
-                with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
-                    x_index = 0
-                    for line in f:
-                        if True:
-                            try:
-                                # Хирургический вырез значения вольтажа из строки лога
-                                voltage_value = float(line.split()[2])
-                                points.append((x_index, voltage_value))
-                                x_index += 1
-                            except Exception:
-                                continue
-                if len(points) > 20:
-                    graph.xmax = len(points)
-            except Exception as e:
-                print(f"[ERR] Ошибка чтения файла1: {e}")
+        tcut=append_to_public_documents("mock.txt, "", 1,100)
+        #try:# Grabs indices 2 and 4 from each line
+        print(tcut)
+        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
+        #print(m)
+        # Grabs indices 2 and 4 from each line
+        m = [[float(w[2]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
+        #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+
+        print(m)
+        for x in reversed(m): x[0]-=m[0][0]
+        print(m)
+        print(m[0][0])
+        #time.sleep(10.0)
+        for x in m: points.append(x)
+        if False:                        
+            file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
+            if os.path.exists(file_path):
+                try:
+                    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+                        x_index = 0
+                        for line in f:
+                            if True:
+                                try:
+                                    # Хирургический вырез значения вольтажа из строки лога
+                                    voltage_value = float(line.split()[2])
+                                
+                                    points.append((x_index, voltage_value))
+                                    x_index += 1
+                                except Exception:
+                                    continue
+                    if len(points) > 20:
+                        graph.xmax = len(points)
+                except Exception as e:
+                    print(f"[ERR] Ошибка чтения файла1: {e}")
+                    for i in range(1, 11):
+                        voltage_value = i
+                        x_index = i
+                        points.append((x_index, voltage_value))
+            
+            else:
+                print(f"[ERR] Ошибка чтения файла2")
                 for i in range(1, 11):
                     voltage_value = i
                     x_index = i
                     points.append((x_index, voltage_value))
-        else:
-            print(f"[ERR] Ошибка чтения файла2")
-            for i in range(1, 11):
-                voltage_value = i
-                x_index = i
-                points.append((x_index, voltage_value))
-            points = [(0, 120), (20, 220)]
-        
-        # Заглушка, если мотор еще не успел создать файл на чистой установке
+                points = [(0, 120), (20, 220)]
+                # end path exists
+            # end False os file method
+            # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 120), (20, 220)]
         print(points)
@@ -334,7 +353,7 @@ if True:
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
-        graph_widget = build_voltage_graph(LOG_PATH)
+        graph_widget = build_voltage_graph('mock.txt')
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (1.0, 1.0) 
         graph_widget.pos_hint = {'x': 0, 'y': 0}

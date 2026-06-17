@@ -377,8 +377,8 @@ class DigmaRecorderApp(App):
         print('START4')
         print('START5')
         print('START6')
-        tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
-        tcut=append_to_public_documents("servicework.txt", "", 1,3)
+        #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
+        tcut=append_to_public_documents("service_work.txt", "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]

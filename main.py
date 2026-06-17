@@ -240,6 +240,9 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
+    def __init__(self, outfile = 'app_log.txt')
+      self.outfile = outfile
+      return
     def write(self, message):
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
@@ -361,6 +364,44 @@ if True:
         
         return main_layout
           
+import math
+import time
+
+def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
+    """
+    Генерирует искусственную историю вольтажа/мощности розетки.
+    duration_seconds - общая глубина лога в секундах.
+    step_seconds - шаг между записями (например, раз в секунду).
+    """
+    # Стартовая точка отсчета времени (текущий штамп эпохи Linux)
+    start_time = time.time()
+    
+    # Накопитель энергии (Джоули = Ватт * Секунды)
+    total_joules = 0.0
+    
+    # Количество строк, которое нужно сгенерировать
+    total_lines = int(duration_seconds / step_seconds)
+    
+    for i in range(1, total_lines + 1):
+        # Вычисляем текущее виртуальное время от старта
+        elapsed = (i - 1) * step_seconds
+        current_timestamp = start_time + elapsed
+        
+        # ФИЗИКА ПРИПОДНЯТОЙ СИНУСОИДЫ (Диапазон 0...200, Период 60 сек):
+        # math.sin(2 * math.pi * elapsed / 60.0) дает колебания от -1 до 1 каждые 60 секунд.
+        # + 1.0 сдвигает диапазон в 0...2. Умножение на 100.0 дает ровно 0...200 Вт!
+        current_power = 100.0 * (math.sin(2 * math.pi * elapsed / 60.0) + 1.0)
+        
+        # Интегрируем джоули (Прибавляем энергию, набежавшую за текущий шаг)
+        if elapsed > 0:
+            total_joules += current_power * step_seconds
+            
+        # СБОРКА ТЕКСТОВОЙ МАТРИЦЫ СТРОКИ С ТОЧНОСТЬЮ ДО СОТЫХ ДОЛЕЙ:
+        log_line = f".{i} {current_timestamp:.2f} {current_power:.2f} {total_joules:.2f} -1"
+        
+        # ЖЕСТКИЙ ПРИКАЗ ЗАПИСИ (Передаем готовую строку в ваш внешний шлюз):
+        mywrite(log_line)
+    return
     
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):

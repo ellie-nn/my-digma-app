@@ -57,6 +57,7 @@ SUB_DIR = ''
 #LOG_FN = 'app_aaf' #loogg'
 LOG_FNw = str(time.time()//300)
 LOG_FN = str(time.time()//300)
+LOG_FN = 'logapp.txt'
 
 
 from kivy.uix.floatlayout import FloatLayout
@@ -240,15 +241,17 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
-    def __init__(self, outfile = 'app_log.txt')
-      self.outfile = outfile
+    def __init__(self, outf = 'app_log.txt')
+      self.outfile = outf
+      sys.stdout = self
+      sys.stderr = sys.stdout
       return
     def write(self, message):
         # Если прилетает не пустая строка — отправляем её в наш Java-мост
         if message and message.strip():
             # Вызываем вашу отлаженную функцию дозаписи в Documents!
             #append_to_public_documents("log"+LOG_FN+".txt", message.strip())
-            append_to_public_documents("logapp.txt", message.strip())
+            append_to_public_documents(self.outfile, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
     
@@ -406,8 +409,8 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
-        sys.stdout = MediaStoreStdout()
-        sys.stderr = sys.stdout
+        MediaStoreStdout(LOG_FN)
+        #sys.stderr = sys.stdout
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')
@@ -421,7 +424,7 @@ class DigmaRecorderApp(App):
         print('START6')
         #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #tcut=append_to_public_documents("service_work.txt", "", 1,3)
-        tcut=append_to_public_documents("logapp.txt", "", 1,3)
+        tcut=append_to_public_documents(LOG_FN, "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]

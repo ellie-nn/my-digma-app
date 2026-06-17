@@ -380,10 +380,10 @@ class DigmaRecorderApp(App):
         tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
-        m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
-        print(m)
+        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
+        #print(m)
         # Grabs indices 2 and 4 from each line
-        m = [(time.mktime(time.strptime(w[2], "%H:%M:%S")), w[3]) for line in tcut.splitlines() if (w := line.split())]
+        m = [(time.mktime(time.strptime(w[2], "%H:%M:%S")), w[3]) for line in tcut.splitlines() if (w := line.split())>3]
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m)

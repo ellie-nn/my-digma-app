@@ -383,7 +383,7 @@ class DigmaRecorderApp(App):
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
-        m = [(float(time.mktime(time.strptime(w[2], "%H:%M:%S"))), float(w[3])) for line in tcut.splitlines() if len(w := line.split())>3]
+        m = [[float(time.mktime(time.strptime(w[2], "%H:%M:%S"))), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m)

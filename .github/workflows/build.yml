@@ -93,7 +93,7 @@ jobs:
         #echo "P4A_RELEASE_KEYSTORE=$HOME/digma.keystore" >> $GITHUB_ENV
         #echo "P4A_RELEASE_KEYSTORE_PASSWD=android" >> $GITHUB_ENV
         #echo "P4A_RELEASE_KEY_ALIAS=androiddebugkey" >> $GITHUB_ENV
-        $echo "P4A_RELEASE_KEY_PASSWD=android" >> $GITHUB_ENV
+        #echo "P4A_RELEASE_KEY_PASSWD=android" >> $GITHUB_ENV
  
     - name: Final Build with Buildozer
       run: |

@@ -387,6 +387,8 @@ class DigmaRecorderApp(App):
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m)
+        for x in reversed(m): x[0]-=m[0][0]
+        print(m)
         print(m[0][0])
         #time.sleep(10.0)
         self.mywin = g_init()

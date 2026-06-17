@@ -241,7 +241,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
 class MediaStoreStdout:
-    def __init__(self, outf = 'app_log.txt')
+    def __init__(self, outf = 'app_log.txt'):
       self.outfile = outf
       sys.stdout = self
       sys.stderr = sys.stdout

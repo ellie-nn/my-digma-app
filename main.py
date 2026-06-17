@@ -107,7 +107,7 @@ def freadln_range(uri,min,max):
     return retline[:-1]
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
-    if filename[:3] != "log": return
+    #if filename[:3] != "log": return
     if text_content: text_content = filename+" "+text_content
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
@@ -378,6 +378,7 @@ class DigmaRecorderApp(App):
         print('START5')
         print('START6')
         tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
+        tcut=append_to_public_documents("servicework.txt", "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]

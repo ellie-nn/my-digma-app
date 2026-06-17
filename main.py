@@ -403,7 +403,7 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
         log_line = f".{i} {current_timestamp:.2f} {current_power:.2f} {total_joules:.2f} -1"
         
         # ЖЕСТКИЙ ПРИКАЗ ЗАПИСИ (Передаем готовую строку в ваш внешний шлюз):
-        append_to_public_documents(mock.txt,log_line)
+        append_to_public_documents("mock.txt",log_line)
     return
     
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА

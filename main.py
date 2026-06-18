@@ -381,6 +381,11 @@ if True:
         scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
+        # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
+
+        scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
+        scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.04} # Верхний край бегунка утыкается в низ графика!
+
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
@@ -388,6 +393,10 @@ if True:
         scroll_bar_scale = Slider(min=0, max=100, value=60, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
+
+        scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
+        scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.08} # Верхний край бегунка утыкается в низ графика!
+
         main_layout.add_widget(scroll_bar_scale) # Бегунок послушно встанет строго под графиком!
         
         # ========================================================
@@ -408,7 +417,7 @@ if True:
         btn_clear = Button(
             text="Очистить лог розетки",
             size_hint=(0.5, 0.08),            # 50% ширины экрана, 8% высоты [↑]
-            pos_hint={'x': 0.25, 'y': 0.05},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+            pos_hint={'x': 0.25, 'top': 0.9},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
             background_color=[1, 0, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]

@@ -352,7 +352,7 @@ if True:
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
-        instance.gw.xmin -= value
+        instance.gw.xmin = instance.gw.xmax - value
         return  
         
     def move_window(instance, value):

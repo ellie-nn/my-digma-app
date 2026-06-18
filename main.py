@@ -72,7 +72,7 @@ from kivy.uix.slider import Slider
 #LOG_PATH = "/Documents/servicework.txt"
 LOG_PATH = "/storage/emulated/0/Documents/"
 
-def read_alien(fn)
+def read_alien(fn):
     # Родной андроидный хак для новичков:
     # На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
     # правильный абсолютный путь к вашей внутренней памяти (уже со всеми нужными слэшами!

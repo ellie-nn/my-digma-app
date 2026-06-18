@@ -349,10 +349,10 @@ if True:
         return
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
-    def move_window(instance, value):
+    def move_window(instance, gw, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
-        graph_widget.xmin = value
-        graph_widget.xmax = value + 60
+        gw.xmin = value
+        gw.xmax = value + 60
         return
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
@@ -370,7 +370,7 @@ if True:
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
         scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
-        scroll_bar.bind(value=move_window)
+        scroll_bar.bind(graph_widget, value=move_window)
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!

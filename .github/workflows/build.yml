@@ -52,6 +52,18 @@ jobs:
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
         
+    # === ХИРУРГИЧЕСКИЙ СДВИГ ИНСТРУМЕНТОВ СБОРКИ ПОД API 28 ===
+    - name: Set up Android NDK r19c for API 28
+      run: |
+        echo "=== [HACK] Скачиваем олдскульный стабильный NDK r19c ==="
+        wget -q https://google.com
+        unzip -q android-ndk-r19c-linux-x86_64.zip -d $HOME
+        
+        # Прописываем жесткие пути, чтобы Buildozer зацепил именно этот NDK
+        echo "ANDROID_NDK_HOME=$HOME/android-ndk-r19c" >> $GITHUB_ENV
+        echo "ANDROID_NDK_PATH=$HOME/android-ndk-r19c" >> $GITHUB_ENV
+
+   
     - name: Inspect Generated Manifests
       run: |
         echo "=== [STEP 4] ИНСПЕКЦИЯ РЕЗУЛЬТАТА ==="

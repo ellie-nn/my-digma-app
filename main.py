@@ -361,9 +361,9 @@ if True:
     def scale_window(instance, value):
         with instance.gw as q:
             q.xmin = q.xmax - value
-        return    
-            
-   def g_init():
+        return  
+    
+    def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
         

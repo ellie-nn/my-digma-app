@@ -353,8 +353,8 @@ if True:
         
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
-        self.gw.xmin = value
-        self.gw.xmax = value + 60
+        instance.gw.xmin = value
+        instance.gw.xmax = value + 60
         return
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]

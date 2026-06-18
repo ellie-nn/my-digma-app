@@ -358,7 +358,7 @@ if True:
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
-        instance.gw.xmax = value + (instance.gw.max-instance.gw.min)
+        instance.gw.xmax = value + (instance.gw.xmax-instance.gw.xmin)
         instance.gw.xmin = value
         return
             

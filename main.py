@@ -2,39 +2,6 @@
 # ДАЕМ КОМАНДУ ПИТОНУ: ПОЛНОСТЬЮ ИГНОРИРОВАТЬ ЛЮБЫЕ ДЕКОРАТИВНЫЕ WARNINGS
 #warnings.filterwarnings("ignore")
 
-from kivy.uix.slider import Slider
-# (from kivy.uix.boxlayout import BoxLayout — еслиlayout вертикальный)
-
-# =====================================================================
-# НАЧАЛО ДОБАВКИ. Вставляем строго ПОСЛЕ того, как ваш Graph уже создан
-# Допустим, ваш объект графика называется: my_graph
-# =====================================================================
-
-# 1. Рождаем горизонтальный бегунок
-# range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
-# value - стартовая позиция ползунка
-scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
-
-# 2. ЖЕСТКИЙ СИНТАКСИЧЕСКИЙ ЗАЖИМ (Связываем ползунок с осями графика):
-# Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
-# нашу микро-функцию move_window и сдвинет сетку!
-def move_window(instance, value):
-    # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
-    my_graph.xmin = value
-    my_graph.xmax = value + 60
-
-scroll_bar.bind(value=move_window)
-
-# 3. ДОБАВЛЕНИЕ В ИНТЕРФЕЙС:
-# Не забудьте запихнуть scroll_bar в ваш главный Layout!
-# Если у вас BoxLayout(orientation='vertical'), то:
-# main_layout.add_widget(my_graph)
-# main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
-
-# =====================================================================
-# КОНЕЦ ДОБАВКИ. Дальше идет ваш родной return main_layout
-# =====================================================================
-
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
 logging.disable(logging.CRITICAL)
@@ -96,7 +63,10 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 # Импортируем легальный Kivy-движок для графиков
 from kivy_garden.graph import Graph, LinePlot
-
+# если layout вертикальный:
+# (from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.slider import Slider
+        
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 #LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 #LOG_PATH = "/Documents/servicework.txt"
@@ -377,7 +347,13 @@ if True:
 
     def clear_log_file(instance):
         return
-        
+    # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
+    # нашу микро-функцию move_window и сдвинет сетку!
+    def move_window(instance, value):
+        # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
+        my_graph.xmin = value
+        my_graph.xmax = value + 60
+        return
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
@@ -390,6 +366,14 @@ if True:
         graph_widget.size_hint = (1.0, 1.0) 
         graph_widget.pos_hint = {'x': 0, 'y': 0}
         main_layout.add_widget(graph_widget)
+        
+        # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
+        # value - стартовая позиция ползунка
+        scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
+        scroll_bar.bind(value=move_window)
+        # Если у вас BoxLayout(orientation='vertical'), то:
+        # main_layout.add_widget(my_graph)
+        main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
         
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]

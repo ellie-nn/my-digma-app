@@ -351,8 +351,8 @@ if True:
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
-        with instance.gw as q:
-            q.xmin = q.xmax - value
+        #with instance.gw as q:
+        instance.gw.xmin -= value
         return  
         
     def move_window(instance, value):

@@ -8,6 +8,9 @@ source.include_exts = py,png,jpg,kv,csv
 #android.target_sdk = 28
 #icon.filename = socket.png
 
+# Сдвигаем целевой SDK на Android 9 (API 28) для тотальной свободы диска!
+android.target_sdk = 28
+
 requirements = python3,kivy,pyaes,oscpy,kivy,kivy_garden.graph
 # ТРЕБОВАНИЯ НАШЕГО ПРИЛОЖЕНИЯ:
 

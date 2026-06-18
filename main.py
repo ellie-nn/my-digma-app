@@ -353,10 +353,17 @@ if True:
         
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
-        instance.gw.xmin = value
-        instance.gw.xmax = value + 60
+        with instance.gw as q
+            q.xmax = value + (q.max-q.min)
+            q.xmin = value
         return
-    def g_init():
+            
+    def scale_window(instance, value):
+        with instance.gw as q
+            q.xmin = q.xmax - value
+        return    
+            
+   def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
         
@@ -377,6 +384,11 @@ if True:
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
+
+        scroll_bar_scale = Slider(min=0, max=100, value=60, orientation='horizontal')
+        scroll_bar_scale.gw = graph_widget
+        scroll_bar_scale.bind(value=scale_window)
+        main_layout.add_widget(scroll_bar_scale) # Бегунок послушно встанет строго под графиком!
         
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]

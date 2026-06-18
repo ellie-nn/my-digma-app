@@ -350,6 +350,10 @@ if True:
             
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
+    def scale_window(instance, value):
+        with instance.gw as q:
+            q.xmin = q.xmax - value
+        return  
         
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
@@ -358,10 +362,6 @@ if True:
             q.xmin = value
         return
             
-    def scale_window(instance, value):
-        with instance.gw as q:
-            q.xmin = q.xmax - value
-        return  
     
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
@@ -376,6 +376,16 @@ if True:
         graph_widget.pos_hint = {'x': 0, 'y': 0}
         main_layout.add_widget(graph_widget)
         
+        
+        scroll_bar_scale = Slider(min=0, max=100, value=60, orientation='horizontal')
+        scroll_bar_scale.gw = graph_widget
+        scroll_bar_scale.bind(value=scale_window)
+
+        scroll_bar_scale.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
+        scroll_bar_scale.pos_hint = {'center_x': 0.5, 'y': 0.08} # Верхний край бегунка утыкается в низ графика!
+
+        main_layout.add_widget(scroll_bar_scale) # Бегунок послушно встанет строго под графиком!
+
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
         scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
@@ -390,15 +400,6 @@ if True:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
 
-        scroll_bar_scale = Slider(min=0, max=100, value=60, orientation='horizontal')
-        scroll_bar_scale.gw = graph_widget
-        scroll_bar_scale.bind(value=scale_window)
-
-        scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
-        scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.08} # Верхний край бегунка утыкается в низ графика!
-
-        main_layout.add_widget(scroll_bar_scale) # Бегунок послушно встанет строго под графиком!
-        
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
         # ========================================================

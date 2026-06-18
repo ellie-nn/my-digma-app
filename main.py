@@ -351,8 +351,8 @@ if True:
     # нашу микро-функцию move_window и сдвинет сетку!
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
-        my_graph.xmin = value
-        my_graph.xmax = value + 60
+        graph_widget.xmin = value
+        graph_widget.xmax = value + 60
         return
     def g_init():
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]

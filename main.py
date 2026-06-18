@@ -72,6 +72,20 @@ from kivy.uix.slider import Slider
 #LOG_PATH = "/Documents/servicework.txt"
 LOG_PATH = "/storage/emulated/0/Documents/"
 
+def read_alien(fn)
+    # Родной андроидный хак для новичков:
+    # На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
+    # правильный абсолютный путь к вашей внутренней памяти (уже со всеми нужными слэшами!
+    base_dir = os.environ.get('EXTERNAL_STORAGE', '/storage/emulated/0')
+
+    # Собираем путь в лоб, без ручных слэшей
+    #file_path = os.path.join(base_dir, 'Documents', 'work.txt')
+    with open("/storage/emulated/0/Documents/"+fn, "a", encoding="utf-8", errors="ignore") as f:
+        tmpl='10 20 30 40'
+        ret=f.read()
+        #f.flush
+        f.close()
+    return ret
 def freadln_range(uri,min,max):
     # Подключаем официальные Java-инструменты Android
     context = autoclass('org.kivy.android.PythonActivity').mActivity
@@ -276,18 +290,7 @@ if True:
         points = []
         #import os
 
-# Родной андроидный хак для новичков:
-# На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
-# правильный абсолютный путь к вашей внутренней памяти (уже со всеми нужными слэшами!)
-        base_dir = os.environ.get('EXTERNAL_STORAGE', '/storage/emulated/0')
 
-# Собираем путь в лоб, без ручных слэшей
-        #file_path = os.path.join(base_dir, 'Documents', 'work.txt')
-      #  with open("/storage/emulated/0/Documents/work"+LOG_FNw+".txt", "a", encoding="utf-8", errors="ignore") as f:
-       #     tmpl='10 20 30 40'
-       #     f.write((tmpl+'\n')*3+tmpl)
-        #    f.flush
-     #       f.close
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
@@ -471,6 +474,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
+        print(read_alien("service_wotk.txt"))
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')

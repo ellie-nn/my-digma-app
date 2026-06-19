@@ -71,7 +71,7 @@ from kivy.uix.slider import Slider
 #LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 #LOG_PATH = "/Documents/servicework.txt"
 LOG_PATH = "/storage/emulated/0/Documents/"
-from jnius import autoclass, cast
+#from jnius import autoclass, cast
 
 def is_full_storage_allowed():
     try:
@@ -511,7 +511,7 @@ class DigmaRecorderApp(App):
         print('START4')
         print('START5')
         print('START6')
-        sys.exit()
+        #sys.exit()
         #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #tcut=append_to_public_documents("service_work.txt", "", 1,3)
         tcut=append_to_public_documents(LOG_FN, "", 1,3)

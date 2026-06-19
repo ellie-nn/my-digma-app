@@ -68,7 +68,7 @@ jobs:
       run: |
         echo "=== [NDK] Скачиваем стабильный NDK r19c из официального архивного шлюза ==="
         # Это вечная прямая ссылка на физический zip-архив Linux! Она пробьет любые блокировки!
-        curl -L -o $HOME/ndk.zip https://google.com
+        curl -L -o $HOME/ndk.zip https://dl.google.com/android/repository/android-ndk-r19c-linux-x86_64.zip
         
         echo "=== [NDK] Распаковываем 800 Мб архива в домашнюю папку пользователя ==="
         # Мы распаковываем в $HOME, где у процесса Гитхаба есть абсолютные права на запись!

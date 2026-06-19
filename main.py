@@ -408,7 +408,7 @@ if True:
         main_layout.add_widget(graph_widget)
         
         
-        scroll_bar_scale = Slider(min=0, max=100, value=60, orientation='horizontal')
+        scroll_bar_scale = Slider(min=10, max=120, value=60, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 
@@ -419,7 +419,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=0, max=180, value=0, orientation='horizontal')
+        scroll_bar = Slider(min=60, max=120, value=60, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу

@@ -1,6 +1,27 @@
 fuck off
 это блокнот
 #==========≠======≠
+from jnius import autoclass, cast
+
+def is_full_storage_allowed():
+    """
+    Возвращает True, если пользователь включил тумблер 'Доступ ко всем файлам'.
+    Возвращает False, если тумблер выключен или это Android 10 (где его нет).
+    """
+    try:
+        # 1. Стучимся в системный Java-класс Environment операционной системы Android
+        Environment = autoclass('android.os.Environment')
+        
+        # 2. Вызываем официальный метод-проверку
+        # Он возвращает живой бинарный флаг (True/False) прямо из ядра Linux!
+        return Environment.isExternalStorageManager()
+        
+    except Exception:
+        # Если метод не найден (это наш Android 10, где этого тумблера физически не существует)
+        # или произошел сбой — возвращаем False, давая сигнал работать по правилам SAF
+        return False
+
+#==========≠======≠
 import math
 import time
 

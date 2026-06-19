@@ -51,21 +51,24 @@ jobs:
         # скачать python-for-android и распаковать все скрытые шаблоны манифестов на диск,
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
-      
+        
+    # ====================================================================
+    # НАШЕ НОВОЕ ХИРУРГИЧЕСКОЕ ВНЕДРЕНИЕ (Вставляем вместо curl и unzip!):
+    # ====================================================================
     - name: Set up Android NDK r19c for API 28
-      run: |
-        echo "=== [NDK] Скачиваем стабильный NDK r19c через сквозной шлюз curl ==="
-        # Флаг -L заставит Гитхаб пробить любые редиректы серверов Google! [1]
-        curl -L -o android-ndk-r19c-linux-x86_64.zip https://google.com
-        
-        # Теперь файл весит честные 800 Мб, и unzip раскатает его идеально ровно! [1]
-        unzip -q android-ndk-r19c-linux-x86_64.zip -d $HOME
-        
-        # Намертво фиксируем пути в памяти сервера Гитхаба
-        echo "ANDROID_NDK_HOME=$HOME/android-ndk-r19c" >> $GITHUB_ENV
-        echo "ANDROID_NDK_PATH=$HOME/android-ndk-r19c" >> $GITHUB_ENV
+      uses: android-actions/setup-android@v3
+      with:
+        # Указываем Гитхабу скачать именно r19c (версия 19.2.5345600 по каталогу Google)
+        ndk-version: '19.2.5345600'
 
-   
+    # Нам остается только прописать пути к автоматически скачанному NDK 
+    # в системную память Buildozer! 
+    - name: Inject NDK Paths to Environment
+      run: |
+        echo "=== [NDK] Фиксируем пути к установленному NDK ==="
+        echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/19.2.5345600" >> $GITHUB_ENV
+        echo "ANDROID_NDK_PATH=$ANDROID_HOME/ndk/19.2.5345600" >> $GITHUB_ENV
+ 
     - name: Inspect Generated Manifests
       run: |
         echo "=== [STEP 4] ИНСПЕКЦИЯ РЕЗУЛЬТАТА ==="

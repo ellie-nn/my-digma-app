@@ -221,7 +221,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             values = ContentValues()
             values.put("_display_name", filename)
             values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Documents/"+SUB_DIR)
+            values.put("relative_path", "/storage/emulated/0/Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
             try:
                 values.clear(); 
@@ -474,21 +474,23 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
-        #print(read_alien("service_work.txt"))
-        #print(append_to_public_documents("service_work.txt","",1,2))
-        
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')
         print('.4 20:29:15 11.1 0.011 -1')
         print('.5 20:29:11 0.0 0.001 -1')
-        generate_mock_log_stream()
+       
+        #print(read_alien("service_work.txt"))
+        #print(append_to_public_documents("service_work.txt","",1,2))
+        
+        #generate_mock_log_stream()
         print('START1')
         print('START2')
         print('START3')
         print('START4')
         print('START5')
         print('START6')
+        sys.exit()
         #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #tcut=append_to_public_documents("service_work.txt", "", 1,3)
         tcut=append_to_public_documents(LOG_FN, "", 1,3)

@@ -150,13 +150,13 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         if text_content:
             
             with open("/storage/emulated/0/Documents/"+filename, "a", encoding="utf-8", errors="ignore") as f:
-                vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-                vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-                vibrator.vibrate(500) 
-                time.sleep(1.0)
+                #vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+                #vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+                #vibrator.vibrate(500) 
+                #time.sleep(1.0)
     
                 #tmpl='10 20 30 40'
-                f.write(text_content)
+                f.write(text_content+"\n")
                 f.flush
                 f.close()
                 return

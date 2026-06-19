@@ -383,13 +383,14 @@ if True:
     def scale_window(instance, value):
         #with instance.gw as q:
         instance.gw.xmin = instance.gw.xmax - value
+        instance.mov.min = value
         return  
         
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
-        instance.gw.xmax = value + (instance.gw.xmax-instance.gw.xmin)
-        instance.gw.xmin = value
+        instance.gw.xmin = value - (instance.gw.xmax-instance.gw.xmin)
+        instance.gw.xmax = value
         return
             
     
@@ -426,6 +427,9 @@ if True:
         scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
         scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.04} # Верхний край бегунка утыкается в низ графика!
 
+        scroll_bar.skl=scroll_bar_scale
+        scroll_bar_scale.mov=scroll_bar
+            
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!

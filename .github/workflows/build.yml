@@ -50,27 +50,6 @@ jobs:
         # скачать python-for-android и распаковать все скрытые шаблоны манифестов на диск,
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
-        
-
-    # ====================================================================
-    # НАШ ОЛДСКУЛЬНЫЙ И НЕУЯЗВИМЫЙ ШАГ НАСТРОЙКИ ANDROID 9 (Вместо setup-android!)
-    # ====================================================================
-    - name: Set up Android NDK r19c for API 28
-      run: |
-        echo "=== [NDK] Скачиваем стабильный NDK r19c из официального архивного шлюза ==="
-        # Это вечная прямая ссылка на физический zip-архив Linux! Она пробьет любые блокировки!
-        curl -L -o $HOME/ndk.zip https://dl.google.com/android/repository/android-ndk-r19c-linux-x86_64.zip
-        
-        echo "=== [NDK] Распаковываем 800 Мб архива в домашнюю папку пользователя ==="
-        # Мы распаковываем в $HOME, где у процесса Гитхаба есть абсолютные права на запись!
-        unzip -q $HOME/ndk.zip -d $HOME
-        
-        echo "=== [NDK] Удаляем временный zip, чтобы освободить место на сервере ==="
-        #rm $HOME/ndk.zip
-        
-        # Намертво фиксируем переменные пути для Buildozer
-        echo "ANDROID_NDK_HOME=$HOME/android-ndk-r19c" >> $GITHUB_ENV
-        echo "ANDROID_NDK_PATH=$HOME/android-ndk-r19c" >> $GITHUB_ENV
 
     - name: Inspect Generated Manifests
       run: |
@@ -95,14 +74,6 @@ jobs:
         done
         #&-_-_-_-_-20-_-_-_-_&-_-_-_-_-&_-_-_-_-_&  
         
-        echo "=== [HACK] Выжигаем принудительный SDK 33 строго внутри build.py ==="
-        # Ищем только управляющий скрипт по вашей хитрой и проверенной схеме
-        find $HOME/ ./ -name "build.py" -type f 2>/dev/null | while read -r py_file; do
-          echo "Хирургическая правка: $py_file"
-          sed -i 's/target_sdk = 33/target_sdk = 28/g' "$py_file"
-          sed -i 's/target_sdk = 31/target_sdk = 28/g' "$py_file"
-        done
-
     - name: Inject Embedded Keystore Passport
       run: |
         echo "=== [PASSPORT] Восстанавливаем вечный цифровой штамп из текста ==="

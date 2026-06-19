@@ -80,10 +80,10 @@ def read_alien(fn):
 
     # Собираем путь в лоб, без ручных слэшей
     #file_path = os.path.join(base_dir, 'Documents', 'work.txt')
-    with open("/storage/emulated/0/Documents/"+fn, "w", encoding="utf-8", errors="ignore") as f:
+    with open("/storage/emulated/0/Documents/"+fn, "r", encoding="utf-8", errors="ignore") as f:
         tmpl='10 20 30 40'
-        ret=f.write(tmpl)
-        f.flush
+        ret=f.read()
+        #f.flush
         f.close()
     return ret
 def freadln_range(uri,min,max):
@@ -474,8 +474,8 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
-        print(read_alien("service_wotk.txt"))
-        print(append_to_public_documents("service_wotk.txt","",1,2))
+        print(read_alien("service_work.txt"))
+        print(append_to_public_documents("service_work.txt","",1,2))
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')

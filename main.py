@@ -71,7 +71,16 @@ from kivy.uix.slider import Slider
 #LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 #LOG_PATH = "/Documents/servicework.txt"
 LOG_PATH = "/storage/emulated/0/Documents/"
+from jnius import autoclass, cast
 
+def is_full_storage_allowed():
+    try:
+        Environment = autoclass('android.os.Environment')
+        return Environment.isExternalStorageManager()    
+    except Exception:
+        return False
+    return
+        
 def read_alien(fn):
     # Родной андроидный хак для новичков:
     # На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
@@ -137,7 +146,19 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     if min == 1: vibrator.vibrate(500); time.sleep(1.0)
-    
+    if is_full_storage_allowed():
+        if text_content:
+            with open("/storage/emulated/0/Documents/"+filename, "wa", encoding="utf-8", errors="ignore") as f:
+                #tmpl='10 20 30 40'
+                ret=f.write(text_content)
+                f.flush
+                f.close()
+                return
+        else:
+            with open("/storage/emulated/0/Documents/"+filename, "r", encoding="utf-8", errors="ignore") as f:
+                ret=f.read()
+                f.close()
+                return ret
     try:
         Context = autoclass('org.kivy.android.PythonActivity').mActivity
         ContentValues = autoclass('android.content.ContentValues')

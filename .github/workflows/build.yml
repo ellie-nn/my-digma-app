@@ -51,15 +51,17 @@ jobs:
         # скачать python-for-android и распаковать все скрытые шаблоны манифестов на диск,
         # но ОСТАНОВИТ конвейер, не запуская сборку самого APK!
         buildozer android p4a -- --help
-        
-    # === ХИРУРГИЧЕСКИЙ СДВИГ ИНСТРУМЕНТОВ СБОРКИ ПОД API 28 ===
+      
     - name: Set up Android NDK r19c for API 28
       run: |
-        echo "=== [HACK] Скачиваем олдскульный стабильный NDK r19c ==="
-        wget -q https://google.com
+        echo "=== [NDK] Скачиваем стабильный NDK r19c через сквозной шлюз curl ==="
+        # Флаг -L заставит Гитхаб пробить любые редиректы серверов Google! [1]
+        curl -L -o android-ndk-r19c-linux-x86_64.zip https://google.com
+        
+        # Теперь файл весит честные 800 Мб, и unzip раскатает его идеально ровно! [1]
         unzip -q android-ndk-r19c-linux-x86_64.zip -d $HOME
         
-        # Прописываем жесткие пути, чтобы Buildozer зацепил именно этот NDK
+        # Намертво фиксируем пути в памяти сервера Гитхаба
         echo "ANDROID_NDK_HOME=$HOME/android-ndk-r19c" >> $GITHUB_ENV
         echo "ANDROID_NDK_PATH=$HOME/android-ndk-r19c" >> $GITHUB_ENV
 

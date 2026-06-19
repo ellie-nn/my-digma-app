@@ -242,7 +242,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             values = ContentValues()
             values.put("_display_name", filename)
             values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "/storage/emulated/0/Documents/"+SUB_DIR)
+            values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
             try:
                 values.clear(); 

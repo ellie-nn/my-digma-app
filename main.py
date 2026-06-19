@@ -282,7 +282,7 @@ if True:
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=20,  
+            xmin=0, xmax=60,  
             ymin=0, ymax=300
         )
 
@@ -391,7 +391,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=0, max=3600, value=0, orientation='horizontal')
+        scroll_bar = Slider(min=0, max=180, value=0, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
@@ -474,6 +474,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
+        print(read_alien("service_wotk.txt"))
         print(append_to_public_documents("service_wotk.txt","",1,2))
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')

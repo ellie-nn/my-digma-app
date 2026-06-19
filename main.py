@@ -149,7 +149,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     if is_full_storage_allowed():
         if text_content:
             
-            with open("/storage/emulated/0/Documents/"+filename, "wa", encoding="utf-8", errors="ignore") as f:
+            with open("/storage/emulated/0/Documents/"+filename, "a", encoding="utf-8", errors="ignore") as f:
                 vContext = autoclass('org.kivy.android.PythonActivity').mActivity
                 vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
                 vibrator.vibrate(500) 

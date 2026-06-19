@@ -475,7 +475,7 @@ class DigmaRecorderApp(App):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
         #print(read_alien("service_work.txt"))
-        print(append_to_public_documents("service_work.txt","",1,2))
+        #print(append_to_public_documents("service_work.txt","",1,2))
         
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')

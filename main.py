@@ -81,7 +81,7 @@ def is_full_storage_allowed():
         return False
     return
         
-def read_alien(fn):
+def read_alie(fn):
     # Родной андроидный хак для новичков:
     # На Android 10 переменная 'EXTERNAL_STORAGE' всегда намертво знает 
     # правильный абсолютный путь к вашей внутренней памяти (уже со всеми нужными слэшами!
@@ -495,6 +495,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
+        append_to_public_documents("servrk.txt","dfvhjggyjj")
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')
@@ -504,7 +505,7 @@ class DigmaRecorderApp(App):
         #print(read_alien("service_work.txt"))
         #print(append_to_public_documents("service_work.txt","",1,2))
         
-        #generate_mock_log_stream()
+        generate_mock_log_stream()
         print('START1')
         print('START2')
         print('START3')

@@ -474,7 +474,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
-        print(read_alien("service_wotk.txt"))
+        print(append_to_public_documents("service_wotk.txt","",1,2))
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')

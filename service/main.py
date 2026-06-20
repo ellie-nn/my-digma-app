@@ -20,8 +20,8 @@ from kivy.utils import platform
 from kivy.core.window import Window
 from oscpy.client import send_message
 
-FDATA_NAME = "servicework1.txt" #+str(time.time()//300)+".txt"
-FSVC_LOG = "srv_log"+str(time.time()//300)+".txt"
+FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
+FSVC_LOG = "srv_log"+str(time.time()//60)+".txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''

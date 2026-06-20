@@ -655,14 +655,19 @@ class DigmaRecorderApp(App):
         
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
+        vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+        vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+        vibrator.vibrate(200); time.sleep(0.5)
+    
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
         tstamp += SUB_TIME
 
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
-        print(self.label.text)
+        #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
+        text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
+        print(text)
     def check_permissions_callback(self, permissions, grants):    
     #def check_permissions_callback(self, permissions, grants):
         # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!

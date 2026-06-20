@@ -246,7 +246,7 @@ class DigmaServiceEngine:
             data = self.rosette.status()
         except:
             print('line 154, probably no self.rosette')
-        time_ = time.time()
+        utime = time.time()
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
@@ -263,11 +263,11 @@ class DigmaServiceEngine:
             current_time = time.strftime('%H:%M:%S')
             #current_time = time.strftime('%H:%M:%S')
 
+            #self.last_time = utime
+            #self.counter += 1
+            #self.vatt_sum += vatt*(utime-self.last_time)
             self.vatt_sum += vatt*(utime-self.last_time)/3600
             self.last_time = utime
-            #self.counter += 1
-            #self.vatt_sum += vatt*(time_-self.last_time)
-            self.last_time = time_
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
             printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"

@@ -181,7 +181,7 @@ class DigmaServiceEngine:
         append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
         
         from jnius import autoclass
-        self.count = 0
+        self.counter = 0
         self.ttext = 'ttext'
         sys.stdout = MediaStoreStdout()
         sys.stderr = sys.stdout
@@ -237,7 +237,7 @@ class DigmaServiceEngine:
         return
 
     def update_data(self):
-        self.count +=1
+        self.counter +=1
         #current_time = time.strftime('%H:%M:%S')
         
         # Забираем свежий статус
@@ -265,7 +265,7 @@ class DigmaServiceEngine:
 
             self.vatt_sum += vatt*(utime-self.last_time)/3600
             self.last_time = utime
-            self.counter += 1
+            #self.counter += 1
             #self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
                 
@@ -274,7 +274,7 @@ class DigmaServiceEngine:
             sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
           
         else:
-            printout = f".{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
+            printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
           
         append_to_public_documents(FDATA_NAME,printout)

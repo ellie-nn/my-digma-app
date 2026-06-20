@@ -271,18 +271,21 @@ class DigmaServiceEngine:
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
             printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-
-            try:
-            # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
-            # Префикс b'/rosette_packet' — это имя нашей радиоволны
-                pass        
-                #send_message(b'/rosette_packet', [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
-            except Exception as e:
-                pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
-                print(f'Не удалось отправить пакет\n{e}')
+            sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
+          
         else:
             printout = f".{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
+            sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
+          
         append_to_public_documents(FDATA_NAME,printout)
+        try:
+            # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
+            # Префикс b'/rosette_packet' — это имя нашей радиоволны
+            pass        
+            #send_message(b'/rosette_packet', sendout, '127.0.0.1', 3000)
+        except Exception as e:
+            pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
+            print(f'Не удалось отправить пакет\n{e}')
         
         self.tttext = printout
         # Каждую секунду выводим на экран доказательство, что Python ЖИВ

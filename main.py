@@ -407,7 +407,32 @@ if True:
         graph_widget.pos_hint = {'x': 0, 'y': 0}
         main_layout.add_widget(graph_widget)
         
-        
+        from kivy.uix.label import Label
+
+        # =====================================================================
+        # НАШ ТОТАЛЬНЫЙ СКВОЗНОЙ ЛОГ-МОНИТОР
+        # Вставляем этот блок внутрь вашего FloatLayout
+        # =====================================================================
+
+        log_screen = Label(
+            text="[SYSTEM] Монитор лога активирован...\nОжидание данных розетки...",
+    
+            size_hint=(1.0, 1.0),
+            pos_hint={'center_x': 0.5, 'center_y': 0.5},
+    
+            color=(0.2, 1.0, 0.2, 0.8),
+            font_size='14sp',          # Размер шрифта, масштабируемый под экраны телефонов
+            font_name='Roboto',        # Стандартный читаемый системный шрифт Android
+    
+            halign='left',
+            valign='top'
+            )
+        # Без этой строчки Kivy проигнорирует valign, так как текстовая коробка внутри Label 
+        # по умолчанию имеет нулевой размер. Мы принудительно заставляем внутренний 
+        # текстовый блок строго совпадать с физическими размерами самого виджета!
+        log_screen.bind(size=log_screen.setter('text_size'))
+        main_layout.add_widget(log_screen) 
+
         scroll_bar_scale = Slider(min=10, max=120, value=60, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)

@@ -377,7 +377,7 @@ if True:
         print(points)
         plot.points = points
         graph.add_plot(plot)
-        mainclass.tmax = reversed(m)[0][0]
+        mainclass.histtmax = m[-1][0]
         return graph
 
     def clear_log_file(instance):
@@ -591,7 +591,7 @@ class DigmaRecorderApp(App):
       #  except Exception as vib_err:
       #      print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
-           
+        self.launchtime=time.time()
         try:
             # мост к Java-службам Android
             from android import AndroidService
@@ -670,6 +670,10 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
+        self.mywin.plot.points.append((tstamp-self.launchtime+self.histtmax,vatt))
+        self.mywin.plot=self.mywin.plot
+        return 
+     
     def check_permissions_callback(self, permissions, grants):    
     #def check_permissions_callback(self, permissions, grants):
         # Эта функция сама автоматически сработает, когда вы нажмете "Разрешить" на экране!

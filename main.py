@@ -449,6 +449,8 @@ if True:
         scroll_bar_scale.pos_hint = {'center_x': 0.5, 'y': 0.08} # Верхний край бегунка утыкается в низ графика!
 
         main_layout.add_widget(scroll_bar_scale) # Бегунок послушно встанет строго под графиком!
+        main_layout.sbars=scroll_bar_scale
+        
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
@@ -459,13 +461,14 @@ if True:
 
         scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
         scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.04} # Верхний край бегунка утыкается в низ графика!
-
-        scroll_bar.skl=scroll_bar_scale
-        scroll_bar_scale.mov=scroll_bar
-            
+      
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
+        main_layout.sbarm=scroll_bar
+            
+        scroll_bar.skl=scroll_bar_scale
+        scroll_bar_scale.mov=scroll_bar
 
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
@@ -746,6 +749,8 @@ class DigmaRecorderApp(App):
 
     def set_tmax(self, new_value):
         self._tmax = new_value
+        self.mywin.xmax = new_value
+        self.mywin.sbarm.max = new_value
         return
     tmax = property(fget=None, fset=set_tmax)
     pass

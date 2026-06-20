@@ -26,6 +26,9 @@ from kivy.utils import platform
 from kivy.core.window import Window
 
 from jnius import autoclass #, cast
+#from jnius import autoclass #, cast
+
+from oscpy.server import OSCThreadServer
 
 # === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
 # import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]
@@ -57,7 +60,8 @@ SUB_DIR = ''
 LOG_FNw = str(time.time()//300)
 LOG_FN = str(time.time()//300)
 LOG_FN = 'logapp.txt'
-
+#FILE_CSV = 'power_history.csv'
+SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -631,6 +635,16 @@ class DigmaRecorderApp(App):
         self.last_time = time.time()
         self.vatt_sum = 0
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
+        #Запускаем секундный таймер Kivy для вывода отчетов на экран
+        #Clock.schedule_interval(self.update_screen, 5.0)
+
+        # 1. Включаем наш внутренний радиоприемник
+        self.server = OSCThreadServer()
+        self.server.listen(address='127.0.0.1', port=3000, default=True)
+
+        # 2. Намертво привязываем нашу волну к функции обновления экрана
+        self.server.bind(b'/rosette_packet', self.display_live_data)
+        ###########
         Clock.schedule_interval(self.update_screen, 1.0)
         
 #        if platform == 'android':

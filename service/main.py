@@ -18,6 +18,7 @@ from kivy.clock import Clock
 from kivy.utils import platform
 
 from kivy.core.window import Window
+from oscpy.client import send_message
 
 FDATA_NAME = "servicework1.txt" #+str(time.time()//300)+".txt"
 FSVC_LOG = "srv_log"+str(time.time()//300)+".txt"
@@ -25,7 +26,100 @@ DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
+SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+Context = autoclass('org.kivy.android.PythonService').mService
+vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
 
+def vibro():
+    # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===
+    try:
+        # 1. Достаем контекст живой фоновой службы Kivy
+        #Context = autoclass('org.kivy.android.PythonService').mService
+
+        # 2. Вызываем официальную системную службу вибрации Android    
+        #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
+
+        # 3. Трясем телефон 2000 миллисекунд (2 секунды)
+        vibrator.vibrate(500) 
+        time.sleep(1.0)
+    except Exception as vib_err:
+        # Если мы упали на старте — этот принт улетит в системный Logcat
+        print(f"Ошибка вибромотора: {vib_err}")
+     # ==========================================
+
+def SetBkgddStatus():
+    # ВСТАВЛЯЕМ В НАЧАЛО ВАШЕЙ СЛУЖБЫ (Рядом с вибромотором)
+    try:
+
+    # 1. Получаем контекст живой фоновой службы Kivy
+        Context = autoclass('org.kivy.android.PythonService').mService
+
+
+                # 1. СОЗДАЕМ КАНАЛ УВЕДОМЛЕНИЙ (Жесткое требование Android 10+)
+        # Нам нужны классы менеджера, канала и важности
+        NotificationManager = autoclass('android.app.NotificationManager')
+        NotificationChannel = autoclass('android.app.NotificationChannel')
+
+        channel_id = "digma_service_channel"
+        channel_name = "Мониторинг розетки Digma"
+                # Важность IMPORTANCE_LOW (2) — чтобы служба не пищала динамиком каждую секунду
+        importance = NotificationManager.IMPORTANCE_LOW 
+
+                # Строим сам канал
+        channel = NotificationChannel(channel_id, channel_name, importance)
+
+                # Регистрируем канал внутри операционной системы Android
+        notification_manager = Context.getSystemService(Context.NOTIFICATION_SERVICE)
+        notification_manager.createNotificationChannel(channel)
+
+    # 2. Вытаскиваем стандартную иконку нашего APK-пакета из ресурсов Android
+    # (Это застрахует от NullPointerException, так как иконка у приложения есть всегда)
+        pack_mgr = Context.getPackageManager()
+        pack_info = pack_mgr.getPackageInfo(Context.getPackageName(), 0)
+        app_icon = pack_info.applicationInfo.icon
+
+                # 2. ВЫТАСКИВАЕМ ИКОНКУ ПРИЛОЖЕНИЯ (как раньше)
+
+        vibro()
+    # 3. Строим легальное системное уведомление для шторки Android
+        NotificationBuilder = autoclass('android.app.Notification$Builder')
+    # Передаем контекст службы (для Android 10+ каналы создаются Kivy автоматически)
+        #builder = NotificationBuilder(Context)
+        builder = NotificationBuilder(Context, channel_id)
+        builder.setSmallIcon(app_icon)
+        builder.setContentTitle("Мониторинг розеток Digma")
+        builder.setContentText("Служба непрерывно собирает Ватты в фоне...")
+
+        vibro()
+    # 4. ВЫЗЫВАЕМ СИСТЕМНУЮ КОНСТАНТУ ТИПА СЛУЖБЫ ИЗ СЕРДЦА ANDROID
+    # ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC равен числу 1 (0x00000001)
+        ServiceInfo = autoclass('android.content.pm.ServiceInfo')
+        service_type = ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+
+        vibro()
+    # 4. ФИНАЛЬНЫЙ СИСТЕМНЫЙ ЗАЖИМ: Переводим службу в режим бессмертия!
+    # Число 101 — это уникальный ID нашего уведомления в шторке
+
+        Context.startForeground(101, builder.build())
+
+        # === УЛЬТИМАТИВНЫЙ ХАК: ДЕЛАЕМ СЛУЖБУ "ЛИПКОЙ" (START_STICKY) ===
+        # Вытаскиваем системную константу START_STICKY (она равна числу 1)
+        Service = autoclass('android.app.Service')
+        sticky_flag = Service.START_STICKY
+
+        # Принудительно перезаписываем внутреннее состояние службы Android
+        # Теперь, даже если Kivy попытается сделать суицид при смахивании, 
+        # ядро Android мгновенно (в ту же секунду) воскресит наш файл service/main.py в памяти!
+        Context.setSticky(True) # Если метод поддерживается Kivy-оболочкой
+
+        vibro()
+
+        print("[LOG] Бессмертный режим успешно активирован по законам Android 10!")
+    except Exception as fgs_err:
+        print(f"[LOG] Ошибка активации Foreground: {fgs_err}")
+
+#‐---'ччччччяяр------'ч
+#^^^^^^^^&&&&&&&&&&&&&&^
 def append_to_public_documents(filename, text_content):
     from jnius import autoclass
     try:
@@ -167,11 +261,25 @@ class DigmaServiceEngine:
             kwh_17 = dps.get('17', -1)
             
             current_time = time.strftime('%H:%M:%S')
-            
-            self.vatt_sum += vatt*(time_-self.last_time)
+            #current_time = time.strftime('%H:%M:%S')
+
+            self.vatt_sum += vatt*(utime-self.last_time)/3600
+            self.last_time = utime
+            self.counter += 1
+            #self.vatt_sum += vatt*(time_-self.last_time)
             self.last_time = time_
                 
-            printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
+            #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
+            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+
+            try:
+            # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
+            # Префикс b'/rosette_packet' — это имя нашей радиоволны
+                pass        
+                #send_message(b'/rosette_packet', [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17], '127.0.0.1', 3000)
+            except Exception as e:
+                pass # Если окно сейчас закрыто — пакет просто улетит в никуда, без вылетов!
+                print(f'Не удалось отправить пакет\n{e}')
         else:
             printout = f".{self.count} {time.strftime('%H:%M:%S')} -1 -1 -1"
         append_to_public_documents(FDATA_NAME,printout)

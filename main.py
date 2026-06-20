@@ -670,7 +670,7 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
-        self.mywin.plot.points.append((tstamp-self.launchtime+self.histtmax,vatt))
+        self.mywin.plot.points.append((tstamp-self.launchtime+self.histtmax,tstamp-self.launchtime))
         self.mywin.plot=self.mywin.plot
         return 
      

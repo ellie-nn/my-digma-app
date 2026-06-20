@@ -667,7 +667,7 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-        vibrator.vibrate(200); time.sleep(0.5)
+        #vibrator.vibrate(200); time.sleep(0.5)
     
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
@@ -751,6 +751,10 @@ class DigmaRecorderApp(App):
         self._tmax = new_value
         self.mywin.xmax = new_value
         self.mywin.sbarm.max = new_value
+        vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+        vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+        vibrator.vibrate(200); time.sleep(0.5)
+    
         return
     tmax = property(fget=None, fset=set_tmax)
     pass

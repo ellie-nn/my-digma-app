@@ -377,6 +377,7 @@ if True:
         print(points)
         plot.points = points
         graph.add_plot(plot)
+        graph.plot=plot
         mainclass.histtmax = m[-1][0]
         return graph
 
@@ -407,11 +408,12 @@ if True:
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
         graph_widget = build_voltage_graph('mock.txt',mainclass)
+        
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (1.0, 1.0) 
         graph_widget.pos_hint = {'x': 0, 'y': 0}
         main_layout.add_widget(graph_widget)
-        
+        main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label
 
         # =====================================================================
@@ -671,7 +673,7 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
-        print(self.mywin.graph_widget.plot.points)
+        print(f'>>{self.mywin.graph_widget.plot.points}')
         self.mywin.graph_widget.plot.points.append((tstamp-self.launchtime+self.histtmax,tstamp-self.launchtime))
         #self.mywin.plot=self.mywin.plot
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot

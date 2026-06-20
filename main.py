@@ -569,6 +569,7 @@ class DigmaRecorderApp(App):
         print(m)
         print(m[0][0])
         #time.sleep(10.0)
+            
         self.mywin = g_init(self)
         print(self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
@@ -670,8 +671,9 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
-        self.mywin.plot.points.append((tstamp-self.launchtime+self.histtmax,tstamp-self.launchtime))
-        self.mywin.plot=self.mywin.plot
+        self.mywin.graph_widget.plot.points.append((tstamp-self.launchtime+self.histtmax,tstamp-self.launchtime))
+        #self.mywin.plot=self.mywin.plot
+        self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         return 
      
     def check_permissions_callback(self, permissions, grants):    

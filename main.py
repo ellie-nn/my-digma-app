@@ -303,7 +303,7 @@ class MediaStoreStdout:
         pass  # Системная заглушка, обязательная для потоков stdout
     
 if True:
-    def build_voltage_graph(file_path):
+    def build_voltage_graph(file_path,mainclass):
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
@@ -377,6 +377,7 @@ if True:
         print(points)
         plot.points = points
         graph.add_plot(plot)
+        mainclass.tmax = reversed(m)[0][0]
         return graph
 
     def clear_log_file(instance):
@@ -398,14 +399,14 @@ if True:
         return
             
     
-    def g_init():
+    def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
         
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
-        graph_widget = build_voltage_graph('mock.txt')
+        graph_widget = build_voltage_graph('mock.txt',mainclass)
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (1.0, 1.0) 
         graph_widget.pos_hint = {'x': 0, 'y': 0}
@@ -568,7 +569,8 @@ class DigmaRecorderApp(App):
         print(m)
         print(m[0][0])
         #time.sleep(10.0)
-        self.mywin = g_init()
+        self.mywin = g_init(self)
+        print(self.tmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)
         #except: pass

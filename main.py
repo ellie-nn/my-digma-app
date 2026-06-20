@@ -570,7 +570,7 @@ class DigmaRecorderApp(App):
         print(m[0][0])
         #time.sleep(10.0)
         self.mywin = g_init(self)
-        print(self.tmax)
+        print(self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)
         #except: pass

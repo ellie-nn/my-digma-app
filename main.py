@@ -320,7 +320,7 @@ if True:
         for x in reversed(m): x[0]-=m[0][0]
         print(m)
         print(m[0][0])
-        mainclass._tmax = m[-1][0]
+        mainclass.tmax = m[-1][0]
             
         graph = Graph(
             xlabel='Время', ylabel='Вольты',
@@ -328,7 +328,7 @@ if True:
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=mainclass._tmax,  
+            xmin=0, xmax=mainclass.tmax,  
             ymin=0, ymax=300
         )
 
@@ -441,7 +441,7 @@ if True:
         log_screen.bind(size=log_screen.setter('text_size'))
         main_layout.add_widget(log_screen) 
 
-        scroll_bar_scale = Slider(min=10, max=mainclass._tmax, value=60, orientation='horizontal')
+        scroll_bar_scale = Slider(min=10, max=mainclass.tmax, value=60, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 
@@ -454,7 +454,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass._tmax, value=60, orientation='horizontal')
+        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass.tmax, value=60, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
@@ -541,7 +541,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
-        self._tmax = 120
+        self.tmax = 120
         #append_to_public_documents("servrk.txt","dfvhjggyjj")
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
@@ -680,6 +680,9 @@ class DigmaRecorderApp(App):
         print(text)
         print(f'>>{self.mywin.graph_widget.plot.points}')
         tmax = tstamp-self.launchtime+self.histtmax
+        tstamp-self.launchtime+self.histtmax
+        self.mywin.xmax = tmax
+        self.mywin.sbarm.max = tmax
         self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
         #self.mywin.plot=self.mywin.plot
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
@@ -746,18 +749,6 @@ class DigmaRecorderApp(App):
             self.rosette.updatedps()
         time.sleep(0.1)
         return
-
-    def set_tmax(self, new_value):
-        self._tmax = new_value
-        self.mywin.xmax = new_value
-        self.mywin.sbarm.max = new_value
-        vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-        vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-        vibrator.vibrate(200); time.sleep(0.5)
-    
-        return
-    tmax = property(fget=None, fset=set_tmax)
-    pass
         
 if __name__ == '__main__':
     DigmaRecorderApp().run()

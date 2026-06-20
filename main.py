@@ -307,21 +307,6 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
-        graph = Graph(
-            xlabel='Время', ylabel='Вольты',
-            x_ticks_minor=1, x_ticks_major=5,
-            y_ticks_minor=5, y_ticks_major=10,
-            y_grid_label=True, x_grid_label=True,
-            padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=60,  
-            ymin=0, ymax=300
-        )
-
-        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
-        points = []
-        #import os
-
-
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
@@ -335,6 +320,22 @@ if True:
         for x in reversed(m): x[0]-=m[0][0]
         print(m)
         print(m[0][0])
+        mainclass._tmax = m[-1][0]
+            
+        graph = Graph(
+            xlabel='Время', ylabel='Вольты',
+            x_ticks_minor=1, x_ticks_major=5,
+            y_ticks_minor=5, y_ticks_major=10,
+            y_grid_label=True, x_grid_label=True,
+            padding=10, x_grid=True, y_grid=True,
+            xmin=0, xmax=mainclass._tmax,  
+            ymin=0, ymax=300
+        )
+
+        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
+        points = []
+        #import os
+
         #time.sleep(10.0)
         for x in m: points.append(x)
         if False:                        
@@ -440,7 +441,7 @@ if True:
         log_screen.bind(size=log_screen.setter('text_size'))
         main_layout.add_widget(log_screen) 
 
-        scroll_bar_scale = Slider(min=10, max=120, value=60, orientation='horizontal')
+        scroll_bar_scale = Slider(min=10, max=mainclass._tmax, value=60, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 
@@ -451,7 +452,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=60, max=120, value=60, orientation='horizontal')
+        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass._tmax, value=60, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
@@ -537,7 +538,8 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
-        append_to_public_documents("servrk.txt","dfvhjggyjj")
+        self._tmax = 120
+        #append_to_public_documents("servrk.txt","dfvhjggyjj")
         print('.﻿1 20:29:10 11.4 0.001 -1')
         print('.2 20:29:11 0.0 0.001 -1')
         print('.3 20:29:13 11.1 0.006 -1')
@@ -674,7 +676,8 @@ class DigmaRecorderApp(App):
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
         print(f'>>{self.mywin.graph_widget.plot.points}')
-        self.mywin.graph_widget.plot.points.append([tstamp-self.launchtime+self.histtmax,tstamp-self.launchtime])
+        tmax = tstamp-self.launchtime+self.histtmax
+        self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
         #self.mywin.plot=self.mywin.plot
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         return 
@@ -739,6 +742,13 @@ class DigmaRecorderApp(App):
         if data:
             self.rosette.updatedps()
         time.sleep(0.1)
-            
+        return
+
+    def set_tmax(self, new_value):
+        self._tmax = new_value
+        return
+    tmax = property(fget=None, fset=set_tmax)
+    pass
+        
 if __name__ == '__main__':
     DigmaRecorderApp().run()

@@ -397,7 +397,7 @@ if True:
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
         instance.gw.xmin = value - (instance.gw.xmax-instance.gw.xmin)
-        instance.gw.xmax = value + 50
+        instance.gw.xmax = value 
         return
             
     

@@ -331,7 +331,7 @@ if True:
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m1)
-        for x in reversed(m1): x[0]-=m1[0][0]+m[-1][0]+1
+        for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
         m=m+m1
         print(m)
         #print(m1[0][0])
@@ -532,7 +532,7 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
     # Количество строк, которое нужно сгенерировать
     total_lines = int(duration_seconds / step_seconds)
     
-    for i in range(1, total_lines + 1):
+    for i in range(1, total_lines+2):
         # Вычисляем текущее виртуальное время от старта
         elapsed = (i - 1) * step_seconds
         current_timestamp = start_time + elapsed

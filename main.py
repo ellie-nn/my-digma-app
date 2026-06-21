@@ -571,7 +571,7 @@ class DigmaRecorderApp(App):
             # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
             check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
             service_is_running = False
-        except RuntimeError:
+        except:
             # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
@@ -720,7 +720,7 @@ class DigmaRecorderApp(App):
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=1:
+        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=2:
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax

@@ -331,7 +331,7 @@ if True:
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m1)
-        for x in reversed(m1): x[0]-=m1[0][0]+m[0][0]+1
+        for x in reversed(m1): x[0]-=m1[0][0]+m[-1][0]+1
         m=m+m1
         print(m)
         #print(m1[0][0])
@@ -721,8 +721,8 @@ class DigmaRecorderApp(App):
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        print(f'{tmax} {self.mywin.sbarm.value}')
-        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
+        print(f'{tmax} {self.mywin.sbarm.value} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
+        if True # (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax

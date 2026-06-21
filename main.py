@@ -320,6 +320,23 @@ if True:
         for x in reversed(m): x[0]-=m[0][0]
         print(m)
         print(m[0][0])
+
+        tcut=append_to_public_documents("mock.txt", "", 1,100)
+        #try:# Grabs indices 2 and 4 from each line
+        print(tcut)
+        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
+        #print(m)
+        # Grabs indices 2 and 4 from each line
+        m1 = [[float(w[2]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
+        #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+
+        print(m1)
+        for x in reversed(m1): x[0]-=m1[0][0]+m[0][0]+1
+        m=m+m1
+        print(m)
+        #print(m1[0][0])
+        
+            
         mainclass.tmax = m[-1][0]
             
         graph = Graph(
@@ -596,22 +613,6 @@ class DigmaRecorderApp(App):
         print('START5')
         print('START6')
         #sys.exit()
-        #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
-        #tcut=append_to_public_documents("service_work.txt", "", 1,3)
-        #tcut=append_to_public_documents(LOG_FN, "", 1,3)
-        #try:# Grabs indices 2 and 4 from each line
-        #print(tcut)
-        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
-        #print(m)
-        # Grabs indices 2 and 4 from each line
-        #m = [[float(time.mktime(time.strptime(w[2], "%H:%M:%S"))), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
-        #u = time.mktime(time.strptime(s, "%H:%M:%S"))
-
-        #print(m)
-        #for x in reversed(m): x[0]-=m[0][0]
-        #print(m)
-        #print(m[0][0])
-        #time.sleep(10.0)
             
         self.mywin = g_init(self)
         print(self.histtmax)
@@ -720,7 +721,8 @@ class DigmaRecorderApp(App):
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=2:
+        print(f'{tmax} {self.mywin.sbarm.value}')
+        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax

@@ -716,7 +716,7 @@ class DigmaRecorderApp(App):
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        if (self.mywin.sbarm.max-self.mywin.scarm.value)^2 <= 1:
+        if (self.mywin.sbarm.max-self.mywin.scarm.value)^2 <=2:
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax

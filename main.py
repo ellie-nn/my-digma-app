@@ -562,19 +562,19 @@ class DigmaRecorderApp(App):
         #sys.exit()
         #tcut=append_to_public_documents("log"+LOG_FN+".txt", "", 1,3)
         #tcut=append_to_public_documents("service_work.txt", "", 1,3)
-        tcut=append_to_public_documents(LOG_FN, "", 1,3)
+        #tcut=append_to_public_documents(LOG_FN, "", 1,3)
         #try:# Grabs indices 2 and 4 from each line
-        print(tcut)
+        #print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
-        m = [[float(time.mktime(time.strptime(w[2], "%H:%M:%S"))), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
+        #m = [[float(time.mktime(time.strptime(w[2], "%H:%M:%S"))), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-        print(m)
-        for x in reversed(m): x[0]-=m[0][0]
-        print(m)
-        print(m[0][0])
+        #print(m)
+        #for x in reversed(m): x[0]-=m[0][0]
+        #print(m)
+        #print(m[0][0])
         #time.sleep(10.0)
             
         self.mywin = g_init(self)

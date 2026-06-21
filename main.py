@@ -730,12 +730,12 @@ class DigmaRecorderApp(App):
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         if True:    
             tmax = tstamp-self.launchtime+self.histtmax
+            self.mywin.sbarm.max = tmax
             if True:
                 self.mywin.xmax = tmax
-            self.mywin.sbarm.max = tmax
-            self.mywin.sbars.max = tmax
             if True:
                 self.mywin.sbarm.value = tmax
+            self.mywin.sbars.max = tmax
             self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         

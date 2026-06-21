@@ -179,7 +179,14 @@ class MediaStoreStdout:
 class DigmaServiceEngine:
     def __init__(self):
         append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
-        
+     
+        # ВНУТРИ service.py (При старте мотора):
+        from oscpy.server import OSCThreadServer
+
+        osc_service_server = OSCThreadServer()
+        # Мотор намертво «столбит» за собой порт 3001 для приема команд от окна!
+        osc_service_server.listen(address='127.0.0.1', port=3001, default=True)
+
         from jnius import autoclass
         self.counter = 0
         self.ttext = 'ttext'

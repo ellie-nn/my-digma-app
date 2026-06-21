@@ -718,7 +718,6 @@ class DigmaRecorderApp(App):
         print(f'>>{self.mywin.graph_widget.plot.points}')
         tmax = tstamp-self.launchtime+self.histtmax
         self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
-        self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
         print(f'{tmax} {self.mywin.sbarm.value} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
@@ -726,6 +725,7 @@ class DigmaRecorderApp(App):
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax
+        self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         return 
      
     def check_permissions_callback(self, permissions, grants):    

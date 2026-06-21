@@ -551,21 +551,25 @@ class DigmaRecorderApp(App):
         #print(read_alien("service_work.txt"))
         #print(append_to_public_documents("service_work.txt","",1,2))
 
-        from oscpy.server import OSCThreadServer
+        #from oscpy.server import OSCThreadServer
+        import socket # Всего одна короткая строчка в самом верху файла!
+
         # =====================================================================
         # НАШ УЛЬТИМАТИВНЫЙ OSC-РАДАР (Без импорта socket!)
         # Допустим, ваш фоновый мотор держит OSC-порт 3001
         # =====================================================================
 
         # 1. Создаем летучий временный проверочный сервер в окне
-        check_server = OSCThreadServer()
+        check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #OSCThreadServer()
         try:
             # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
-            check_server.listen(address='127.0.0.1', port=3001, default=True)
+            check_server.bind(("127.0.0.1", 3001))
+            #listen(address='127.0.0.1', port=3001, default=True)
     
             # ТРИУМФ 1: Если порт оказался СВОБОДЕН, команда прошла успешно!
             # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
-            check_server.stop() # Сразу гасим наш проверочный сервер, освобождая порт обратно
+            check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
             service_is_running = False
         except RuntimeError:
             # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
@@ -716,7 +720,7 @@ class DigmaRecorderApp(App):
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        if (self.mywin.sbarm.max-self.mywin.scarm.value)^2 <=2:
+        if (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=1:
             self.mywin.xmax = tmax
             self.mywin.sbarm.value = tmax
             self.mywin.sbars.value = tmax

@@ -716,16 +716,24 @@ class DigmaRecorderApp(App):
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
         print(f'>>{self.mywin.graph_widget.plot.points}')
+   #     tmax = tstamp-self.launchtime+self.histtmax
+    #    self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
+   #     self.mywin.sbarm.max = tmax
+   #     self.mywin.sbars.max = tmax
+  #      print(f'{tmax} {self.mywin.sbarm.value} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
+   #     if True: # (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
+     #       self.mywin.xmax = tmax
+     #       self.mywin.sbarm.value = tmax
+     #       self.mywin.sbars.value = tmax
+    #    self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         tmax = tstamp-self.launchtime+self.histtmax
-        self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
+        self.mywin.xmax = tmax
         self.mywin.sbarm.max = tmax
         self.mywin.sbars.max = tmax
-        print(f'{tmax} {self.mywin.sbarm.value} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
-        if True: # (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
-            self.mywin.xmax = tmax
-            self.mywin.sbarm.value = tmax
-            self.mywin.sbars.value = tmax
+        self.mywin.sbarm.value = tmax
+        self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
         self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
+        
         return 
      
     def check_permissions_callback(self, permissions, grants):    

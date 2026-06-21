@@ -441,7 +441,7 @@ if True:
         log_screen.bind(size=log_screen.setter('text_size'))
         main_layout.add_widget(log_screen) 
 
-        scroll_bar_scale = Slider(min=10, max=mainclass.tmax, value=60, orientation='horizontal')
+        scroll_bar_scale = Slider(min=10, max=mainclass.tmax, value=graph_widget.xmax-graph_widget.xmin, orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 
@@ -454,7 +454,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass.tmax, value=60, orientation='horizontal')
+        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass.tmax, value=mainclass.tmax, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу

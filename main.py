@@ -733,7 +733,7 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
           
-            if True:# (tmax-tmax)^2 <=4:
+            if (tmax-self.mywin.sbarm.value)**2 <=4:
                 self.mywin.xmax = tmax
                 self.mywin.sbarm.value = tmax
             #self.mywin.xmax = self.mywin.xmax 

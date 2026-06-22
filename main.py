@@ -320,13 +320,17 @@ if True:
         for x in reversed(m): x[0]-=m[0][0]
         print(m)
         print(m[0][0])
+            
         try:
             tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
         except:         
             tcut=append_to_public_documents("mock.txt", "", 1,100)
         
         #try:# Grabs indices 2 and 4 from each line
+        print('настоящая история:')
         print(tcut)
+        print('- /настоящая история')
+      
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line

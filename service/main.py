@@ -280,13 +280,20 @@ class DigmaServiceEngine:
             self.last_time = utime
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
-            printout = f"{self.counter} {utime - SUB_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+         
+    #        printout = f"{self.counter} {utime - SUB_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+ #           sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
+#        else:
+#            printout = f".{self.counter} {utime - SUB_TIME} -1 -1 -1"
+   #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
+         
+            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
             sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
           
         else:
-            printout = f".{self.counter} {utime - SUB_TIME} -1 -1 -1"
+            printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
-          
+   
         append_to_public_documents(FDATA_NAME,printout)
         try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000

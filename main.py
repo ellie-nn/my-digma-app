@@ -734,8 +734,9 @@ class DigmaRecorderApp(App):
             if  (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
                 self.mywin.xmax = tmax
                 self.mywin.sbarm.value = tmax
-            self.mywin.sbars.max = tmax
             self.mywin.xmax = self.mywin.xmax 
+            self.mywin.sbarm.value = self.mywin.sbarm.value
+            self.mywin.sbars.max = tmax
             self.mywin.graph_widget.plot.points.append([ tmax, tstamp-self.launchtime])
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
         

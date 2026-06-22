@@ -138,7 +138,7 @@ def freadln_range(uri,min,max):
 
 def append_to_public_documents(filename, text_content, min = None, max = None):
     #if filename[:3] != "log": return
-    if text_content: text_content = filename+" "+text_content
+    if text_content and not filename == 'mock.txt': text_content = filename+" "+text_content
     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
     #if min == 1: vibrator.vibrate(500) 

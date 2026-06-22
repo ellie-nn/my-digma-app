@@ -322,7 +322,8 @@ if True:
         print(m[0][0])
             
         try:
-            tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
+            #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
+            tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
         except Exception as e:       
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")
             tcut=append_to_public_documents("mock.txt", "", 1,100)
@@ -339,6 +340,8 @@ if True:
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m1)
+        #if os.path.isfile(file_path)
+        self.datafn=f'data_{string(int(m1[0][1]))}.txt'
         for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
         m=m+m1
         print(m)
@@ -565,13 +568,30 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
         # ЖЕСТКИЙ ПРИКАЗ ЗАПИСИ (Передаем готовую строку в ваш внешний шлюз):
         append_to_public_documents("mock.txt",log_line)
     return
-    
+def thelastfile(path,mask)
+    from pathlib import Path
+
+    # Define directory and mask
+    directory = Path(path)
+    mask = 'data*.txt'
+
+    # 1. Get matching files recursively (use .glob() if not searching subfolders)
+    files = list(directory.rglob(mask))
+
+    # 2. Sort by modification time
+    files.sort(key=lambda x: x.stat().st_mtime)
+    return files[0]
+
+for file in files:
+    print(file)
+
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         #sys.stderr = sys.stdout
         self.tmax = 120
+        self.datafn=''
         #append_to_public_documents("servrk.txt","dfvhjggyjj")
         #print('.﻿1 20:29:10 11.4 0.001 -1')
         #print('.2 20:29:11 0.0 0.001 -1')
@@ -601,11 +621,15 @@ class DigmaRecorderApp(App):
             # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
             check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
             service_is_running = False
+            self.datafn=''
         except:
+            import shutil
             # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
             service_is_running = True
+            self.datafn=thelastfile('/storage/emulated/0/Documents','data*.txt')
+            shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
 
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
@@ -718,12 +742,15 @@ class DigmaRecorderApp(App):
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
-    
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
         tstamp += SUB_TIME
-
+        if not self.datafn:
+            self.datafn=f'data{string(int(tstamp))}.txt'
+        f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a')
+        f.write(f'.{count} {tstamp} {vatt} {integral} {kwh}')
+        f.close()
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
@@ -746,7 +773,7 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
           
-            if (tmax-self.mywin.sbarm.value)**2 <=1:
+            if (tmax-self.mywin.sbarm.value)**2 <=2:
                 self.mywin.xmax = tmax
                 self.mywin.sbarm.value = tmax
             #self.mywin.xmax = self.mywin.xmax 

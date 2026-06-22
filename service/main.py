@@ -27,7 +27,10 @@ LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_DIR=''
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
-FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
+#FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
+FDATA_NAME = '' 
+
+
 
 
 #Context = autoclass('org.kivy.android.PythonService').mService
@@ -181,8 +184,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
-     
+        
         # ВНУТРИ service.py (При старте мотора):
         from oscpy.server import OSCThreadServer
 
@@ -281,10 +283,10 @@ class DigmaServiceEngine:
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
          
-            printout = f"{self.counter} {utime - SUB_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            printout = f"{self.counter} {utime} {vatt} {self.vatt_sum:.3f} {kwh_17}"
             sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
         else:
-            printout = f".{self.counter} {utime - SUB_TIME} {self.counter} -1 -1"
+            printout = f".{self.counter} {utime} {self.counter} -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, self.counter, -1, -1]
          
    #         printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
@@ -293,7 +295,10 @@ class DigmaServiceEngine:
  #       else:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
    #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
-   
+        if not FDATA_NAME:
+            FDATA_NAME=f"svcdata{int(utime)}.txt"
+            append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
+         
         append_to_public_documents(FDATA_NAME,printout)
         try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000

@@ -313,7 +313,7 @@ if True:
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
-        m = [[float(w[2]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3]
+        m = [[float(w[2]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m)

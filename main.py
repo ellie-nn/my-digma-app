@@ -321,7 +321,7 @@ if True:
         print(m)
         print(m[0][0])
 
-        tcut=append_to_public_documents("mock.txt", "", 1,100)
+        tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
@@ -733,7 +733,7 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
           
-            if (tmax-self.mywin.sbarm.value)**2 <=4:
+            if (tmax-self.mywin.sbarm.value)**2 <=1:
                 self.mywin.xmax = tmax
                 self.mywin.sbarm.value = tmax
             #self.mywin.xmax = self.mywin.xmax 

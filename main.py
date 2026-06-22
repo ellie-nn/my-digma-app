@@ -531,6 +531,11 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
     duration_seconds - общая глубина лога в секундах.
     step_seconds - шаг между записями (например, раз в секунду).
     """
+    try:
+        open("/storage/emulated/0/Documents/mock.txt", "r", encoding="utf-8", errors="ignore").close
+        return
+    except:
+        pass
     # Стартовая точка отсчета времени (текущий штамп эпохи Linux)
     start_time = time.time()
     

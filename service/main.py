@@ -20,13 +20,16 @@ from kivy.utils import platform
 from kivy.core.window import Window
 from oscpy.client import send_message
 
-FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
 FSVC_LOG = "srv_log"+str(time.time()//60)+".txt"
 DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
+FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
+
+
 #Context = autoclass('org.kivy.android.PythonService').mService
 #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
 
@@ -277,11 +280,11 @@ class DigmaServiceEngine:
             self.last_time = utime
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
-            printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            printout = f"{self.counter} {utime - SUB_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
             sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
           
         else:
-            printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
+            printout = f".{self.counter} {utime - SUB_TIME} -1 -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
           
         append_to_public_documents(FDATA_NAME,printout)

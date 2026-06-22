@@ -534,7 +534,7 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
     
     # Количество строк, которое нужно сгенерировать
     total_lines = int(duration_seconds / step_seconds)
-    
+    append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
     for i in range(1, total_lines+2):
         # Вычисляем текущее виртуальное время от старта
         elapsed = (i - 1) * step_seconds

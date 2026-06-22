@@ -27,7 +27,7 @@ LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_DIR=''
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
-FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
+#FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
 
 
 #Context = autoclass('org.kivy.android.PythonService').mService

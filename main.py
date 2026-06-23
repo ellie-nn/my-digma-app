@@ -589,6 +589,7 @@ for file in files:
 class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
+        print('START1')
         #sys.stderr = sys.stdout
         self.tmax = 120
         self.datafn=''
@@ -643,7 +644,7 @@ class DigmaRecorderApp(App):
             # Здесь вызываем ваш запуск службы через mActivity [↑]
 
         generate_mock_log_stream()
-        print('START1')
+        
         print('START2')
         print('START3')
         print('START4')

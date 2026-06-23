@@ -19,7 +19,7 @@ jobs:
         path: |
           ~/.buildozer
           .buildozer
-        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v131111
+        key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}v14
       
     - name: Free Disk Space
       run: |

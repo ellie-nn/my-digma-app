@@ -756,7 +756,7 @@ class DigmaRecorderApp(App):
         tstamp += SUB_TIME
         if not self.datafn:
             self.datafn=f'data{int(tstamp)}.txt'
-        f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a')
+        f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a', encoding="utf-8", errors="ignore")
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh} -\n')
         f.close()
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"

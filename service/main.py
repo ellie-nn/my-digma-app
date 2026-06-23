@@ -29,7 +29,7 @@ SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время с�
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
 #FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
 FDATA_NAME = '' 
-FDATA_NAME = "-"
+#FDATA_NAME = "-"
 
 
 
@@ -184,7 +184,7 @@ class MediaStoreStdout:
 
 class DigmaServiceEngine:
     def __init__(self):
-        FDATA_NAME=""
+        global FDATA_NAME
         # ВНУТРИ service.py (При старте мотора):
         from oscpy.server import OSCThreadServer
 
@@ -248,7 +248,8 @@ class DigmaServiceEngine:
             time.sleep(1.0)
         return
 
-    def update_data(self):
+    def update_data(self)
+        glogal FDATA_NAME
         self.counter +=1
         #current_time = time.strftime('%H:%M:%S')
         
@@ -296,7 +297,7 @@ class DigmaServiceEngine:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
    #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
         print('Fdatanamea')
-        if FDATA_NAME == "-":
+        if not FDATA_NAME:
             print('Fdatanameb')
        
             FDATA_NAME=f"svcdata{int(utime)}.txt"

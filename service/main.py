@@ -29,7 +29,7 @@ SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время с�
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
 #FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
 FDATA_NAME = '' 
-FDATA_NAME = ""
+FDATA_NAME = "-"
 
 
 
@@ -296,7 +296,7 @@ class DigmaServiceEngine:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
    #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
         print('Fdatanamea')
-        if not FDATA_NAME:
+        if FDATA_NAME == "-":
             print('Fdatanameb')
        
             FDATA_NAME=f"svcdata{int(utime)}.txt"

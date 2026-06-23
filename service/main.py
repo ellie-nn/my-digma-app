@@ -295,11 +295,20 @@ class DigmaServiceEngine:
  #       else:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
    #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
+        print('Fdatanamea')
         if not FDATA_NAME:
+            print('Fdatanameb')
+       
             FDATA_NAME=f"svcdata{int(utime)}.txt"
+            print('Fdatanamec')
+       
             append_to_public_documents(FDATA_NAME,'№ Time Pow ΣPow HardPow')
-         
+            print('Fdatanamed')
+       
+        print('Fdatanamee')
         append_to_public_documents(FDATA_NAME,printout)
+        print('Fdatanamef')
+       
         try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000
             # Префикс b'/rosette_packet' — это имя нашей радиоволны

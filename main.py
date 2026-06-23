@@ -653,8 +653,9 @@ class DigmaRecorderApp(App):
         print('START4')
         print('START5')
         print('START6')
+        print(SUB_TIME)
+        
         #sys.exit()
-            
         self.mywin = g_init(self)
         print(self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
@@ -678,21 +679,8 @@ class DigmaRecorderApp(App):
       #      print(f"Ошибка вибромотора: {vib_err}")
         # ==========================================
         self.launchtime=time.time()
-        try:
-            # мост к Java-службам Android
-            from android import AndroidService
-                
-            # Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-            service = AndroidService('digmaservice', 'fore ground')
-                
-            # Запускаем файл service.py в изолированном потоке памяти
-            service.start('service')
-            self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
-            print('Успех запуска службы')
-        except Exception as e:
-            self.ttext = f"Ошибка запуска службы: {e}"
-            print(self.ttext)
-        
+        self.ttext = f'СИСТЕМА СТАРОЙ ШКОЛЫ ПАШЕТ!\n'
+            
         #time.sleep(30.0)                
         #return label
         
@@ -726,14 +714,29 @@ class DigmaRecorderApp(App):
         #Запускаем секундный таймер Kivy для вывода отчетов на экран
         #Clock.schedule_interval(self.update_screen, 5.0)
 
+        # мост к Java-службам Android
+        from android import AndroidService
+                
+        #Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
+        service = AndroidService('digmaservice', 'fore ground')
+        
         # 1. Включаем наш внутренний радиоприемник
         self.server = OSCThreadServer()
         self.server.listen(address='127.0.0.1', port=3000, default=True)
 
         # 2. Намертво привязываем нашу волну к функции обновления экрана
         self.server.bind(b'/rosette_packet', self.display_live_data)
+        
+        try:       
+            # Запускаем файл service.py в изолированном потоке памяти
+            service.start('service')
+            print('Успех запуска службы')  
+        except Exception as e:
+            self.ttext = f"Ошибка запуска службы: {e}"
+            print(self.ttext)
+        
         ###########
-        Clock.schedule_interval(self.update_screen, 1.0)
+        #Clock.schedule_interval(self.update_screen, 1.0)
         
 #        if platform == 'android':
   #          self.start_background_service()

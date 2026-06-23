@@ -248,7 +248,7 @@ class DigmaServiceEngine:
             time.sleep(1.0)
         return
 
-    def update_data(self)
+    def update_data(self):
         glogal FDATA_NAME
         self.counter +=1
         #current_time = time.strftime('%H:%M:%S')

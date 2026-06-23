@@ -341,7 +341,7 @@ if True:
 
         print(m1)
         #if os.path.isfile(file_path)
-        self.datafn=f'data_{int(m1[0][1])}.txt'
+        mainclass.datafn=f'data_{int(m1[0][1])}.txt'
         for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
         m=m+m1
         print(m)

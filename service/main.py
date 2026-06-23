@@ -199,7 +199,7 @@ class DigmaServiceEngine:
         sys.stderr = sys.stdout
         
         print('srvstdoutstart')
-        
+        print(SUB_TIME)
         print('srvstdoutstart')
         if False:
         # === ТЕСТОВЫЙ ВИБРО-ПИНОК СТАРТА СЛУЖБЫ ===

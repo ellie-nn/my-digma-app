@@ -582,8 +582,8 @@ def thelastfile(path,mask):
     files.sort(key=lambda x: x.stat().st_mtime)
     return files[0]
 
-for file in files:
-    print(file)
+#for file in files:
+    #print(file)
 
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):

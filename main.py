@@ -501,6 +501,7 @@ if True:
         scroll_bar.skl=scroll_bar_scale
         scroll_bar_scale.mov=scroll_bar
 
+        
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
         # ========================================================
@@ -525,7 +526,58 @@ if True:
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
         btn_clear.bind(on_release=clear_log_file)
         main_layout.add_widget(btn_clear)
-        
+
+        from kivy.uix.textinput import TextInput
+
+# =====================================================================
+# НАШЕ ИНТЕРАКТИВНОЕ ПОЛЕ ВВОДА
+# Вставляем этот блок строго ВНУТРИ вашего FloatLayout
+# =====================================================================
+
+        user_input = TextInput(
+            # 1. Стартовый невидимый текст-подсказка (исчезает, когда вы тапаете пальцем)
+            hint_text="Километры",
+            text="",                         # По умолчанию поле абсолютно пустое
+            multiline=False,                 # Ввод строго в одну строку (удобно для ввода цифр)
+    
+            # 2. ЖЕСТКИЙ ПРОПОРЦИОНАЛЬНЫЙ ЗАЖИМ В ВОЗДУХЕ OVER GRAPH:
+            # Задаем элементу фиксированную высоту (40 пикселей) под палец, 
+            # но плавающую ширину (30% от ширины экрана Самсунга) [↑]
+            size_hint=(0.3, None),
+            height=40,
+    
+            # Прижимаем поле, например, к правому верхнему углу экрана поверх графика! [↑]
+            # 'right': 0.95 оставляет изящный отступ в 5% справа, 'top': 0.95 — отступ сверху
+            pos_hint={'right': 0.95, 'top': 0.95},
+    
+            # 3. ДИЗАЙН И ЧАСТИЧНАЯ ПРОЗРАЧНОСТЬ:
+            # Сделаем задний фон поля полупрозрачным темно-серым (RGBA), 
+            # чтобы сквозь него были зряче видны пики пролетающей синусоиды!
+            background_color=(0.1, 0.1, 0.1, 0.5), 
+            foreground_color=(0.2, 1.0, 0.2, 1.0),   # Текст ввода — неоново-зеленый
+            hint_text_color=(0.5, 0.5, 0.5, 0.8),    # Цвет подсказки — тускло-серый
+    
+            font_size='16sp',                        # Крупный шрифт под палец
+            cursor_color=(0.2, 1.0, 0.2, 1.0)        # Мигающий курсор тоже делаем зеленым
+            )
+        main_layout.add_widget(user_input)
+        main_layout.user_input=user_input
+
+        # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
+        # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
+    #    def on_text_submitted(instance, value):
+      #      print(f"[ВВОД] Пользователь вбил данные: '{instance.text}'")
+            # ТУТ СРАБАТЫВАЕТ ЛЮБАЯ ВАША ЛОГИКА!
+            # Например: если instance.text: рассчитать_коэффициент(instance.text)
+        #user_input.bind(on_text_validate=on_text_submitted)
+
+        # ДОБАВЛЕНИЕ В КОРЕНЬ ИНТЕРФЕЙСА:
+        # Важно! Добавляйте user_input САМЫМ ПОСЛЕДНИМ в ваш FloatLayout (даже после Label лога),
+        # чтобы Android положил его самым верхним, приоритетным слоем для тапов пальца!
+        # main_layout.add_widget(my_graph)
+        # main_layout.add_widget(scroll_bar)
+        # main_layout.add_widget(user_input) 
+
         return main_layout
           
 import math
@@ -750,6 +802,8 @@ class DigmaRecorderApp(App):
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
+
+        print(f'=={self.user_input.text}==')
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))

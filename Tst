@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Decoded from "/storage/emulated/0/Download/digmarecordery-1.0.5-arm64-v8a-debug (88).apk" -->
+<!-- Decoded from "/storage/emulated/0/Download/digmarecordery-1.0.5-arm64-v8a-debug (99).apk" -->
 <manifest
 	android:versionCode="102410005"
 	android:versionName="1.0.5"

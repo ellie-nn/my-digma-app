@@ -1,7 +1,7 @@
 [app]
 source.dir = .
 title = Digma Recorder
-package.name = digmarecordery
+package.name = digmarecorderz
 package.domain = org.oldschool
 version = 1.0.5
 source.include_exts = py,png,jpg,kv,csv

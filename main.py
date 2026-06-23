@@ -501,6 +501,7 @@ if True:
         scroll_bar.skl=scroll_bar_scale
         scroll_bar_scale.mov=scroll_bar
 
+        
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
         # ========================================================
@@ -525,7 +526,9 @@ if True:
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
         btn_clear.bind(on_release=clear_log_file)
         main_layout.add_widget(btn_clear)
+
         
+
         return main_layout
           
 import math
@@ -723,7 +726,7 @@ class DigmaRecorderApp(App):
         
         # 1. Включаем наш внутренний радиоприемник
         self.server = OSCThreadServer()
-        self.server.listen(address='127.0.0.1', port=3000, default=True)
+        self.server.listen(address='127.0.0.1', port=3002, default=True)
 
         # 2. Намертво привязываем нашу волну к функции обновления экрана
         self.server.bind(b'/rosette_packet', self.display_live_data)
@@ -750,6 +753,8 @@ class DigmaRecorderApp(App):
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
+
+        print(f'=={self.user_input.text}==')
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))

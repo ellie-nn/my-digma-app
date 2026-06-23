@@ -249,7 +249,7 @@ class DigmaServiceEngine:
         return
 
     def update_data(self):
-        glogal FDATA_NAME
+        global FDATA_NAME
         self.counter +=1
         #current_time = time.strftime('%H:%M:%S')
         

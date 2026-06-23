@@ -632,7 +632,8 @@ class DigmaRecorderApp(App):
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
             service_is_running = True
-            self.datafn=thelastfile('/storage/emulated/0/Documents','data*.txt')
+            self.datafn=f'{thelastfile('/storage/emulated/0/Documents','data*.txt')}'
+            print(self.datafn)
             shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
 
         # =====================================================================
@@ -756,7 +757,7 @@ class DigmaRecorderApp(App):
         if not self.datafn:
             self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a')
-        f.write(f'.{count} {tstamp} {vatt} {integral} {kwh}')
+        f.write(f'.{count} {tstamp} {vatt} {integral} {kwh}\n')
         f.close()
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"

@@ -775,7 +775,7 @@ class DigmaRecorderApp(App):
         
         # 1. Включаем наш внутренний радиоприемник
         self.server = OSCThreadServer()
-        self.server.listen(address='127.0.0.1', port=3000, default=True)
+        self.server.listen(address='127.0.0.1', port=3002, default=True)
 
         # 2. Намертво привязываем нашу волну к функции обновления экрана
         self.server.bind(b'/rosette_packet', self.display_live_data)

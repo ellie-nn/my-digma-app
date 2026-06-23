@@ -568,7 +568,7 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
         # ЖЕСТКИЙ ПРИКАЗ ЗАПИСИ (Передаем готовую строку в ваш внешний шлюз):
         append_to_public_documents("mock.txt",log_line)
     return
-def thelastfile(path,mask)
+def thelastfile(path,mask):
     from pathlib import Path
 
     # Define directory and mask

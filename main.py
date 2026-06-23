@@ -324,26 +324,29 @@ if True:
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
-        except Exception as e:       
+        except Exception as e:     
+            mainclass.datafn=""
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")
             tcut=append_to_public_documents("mock.txt", "", 1,100)
         
         #try:# Grabs indices 2 and 4 from each line
-        print('настоящая история:')
-        print(tcut)
-        print('- /настоящая история')
+        if mainclass.datafn:
+            print('настоящая история:')
+            print(tcut)
+            print('- /настоящая история')
       
-        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
-        #print(m)
-        # Grabs indices 2 and 4 from each line
-        m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
-        #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+            #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
+            #print(m)
+            # Grabs indices 2 and 4 from each line
+            m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+            #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-        print(m1)
-        #if os.path.isfile(file_path)
-        mainclass.datafn=f'data_{int(m1[0][1])}.txt'
-        for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
-        m=m+m1
+            print(m1)
+            #if os.path.isfile(file_path)
+            mainclass.datafn=f'data_{int(m1[0][1])}.txt'
+            for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
+            m=m+m1
+            
         print(m)
         #print(m1[0][0])
         
@@ -748,7 +751,7 @@ class DigmaRecorderApp(App):
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
         tstamp += SUB_TIME
         if not self.datafn:
-            self.datafn=f'data{string(int(tstamp))}.txt'
+            self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a')
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh}')
         f.close()

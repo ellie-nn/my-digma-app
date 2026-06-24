@@ -821,7 +821,7 @@ class DigmaRecorderApp(App):
         f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a', encoding="utf-8", errors="ignore")
         if self.kilometers:
             f.write(f'-{self.kilometers} -\n')   
-            g=open(f'/storage/emulated/0/Documents/ini.txt,'a', encoding="utf-8", errors="ignore")
+            g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
             self.kilometers = ""

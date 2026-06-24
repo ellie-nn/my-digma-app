@@ -707,7 +707,7 @@ class DigmaRecorderApp(App):
             try:
                 run(run)
                 print(f'ini found,\n{run}executed, self.kilometers is set to {self.kilometers}')
-            except: print(f'Could not run\n{run}')
+            except Exception as e: print(f'Could not run\n{run}{e}')
         except: print('no file or could not open ini.txt')
         
         print('START3')
@@ -823,7 +823,9 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
+            self.user_input.text = str(self.kilometers)
             self.kilometers = ""
+          
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh} -\n')
         f.close()
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"

@@ -435,6 +435,7 @@ if True:
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
+        mainclass.kilometers = ""
         
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
@@ -562,11 +563,13 @@ if True:
 
         # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
-    #    def on_text_submitted(instance, value):
-      #      print(f"[ВВОД] Пользователь вбил данные: '{instance.text}'")
+        def on_text_submitted(instance, value):
+            print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
+            instance.mainclass.kilometers = int(value)
             # ТУТ СРАБАТЫВАЕТ ЛЮБАЯ ВАША ЛОГИКА!
             # Например: если instance.text: рассчитать_коэффициент(instance.text)
-        #user_input.bind(on_text_validate=on_text_submitted)
+            #user_input.bind(on_text_validate=on_text_submitted)
+            return
 
         # ДОБАВЛЕНИЕ В КОРЕНЬ ИНТЕРФЕЙСА:
         # Важно! Добавляйте user_input САМЫМ ПОСЛЕДНИМ в ваш FloatLayout (даже после Label лога),
@@ -799,6 +802,7 @@ class DigmaRecorderApp(App):
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
+
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
@@ -806,6 +810,12 @@ class DigmaRecorderApp(App):
         if not self.datafn:
             self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a', encoding="utf-8", errors="ignore")
+        if self.kilometers:
+            f.write(f'-{self.kilometers} -\n')   
+            g=open(f'/storage/emulated/0/Documents/ini.txt,'a', encoding="utf-8", errors="ignore")
+            g.write(f'self.kilometers = {self.kilometers}\n')
+            g.close()
+            self.kilometers = ""
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh} -\n')
         f.close()
         #self.label.text = f"N = {count}\n{time_}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"

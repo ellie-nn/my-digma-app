@@ -827,7 +827,7 @@ class DigmaRecorderApp(App):
                 self.user_input.text = str(self.kilometers)
                 self.kilometers = ""
                 time.sleep(700)
-                if not self.kilometers 
+                if not self.kilometers:
                     vContext = autoclass('org.kivy.android.PythonActivity').mActivity
                     vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
                     vibrator.vibrate(200); time.sleep(0.5)

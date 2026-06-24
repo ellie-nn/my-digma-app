@@ -823,7 +823,8 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
-            self.user_input.text = str(self.kilometers)
+            if self.user_input.text != str(self.kilometers):
+                self.user_input.text = str(self.kilometers)
             self.kilometers = ""
           
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh} -\n')

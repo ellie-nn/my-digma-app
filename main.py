@@ -824,8 +824,8 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
-            if self.user_input.text != self.kilometers:
-                self.user_input.text = self.kilometers
+            if not self.user_input.text and self.user_input.hint_text != self.kilometers:
+                self.user_input.hint_text = self.kilometers
             self.kilometers = ""
             #time.sleep(700)
             #if not self.kilometers:

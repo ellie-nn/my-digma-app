@@ -434,6 +434,7 @@ if True:
     # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
     def on_text_submitted(instance):
+        if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
         instance.mainclass.kilometers = instance.text
         return

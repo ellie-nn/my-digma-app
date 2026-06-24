@@ -701,7 +701,7 @@ class DigmaRecorderApp(App):
         
         print('START2')
         try:
-            f = open("ini.txt","r",encoding="utf-8", errors="ignore")
+            f = open("/storage/emulated/0/Documents/ini.txt","r",encoding="utf-8", errors="ignore")
             run = f.read()
             f.close()
             try:

@@ -435,7 +435,7 @@ if True:
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
     def on_text_submitted(instance):
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
-        instance.mainclass.kilometers = int(instance.text)
+        instance.mainclass.kilometers = instance.text
         return
             
     def g_init(mainclass):
@@ -823,14 +823,14 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
-            if self.user_input.text != str(self.kilometers):
-                self.user_input.text = str(self.kilometers)
-                self.kilometers = ""
-                time.sleep(700)
-                if not self.kilometers:
-                    vContext = autoclass('org.kivy.android.PythonActivity').mActivity
-                    vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
-                    vibrator.vibrate(200); time.sleep(0.5)
+            if self.user_input.text != self.kilometers:
+                self.user_input.text = self.kilometers
+            self.kilometers = ""
+            #time.sleep(700)
+            #if not self.kilometers:
+            #vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+            #vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+            #vibrator.vibrate(200); time.sleep(0.5)
           
         f.write(f'.{count} {tstamp} {vatt} {integral} {kwh} -\n')
         f.close()

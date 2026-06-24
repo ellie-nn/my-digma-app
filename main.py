@@ -702,6 +702,15 @@ class DigmaRecorderApp(App):
         generate_mock_log_stream()
         
         print('START2')
+        try:
+            f = open("ini.txt","r",encoding="utf-8", errors="ignore")
+            run = f.read()
+            f.close()
+            try:
+                run(run)
+            except: print(f'Could not run\n{run}')
+        except: print('no file or could not open ini.txt')
+        
         print('START3')
         print('START4')
         print('START5')

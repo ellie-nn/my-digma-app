@@ -431,7 +431,13 @@ if True:
         instance.gw.xmax = value 
         return
             
-    
+    # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
+        # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
+    def on_text_submitted(instance, value):
+        print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
+        instance.mainclass.kilometers = int(value)
+        return
+            
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
@@ -560,16 +566,8 @@ if True:
             )
         main_layout.add_widget(user_input)
         main_layout.user_input=user_input
-
-        # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
-        # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
-        def on_text_submitted(instance, value):
-            print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
-            instance.mainclass.kilometers = int(value)
-            # ТУТ СРАБАТЫВАЕТ ЛЮБАЯ ВАША ЛОГИКА!
-            # Например: если instance.text: рассчитать_коэффициент(instance.text)
-            #user_input.bind(on_text_validate=on_text_submitted)
-            return
+        user_input.mainclass=mainclass
+        user_input.bind(on_text_validate=on_text_submitted)
 
         # ДОБАВЛЕНИЕ В КОРЕНЬ ИНТЕРФЕЙСА:
         # Важно! Добавляйте user_input САМЫМ ПОСЛЕДНИМ в ваш FloatLayout (даже после Label лога),

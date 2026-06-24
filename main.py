@@ -435,7 +435,7 @@ if True:
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
     def on_text_submitted(instance, value):
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
-        instance.mainclass.kilometers = int(value)
+        instance.mainclass.kilometers = int(instance.text)
         return
             
     def g_init(mainclass):

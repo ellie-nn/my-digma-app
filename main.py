@@ -495,7 +495,7 @@ if True:
             new_fake_slider_value = GRAPH_WIDGET.scroll_bar.value - shift_seconds
         
             # Ограничиваем сдвиг в жесткие рамки истории (от 0 до xmax), чтобы не улететь в пустоту
-            #new_fake_slider_value = max(0, min(new_fake_slider_value, GRAPH_WIDGET.xmax))
+            new_fake_slider_value = max(GRAPH_WIDGET.scroll_bar.min, min(new_fake_slider_value, GRAPH_WIDGET.scroll_bar.max))
             GRAPH_WIDGET.scroll_bar.value=new_fake_slider_value
             # ВЫЗЫВАЕМ ВАШУ ГОТОВУЮ ФУНКЦИЮ ОБРАБОТКИ СДВИГА:
             # Ей глубоко плевать, откуда пришла цифра — от бегунка Slider или от пальца!

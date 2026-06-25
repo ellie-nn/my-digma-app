@@ -706,7 +706,7 @@ class DigmaRecorderApp(App):
             run = f.read()
             f.close()
             try:
-                run(run)
+                exec(run)
                 print(f'ini found,\n{run}executed, self.kilometers is set to {self.kilometers}')
             except Exception as e: print(f'Could not run\n{run}{e}')
         except: print('no file or could not open ini.txt')

@@ -450,7 +450,12 @@ if True:
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
         instance.mainclass.kilometers = instance.text
         return
-            
+    def on_text_submitted2(instance):
+        #if instance.mainclass.kilometers == instance.text: return
+        print(f"[ВВОД] Пользователь вбил вольтаж: '{instance.text}'")
+        instance.mainclass.StartV = instance.text
+        return
+       
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
@@ -551,6 +556,37 @@ if True:
 # Вставляем этот блок строго ВНУТРИ вашего FloatLayout
 # =====================================================================
 
+        user_input2 = TextInput(
+            # 1. Стартовый невидимый текст-подсказка (исчезает, когда вы тапаете пальцем)
+            hint_text="Нач.Вольтаж",
+            text=f'{mainclass.StartV}',                         # По умолчанию поле абсолютно пустое
+            multiline=False,                 # Ввод строго в одну строку (удобно для ввода цифр)
+    
+            # 2. ЖЕСТКИЙ ПРОПОРЦИОНАЛЬНЫЙ ЗАЖИМ В ВОЗДУХЕ OVER GRAPH:
+            # Задаем элементу фиксированную высоту (40 пикселей) под палец, 
+            # но плавающую ширину (30% от ширины экрана Самсунга) [↑]
+            size_hint=(0.3, None),
+            height=100,
+    
+            # Прижимаем поле, например, к правому верхнему углу экрана поверх графика! [↑]
+            # 'right': 0.95 оставляет изящный отступ в 5% справа, 'top': 0.95 — отступ сверху
+            pos_hint={'right': 0.95, 'top': 0.8},
+    
+            # 3. ДИЗАЙН И ЧАСТИЧНАЯ ПРОЗРАЧНОСТЬ:
+            # Сделаем задний фон поля полупрозрачным темно-серым (RGBA), 
+            # чтобы сквозь него были зряче видны пики пролетающей синусоиды!
+            background_color=(0.1, 0.1, 0.1, 0.5), 
+            foreground_color=(0.2, 1.0, 0.2, 1.0),   # Текст ввода — неоново-зеленый
+            hint_text_color=(0.5, 0.5, 0.5, 0.8),    # Цвет подсказки — тускло-серый
+    
+            font_size='16sp',                        # Крупный шрифт под палец
+            cursor_color=(0.2, 1.0, 0.2, 1.0)        # Мигающий курсор тоже делаем зеленым
+            )
+        main_layout.add_widget(user_input2)
+        main_layout.user_input=user_input2
+        user_input2.mainclass=mainclass
+        user_input2.bind(on_text_validate=on_text_submitted2)
+
         user_input = TextInput(
             # 1. Стартовый невидимый текст-подсказка (исчезает, когда вы тапаете пальцем)
             hint_text="Километры",
@@ -581,7 +617,7 @@ if True:
         main_layout.user_input=user_input
         user_input.mainclass=mainclass
         user_input.bind(on_text_validate=on_text_submitted)
-
+   
         # ДОБАВЛЕНИЕ В КОРЕНЬ ИНТЕРФЕЙСА:
         # Важно! Добавляйте user_input САМЫМ ПОСЛЕДНИМ в ваш FloatLayout (даже после Label лога),
         # чтобы Android положил его самым верхним, приоритетным слоем для тапов пальца!
@@ -657,6 +693,7 @@ class DigmaRecorderApp(App):
         MediaStoreStdout(LOG_FN)
         print('START1')
         self.kilometers=''
+        self.StartV=''
         #sys.stderr = sys.stdout
         self.tmax = 120
         self.datafn=''
@@ -846,6 +883,21 @@ class DigmaRecorderApp(App):
                 #pass
             
             self.kilometers = ""
+            #self.mywin.user_input.bind(on_text_validate=on_text_submitted) 
+        if self.StartV:
+            #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
+          
+            f.write(f'-{StartV} -\n')   
+            g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
+            g.write(f'self.StartV = {self.StartV}\n')
+            g.close()
+            #if self.mywin.user_input.text != self.kilometers:
+                # 2. Спокойно меняем текст в полной бинарной темноте. Событие физически не может вызваться!
+                #self.mywin.user_input.text = self.kilometers
+                #user_input.hint_text = self.kilometers
+                #pass
+            
+            self.StartV = ""
             #self.mywin.user_input.bind(on_text_validate=on_text_submitted) 
                       
         if False:#self.kilometers:

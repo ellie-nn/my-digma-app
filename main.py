@@ -515,7 +515,7 @@ if True:
             # ЗДЕСЬ МОЖНО ЗАФИКСИРОВАТЬ РЕЖИМ ОКНА!
             # Автоматически переключаем тумблер в режим "застыть", 
             # раз пользователь сам руками полез листать историю назад во времени!
-            self.current_mode = "застыть"
+            #self.current_mode = "застыть"
             return True
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
 

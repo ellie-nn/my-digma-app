@@ -314,6 +314,7 @@ if True:
         #print(m)
         # Grabs indices 2 and 4 from each line
         m = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+        mA=m
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
         print(m)
@@ -346,7 +347,7 @@ if True:
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
-            mA=m+m1A
+            mA=mA+m1A
             m=m+m1
             
         print(m)

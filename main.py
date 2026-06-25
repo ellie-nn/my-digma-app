@@ -824,16 +824,16 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
+                
+            # 1. Намертво отвязываем нашу функцию от события валидации текста
+            self.user_input.unbind(on_text_validate=on_text_submitted) 
             if not self.user_input.text and self.user_input.hint_text != self.kilometers:
-                # 1. Намертво отвязываем нашу функцию от события валидации текста
-                self.user_input.unbind(on_text_validate=on_text_submitted)
                 # 2. Спокойно меняем текст в полной бинарной темноте. Событие физически не может вызваться!
                 self.user_input.text = self.kilometers
                 #user_input.hint_text = self.kilometers
-                # 3. Возвращаем железную привязку обратно на место
-                self.user_input.bind(on_text_validate=on_text_submitted)
-
             self.kilometers = ""
+            # 3. Возвращаем железную привязку обратно на место 
+            self.user_input.bind(on_text_validate=on_text_submitted)
                 
             #time.sleep(700)
             #if not self.kilometers:

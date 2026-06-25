@@ -62,6 +62,7 @@ LOG_FN = str(time.time()//300)
 LOG_FN = 'logapp.txt'
 #FILE_CSV = 'power_history.csv'
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+GRAPH_WIDGET = None
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -463,24 +464,24 @@ if True:
     # Заводим в памяти окна переменную для отслеживания стартовой точки касания
 
     # ФАЗА 1: КАСАНИЕ (Палец опустился на график)
-    def graph_touch_down(instance, touch):
+    def graph_touch_down(touch):
     # Проверяем, что палец попал именно в границы сетки графика, а не мимо
-        if instance.collide_point(*touch.pos):
+        if GRAPH_WIDGET.collide_point(*touch.pos):
             # Запоминаем физическую икс-координату пикселя, где палец коснулся экрана
-            instance.touch_start_x = touch.x
+            GRAPH_WIDGET.touch_start_x = touch.x
             # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
             touch.grab(instance)
             return True
-        return super(instance.__class__, instance).on_touch_down(touch)
+        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_down(touch)
 
     # ФАЗА 2: ДВИЖЕНИЕ (Палец скользит по синусоиде)
-    def graph_touch_move(instance, touch):
+    def graph_touch_move(touch):
         # Проверяем, что этот тач был захвачен именно нашим графиком
-        if touch.grab_current is instance:
+        if touch.grab_current is GRAPH_WIDGET:
             # ВЫЧИСЛЯЕМ ДЕЛЬТУ СДВИГА В ПИКСЕЛЯХ:
             # Сколько пикселей прошел палец от точки старта.
             # Если дельта положительная — палец тащит вправо, если отрицательная — влево.
-            delta_pixels = touch.x - instance.touch_start_x
+            delta_pixels = touch.x - GRAPH_WIDGET.touch_start_x
         
             # МАСШТАБНЫЙ КОЭФФИЦИЕНТ:
             # Переводим пиксели экрана Самсунга в виртуальные секунды вашей истории!
@@ -491,32 +492,32 @@ if True:
             # Мы берем текущее значение сдвига и силой сдвигаем его на дельту пальца.
             # Замените self.current_scroll_value на имя вашей переменной сдвига!
         
-            new_fake_slider_value = instance.scroll_bar.value - shift_seconds
+            new_fake_slider_value = GRAPH_WIDGET.scroll_bar.value - shift_seconds
         
             # Ограничиваем сдвиг в жесткие рамки истории (от 0 до xmax), чтобы не улететь в пустоту
-            new_fake_slider_value = max(0, min(new_fake_slider_value, instance.xmax))
-            instance.scroll_bar.value=new_fake_slider_value
+            new_fake_slider_value = max(0, min(new_fake_slider_value, GRAPH_WIDGET.xmax))
+            GRAPH_WIDGET.scroll_bar.value=new_fake_slider_value
             # ВЫЗЫВАЕМ ВАШУ ГОТОВУЮ ФУНКЦИЮ ОБРАБОТКИ СДВИГА:
             # Ей глубоко плевать, откуда пришла цифра — от бегунка Slider или от пальца!
             #self.ваша_процедура_отрисовки_сдвига(new_fake_slider_value)
         
             # Обновляем стартовую точку, чтобы скроллинг был непрерывным и шелковистым
-            instance.touch_start_x = touch.x
+            GRAPH_WIDGET.touch_start_x = touch.x
             return True
-        return super(instance.__class__, instance).on_touch_move(touch)
+        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_move(touch)
 
     # ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)
-    def graph_touch_up(instance, touch):
-        if touch.grab_current is instance:
+    def graph_touch_up(touch):
+        if touch.grab_current is GRAPH_WIDGET:
             # Освобождаем тач из захвата памяти Android
-            touch.ungrab(instance)
+            touch.ungrab(GRAPH_WIDGET)
         
             # ЗДЕСЬ МОЖНО ЗАФИКСИРОВАТЬ РЕЖИМ ОКНА!
             # Автоматически переключаем тумблер в режим "застыть", 
             # раз пользователь сам руками полез листать историю назад во времени!
             self.current_mode = "застыть"
             return True
-        return super(instance.__class__, instance).on_touch_up(touch)
+        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
 
    
     def g_init(mainclass):
@@ -689,6 +690,7 @@ if True:
         # main_layout.add_widget(user_input) 
 
         # НАМЕРТВО ПРИКЛЕИВАЕМ НАШИ ФУНКЦИИ ВНУТРЬ ОБЪЕКТА MY_GRAPH:
+        global GRAPH_WIDGET = graph_widget
         graph_widget.touch_start_x = 0.0
         graph_widget.scroll_bar=scroll_bar
         graph_widget.on_touch_down = graph_touch_down

@@ -690,7 +690,8 @@ if True:
         # main_layout.add_widget(user_input) 
 
         # НАМЕРТВО ПРИКЛЕИВАЕМ НАШИ ФУНКЦИИ ВНУТРЬ ОБЪЕКТА MY_GRAPH:
-        global GRAPH_WIDGET = graph_widget
+        global GRAPH_WIDGET
+        GRAPH_WIDGET = graph_widget
         graph_widget.touch_start_x = 0.0
         graph_widget.scroll_bar=scroll_bar
         graph_widget.on_touch_down = graph_touch_down

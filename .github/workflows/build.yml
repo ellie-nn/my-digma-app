@@ -121,7 +121,7 @@ jobs:
         #zip -r source_code.zip main.py service.py buildozer.spec tinytuya.py
         # УПАКОВЫВАЕМ ВСЁ ПОДРЯД, НО ВЫКИДЫВАЕМ ГИГАНТСКИЙ КЭШ БИЛДОЗЕРА
         #zip -r source_code.zip . -x ".*" ".buildozer/*"
-        zip -r source_code15.zip . -x ".buildozer/*" ".git/*"
+        zip -r source_code16.zip . -x ".buildozer/*" ".git/*"
       
     - name: Create Release and Upload APK
       uses: softprops/action-gh-release@v2
@@ -135,7 +135,7 @@ jobs:
         #files: bin/*.apk
         files: |
           bin/*.apk
-          source_code15.zip          
+          source_code16.zip          
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: ONE_TIME_GENERATE_PASSPORT

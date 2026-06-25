@@ -826,6 +826,12 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
+            if self.mywin.user_input.text != self.kilometers:
+                # 2. Спокойно меняем текст в полной бинарной темноте. Событие физически не может вызваться!
+                self.mywin.user_input.text = self.kilometers
+                #user_input.hint_text = self.kilometers
+                #pass
+            
             self.kilometers = ""
             self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
                       

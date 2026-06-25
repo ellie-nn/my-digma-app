@@ -320,7 +320,7 @@ if True:
         for x in reversed(m): x[0]-=m[0][0]
         print(m)
         print(m[0][0])
-            
+        
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
@@ -339,12 +339,14 @@ if True:
             #print(m)
             # Grabs indices 2 and 4 from each line
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
-            #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+            m1A = [[float(w[1]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+           #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
             print(m1)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
+            mA=m+m1A
             m=m+m1
             
         print(m)
@@ -364,11 +366,16 @@ if True:
         )
 
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
+        plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
         points = []
+        pointsA = []
+        
         #import os
 
         #time.sleep(10.0)
         for x in m: points.append(x)
+        for x in mA: pointsA.append(x)
+       
         if False:                        
             file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
             if os.path.exists(file_path):
@@ -409,7 +416,11 @@ if True:
         print(points)
         plot.points = points
         graph.add_plot(plot)
+        plotA.points = pointsA
+        graph.add_plot(plot)
+        graph.add_plot(plotA)
         graph.plot=plot
+        graph.plotA=plotA
         mainclass.histtmax = m[-1][0]
         return graph
 

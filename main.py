@@ -470,7 +470,7 @@ if True:
             # Запоминаем физическую икс-координату пикселя, где палец коснулся экрана
             GRAPH_WIDGET.touch_start_x = touch.x
             # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
-            touch.grab(instance)
+            touch.grab(GRAPH_WIDGET)
             return True
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_down(touch)
 

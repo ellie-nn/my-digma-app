@@ -461,7 +461,6 @@ if True:
 # =====================================================================
 
 # Заводим в памяти окна переменную для отслеживания стартовой точки касания
-my_graph.touch_start_x = 0.0
 
 # ФАЗА 1: КАСАНИЕ (Палец опустился на график)
 def graph_touch_down(instance, touch):
@@ -690,6 +689,7 @@ def graph_touch_up(instance, touch):
         # main_layout.add_widget(user_input) 
 
         # НАМЕРТВО ПРИКЛЕИВАЕМ НАШИ ФУНКЦИИ ВНУТРЬ ОБЪЕКТА MY_GRAPH:
+        graph_widget.touch_start_x = 0.0
         graph_widget.scroll_bar=scroll_bar
         graph_widget.on_touch_down = graph_touch_down
         graph_widget.on_touch_move = graph_touch_move

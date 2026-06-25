@@ -827,7 +827,7 @@ class DigmaRecorderApp(App):
                 
             # 1. Намертво отвязываем нашу функцию от события валидации текста
             self.user_input.unbind(on_text_validate=on_text_submitted) 
-            if not self.user_input.text and self.user_input.text != self.kilometers:
+            #if not self.user_input.text and self.user_input.text != self.kilometers:
                 # 2. Спокойно меняем текст в полной бинарной темноте. Событие физически не может вызваться!
                 #self.user_input.text = self.kilometers
                 #user_input.hint_text = self.kilometers

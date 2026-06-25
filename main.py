@@ -821,7 +821,7 @@ class DigmaRecorderApp(App):
             self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a', encoding="utf-8", errors="ignore")
         if self.kilometers:
-            self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
+            #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
           
             f.write(f'-{self.kilometers} -\n')   
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
@@ -834,7 +834,7 @@ class DigmaRecorderApp(App):
                 #pass
             
             self.kilometers = ""
-            self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
+            #self.mywin.user_input.bind(on_text_validate=on_text_submitted) 
                       
         if False:#self.kilometers:
             f.write(f'-{self.kilometers} -\n')   

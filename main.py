@@ -456,67 +456,67 @@ if True:
         instance.mainclass.StartV = instance.text
         return
     # =====================================================================
-# ДИНАМИЧЕСКИЙ ТАЧ-РАДАР ДЛЯ ГРАФИКА (Вместо Slider!)
-# Вставляем этот блок в build() сразу после создания объекта my_graph
-# =====================================================================
+    # ДИНАМИЧЕСКИЙ ТАЧ-РАДАР ДЛЯ ГРАФИКА (Вместо Slider!)
+    # Вставляем этот блок в build() сразу после создания объекта my_graph
+    # =====================================================================
 
-# Заводим в памяти окна переменную для отслеживания стартовой точки касания
+    # Заводим в памяти окна переменную для отслеживания стартовой точки касания
 
-# ФАЗА 1: КАСАНИЕ (Палец опустился на график)
-def graph_touch_down(instance, touch):
+    # ФАЗА 1: КАСАНИЕ (Палец опустился на график)
+    def graph_touch_down(instance, touch):
     # Проверяем, что палец попал именно в границы сетки графика, а не мимо
-    if instance.collide_point(*touch.pos):
-        # Запоминаем физическую икс-координату пикселя, где палец коснулся экрана
-        instance.touch_start_x = touch.x
-        # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
-        touch.grab(instance)
-        return True
-    return super(instance.__class__, instance).on_touch_down(touch)
+        if instance.collide_point(*touch.pos):
+            # Запоминаем физическую икс-координату пикселя, где палец коснулся экрана
+            instance.touch_start_x = touch.x
+            # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
+            touch.grab(instance)
+            return True
+        return super(instance.__class__, instance).on_touch_down(touch)
 
-# ФАЗА 2: ДВИЖЕНИЕ (Палец скользит по синусоиде)
-def graph_touch_move(instance, touch):
-    # Проверяем, что этот тач был захвачен именно нашим графиком
-    if touch.grab_current is instance:
-        # ВЫЧИСЛЯЕМ ДЕЛЬТУ СДВИГА В ПИКСЕЛЯХ:
-        # Сколько пикселей прошел палец от точки старта.
-        # Если дельта положительная — палец тащит вправо, если отрицательная — влево.
-        delta_pixels = touch.x - instance.touch_start_x
+    # ФАЗА 2: ДВИЖЕНИЕ (Палец скользит по синусоиде)
+    def graph_touch_move(instance, touch):
+        # Проверяем, что этот тач был захвачен именно нашим графиком
+        if touch.grab_current is instance:
+            # ВЫЧИСЛЯЕМ ДЕЛЬТУ СДВИГА В ПИКСЕЛЯХ:
+            # Сколько пикселей прошел палец от точки старта.
+            # Если дельта положительная — палец тащит вправо, если отрицательная — влево.
+            delta_pixels = touch.x - instance.touch_start_x
         
-        # МАСШТАБНЫЙ КОЭФФИЦИЕНТ:
-        # Переводим пиксели экрана Самсунга в виртуальные секунды вашей истории!
-        # Допустим, каждые 10 пикселей сдвига пальца = 1 секунда прокрутки истории.
-        shift_seconds = delta_pixels / 10.0
+            # МАСШТАБНЫЙ КОЭФФИЦИЕНТ:
+            # Переводим пиксели экрана Самсунга в виртуальные секунды вашей истории!
+            # Допустим, каждые 10 пикселей сдвига пальца = 1 секунда прокрутки истории.
+            shift_seconds = delta_pixels / 10.0
         
-        # ИМИТАЦИЯ SLIDER.VALUE (Ваша готовая обработка!):
-        # Мы берем текущее значение сдвига и силой сдвигаем его на дельту пальца.
-        # Замените self.current_scroll_value на имя вашей переменной сдвига!
+            # ИМИТАЦИЯ SLIDER.VALUE (Ваша готовая обработка!):
+            # Мы берем текущее значение сдвига и силой сдвигаем его на дельту пальца.
+            # Замените self.current_scroll_value на имя вашей переменной сдвига!
         
-        new_fake_slider_value = instance.scroll_bar.value - shift_seconds
+            new_fake_slider_value = instance.scroll_bar.value - shift_seconds
         
-        # Ограничиваем сдвиг в жесткие рамки истории (от 0 до xmax), чтобы не улететь в пустоту
-        new_fake_slider_value = max(0, min(new_fake_slider_value, instance.xmax))
-        instance.scroll_bar.value=new_fake_slider_value
-        # ВЫЗЫВАЕМ ВАШУ ГОТОВУЮ ФУНКЦИЮ ОБРАБОТКИ СДВИГА:
-        # Ей глубоко плевать, откуда пришла цифра — от бегунка Slider или от пальца!
-        #self.ваша_процедура_отрисовки_сдвига(new_fake_slider_value)
+            # Ограничиваем сдвиг в жесткие рамки истории (от 0 до xmax), чтобы не улететь в пустоту
+            new_fake_slider_value = max(0, min(new_fake_slider_value, instance.xmax))
+            instance.scroll_bar.value=new_fake_slider_value
+            # ВЫЗЫВАЕМ ВАШУ ГОТОВУЮ ФУНКЦИЮ ОБРАБОТКИ СДВИГА:
+            # Ей глубоко плевать, откуда пришла цифра — от бегунка Slider или от пальца!
+            #self.ваша_процедура_отрисовки_сдвига(new_fake_slider_value)
         
-        # Обновляем стартовую точку, чтобы скроллинг был непрерывным и шелковистым
-        instance.touch_start_x = touch.x
-        return True
-    return super(instance.__class__, instance).on_touch_move(touch)
+            # Обновляем стартовую точку, чтобы скроллинг был непрерывным и шелковистым
+            instance.touch_start_x = touch.x
+            return True
+        return super(instance.__class__, instance).on_touch_move(touch)
 
-# ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)
-def graph_touch_up(instance, touch):
-    if touch.grab_current is instance:
-        # Освобождаем тач из захвата памяти Android
-        touch.ungrab(instance)
+    # ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)
+    def graph_touch_up(instance, touch):
+        if touch.grab_current is instance:
+            # Освобождаем тач из захвата памяти Android
+            touch.ungrab(instance)
         
-        # ЗДЕСЬ МОЖНО ЗАФИКСИРОВАТЬ РЕЖИМ ОКНА!
-        # Автоматически переключаем тумблер в режим "застыть", 
-        # раз пользователь сам руками полез листать историю назад во времени!
-        self.current_mode = "застыть"
-        return True
-    return super(instance.__class__, instance).on_touch_up(touch)
+            # ЗДЕСЬ МОЖНО ЗАФИКСИРОВАТЬ РЕЖИМ ОКНА!
+            # Автоматически переключаем тумблер в режим "застыть", 
+            # раз пользователь сам руками полез листать историю назад во времени!
+            self.current_mode = "застыть"
+            return True
+        return super(instance.__class__, instance).on_touch_up(touch)
 
    
     def g_init(mainclass):

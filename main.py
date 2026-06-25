@@ -542,7 +542,7 @@ if True:
         user_input = TextInput(
             # 1. Стартовый невидимый текст-подсказка (исчезает, когда вы тапаете пальцем)
             hint_text="Километры",
-            text="",                         # По умолчанию поле абсолютно пустое
+            text=mainclass.kilometers,                         # По умолчанию поле абсолютно пустое
             multiline=False,                 # Ввод строго в одну строку (удобно для ввода цифр)
     
             # 2. ЖЕСТКИЙ ПРОПОРЦИОНАЛЬНЫЙ ЗАЖИМ В ВОЗДУХЕ OVER GRAPH:
@@ -827,9 +827,9 @@ class DigmaRecorderApp(App):
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
-            if self.mywin.user_input.text != self.kilometers:
+            #if self.mywin.user_input.text != self.kilometers:
                 # 2. Спокойно меняем текст в полной бинарной темноте. Событие физически не может вызваться!
-                self.mywin.user_input.text = self.kilometers
+                #self.mywin.user_input.text = self.kilometers
                 #user_input.hint_text = self.kilometers
                 #pass
             

@@ -442,7 +442,7 @@ if True:
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
-        mainclass.kilometers = ""
+        #mainclass.kilometers = ""
         
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
@@ -644,6 +644,7 @@ class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
         print('START1')
+        self.kilometers=''
         #sys.stderr = sys.stdout
         self.tmax = 120
         self.datafn=''

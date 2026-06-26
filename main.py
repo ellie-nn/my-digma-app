@@ -532,7 +532,7 @@ if True:
         
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (0.80, 0.90) 
-        graph_widget.pos_hint = {'center_x': 0.5, 'top': 0}
+        graph_widget.pos_hint = {'center_x': 0.5, 'top':1}
         main_layout.add_widget(graph_widget)
         main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label

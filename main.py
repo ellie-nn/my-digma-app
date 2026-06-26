@@ -437,11 +437,11 @@ if True:
         от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
         """
         global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
-        if active_graph is None:
+        if GRAPH_WIDGET is None:
             return
 
         # Зрячий перебор скрытого списка детей графического холста [↑]
-        for child in active_graph.children:
+        for child in GRAPH_WIDGET.children:
             # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
             if child.__class__.__name__ == 'Label':
             

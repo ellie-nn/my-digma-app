@@ -440,7 +440,8 @@ if True:
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
-        instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
+        #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
+        instance.gw.xmin = int(value - instance.scl.value)
         instance.gw.xmax = value 
         return
             
@@ -587,7 +588,7 @@ if True:
         main_layout.add_widget(scroll_bar) # Бегунок послушно встанет строго под графиком!
         main_layout.sbarm=scroll_bar
             
-        scroll_bar.skl=scroll_bar_scale
+        scroll_bar.scl=scroll_bar_scale
         scroll_bar_scale.mov=scroll_bar
 
         # ========================================================

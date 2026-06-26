@@ -361,7 +361,7 @@ if True:
             
         graph = Graph(
             xlabel='Время', ylabel='Вольты',
-            x_ticks_minor=1/6, x_ticks_major=1,
+            x_ticks_minor=1, x_ticks_major=1,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,

@@ -576,7 +576,9 @@ if True:
         
             # Обновляем стартовую точку, чтобы скроллинг был непрерывным и шелковистым
             GRAPH_WIDGET.touch_start_x = touch.x
+            apply_vertical_minutes_hack()
             return True
+        apply_vertical_minutes_hack()
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_move(touch)
 
     # ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)

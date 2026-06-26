@@ -531,8 +531,8 @@ if True:
         graph_widget = build_voltage_graph('mock.txt',mainclass)
         
         # Занимает 100% ширины и 100% высоты окна [↑]
-        graph_widget.size_hint = (0.90, 1.0) 
-        graph_widget.pos_hint = {'x': 0.05, 'y': 0}
+        graph_widget.size_hint = (0.80, 0.90) 
+        graph_widget.pos_hint = {'center_x': 0.5 'top': 0}
         main_layout.add_widget(graph_widget)
         main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label
@@ -613,7 +613,7 @@ if True:
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
         btn_clear.bind(on_release=clear_log_file)
-        main_layout.add_widget(btn_clear)
+        #main_layout.add_widget(btn_clear)
         from kivy.uix.textinput import TextInput
 # =====================================================================
 # НАШЕ ИНТЕРАКТИВНОЕ ПОЛЕ ВВОДА

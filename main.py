@@ -456,8 +456,8 @@ if True:
                 # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
-                #if child.text.endswith(" "):
-                #    continue
+                if child.text.endswith(" "):
+                    continue
 
                 # ТОЧКА УДАРА №3: Проверяем маркер оси X!
                 # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
@@ -484,7 +484,7 @@ if True:
                         #child.text = vertical_minutes + " "
                         #child.text = "-"
                         #child.texture_update()
-                        child.text = str(minutes)
+                        child.text = str(minutes)+" "
                     #except:# ValueError:
                         #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
@@ -505,7 +505,7 @@ if True:
         #with instance.gw as q:
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
-        #apply_vertical_minutes_hack()
+        apply_vertical_minutes_hack()
         return  
         
     def move_window(instance, value):
@@ -769,7 +769,7 @@ if True:
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
         # Attach the formatting function to the graph
-        graph_widget.x_ticks_func = format_x_axis         
+        #graph_widget.x_ticks_func = format_x_axis         
 
         return main_layout
           

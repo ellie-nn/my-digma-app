@@ -471,8 +471,9 @@ if True:
                         # Вшиваем пробел на конце! Kivy обновит экран, вызовет перерисовку,
                         # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
                         #child.text = vertical_minutes + " "
-                        child.text = child.text + "-"
-                    except ValueError:
+                        child.text = "-"
+                    except:# ValueError:
+                        child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         pass
         return

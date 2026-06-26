@@ -439,13 +439,22 @@ if True:
         global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
         if GRAPH_WIDGET is None:
             return
-
         # Зрячий перебор скрытого списка детей графического холста [↑]
         for child in GRAPH_WIDGET.children:
-            try:
-                print(child.id)
-            except:
-                pass
+            # Запускаем зрячий обыск всех внутренних переменных внутри my_graph [↑]
+            # key — это текстовое имя переменной, val — ссылка на объект в памяти [↑]
+            found_name = "Безымянный"
+            for key, val in GRAPH_WIDGET.__dict__.items():
+                if val is child:
+                    found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
+                    break
+                
+            print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
+    
+            #try:
+             #   print(child.id)
+            #except:
+             #   pass
             #print(f"Фамилия: {child.__class__.__name__} | Имя (ID): {name}")
 
             if True: #child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():

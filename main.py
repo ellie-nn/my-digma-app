@@ -456,6 +456,7 @@ if True:
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
                 #if not "SEC" in child.text: continue
                 if "-" in child.text: continue
+                print(child.text)
                 if True:
                     try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост

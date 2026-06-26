@@ -532,8 +532,8 @@ if True:
         graph_widget = build_voltage_graph('mock.txt',mainclass)
         
         # Занимает 100% ширины и 100% высоты окна [↑]
-        graph_widget.size_hint = (0.80, 0.90) 
-        graph_widget.pos_hint = {'center_x': 0.5, 'top':1}
+        graph_widget.size_hint = (1.0, 0.90) 
+        graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
         main_layout.add_widget(graph_widget)
         main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label

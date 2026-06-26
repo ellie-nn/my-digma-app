@@ -490,14 +490,22 @@ if True:
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         pass
         return
+    #from kivy_garden.graph import Graph
+
+    def format_x_axis(graph, value):
+        # Returns the value formatted as a string (e.g. $10.00, Date, etc.)
             
+        return f"${value:.2f}" 
+
+
+
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return  
         
     def move_window(instance, value):
@@ -760,8 +768,9 @@ if True:
         graph_widget.on_touch_down = graph_touch_down
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
-        # Вшиваем наш переводчик в сетку графика:
-        graph_widget.x_label_format = "%dSEC" 
+        # Attach the formatting function to the graph
+        graph_widget.x_ticks_func = format_x_axis         
+
         return main_layout
           
 import math

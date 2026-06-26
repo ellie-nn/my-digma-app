@@ -350,8 +350,8 @@ if True:
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
             mA=mA+m1A
             m=m+m1
-            for x in m: x[0]/=60
-            for x in mA: x[0]/=60
+            #for x in m: x[0]/=60
+            #for x in mA: x[0]/=60
             
         print(m)
         #print(m1[0][0])
@@ -361,7 +361,7 @@ if True:
             
         graph = Graph(
             xlabel='Время', ylabel='Вольты',
-            x_ticks_minor=1, x_ticks_major=1,
+            x_ticks_minor=10, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,
@@ -435,7 +435,7 @@ if True:
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
-        instance.gw.xmin = int((instance.gw.xmax - value)//60*60)
+        instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
         return  
         
@@ -443,7 +443,7 @@ if True:
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
-        instance.gw.xmin = int((value - instance.scl.value)//60*60)
+        instance.gw.xmin = int((value - instance.scl.value))
         instance.gw.xmax = value 
         return
             
@@ -521,7 +521,19 @@ if True:
             #self.current_mode = "застыть"
             return True
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
+            
 
+    # 2. НАШ ЗРЯЧИЙ ФОРМАТТЕР-ПЕРЕВОДЧИК:
+    # Функция перехватывает секунды перед выводом на экран и превращает их в минуты!
+    def seconds_to_minutes_formatter(value):
+        # value — это секунды, прилетевшие от Kivy (например, 0, 60, 120, 180...)
+        minutes = int(value / 60)
+    
+        # ЕСЛИ ХОТИТЕ ВЕРТИКАЛЬНЫЕ СТОЛБИКИ (чтобы цифры не прыгали и не лезли друг на друга):
+        #return "\n".join(list(str(minutes)))
+    
+        # Если хотите обычные горизонтальные минуты, просто верните: 
+        return str(minutes)
    
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
@@ -700,6 +712,8 @@ if True:
         graph_widget.on_touch_down = graph_touch_down
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
+        # Вшиваем наш переводчик в сетку графика:
+        graph_widget.x_label_format = seconds_to_minutes_formatter
 
         return main_layout
           
@@ -1032,8 +1046,8 @@ class DigmaRecorderApp(App):
             #self.mywin.xmax = self.mywin.xmax 
             #self.mywin.sbarm.value = self.mywin.sbarm.value
             self.mywin.sbars.max = tmax
-            self.mywin.graph_widget.plot.points.append([ tmax/60, vatt])
-            self.mywin.graph_widget.plotA.points.append([ tmax/60, integral])
+            self.mywin.graph_widget.plot.points.append([ tmax, vatt])
+            self.mywin.graph_widget.plotA.points.append([ tmax, integral])
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
             self.mywin.graph_widget.plotA=self.mywin.graph_widget.plotA
         

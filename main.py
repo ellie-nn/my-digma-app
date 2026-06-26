@@ -431,12 +431,58 @@ if True:
     def clear_log_file(instance):
         return
             
+    def apply_vertical_minutes_hack():
+        """
+        Трёхступенчатый хак: вычищает секунды, ставит бинарный семафор 
+        от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
+        """
+        global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
+        if active_graph is None:
+            return
+
+        # Зрячий перебор скрытого списка детей графического холста [↑]
+        for child in active_graph.children:
+            # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
+            if child.__class__.__name__ == 'Label':
+            
+                # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
+                # Если на конце строки уже стоит наш секретный пробел — значит, 
+                # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
+                #if child.text.endswith(" "):
+                #    continue
+
+                # ТОЧКА УДАРА №3: Проверяем маркер оси X!
+                # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
+                # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
+                if not "SEC" in child.text: continue
+                if True:
+                    try:
+                        # Извлекаем чистые секунды, отбрасывая маркерный хвост
+                        raw_seconds = int(child.text.replace("SEC", ""))
+                    
+                        # Переносим секунды в минуты (округляем до целого)
+                        minutes = int(raw_seconds / 60)
+                    
+                        # Строим узкий вертикальный столбик через \n
+                        #vertical_minutes = "\n".join(list(str(minutes)))
+                    
+                        # ПРИСВАИВАНИЕ С МЕТКОЙ:
+                        # Вшиваем пробел на конце! Kivy обновит экран, вызовет перерисовку,
+                        # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
+                        #child.text = vertical_minutes + " "
+                    
+                    except ValueError:
+                        # Железобетонная страховка — если прилетел мусор, просто идем дальше
+                        pass
+        return
+            
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
+        apply_vertical_minutes_hack()
         return  
         
     def move_window(instance, value):
@@ -522,19 +568,6 @@ if True:
             return True
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
             
-
-    # 2. НАШ ЗРЯЧИЙ ФОРМАТТЕР-ПЕРЕВОДЧИК:
-    # Функция перехватывает секунды перед выводом на экран и превращает их в минуты!
-    def seconds_to_minutes_formatter(value):
-        # value — это секунды, прилетевшие от Kivy (например, 0, 60, 120, 180...)
-        minutes = int(value / 60)
-    
-        # ЕСЛИ ХОТИТЕ ВЕРТИКАЛЬНЫЕ СТОЛБИКИ (чтобы цифры не прыгали и не лезли друг на друга):
-        #return "\n".join(list(str(minutes)))
-    
-        # Если хотите обычные горизонтальные минуты, просто верните: 
-        return str(minutes)
-   
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
@@ -713,8 +746,7 @@ if True:
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
         # Вшиваем наш переводчик в сетку графика:
-        graph_widget.x_label_format = seconds_to_minutes_formatter
-
+        graph_widget.x_label_format = "%dSEC" 
         return main_layout
           
 import math

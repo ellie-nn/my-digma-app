@@ -359,7 +359,7 @@ if True:
             
         graph = Graph(
             xlabel='Время', ylabel='Вольты',
-            x_ticks_minor=1, x_ticks_major=5,
+            x_ticks_minor=10, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
             padding=10, x_grid=True, y_grid=True,
@@ -531,8 +531,8 @@ if True:
         graph_widget = build_voltage_graph('mock.txt',mainclass)
         
         # Занимает 100% ширины и 100% высоты окна [↑]
-        graph_widget.size_hint = (1.0, 1.0) 
-        graph_widget.pos_hint = {'x': 0, 'y': 0}
+        graph_widget.size_hint = (0.90, 1.0) 
+        graph_widget.pos_hint = {'x': 0.05, 'y': 0}
         main_layout.add_widget(graph_widget)
         main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label
@@ -580,7 +580,7 @@ if True:
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
 
         scroll_bar.size_hint = (1, 0.02) # Ширина 80%, высота 5% от экрана
-        scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.04} # Верхний край бегунка утыкается в низ графика!
+        scroll_bar.pos_hint = {'center_x': 0.5, 'y': 0.90} # Верхний край бегунка утыкается в низ графика!
       
         # Если у вас BoxLayout(orientation='vertical'), то:
         # main_layout.add_widget(my_graph)

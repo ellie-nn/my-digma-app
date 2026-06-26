@@ -472,7 +472,7 @@ if True:
                     if True:
                     #try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
-                        raw_second = float(child.text) #int(child.text.replace("SEC", ""))
+                        raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)
                         minutes = int(raw_seconds / 60)
                         # Строим узкий вертикальный столбик через \n

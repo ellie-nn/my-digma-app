@@ -694,9 +694,9 @@ if True:
         GRAPH_WIDGET = graph_widget
         graph_widget.touch_start_x = 0.0
         graph_widget.scroll_bar=scroll_bar
-        graph_widget.on_touch_down = graph_touch_down
-        graph_widget.on_touch_move = graph_touch_move
-        graph_widget.on_touch_up = graph_touch_up
+        #graph_widget.on_touch_down = graph_touch_down
+        #graph_widget.on_touch_move = graph_touch_move
+        #graph_widget.on_touch_up = graph_touch_up
 
         return main_layout
           

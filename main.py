@@ -430,7 +430,7 @@ if True:
 
     def clear_log_file(instance):
         return
-            
+
     def apply_vertical_minutes_hack():
         """
         Трёхступенчатый хак: вычищает секунды, ставит бинарный семафор 
@@ -442,6 +442,18 @@ if True:
 
         # Зрячий перебор скрытого списка детей графического холста [↑]
         for child in GRAPH_WIDGET.children:
+            if child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():
+            
+                # Шаг 2: Спускаемся ЕЩЁ НА ОДИН УРОВЕНЬ ГЛУБЖЕ — к внукам! [↑]
+                for grandchild in child.children:
+                    if grandchild.__class__.__name__ == 'Label':
+                        if "-" in child.text: continue
+                        print(child.text)
+                        # ТРИУМФ: Мы держим за руку непосредственного внука!
+                        # Теперь команда "тире" или минутный перехват ударят 
+                        # точно в цель, минуя слепые зоны! [↑]
+                        grandchild.text = "-" 
+            
             # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
             if child.__class__.__name__ == 'Label':
             
@@ -473,7 +485,7 @@ if True:
                         # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
                         #child.text = vertical_minutes + " "
                         child.text = "-"
-                        child.texture_update()
+                        #child.texture_update()
                     except:# ValueError:
                         child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше

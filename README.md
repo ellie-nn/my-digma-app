@@ -7,6 +7,20 @@ fuck off
 #==========≠======≠
 
 #==========≠======≠
+from kivy_garden.graph import Graph
+
+def format_x_axis(graph, value):
+    # Returns the value formatted as a string (e.g. $10.00, Date, etc.)
+    return f"${value:.2f}" 
+
+graph = Graph(
+    xlabel='Price',
+    x_ticks_major=10, 
+    x_ticks_minor=5
+)
+
+# Attach the formatting function to the graph
+graph.x_ticks_func = format_x_axis
 
 #==========≠======≠
 мультикаст-запросом на системный адрес 224.0.0.251 (порт 5353). Микроконтроллер розетки обрабатывает этот системный mDNS-запрос на уровне сетевого чипа 

@@ -472,6 +472,7 @@ if True:
                         # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
                         #child.text = vertical_minutes + " "
                         child.text = "-"
+                        child.texture_update()
                     except:# ValueError:
                         child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше

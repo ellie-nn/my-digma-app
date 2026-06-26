@@ -453,8 +453,8 @@ if True:
     
             #try:
              #   print(child.id)
-            #except:
-             #   pass
+           # except:
+              #  pass
             #print(f"Фамилия: {child.__class__.__name__} | Имя (ID): {name}")
 
             if True: #child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():
@@ -470,7 +470,7 @@ if True:
                         grandchild.text = "-" 
             
             # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
-            if child.__class__.__name__ == 'Label':
+            if child.__class__.__name__ == 'Label' or child.__class__.__name__ == 'GraphRotatedLabel':
             
                 # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
@@ -483,7 +483,10 @@ if True:
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
                 #if not "SEC" in child.text: continue
                 if "-" in child.text: continue
-                print(child.text)
+                try:
+                    print(child.text)
+                except:
+                    print('...')
                 if True:
                     try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост

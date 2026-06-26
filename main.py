@@ -497,8 +497,6 @@ if True:
             
         return f"${value:.2f}" 
 
-
-
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
@@ -523,19 +521,16 @@ if True:
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
         instance.mainclass.kilometers = instance.text
+        apply_vertical_minutes_hack()
         return
+            
     def on_text_submitted2(instance):
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил вольтаж: '{instance.text}'")
         instance.mainclass.StartV = instance.text
+        apply_vertical_minutes_hack()
         return
-    # =====================================================================
-    # ДИНАМИЧЕСКИЙ ТАЧ-РАДАР ДЛЯ ГРАФИКА (Вместо Slider!)
-    # Вставляем этот блок в build() сразу после создания объекта my_graph
-    # =====================================================================
-
-    # Заводим в памяти окна переменную для отслеживания стартовой точки касания
-
+            
     # ФАЗА 1: КАСАНИЕ (Палец опустился на график)
     def graph_touch_down(touch):
     # Проверяем, что палец попал именно в границы сетки графика, а не мимо
@@ -544,9 +539,13 @@ if True:
             GRAPH_WIDGET.touch_start_x = touch.x
             # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
             touch.grab(GRAPH_WIDGET)
+            apply_vertical_minutes_hack()
             return True
-        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_down(touch)
-
+        apply_vertical_minutes_hack()
+        ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
+        apply_vertical_minutes_hack()
+        return ret
+        
     # ФАЗА 2: ДВИЖЕНИЕ (Палец скользит по синусоиде)
     def graph_touch_move(touch):
         # Проверяем, что этот тач был захвачен именно нашим графиком
@@ -579,8 +578,10 @@ if True:
             apply_vertical_minutes_hack()
             return True
         apply_vertical_minutes_hack()
-        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_move(touch)
-
+        ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
+        apply_vertical_minutes_hack()
+        return ret
+        
     # ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)
     def graph_touch_up(touch):
         if touch.grab_current is GRAPH_WIDGET:
@@ -594,7 +595,9 @@ if True:
             apply_vertical_minutes_hack()
             return True
         apply_vertical_minutes_hack()
-        return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
+        ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
+        apply_vertical_minutes_hack()
+        return ret
             
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]

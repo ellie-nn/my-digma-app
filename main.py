@@ -588,7 +588,9 @@ if True:
             # Автоматически переключаем тумблер в режим "застыть", 
             # раз пользователь сам руками полез листать историю назад во времени!
             #self.current_mode = "застыть"
+            apply_vertical_minutes_hack()
             return True
+        apply_vertical_minutes_hack()
         return super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
             
     def g_init(mainclass):

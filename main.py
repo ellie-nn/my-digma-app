@@ -514,6 +514,7 @@ if True:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
         instance.gw.xmin = int((value - instance.scl.value))
         instance.gw.xmax = value 
+        apply_vertical_minutes_hack()
         return
             
     # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):

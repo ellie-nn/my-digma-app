@@ -5,7 +5,67 @@ fuck off
 #==========≠======≠
 
 #==========≠======≠
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.metrics import dp
+from kivy_garden.graph import Graph, LinePlot
+import math
 
+class CustomGraph(Graph):
+    def update_ticks(self, *args):
+        # 1. Let the original Graph logic run to generate tick locations
+        super().update_ticks(*args)
+        
+        # Mapping table for our X-axis values
+        day_mapping = {
+            0: "Mon", 20: "Tue", 40: "Wed", 
+            60: "Thu", 80: "Fri", 100: "Sat"
+        }
+        
+        # 2. Iterate and alter the text of the generated X-axis labels
+        for label in self._x_grid_label_list:
+            try:
+                # Convert the generated string back to a float/int to match
+                val = int(float(label.text))
+                
+                # Update with custom string if it exists in our map
+                if val in day_mapping:
+                    label.text = day_mapping[val]
+                else:
+                    label.text = ""  # Hide labels that don't match our criteria
+            except ValueError:
+                pass
+
+class GraphApp(App):
+    def build(self):
+        layout = BoxLayout(padding=dp(20))
+        
+        # Initialize our custom graph wrapper
+        graph = CustomGraph(
+            xlabel='Days',
+            ylabel='Value',
+            xmin=0, xmax=100,
+            ymin=-1, ymax=1,
+            x_ticks_major=20,  # Matches the mapping intervals
+            y_ticks_major=0.5,
+            x_grid_label=True,
+            y_grid_label=True,
+            padding=dp(10),
+            x_grid=True,
+            y_grid=True
+        )
+        
+        # Generate some placeholder data
+        plot = LinePlot(color=[0, 1, 0, 1], line_width=2)
+        plot.points = [(x, math.sin(x / 10.0)) for x in range(0, 101)]
+        
+        graph.add_plot(plot)
+        layout.add_widget(graph)
+        return layout
+
+if __name__ == '__main__':
+    GraphApp().run()
+    
 #==========≠======≠
 from kivy_garden.graph import Graph
 

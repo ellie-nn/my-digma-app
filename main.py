@@ -442,8 +442,8 @@ if True:
         for child in GRAPH_WIDGET.children:
             # Запускаем зрячий обыск всех внутренних переменных внутри my_graph [↑]
             # key — это текстовое имя переменной, val — ссылка на объект в памяти [↑]
-            found_name = "Безымянный"
             if False: # Перечисление дочерних классов и имён
+                found_name = "Безымянный"
                 for key, val in GRAPH_WIDGET.__dict__.items():
                     if val is child:
                         found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
@@ -469,7 +469,8 @@ if True:
                 #except:
                     #print('...')
                 if True:
-                    try:
+                    if True:
+                    #try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
                         raw_second = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)
@@ -484,7 +485,7 @@ if True:
                         #child.text = "-"
                         #child.texture_update()
                         child.text = str(minutes)
-                    except:# ValueError:
+                    #except:# ValueError:
                         #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         pass

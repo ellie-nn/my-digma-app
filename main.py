@@ -437,40 +437,21 @@ if True:
         от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
         """
         global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
-        if GRAPH_WIDGET is None:
-            return
+        #if GRAPH_WIDGET is None: return
         # Зрячий перебор скрытого списка детей графического холста [↑]
         for child in GRAPH_WIDGET.children:
             # Запускаем зрячий обыск всех внутренних переменных внутри my_graph [↑]
             # key — это текстовое имя переменной, val — ссылка на объект в памяти [↑]
             found_name = "Безымянный"
-            for key, val in GRAPH_WIDGET.__dict__.items():
-                if val is child:
-                    found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
-                    break
-                
-            print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
-    
-            #try:
-             #   print(child.id)
-           # except:
-              #  pass
-            #print(f"Фамилия: {child.__class__.__name__} | Имя (ID): {name}")
-
-            if True: #child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():
-            
-                # Шаг 2: Спускаемся ЕЩЁ НА ОДИН УРОВЕНЬ ГЛУБЖЕ — к внукам! [↑]
-                for grandchild in child.children:
-                    if grandchild.__class__.__name__ == 'Label':
-                        if "-" in child.text: continue
-                        print(grandchild.text)
-                        # ТРИУМФ: Мы держим за руку непосредственного внука!
-                        # Теперь команда "тире" или минутный перехват ударят 
-                        # точно в цель, минуя слепые зоны! [↑]
-                        grandchild.text = "-" 
-            
+            if False: # Перечисление дочерних классов и имён
+                for key, val in GRAPH_WIDGET.__dict__.items():
+                    if val is child:
+                        found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
+                        break    
+                    print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
+     
             # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
-            if child.__class__.__name__ == 'Label' or child.__class__.__name__ == 'GraphRotatedLabel':
+            if child.__class__.__name__ == 'GraphRotatedLabel':
             
                 # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
@@ -482,19 +463,17 @@ if True:
                 # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
                 #if not "SEC" in child.text: continue
-                if "-" in child.text: continue
-                try:
-                    print(child.text)
-                except:
-                    print('...')
+                #if "-" in child.text: continue
+                #try:
+                    #print(child.text)
+                #except:
+                    #print('...')
                 if True:
                     try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
-                        raw_seconds = int(child.text.replace("SEC", ""))
-                    
+                        raw_second = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)
                         minutes = int(raw_seconds / 60)
-                    
                         # Строим узкий вертикальный столбик через \n
                         #vertical_minutes = "\n".join(list(str(minutes)))
                     
@@ -502,8 +481,9 @@ if True:
                         # Вшиваем пробел на конце! Kivy обновит экран, вызовет перерисовку,
                         # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
                         #child.text = vertical_minutes + " "
-                        child.text = "-"
+                        #child.text = "-"
                         #child.texture_update()
+                        child.text = str(minutes)
                     except:# ValueError:
                         child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше

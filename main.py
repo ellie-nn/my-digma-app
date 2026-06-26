@@ -448,7 +448,7 @@ if True:
                 for grandchild in child.children:
                     if grandchild.__class__.__name__ == 'Label':
                         if "-" in child.text: continue
-                        print(child.text)
+                        print(grandchild.text)
                         # ТРИУМФ: Мы держим за руку непосредственного внука!
                         # Теперь команда "тире" или минутный перехват ударят 
                         # точно в цель, минуя слепые зоны! [↑]

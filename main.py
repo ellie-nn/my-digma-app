@@ -360,7 +360,7 @@ if True:
         mainclass.tmax = m[-1][0]
             
         graph = Graph(
-            xlabel='Время', ylabel='Вольты',
+            xlabel='Время', ylabel='345',
             x_ticks_minor=6, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,

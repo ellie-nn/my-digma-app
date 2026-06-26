@@ -433,14 +433,14 @@ if True:
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
-        instance.gw.xmin = instance.gw.xmax - value
+        instance.gw.xmin = int(instance.gw.xmax - value)
         instance.mov.min = value
         return  
         
     def move_window(instance, value):
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
-        instance.gw.xmin = value - (instance.gw.xmax-instance.gw.xmin)
+        instance.gw.xmin = int(value - (instance.gw.xmax-instance.gw.xmin))
         instance.gw.xmax = value 
         return
             

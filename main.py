@@ -485,7 +485,7 @@ if True:
                         #child.texture_update()
                         child.text = str(minutes)
                     except:# ValueError:
-                        child.text = "-"
+                        #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         pass
         return

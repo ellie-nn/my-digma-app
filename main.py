@@ -442,7 +442,7 @@ if True:
 
         # Зрячий перебор скрытого списка детей графического холста [↑]
         for child in GRAPH_WIDGET.children:
-            if child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():
+            if True: #child.__class__.__name__ == 'Widget' or 'area' in str(child.__class__).lower():
             
                 # Шаг 2: Спускаемся ЕЩЁ НА ОДИН УРОВЕНЬ ГЛУБЖЕ — к внукам! [↑]
                 for grandchild in child.children:

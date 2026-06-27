@@ -66,7 +66,7 @@ GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
-X_SYMBOLS_LENGTH=48
+X_SYMBOLS_LENGTH=59
 #X_MESURE="Секунды"
 
 from kivy.uix.floatlayout import FloatLayout
@@ -460,7 +460,7 @@ if True:
         mainclass.tmax = m[-1][0]
             
         graph = Graph(
-            xlabel='Время', ylabel='Ватты & Джоули',
+            xlabel='Время', ylabel='Ватты  &  Джоули',
             x_ticks_minor=6, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,
@@ -547,7 +547,7 @@ if True:
         instance.mov.min = value
         #apply_vertical_minutes_hack()
 
-        log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+2)),60)
+        log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+1)),60)
         frac=0
         global X_MESURE
         instance.gw.xlabel="Секунды"

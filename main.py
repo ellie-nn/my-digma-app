@@ -303,54 +303,6 @@ class MediaStoreStdout:
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
 
-if True:   
-#from kivy.uix.boxlayout import BoxLayout
-#from kivy.metrics import dp
-#from kivy_garden.graph import Graph, LinePlot
-#import math
-
-    class CustomGraph(Graph):
-        def update_ticks(self, *args):
-            # 1. Let the original Graph logic run to generate tick locations
-            ret=super().update_ticks(*args)
-        
-        # Mapping table for our X-axis values
-       # day_mapping = {
-         #   0: "Mon", 20: "Tue", 40: "Wed", 
-         #   60: "Thu", 80: "Fri", 100: "Sat"
-   #     }
-            graph_update_data()
-        # 2. Iterate and alter the text of the generated X-axis labels
-            for label in self._x_grid_label_list:
-                try:
-                    pass
-                # Convert the generated string back to a float/int to match
-           #     val = int(float(label.text))
-                
-                # Update with custom string if it exists in our map
-     #           if val in day_mapping:
-   #                 label.text = day_mapping[val]
-    #            else:
-   #                 label.text = ""  # Hide labels that don't match our criteria
-                except ValueError:
-                    pass
-            return ret
-#class GraphApp(App):
- #   def build(self):
- #       layout = BoxLayout(padding=dp(20))
-        
-        # Initialize our custom graph wrapper
-#        graph = CustomGraph(
-            
-        
-        # Generate some placeholder data
- #       plot = LinePlot(color=[0, 1, 0, 1], line_width=2)
- #       plot.points = [(x, math.sin(x / 10.0)) for x in range(0, 101)]
-        
- #       graph.add_plot(plot)
-   #     layout.add_widget(graph)
-  #      return layout
-
 if True:
     def build_voltage_graph(file_path,mainclass):
         #"""
@@ -407,7 +359,7 @@ if True:
             
         mainclass.tmax = m[-1][0]
             
-        graph = CustomGraph(
+        graph = Graph(
             xlabel='Время', ylabel='345',
             x_ticks_minor=6, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,

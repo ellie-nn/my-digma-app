@@ -811,7 +811,7 @@ if True:
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТ БАЗОВОГО МЕТОДА:
         # Заменяем оригинальный _update_labels на наш контролируемый custom_update_labels
         global ORIGINAL_KIVY_UPDATER
-        ORIGINAL_KIVY_UPDATER=graph_widget._update_label
+        ORIGINAL_KIVY_UPDATER=graph_widget._update_labels
         graph_widget._update_labels = create_secured_graph_updater(my_graph)
     
         # Attach the formatting function to the graph

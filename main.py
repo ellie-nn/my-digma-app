@@ -63,6 +63,8 @@ LOG_FN = 'logapp.txt'
 #FILE_CSV = 'power_history.csv'
 SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 GRAPH_WIDGET = None
+# 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
+ORIGINAL_KIVY_UPDATER = None
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -302,8 +304,89 @@ class MediaStoreStdout:
             append_to_public_documents(self.outfile, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-
 if True:
+    def apply_vertical_minutes_hack():
+        """
+        Трёхступенчатый хак: вычищает секунды, ставит бинарный семафор 
+        от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
+        """
+        global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
+        #if GRAPH_WIDGET is None: return
+        # Зрячий перебор скрытого списка детей графического холста [↑]
+        for child in GRAPH_WIDGET.children:
+            # Запускаем зрячий обыск всех внутренних переменных внутри my_graph [↑]
+            # key — это текстовое имя переменной, val — ссылка на объект в памяти [↑]
+            if False: # Перечисление дочерних классов и имён
+                found_name = "Безымянный"
+                for key, val in GRAPH_WIDGET.__dict__.items():
+                    if val is child:
+                        found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
+                        break    
+                    print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
+     
+            # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
+            if child.__class__.__name__ == 'GraphRotatedLabel':
+            
+                # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
+                # Если на конце строки уже стоит наш секретный пробел — значит, 
+                # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
+                if child.text.endswith(" "):
+                    continue
+
+                # ТОЧКА УДАРА №3: Проверяем маркер оси X!
+                # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
+                # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
+                #if not "SEC" in child.text: continue
+                #if "-" in child.text: continue
+                #try:
+                    #print(child.text)
+                #except:
+                    #print('...')
+                if True:
+                    if True:
+                    #try:
+                        # Извлекаем чистые секунды, отбрасывая маркерный хвост
+                        raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
+                        # Переносим секунды в минуты (округляем до целого)
+                        minutes = int(raw_seconds / 60)
+                        # Строим узкий вертикальный столбик через \n
+                        #vertical_minutes = "\n".join(list(str(minutes)))
+                    
+                        # ПРИСВАИВАНИЕ С МЕТКОЙ:
+                        # Вшиваем пробел на конце! Kivy обновит экран, вызовет перерисовку,
+                        # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
+                        #child.text = vertical_minutes + " "
+                        #child.text = "-"
+                        #child.texture_update()
+                        child.text = str(minutes)+" "
+                    #except:# ValueError:
+                        #child.text = "-"
+                        # Железобетонная страховка — если прилетел мусор, просто идем дальше
+                        pass
+        return
+    # end if True
+
+# 2. Наша чистая плоская базовая функция перерисовки осей
+def custom_update_labels(*args, **kwargs):
+    global ORIGINAL_KIVY_UPDATER
+    global GRAPH_WIDGET
+        
+    # Страховка: если ссылки не прошиты — мгновенно выходим
+    if ORIGINAL_KIVY_UPDATER is None or GRAPH_WIDGET is None:
+        return
+
+    # А) Принудительно вызываем родной Си-метод Kivy. 
+    # Он снесёт старый холст и сгенерирует свежий секундный список _labels [↑]
+    ret=ORIGINAL_KIVY_UPDATER(*args, **kwargs)
+    
+    # Б) ТОТАЛЬНЫЙ ЗАЖИМ: Мгновенно перехватываем свежесозданный список _labels
+    # до того, как кадр улетит на отрисовку в видеочип OpenGL! [↑]
+    apply_vertical_minutes_hack()
+    #for label in GRAPH_WIDGET._labels:
+    return ret
+                
+if True:
+
     def build_voltage_graph(file_path,mainclass):
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
@@ -431,65 +514,7 @@ if True:
     def clear_log_file(instance):
         return
 
-    def apply_vertical_minutes_hack():
-        """
-        Трёхступенчатый хак: вычищает секунды, ставит бинарный семафор 
-        от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
-        """
-        global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
-        #if GRAPH_WIDGET is None: return
-        # Зрячий перебор скрытого списка детей графического холста [↑]
-        for child in GRAPH_WIDGET.children:
-            # Запускаем зрячий обыск всех внутренних переменных внутри my_graph [↑]
-            # key — это текстовое имя переменной, val — ссылка на объект в памяти [↑]
-            if False: # Перечисление дочерних классов и имён
-                found_name = "Безымянный"
-                for key, val in GRAPH_WIDGET.__dict__.items():
-                    if val is child:
-                        found_name = key  # Мы нашли, под каким именем этот ребенок привязан к графику!
-                        break    
-                    print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
-     
-            # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
-            if child.__class__.__name__ == 'GraphRotatedLabel':
-            
-                # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
-                # Если на конце строки уже стоит наш секретный пробел — значит, 
-                # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
-                if child.text.endswith(" "):
-                    continue
 
-                # ТОЧКА УДАРА №3: Проверяем маркер оси X!
-                # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
-                # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
-                #if not "SEC" in child.text: continue
-                #if "-" in child.text: continue
-                #try:
-                    #print(child.text)
-                #except:
-                    #print('...')
-                if True:
-                    if True:
-                    #try:
-                        # Извлекаем чистые секунды, отбрасывая маркерный хвост
-                        raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
-                        # Переносим секунды в минуты (округляем до целого)
-                        minutes = int(raw_seconds / 60)
-                        # Строим узкий вертикальный столбик через \n
-                        #vertical_minutes = "\n".join(list(str(minutes)))
-                    
-                        # ПРИСВАИВАНИЕ С МЕТКОЙ:
-                        # Вшиваем пробел на конце! Kivy обновит экран, вызовет перерисовку,
-                        # но на следующем круге ТОЧКА УДАРА №1 намертво заблокирует цикл! [↑]
-                        #child.text = vertical_minutes + " "
-                        #child.text = "-"
-                        #child.texture_update()
-                        child.text = str(minutes)+" "
-                    #except:# ValueError:
-                        #child.text = "-"
-                        # Железобетонная страховка — если прилетел мусор, просто идем дальше
-                        pass
-        return
     #from kivy_garden.graph import Graph
 
     def format_x_axis(graph, value):
@@ -783,7 +808,12 @@ if True:
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
         graph_widget.update_ticks = graph_update_ticks
-            
+        # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТ БАЗОВОГО МЕТОДА:
+        # Заменяем оригинальный _update_labels на наш контролируемый custom_update_labels
+        global ORIGINAL_KIVY_UPDATER
+        ORIGINAL_KIVY_UPDATER=graph_widget._update_label
+        graph_widget._update_labels = create_secured_graph_updater(my_graph)
+    
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         
 

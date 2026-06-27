@@ -599,8 +599,8 @@ if True:
         apply_vertical_minutes_hack()
         return ret
             
-    def graph_update_data():
-        ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_data()
+    def graph_update_ticks():
+        ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
         apply_vertical_minutes_hack()
         return ret
             
@@ -781,7 +781,7 @@ if True:
         graph_widget.on_touch_down = graph_touch_down
         graph_widget.on_touch_move = graph_touch_move
         graph_widget.on_touch_up = graph_touch_up
-        graph_widget.update_data = graph_update_data
+        graph_widget.update_ticks = graph_update_ticks
             
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         

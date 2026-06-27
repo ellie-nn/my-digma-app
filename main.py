@@ -542,8 +542,8 @@ if True:
 
         log=math.log10((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+2)))
         frac=0
-        if (log-int(log))>log10(2): frac+=1
-        if (log-int(log))>log10(5): frac+=1
+        if (log-int(log))>math.log10(2): frac+=1
+        if (log-int(log))>math.log10(5): frac+=1
         instance.gw.x_ticks_major=int(10**int(log)*[2,5,10][int(frac)])
         return  
         

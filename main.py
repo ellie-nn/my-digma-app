@@ -363,7 +363,7 @@ if True:
                         child.text = str(minutes)+" "
                     except Exception as e:# ValueError:
                         global GRAPH_INITED_FLAG
-                        if not child.text and GRAPH_INITED_FLAG>=3: GRAPH_WIDGET.x_ticks_major=120
+                        if not child.text and GRAPH_INITED_FLAG>=9: GRAPH_WIDGET.x_ticks_major=120
                         if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
                         print(f'label change error\n{e}')
                         #child.text = "-"

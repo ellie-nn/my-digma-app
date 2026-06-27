@@ -599,7 +599,7 @@ if True:
         apply_vertical_minutes_hack()
         return ret
             
-    def graph_update_data()
+    def graph_update_data():
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_data()
         apply_vertical_minutes_hack()
         return ret

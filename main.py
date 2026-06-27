@@ -362,7 +362,9 @@ if True:
                         #child.text = vertical_minutes + " "
                         #child.text = "-"
                         #child.texture_update()
-                        child.text = str(minutes)+" "
+                        #child.text = str(minutes)+" "
+                        child.text += " "
+                            
                     except Exception as e:# ValueError:
                         if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
                         #if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1

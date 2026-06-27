@@ -66,6 +66,7 @@ GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
+X_SYMBOLS_LENGTH=30
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button

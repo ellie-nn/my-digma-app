@@ -66,7 +66,8 @@ GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
-X_SYMBOLS_LENGTH=45
+X_SYMBOLS_LENGTH=50
+#X_MESURE="Секунды"
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -362,7 +363,8 @@ if True:
                         #child.text = vertical_minutes + " "
                         #child.text = "-"
                         #child.texture_update()
-                        #child.text = str(minutes)+" "
+                        if GRAPH_WIDGET.xlabel=="Минуты": 
+                            child.text = str(minutes)
                         child.text += " "
                             
                     except Exception as e:# ValueError:
@@ -544,11 +546,14 @@ if True:
 
         log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+2)),60)
         frac=0
+        global X_MESURE
+        instance.gw.xlabel="Секунды"
         if (log-int(log))>math.log(2,60): frac+=1
         if (log-int(log))>math.log(5,60): frac+=1
         if (log-int(log))>math.log(10,60): frac+=1
         if (log-int(log))>math.log(20,60): frac+=1
-        if (log-int(log))>math.log(30,60): frac+=1
+        if (log-int(log))>math.log(30,60): frac+=1; instance.gw.xlabel="Минуты"
+        if (log-int(log))>math.log(1800,60): instance.gw.xlabel="Часы"
         instance.gw.x_ticks_major=int(60**int(log)*[2,5,10,20,30,60][int(frac)])
         return  
         

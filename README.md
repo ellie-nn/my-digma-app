@@ -3,7 +3,7 @@ fuck off
 #==========≠======≠
 
 #==========≠======≠
-
+ -0.063259 x^2 + 0.491418 x + 0.571841
 #==========≠======≠
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout

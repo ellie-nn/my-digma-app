@@ -530,7 +530,7 @@ if True:
         #with instance.gw as q:
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return  
         
     def move_window(instance, value):
@@ -539,7 +539,7 @@ if True:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
         instance.gw.xmin = int((value - instance.scl.value))
         instance.gw.xmax = value 
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return
             
     # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
@@ -548,14 +548,14 @@ if True:
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
         instance.mainclass.kilometers = instance.text
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return
             
     def on_text_submitted2(instance):
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил вольтаж: '{instance.text}'")
         instance.mainclass.StartV = instance.text
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return
             
     # ФАЗА 1: КАСАНИЕ (Палец опустился на график)
@@ -566,11 +566,11 @@ if True:
             GRAPH_WIDGET.touch_start_x = touch.x
             # Переводим тач в режим фокуса (чтобы Kivy знал, кто держит экран)
             touch.grab(GRAPH_WIDGET)
-            apply_vertical_minutes_hack()
+            #apply_vertical_minutes_hack()
             return True
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_down(touch)
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return ret
         
     # ФАЗА 2: ДВИЖЕНИЕ (Палец скользит по синусоиде)
@@ -602,11 +602,11 @@ if True:
         
             # Обновляем стартовую точку, чтобы скроллинг был непрерывным и шелковистым
             GRAPH_WIDGET.touch_start_x = touch.x
-            apply_vertical_minutes_hack()
+            #apply_vertical_minutes_hack()
             return True
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_move(touch)
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return ret
         
     # ФАЗА 3: ОТПУСКАНИЕ (Палец оторвался от экрана)
@@ -619,16 +619,16 @@ if True:
             # Автоматически переключаем тумблер в режим "застыть", 
             # раз пользователь сам руками полез листать историю назад во времени!
             #self.current_mode = "застыть"
-            apply_vertical_minutes_hack()
+            #apply_vertical_minutes_hack()
             return True
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).on_touch_up(touch)
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return ret
             
     def graph_update_ticks():
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
-        apply_vertical_minutes_hack()
+        #apply_vertical_minutes_hack()
         return ret
 
         

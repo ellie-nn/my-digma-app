@@ -312,6 +312,7 @@ if True:
         Трёхступенчатый хак: вычищает секунды, ставит бинарный семафор 
         от рекурсии и выстраивает минуты в вертикальные столбики! [↑]
         """
+        global GRAPH_INITED_FLAG
         global GRAPH_WIDGET  # Ваш глобальный указатель на сетку my_graph
         #if GRAPH_WIDGET is None: return
         # Зрячий перебор скрытого списка детей графического холста [↑]
@@ -362,7 +363,6 @@ if True:
                         #child.texture_update()
                         child.text = str(minutes)+" "
                     except Exception as e:# ValueError:
-                        global GRAPH_INITED_FLAG
                         if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
                         #if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
                         print(f'label change error\n{e}')
@@ -370,7 +370,7 @@ if True:
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         return
                         pass
-        global GRAPH_INITED_FLAG
+        
         GRAPH_INITED_FLAG=True
         return
     # end if True

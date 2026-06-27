@@ -545,7 +545,7 @@ if True:
         log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+2)),60)
         frac=0
         if (log-int(log))>math.log(2,60): frac+=1
-        if (log-int(log))>math.log(5 60): frac+=1
+        if (log-int(log))>math.log(5,60): frac+=1
         if (log-int(log))>math.log(10,60): frac+=1
         if (log-int(log))>math.log(20,60): frac+=1
         if (log-int(log))>math.log(30,60): frac+=1

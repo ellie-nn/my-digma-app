@@ -361,7 +361,7 @@ if True:
                         #child.texture_update()
                         child.text = str(minutes)+" "
                     except Exception as e:# ValueError:
-                        GRAPH_WIDGET.x_ticks_major=120
+                        if not child.text: GRAPH_WIDGET.x_ticks_major=120
                         print(f'label change error\n{e}')
                         #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше

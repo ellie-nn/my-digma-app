@@ -538,6 +538,12 @@ if True:
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
         #apply_vertical_minutes_hack()
+
+        log=math.log10((instance.gw.xmax-instanse.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+2)))
+        frac=0
+        if (log-int(log))>log10(2): frac+=1
+        if (log-int(log))>log10(5): frac+=1
+        instance.gw.x_ticks_major=int(10**int(log)*[2,5,10][int(frac)])
         return  
         
     def move_window(instance, value):

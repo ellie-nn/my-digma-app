@@ -304,6 +304,7 @@ class MediaStoreStdout:
             append_to_public_documents(self.outfile, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
+            
 if True:
     def apply_vertical_minutes_hack():
         """
@@ -812,7 +813,7 @@ if True:
         # Заменяем оригинальный _update_labels на наш контролируемый custom_update_labels
         global ORIGINAL_KIVY_UPDATER
         ORIGINAL_KIVY_UPDATER=graph_widget._update_labels
-        graph_widget._update_labels = create_secured_graph_updater(my_graph)
+        graph_widget._update_labels = custom_update_labels
     
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         

@@ -339,13 +339,13 @@ if True:
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
                 #if not "SEC" in child.text: continue
                 #if "-" in child.text: continue
-                #try:
-                    #print(child.text)
-                #except:
-                    #print('...')
+                try:
+                    print(f'=> {child.text}')
+                except:
+                    print('...')
                 if True:
-                    if True:
-                    #try:
+                    #if True:
+                    try:
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
                         raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)
@@ -360,7 +360,8 @@ if True:
                         #child.text = "-"
                         #child.texture_update()
                         child.text = str(minutes)+" "
-                    #except:# ValueError:
+                    except Exception as e:# ValueError:
+                        print(f'label change error\n{e}')
                         #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         pass

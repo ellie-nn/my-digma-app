@@ -66,7 +66,7 @@ GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
-X_SYMBOLS_LENGTH=50
+X_SYMBOLS_LENGTH=48
 #X_MESURE="Секунды"
 
 from kivy.uix.floatlayout import FloatLayout
@@ -365,10 +365,13 @@ if True:
                         #child.texture_update()
                         if GRAPH_WIDGET.xlabel=="Минуты": 
                             child.text = str(minutes)
+                        if GRAPH_WIDGET.xlabel=="Часы": 
+                            child.text = str(int(minutes/60))
+                        
                         child.text += " "
                             
                     except Exception as e:# ValueError:
-                        if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
+                        #if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
                         #if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
                         print(f'label change error\n{e}')
                         #child.text = "-"
@@ -457,7 +460,7 @@ if True:
         mainclass.tmax = m[-1][0]
             
         graph = Graph(
-            xlabel='Время', ylabel='345',
+            xlabel='Время', ylabel='Ватты & Джоули',
             x_ticks_minor=6, x_ticks_major=60,
             y_ticks_minor=5, y_ticks_major=10,
             y_grid_label=True, x_grid_label=True,

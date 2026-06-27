@@ -363,12 +363,15 @@ if True:
                         child.text = str(minutes)+" "
                     except Exception as e:# ValueError:
                         global GRAPH_INITED_FLAG
-                        if not child.text and GRAPH_INITED_FLAG>=9: GRAPH_WIDGET.x_ticks_major=120
-                        if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
+                        if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
+                        #if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
                         print(f'label change error\n{e}')
                         #child.text = "-"
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
+                        return
                         pass
+        global GRAPH_INITED_FLAG
+        GRAPH_INITED_FLAG=True
         return
     # end if True
 
@@ -820,7 +823,7 @@ if True:
         ORIGINAL_KIVY_UPDATER=graph_widget._update_labels
         graph_widget._update_labels = custom_update_labels
         global GRAPH_INITED_FLAG
-        GRAPH_INITED_FLAG=0
+        #GRAPH_INITED_FLAG=0
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         
 

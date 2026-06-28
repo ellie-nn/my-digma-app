@@ -67,7 +67,7 @@ GRAPH_WIDGET = None
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
-HOLD_LEFT=False
+HOLD_LEFT=True
 IN_LIVEDATA=False
 
 from kivy.uix.floatlayout import FloatLayout
@@ -1087,6 +1087,7 @@ class DigmaRecorderApp(App):
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         IN_LIVEDATA=True
+        ptint(f'1 xmin > {self.mywin.xmin}')
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
@@ -1115,7 +1116,7 @@ class DigmaRecorderApp(App):
             #self.mywin.user_input.bind(on_text_validate=on_text_submitted) 
         if self.StartV:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
-          
+            
             f.write(f'-{StartV} -\n')   
             g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.StartV = {self.StartV}\n')
@@ -1158,7 +1159,7 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
-        print(f'>>{self.mywin.graph_widget.plot.points}')
+        #print(f'>>{self.mywin.graph_widget.plot.points}')
         if False:    
             tmax = tstamp-self.launchtime+self.histtmax
             if True: # (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
@@ -1203,6 +1204,8 @@ class DigmaRecorderApp(App):
             #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin
                # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
+        ptint(f'2 xmin > {self.mywin.xmin}')
+        
         #IN_LIVEDATA=False    
         return 
      

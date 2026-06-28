@@ -531,7 +531,7 @@ if True:
     def hold_left_btn(instance):
         global HOLD_LEFT 
         HOLD_LEFT=not HOLD_LEFT         
-        intent.background_color=[0.3, int(HOLD_LEFT),0.2,0.7]
+        instance.background_color=[0.3, int(HOLD_LEFT),0.2,0.7]
         return
 
 

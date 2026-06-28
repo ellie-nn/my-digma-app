@@ -67,7 +67,7 @@ GRAPH_WIDGET = None
 ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
-#X_MESURE="Секунды"
+HOLD_LEFT=True
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -528,7 +528,10 @@ if True:
         mainclass.histtmax = m[-1][0]
         return graph
 
-    def clear_log_file(instance):
+    def hold_left_btn(instance):
+        global HOLD_LEFT 
+        HOLD_LEFT=not HOLD_LEFT         
+        intent.background_color=[0.3, int(HOLD_LEFT),0.2,0.7]
         return
 
 
@@ -748,10 +751,10 @@ if True:
             text="Д\nе\nр\nж\nа\nт\nь",
             size_hint=(0.06, 0.17),            # 50% ширины экрана, 8% высоты [↑]
             pos_hint={'x':0.0, 'y': 0.10},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
-            background_color=[1, 0, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+            background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
-        btn_holdleft.bind(on_release=clear_log_file)
+        btn_holdleft.bind(on_release=hold_left_btn)
         main_layout.add_widget(btn_holdleft)
         from kivy.uix.textinput import TextInput
 # =====================================================================

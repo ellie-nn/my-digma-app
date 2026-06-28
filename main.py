@@ -544,10 +544,10 @@ if True:
 
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
-    def scale_window(instance, value):
+    def scale_window(instance, value, hf = False):
         #with instance.gw as q:
         instance.value = value
-        instance.gw.xmin = int((instance.gw.xmax - value))
+        if not hf: instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
         
         #apply_vertical_minutes_hack()

@@ -1203,7 +1203,7 @@ class DigmaRecorderApp(App):
             #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin
                # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
-        IN_LIVEDATA=False    
+        #IN_LIVEDATA=False    
         return 
      
     def check_permissions_callback(self, permissions, grants):    

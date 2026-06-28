@@ -1188,7 +1188,7 @@ class DigmaRecorderApp(App):
                 
             #self.mywin.xmax = self.mywin.xmax 
             #self.mywin.sbarm.value = self.mywin.sbarm.value
-            self.mywin.sbars.max = tmax
+     #       self.mywin.sbars.max = tmax
             #self.mywin.sbarm.bind(value=move_window)
             #self.mywin.sbars.bind(value=scale_window)
             #self.mywin.sbarm.value=self.mywin.sbarm.value

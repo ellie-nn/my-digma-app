@@ -1087,6 +1087,7 @@ class DigmaRecorderApp(App):
         
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
+        global IN_LIVEDATA
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin
         q=2
@@ -1217,7 +1218,7 @@ class DigmaRecorderApp(App):
             print(f'{q} end xmin > {GRAPH_WIDGET.xmin}'); q+=1
           #print(f'3 xmin > {self.mywin.graph_widget.xmin}')
         
-        #IN_LIVEDATA=False    
+        IN_LIVEDATA=False    
         return 
      
     def check_permissions_callback(self, permissions, grants):    

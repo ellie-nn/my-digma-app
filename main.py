@@ -570,7 +570,7 @@ if True:
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
-        print(f'{HOLD_LEFT} {IN_LIVEDATA} {not HOLD_LEFT or not IN_LIVEDATA}'): 
+        print(f'{HOLD_LEFT} {IN_LIVEDATA} {not HOLD_LEFT or not IN_LIVEDATA}')
         if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((value - instance.scl.value))
         instance.gw.xmax = value 
         #apply_vertical_minutes_hack()

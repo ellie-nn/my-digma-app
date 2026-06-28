@@ -1189,7 +1189,7 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.bind(value=move_window)
             self.mywin.sbars.bind(value=scale_window)
             self.mywin.sbarm.value=self.mywin.sbarm.value
-            #self.mywin.sbars.value=self.mywin.sbars.value
+            self.mywin.sbars.value=self.mywin.sbars.value
                
             self.mywin.graph_widget.plot.points.append([ tmax, vatt])
             self.mywin.graph_widget.plotA.points.append([ tmax, integral])

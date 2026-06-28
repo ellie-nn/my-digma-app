@@ -1088,6 +1088,7 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin
+        q=2
         print(f'1 xmin -- {xmn}')
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
@@ -1159,7 +1160,9 @@ class DigmaRecorderApp(App):
         #self.label.text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
-        print(f'>>{self.mywin.graph_widget.plot.points}')
+        #print(f'>>{self.mywin.graph_widget.plot.points}')
+        print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+            
         if False:    
             tmax = tstamp-self.launchtime+self.histtmax
             if True: # (self.mywin.sbarm.max-self.mywin.sbarm.value)^2 <=4:
@@ -1178,14 +1181,19 @@ class DigmaRecorderApp(App):
         if True:
             #self.mywin.sbarm.unbind(value=move_window)
             #self.mywin.sbars.unbind(value=scale_window)
-
+            
             tmax = tstamp-self.launchtime+self.histtmax
+            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             self.mywin.sbarm.max = tmax
+            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
             self.mywin.sbars.max = tmax
-            if (tmax-self.mywin.sbarm.value)**2 <=3:
-                self.mywin.sbarm.value = tmax
-                
+            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+             if (tmax-self.mywin.sbarm.value)**2 <=3:
+                 print(f'{q} if xmin -> {GRAPH_WIDGET.xmin}'); q+=1
+                 self.mywin.sbarm.value = tmax
+                 print(f'{q} if xmin > {GRAPH_WIDGET.xmin}'); q+=1
+                 
                 #if HOLD_LEFT: self.mywin.sbars.value = tmax-self.mywin.xmin
        #         self.mywin.xmax = tmax
                 
@@ -1201,10 +1209,12 @@ class DigmaRecorderApp(App):
             self.mywin.graph_widget.plotA.points.append([ tmax, integral])
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
             self.mywin.graph_widget.plotA=self.mywin.graph_widget.plotA
-            #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
+            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+              #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin
                # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
-        print(f'2 xmin > {self.mywin.graph_widget.xmin}')
+            print(f'{q} end xmin > {GRAPH_WIDGET.xmin}'); q+=1
+          #print(f'3 xmin > {self.mywin.graph_widget.xmin}')
         
         #IN_LIVEDATA=False    
         return 

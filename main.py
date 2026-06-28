@@ -1180,8 +1180,8 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
             self.mywin.sbars.max = tmax
-            if (tmax-self.mywin.sbarm.value)**2 <=3:
-                self.mywin.sbarm.value = tmax
+            if True:#(tmax-self.mywin.sbarm.value)**2 <=3:
+              #  self.mywin.sbarm.value = tmax
                 
                 #if HOLD_LEFT: self.mywin.sbars.value = tmax-self.mywin.xmin
                 self.mywin.xmax = tmax
@@ -1198,9 +1198,9 @@ class DigmaRecorderApp(App):
             self.mywin.graph_widget.plotA.points.append([ tmax, integral])
             self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
             self.mywin.graph_widget.plotA=self.mywin.graph_widget.plotA
-            if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
-                self.mywin.sbars.value = tmax-self.mywin.xmin
-                scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
+            #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
+             #   self.mywin.sbars.value = tmax-self.mywin.xmin
+               # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
             
         return 
      

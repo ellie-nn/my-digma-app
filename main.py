@@ -68,6 +68,7 @@ ORIGINAL_KIVY_UPDATER = None
 GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
+IN_LIVEDATA=False
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -569,7 +570,7 @@ if True:
         # Допустим, ширина видимого окна графика на экране — всегда 60 секунд
         #with instance.gw as q:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
-        if not HOLD_LEFT: instance.gw.xmin = int((value - instance.scl.value))
+        if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((value - instance.scl.value))
         instance.gw.xmax = value 
         #apply_vertical_minutes_hack()
         return
@@ -1085,6 +1086,7 @@ class DigmaRecorderApp(App):
         
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
+        IN_LIVEDATA=True
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
@@ -1180,7 +1182,7 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
        #     self.mywin.sbars.max = tmax
-            if True:#(tmax-self.mywin.sbarm.value)**2 <=3:
+            if (tmax-self.mywin.sbarm.value)**2 <=3:
                 self.mywin.sbarm.value = tmax
                 
                 #if HOLD_LEFT: self.mywin.sbars.value = tmax-self.mywin.xmin
@@ -1201,7 +1203,7 @@ class DigmaRecorderApp(App):
             #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin
                # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
-            
+        IN_LIVEDATA=False    
         return 
      
     def check_permissions_callback(self, permissions, grants):    

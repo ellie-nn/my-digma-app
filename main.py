@@ -546,8 +546,10 @@ if True:
     # нашу микро-функцию move_window и сдвинет сетку!
     def scale_window(instance, value):
         #with instance.gw as q:
+        instance.value = value
         instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
+        
         #apply_vertical_minutes_hack()
 
         log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+1)),60)

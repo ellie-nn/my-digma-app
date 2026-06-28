@@ -1087,7 +1087,7 @@ class DigmaRecorderApp(App):
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         IN_LIVEDATA=True
-        ptint(f'1 xmin -- {self.mywin.graph_widget.xminn}')
+        ptint(f'1 xmin -- {GRAPH_WIDGET.xmin}')
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)

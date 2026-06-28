@@ -548,7 +548,7 @@ if True:
     def scale_window(instance, value, hf = False):
         #with instance.gw as q:
         instance.value = value
-        if not hf: instance.gw.xmin = int((instance.gw.xmax - value))
+        if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value
         
         #apply_vertical_minutes_hack()

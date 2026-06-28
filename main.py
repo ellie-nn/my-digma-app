@@ -1181,7 +1181,7 @@ class DigmaRecorderApp(App):
             if (tmax-self.mywin.sbarm.value)**2 <=3:
                 self.mywin.sbarm.value = tmax
                 
-                #if HOLD_LEFT:  self.mywin.sbars.max, self.mywin.sbars.value = tmax, tmax-self.mywin.xmin
+                if HOLD_LEFT: self.mywin.sbars.value = tmax-self.mywin.xmin
                 self.mywin.xmax = tmax
                 
             #self.mywin.xmax = self.mywin.xmax 

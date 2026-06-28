@@ -1088,7 +1088,7 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin
-        #ptint(f'1 xmin -- {xmn}')
+        print(f'1 xmin -- {xmn}')
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
@@ -1204,7 +1204,7 @@ class DigmaRecorderApp(App):
             #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin
                # scale_window(self.mywin.sbars, value = tmax-self.mywin.xmin, hf=True)
-        #ptint(f'2 xmin > {self.mywin.graph_widget.xmin}')
+        print(f'2 xmin > {self.mywin.graph_widget.xmin}')
         
         #IN_LIVEDATA=False    
         return 

@@ -279,7 +279,7 @@ class DigmaServiceEngine:
             #self.last_time = utime
             #self.counter += 1
             #self.vatt_sum += vatt*(utime-self.last_time)
-            self.vatt_sum += vatt*(utime-self.last_time)/10 #/3600
+            self.vatt_sum += vatt*(utime-self.last_time)/3600
             self.last_time = utime
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"

@@ -411,7 +411,7 @@ if True:
         #"""
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
-        print(tcut)
+        print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
@@ -419,10 +419,10 @@ if True:
         mA=m
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-        print(m)
+        print(inspect.currentframe().f_lineno,'422 m:',m)
         for x in reversed(m): x[0]-=m[0][0]
-        print(m)
-        print(m[0][0])
+        print(inspect.currentframe().f_lineno,'424 m:',m)
+        print(inspect.currentframe().f_lineno,'425 m[0][0]:,m[0][0])
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
@@ -435,9 +435,9 @@ if True:
         
         #try:# Grabs indices 2 and 4 from each line
         if mainclass.datafn:
-            print('настоящая история:')
-            print(tcut)
-            print('- /настоящая история')
+            print(inspect.currentframe().f_lineno,'438 настоящая история:')
+            print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
+            print(inspect.currentframe().f_lineno,'440 - /настоящая история')
       
             #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
             #print(m)
@@ -448,7 +448,7 @@ if True:
             m1A=m1A[:100]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-            print(m1)
+            print(inspect.currentframe().f_lineno,'451 m1',m1)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
@@ -457,7 +457,7 @@ if True:
             #for x in m: x[0]/=60
             #for x in mA: x[0]/=60
             
-        print(m)
+        print(inspect.currentframe().f_lineno,'460 m:',m)
         #print(m1[0][0])
         
             
@@ -503,14 +503,14 @@ if True:
                     if len(points) > 20:
                         graph.xmax = len(points)
                 except Exception as e:
-                    print(f"[ERR] Ошибка чтения файла1: {e}")
+                    print(inspect.currentframe().f_lineno,f"506 [ERR] Ошибка чтения файла1: {e}")
                     for i in range(1, 11):
                         voltage_value = i
                         x_index = i
                         points.append((x_index, voltage_value))
             
             else:
-                print(f"[ERR] Ошибка чтения файла2")
+                print(inspect.currentframe().f_lineno,f"513 [ERR] Ошибка чтения файла2")
                 for i in range(1, 11):
                     voltage_value = i
                     x_index = i
@@ -521,7 +521,7 @@ if True:
             # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 120), (20, 220)]
-        print(points)
+        print(inspect.currentframe().f_lineno,'524 points:',points)
         plot.points = points
         graph.add_plot(plot)
         plotA.points = pointsA
@@ -997,11 +997,11 @@ class DigmaRecorderApp(App):
         print('START4')
         print('START5')
         print('START6')
-        print(SUB_TIME)
+        print('SUB TIME:',SUB_TIME)
         
         #sys.exit()
         self.mywin = g_init(self)
-        print(self.histtmax)
+        print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)
         #except: pass

@@ -959,6 +959,7 @@ class DigmaRecorderApp(App):
         # 1. Создаем летучий временный проверочный сервер в окне
         check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         #OSCThreadServer()
+        import shutil
         try:
             # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
             check_server.bind(("127.0.0.1", 3001))
@@ -970,7 +971,7 @@ class DigmaRecorderApp(App):
             service_is_running = False
             self.datafn=''
         except:
-            import shutil
+            
             # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]

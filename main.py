@@ -416,7 +416,7 @@ if True:
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
-        m = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+        m = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.' or w[0][0]==',']
         mA=m
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 

@@ -30,6 +30,7 @@ from jnius import autoclass #, cast
 
 from oscpy.server import OSCThreadServer
 import inspect
+import shutil
 
 # === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
 # import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]

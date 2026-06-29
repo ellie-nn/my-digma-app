@@ -429,6 +429,8 @@ if True:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
+            m1 = [append_to_public_documents("svcdata.txt",w) for line in tcut.splitlines() if len(w := line)>3 and not w[0]=='.']
+            sys.exit()
         except Exception as e:     
             mainclass.datafn=""
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")

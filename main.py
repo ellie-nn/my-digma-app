@@ -422,7 +422,7 @@ if True:
         print(inspect.currentframe().f_lineno,'422 m:',m)
         for x in reversed(m): x[0]-=m[0][0]
         print(inspect.currentframe().f_lineno,'424 m:',m)
-        print(inspect.currentframe().f_lineno,'425 m[0][0]:,m[0][0])
+        print(inspect.currentframe().f_lineno,'425 m[0][0]:',m[0][0])
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)

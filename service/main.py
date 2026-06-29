@@ -222,7 +222,7 @@ class DigmaServiceEngine:
         
     
         try:
-            devices = tinytuya.deviceScan(None,5)
+            devices = tinytuya.deviceScan(None,10)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
         except Exception as e:
            print(f'Can''t find ip\n{e}\nDevices={devices}\n')

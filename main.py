@@ -426,7 +426,8 @@ if True:
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
-            tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            #tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
         except Exception as e:     
             mainclass.datafn=""
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")
@@ -443,7 +444,9 @@ if True:
             # Grabs indices 2 and 4 from each line
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             m1A = [[float(w[1]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
-           #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+            m1=m1[:100]
+            m1A=m1A[:100]
+            #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
             print(m1)
             #if os.path.isfile(file_path)

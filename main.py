@@ -1191,7 +1191,7 @@ class DigmaRecorderApp(App):
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
             self.mywin.sbars.max = tmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
-            if abs(tmax-self.mywin.sbarm.value) <=3:
+            if abs(tmax-self.mywin.sbarm.value) <=5:
                 print(f'{q} if xmin -> {GRAPH_WIDGET.xmin}'); q+=1
                 self.mywin.sbarm.value = tmax
                 print(f'{q} if xmin > {GRAPH_WIDGET.xmin}'); q+=1

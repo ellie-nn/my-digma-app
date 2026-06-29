@@ -453,10 +453,16 @@ if True:
             # Grabs indices 2 and 4 from each line
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             m1A = [[float(w[1]), float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
-            m1=m1[2500:5000]
+            #m1=m1[2500:5000]
             m1A=m1A[2500:5000]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
+            step=int(length(m1)/2500+1)
+            for i in range(0,step-1): xm1.append(m1[i::step]/step)
+            result = [[sum(values) 
+                          for values in zip(*matrix)]
+                              for matrix in zip(*xm1)]
+            m1=result
             print('m1A:',m1A,inspect.currentframe().f_lineno)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'

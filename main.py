@@ -456,7 +456,7 @@ if True:
             m1A=m1A[:100]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-            print(inspect.currentframe().f_lineno,'451 m1',m1)
+            print('m1A:',m1A,inspect.currentframe().f_lineno)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1

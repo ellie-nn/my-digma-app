@@ -429,10 +429,10 @@ if True:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
-            g=open(f'/storage/emulated/0/Documents/svcdata.txt','a', encoding="utf-8", errors="ignore")
-            m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and w[0] in "0123456789"]
-            g.close()
-            sys.exit()
+            #g=open(f'/storage/emulated/0/Documents/svcdata.txt','a', encoding="utf-8", errors="ignore")
+            #m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and w[0] in "0123456789"]
+            #g.close()
+            #sys.exit()
         except Exception as e:     
             mainclass.datafn=""
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")

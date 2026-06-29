@@ -430,7 +430,7 @@ if True:
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
             g=open(f'/storage/emulated/0/Documents/svcdata.txt','a', encoding="utf-8", errors="ignore")
-            m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and not w[0]=='.']
+            m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and not w[0] in ["0","1","2","3","4","5","6","7","8","9"]
             g.close()
             sys.exit()
         except Exception as e:     

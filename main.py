@@ -428,6 +428,8 @@ if True:
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            print(mainclass.datafn,inspect.currentframe().f_lineno)
+            print(tcut,inspect.currentframe().f_lineno)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
             #g=open(f'/storage/emulated/0/Documents/svcdata.txt','a', encoding="utf-8", errors="ignore")
             #m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and w[0] in "0123456789"]
@@ -974,6 +976,7 @@ class DigmaRecorderApp(App):
             print(self.datafn)
             shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
         self.datafn='svcdata1782698598.txt'
+                     #svcdata1782698598.txt
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
         # =====================================================================

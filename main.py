@@ -976,10 +976,15 @@ class DigmaRecorderApp(App):
             service_is_running = True
             self.datafn=f'{thelastfile('/storage/emulated/0/Documents','data*.txt').name}'
             print(self.datafn)
-            #shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
-            shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
+            shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
+            $shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
         #self.datafn='svcdata1782698598.txt'
                      #svcdata1782698598.txt
+            
+        #Тестовая имитация ранее запущенного сервис-мотора
+        service_is_running = True
+        shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
+            
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
         # =====================================================================

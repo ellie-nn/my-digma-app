@@ -549,7 +549,7 @@ if True:
         #with instance.gw as q:
         instance.value = value
         if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((instance.gw.xmax - value))
-        instance.mov.min = value
+        instance.mov.mself.mywin'0.1
         
         #apply_vertical_minutes_hack()
 
@@ -1191,7 +1191,7 @@ class DigmaRecorderApp(App):
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
             self.mywin.sbars.max = tmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
-            if (tmax-self.mywin.sbarm.value)**2 <=3:
+            if (tmax-self.mywin.sbarm.value)**2 <=5:
                 print(f'{q} if xmin -> {GRAPH_WIDGET.xmin}'); q+=1
                 self.mywin.sbarm.value = tmax
                 print(f'{q} if xmin > {GRAPH_WIDGET.xmin}'); q+=1

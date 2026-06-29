@@ -977,7 +977,7 @@ class DigmaRecorderApp(App):
             self.datafn=f'{thelastfile('/storage/emulated/0/Documents','data*.txt').name}'
             print(self.datafn)
             shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
-            $shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
+            #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
         #self.datafn='svcdata1782698598.txt'
                      #svcdata1782698598.txt
             

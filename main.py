@@ -549,8 +549,8 @@ if True:
         #with instance.gw as q:
         instance.value = value
         if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((instance.gw.xmax - value))
-        instance.mov.mself.mywin'0.1
-        
+        instance.mov.min = value-0.1
+            
         #apply_vertical_minutes_hack()
 
         log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+1)),60)
@@ -1030,7 +1030,7 @@ class DigmaRecorderApp(App):
         # ПРОИЗВОДИМ ПОДМЕНУ В ЯДРЕ PYTHON
        
         try:
-            devices = tinytuya.deviceScan(None,10)
+            devices = [] #tinytuya.deviceScan(None,10)
             ip_address = [ip for ip, info in devices.items() if info.get('gwId') == DEVICE_ID][0]
             print(f'Ip found: {ip_address}')
         except Exception as e:

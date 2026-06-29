@@ -458,6 +458,7 @@ if True:
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
             step=int(len(m1)/2500+1)
+            xm1=[]
             for i in range(0,step-1): xm1.append(m1[i::step]/step)
             result = [[sum(values) 
                           for values in zip(*matrix)]

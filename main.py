@@ -427,8 +427,8 @@ if True:
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
-            #tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
-            tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
+            tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
         except Exception as e:     
             mainclass.datafn=""
             print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")
@@ -969,7 +969,7 @@ class DigmaRecorderApp(App):
             self.datafn=f'{thelastfile('/storage/emulated/0/Documents','data*.txt').name}'
             print(self.datafn)
             shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
-
+        self.datafn='svcdata1782698598.txt'
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
         # =====================================================================

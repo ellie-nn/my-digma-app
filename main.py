@@ -465,7 +465,7 @@ if True:
 
             xm1A=[]
             for i in range(0,step-1): xm1A.append(m1A[i::step]) 
-            m1A = [[sum(values)/step for values in zip(*matrix)] for matrix in zip(*xm1A)]
+            m1A = [[sum(values)/step/4 for values in zip(*matrix)] for matrix in zip(*xm1A)]
             #m1=result
             
             print('m1A:',m1A,inspect.currentframe().f_lineno)

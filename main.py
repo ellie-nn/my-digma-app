@@ -460,9 +460,7 @@ if True:
             step=int(len(m1)/2500+1)
             xm1=[]
             for i in range(0,step-1): xm1.append(m1[i::step]/step)
-            result = [[sum(values) 
-                          for values in zip(*matrix)]
-                              for matrix in zip(*xm1)]
+            result = [[sum(values) for values in zip(*matrix)] for matrix in zip(*xm1)]
             m1=result
             print('m1A:',m1A,inspect.currentframe().f_lineno)
             #if os.path.isfile(file_path)

@@ -349,6 +349,7 @@ if True:
                 #if "-" in child.text: continue
                 try:
                     print(f'=> {child.text}')
+                    print(vars(child))
                 except:
                     print('...')
                 if True:

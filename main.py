@@ -348,27 +348,10 @@ if True:
                         continue
                 except:
                     child.text = '222.'
-                    print(f'endswith...: {child.text}')
-                        
-                child.text = '111.'
-                print(f'notendsdot: {child.text}')
-                continue
-                # ТОЧКА УДАРА №3: Проверяем маркер оси X!
-                # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
-                # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]
-                #if not "SEC" in child.text: continue
-                #if "-" in child.text: continue
-                try:
-                    float(child.text)
-                    print(f'=> {child.text}')
-                    print(vars(child))
-                    print(dir(child))
-                except:
-                    print('...')
                 if True:
                     #if True:
                     try:
-                        child.text = "#."  
+                        #child.text = "#."  
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
                         raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)

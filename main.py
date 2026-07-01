@@ -344,7 +344,7 @@ if True:
                     #if not child.text: continue
                     if str(child.text)[-1]==".":
                         child.text +='.'
-                        print(f'endswithdot: {child.text}')
+                        #print(f'endswithdot: {child.text}')
                         continue
                 except:
                     child.text = '222.'
@@ -352,7 +352,7 @@ if True:
                         
                 child.text = '111.'
                 print(f'notendsdot: {child.text}')
-                return
+                continue
                 # ТОЧКА УДАРА №3: Проверяем маркер оси X!
                 # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]

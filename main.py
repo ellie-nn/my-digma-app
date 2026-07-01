@@ -376,7 +376,7 @@ if True:
                             child.text = str(int(minutes/60))
                         if int(raw_seconds)==int(GRAPH_WIDGET.xmin):
                             child.text=f'{int(raw_seconds/3600)}h{(int(raw_seconds/60)-int(raw_seconds/3600)*60)}m{int(raw_seconds)-int(raw_seconds/60)*60}s'
-                            
+                        print(f'raw/xmin: {int(raw_seconds)}=={int(GRAPH_WIDGET.xmin)}')
                         child.text += " "
                             
                     except Exception as e:# ValueError:

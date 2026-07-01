@@ -357,6 +357,7 @@ if True:
                 if True:
                     #if True:
                     try:
+                        child.text = "# "  
                         # Извлекаем чистые секунды, отбрасывая маркерный хвост
                         raw_seconds = float(child.text) #int(child.text.replace("SEC", ""))
                         # Переносим секунды в минуты (округляем до целого)
@@ -383,7 +384,7 @@ if True:
                         #if not child.text and GRAPH_INITED_FLAG: GRAPH_WIDGET.x_ticks_major=120
                         #if not GRAPH_INITED_FLAG is None: GRAPH_INITED_FLAG+=1
                         print(f'label change error\n{e}')
-                        #child.text = "-"
+                        child.text = "= "
                         # Железобетонная страховка — если прилетел мусор, просто идем дальше
                         return
                         pass

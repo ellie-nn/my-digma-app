@@ -339,9 +339,13 @@ if True:
                 # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
-                if str(child.text).endswith("."):
-                    print(f'endswithdot: {child.text}')
-                    continue
+                try:
+                    if child.text and str(child.text)[-1]:
+                        print(f'endswithdot: {child.text}')
+                        continue
+                except:
+                    print(f'endswith...: {child.text}')
+                        
                 child.text = "*."  
                 # ТОЧКА УДАРА №3: Проверяем маркер оси X!
                 # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.

@@ -351,6 +351,7 @@ if True:
                     float(child.text)
                     print(f'=> {child.text}')
                     print(vars(child))
+                    print(dir(child))
                 except:
                     print('...')
                 if True:

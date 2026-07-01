@@ -343,7 +343,7 @@ if True:
                     child.text = '444.'
                     #if not child.text: continue
                     if str(child.text)[-1]==".":
-                        child.text = '333.'
+                        child.text +='.'
                         print(f'endswithdot: {child.text}')
                         continue
                 except:

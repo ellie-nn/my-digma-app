@@ -345,8 +345,9 @@ if True:
                         continue
                 except:
                     print(f'endswith...: {child.text}')
-                        
+                print(f'notendsdot: {child.text}')        
                 child.text = "*."  
+                return
                 # ТОЧКА УДАРА №3: Проверяем маркер оси X!
                 # Благодаря этому "SEC" мы на 100% застрахованы от ValueError.
                 # Подписи оси Y (Ватты, Вольты розетки) и пустые блоки пройдут мимо! [↑]

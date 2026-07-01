@@ -348,6 +348,7 @@ if True:
                 #if not "SEC" in child.text: continue
                 #if "-" in child.text: continue
                 try:
+                    float(child.text)
                     print(f'=> {child.text}')
                     print(vars(child))
                 except:

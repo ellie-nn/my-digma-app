@@ -340,13 +340,16 @@ if True:
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
                 try:
-                    if child.text and str(child.text)[-1]==".":
+                    child.text = '444'
+                    if child.text and not str(child.text)[-1]==".":
+                        child.text = '333.'
                         print(f'endswithdot: {child.text}')
                         continue
                 except:
+                    child.text = '222.'
                     print(f'endswith...: {child.text}')
                         
-                child.text = 111
+                child.text = '111.'
                 print(f'notendsdot: {child.text}')
                 return
                 # ТОЧКА УДАРА №3: Проверяем маркер оси X!

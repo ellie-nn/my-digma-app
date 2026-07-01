@@ -340,7 +340,7 @@ if True:
                 # Если на конце строки уже стоит наш секретный пробел — значит, 
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
                 try:
-                    if child.text and str(child.text)[-1]:
+                    if child.text and str(child.text)[-1]==".":
                         print(f'endswithdot: {child.text}')
                         continue
                 except:

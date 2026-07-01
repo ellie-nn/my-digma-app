@@ -341,7 +341,7 @@ if True:
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
                 try:
                     #child.text = '444'
-                    #if not child.text: continue
+                    if not child.text: child.text = '444'
                     if str(child.text)[-1]==".":
                         child.text +='.'
                         #print(f'endswithdot: {child.text}')

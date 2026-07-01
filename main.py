@@ -341,6 +341,7 @@ if True:
                 # мы этот блок уже обрабатывали. Мгновенно уходим, разрывая петлю! [↑]
                 try:
                     #child.text = '444'
+                    child.text=str(int(child.text))
                     if not child.text: child.text = '444'
                     if str(child.text)[-1]==".":
                         child.text +='.'

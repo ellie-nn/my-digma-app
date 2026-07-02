@@ -27,9 +27,9 @@ class MediaStoreStdout:
                     f.write(message.strip()+"\n")
                     #f.flush
                     #f.close()
-          except:
-              pass
-          f.close()
+            except:
+                pass
+            f.close()
         return
     
     def flush(self):

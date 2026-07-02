@@ -71,7 +71,7 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
-BASE_DIR=os.environ.get('EXTERNAL_STORAGE')
+LOG_PATH=os.environ.get('EXTERNAL_STORAGE')+'Documents/'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -84,7 +84,7 @@ from kivy.uix.slider import Slider
 # Точный путь к файлу данных нашего бессмертного 12-го релиза
 #LOG_PATH = 'Documents/'+SUB_DIR+'servicework.txt'
 #LOG_PATH = "/Documents/servicework.txt"
-LOG_PATH = "/storage/emulated/0/Documents/"
+#LOG_PATH = "/storage/emulated/0/Documents/"
 #from jnius import autoclass, cast
 
 def is_full_storage_allowed():
@@ -163,7 +163,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
     if is_full_storage_allowed():
         if text_content:
             
-            with open("/storage/emulated/0/Documents/"+filename, "a", encoding="utf-8", errors="ignore") as f:
+            with open(LOG_PATH+filename, "a", encoding="utf-8", errors="ignore") as f:
                 #vContext = autoclass('org.kivy.android.PythonActivity').mActivity
                 #vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
                 #vibrator.vibrate(500) 
@@ -176,7 +176,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
                 return
         else:
             print('filename:',filename,inspect.currentframe().f_lineno)
-            with open("/storage/emulated/0/Documents/"+filename, "r", encoding="utf-8", errors="ignore") as f:
+            with open(LOG_PATH+filename, "r", encoding="utf-8", errors="ignore") as f:
                 ret=f.read()
                 f.close()
                 return ret
@@ -913,7 +913,7 @@ def generate_mock_log_stream(duration_seconds=120, step_seconds=1.0):
     step_seconds - шаг между записями (например, раз в секунду).
     """
     try:
-        open("/storage/emulated/0/Documents/mock.txt", "r", encoding="utf-8", errors="ignore").close
+        open(LOG_PATH+"mock.txt", "r", encoding="utf-8", errors="ignore").close
         return
     except:
         pass
@@ -1010,9 +1010,9 @@ class DigmaRecorderApp(App):
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
             service_is_running = True
-            self.datafn=f'{thelastfile('/storage/emulated/0/Documents','data*.txt').name}'
+            self.datafn=f'{thelastfile(LOG_PATH[:-1],'data*.txt').name}'
             print(self.datafn)
-            shutil.copy('/storage/emulated/0/Documents/svc'+self.datafn, '/storage/emulated/0/Documents/'+self.datafn) 
+            shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 
             #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
         #self.datafn='svcdata1782698598.txt'
                      #svcdata1782698598.txt
@@ -1020,7 +1020,7 @@ class DigmaRecorderApp(App):
         #Тестовая имитация ранее запущенного сервис-мотора
         self.datafn="AppDataTest.txt"
         service_is_running = True
-        shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
+        shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
             
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
@@ -1037,7 +1037,7 @@ class DigmaRecorderApp(App):
         
         print('START2')
         try:
-            f = open("/storage/emulated/0/Documents/ini.txt","r",encoding="utf-8", errors="ignore")
+            f = open(LOG_PATH+"ini.txt","r",encoding="utf-8", errors="ignore")
             run = f.read()
             f.close()
             try:
@@ -1158,12 +1158,12 @@ class DigmaRecorderApp(App):
         tstamp += SUB_TIME
         if not self.datafn:
             self.datafn=f'data{int(tstamp)}.txt'
-        f=open(f'/storage/emulated/0/Documents/'+self.datafn,'a', encoding="utf-8", errors="ignore")
+        f=open(f'{LOG_PATH}{self.datafn}','a', encoding="utf-8", errors="ignore")
         if self.kilometers:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
           
             f.write(f'-{self.kilometers} -\n')   
-            g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
+            g=open(f'{LOG_PATH}ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
             #if self.mywin.user_input.text != self.kilometers:
@@ -1177,7 +1177,7 @@ class DigmaRecorderApp(App):
         if self.StartV:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
             f.write(f'-{StartV} -\n')   
-            g=open(f'/storage/emulated/0/Documents/ini.txt','a', encoding="utf-8", errors="ignore")
+            g=open(f'{LOG_PATH}ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.StartV = {self.StartV}\n')
             g.close()
             #if self.mywin.user_input.text != self.kilometers:

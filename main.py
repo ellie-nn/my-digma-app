@@ -664,7 +664,7 @@ if True:
             # МАСШТАБНЫЙ КОЭФФИЦИЕНТ:
             # Переводим пиксели экрана Самсунга в виртуальные секунды вашей истории!
             # Допустим, каждые 10 пикселей сдвига пальца = 1 секунда прокрутки истории.
-            shift_seconds = delta_pixels / 10.0
+            shift_seconds = delta_pixels * ((GRAPH_WIDGET.xmax-GRAPH_WIDGET.xmin)/GRAPH_WIDGET.parent.SIZE[0]) #+/10.0
         
             # ИМИТАЦИЯ SLIDER.VALUE (Ваша готовая обработка!):
             # Мы берем текущее значение сдвига и силой сдвигаем его на дельту пальца.
@@ -726,6 +726,7 @@ if True:
         graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
         main_layout.add_widget(graph_widget)
         main_layout.graph_widget=graph_widget
+        graph_widget.parent=main_layout
         from kivy.uix.label import Label
 
         # =====================================================================

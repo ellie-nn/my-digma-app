@@ -314,12 +314,12 @@ class MediaStoreStdout:
 def scale_func(v):
     ret=10**(v)
     #ret=v
-    print(f'v={v} f={ret}')
+    #print(f'v={v} f={ret}')
     return ret #int(ret)
 def scale_revfunc(ret):
     v=math.log10(ret)
     #v=ret
-    print(f'f={ret} v={v}')
+    #print(f'f={ret} v={v}')
     return v #int(v)
 if True:
     def apply_vertical_minutes_hack():
@@ -388,7 +388,7 @@ if True:
                         #if not ("." in str(dt/3600)): 
                             #child.text=f'{int({(int(dt/60)}m{int(dt)-int(raw_seconds/60)*60}s'
                         
-                        print(f'raw/xmin: {int(raw_seconds)}=={int(GRAPH_WIDGET.xmin)}')
+                        #print(f'raw/xmin: {int(raw_seconds)}=={int(GRAPH_WIDGET.xmin)}')
                         child.text += " "
                         #child.text = "-."  
                     except Exception as e:# ValueError:

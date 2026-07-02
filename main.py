@@ -311,10 +311,10 @@ class MediaStoreStdout:
             append_to_public_documents(self.outfile, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-def scale_func(v)
+def scale_func(v):
     ret=10**(-v)
     return ret
-def scale_func(ret)
+def scale_revfunc(ret):
     v=-log10(ret)
     return v
 if True:

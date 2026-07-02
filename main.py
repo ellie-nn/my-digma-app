@@ -586,7 +586,7 @@ if True:
         #apply_vertical_minutes_hack()
 
         #log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/int(math.log10(instance.gw.xmax)+1)),60)
-        log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/4),60)
+        log=math.log((instance.gw.xmax-instance.gw.xmin)/(X_SYMBOLS_LENGTH/5),60)
         frac=0
         global X_MESURE
         instance.gw.xlabel="Секунды"

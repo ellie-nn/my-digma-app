@@ -746,7 +746,7 @@ if True:
         log_screen.bind(size=log_screen.setter('text_size'))
         #main_layout.add_widget(log_screen) 
 
-        scroll_bar_scale = Slider(min=10, max=mainclass.tmax, value=graph_widget.xmax-graph_widget.xmin, orientation='horizontal')
+        scroll_bar_scale = Slider(min=scale_revfunc(10), max=scale_revfunc(mainclass.tmax), value=scale_revfunc(graph_widget.xmax-graph_widget.xmin), orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 

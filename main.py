@@ -373,7 +373,7 @@ if True:
                         dt=(raw_seconds)-int(GRAPH_WIDGET.xmin)
                         child.text=str(int(dt))
                         if int(raw_seconds)==int(GRAPH_WIDGET.xmin):
-                            child.text=f'{int(raw_seconds/3600)}h{(int(raw_seconds/60)-int(raw_seconds/3600)*60)}m{int(raw_seconds)-int(raw_seconds/60)*60}s'
+                            child.text=f'{int(raw_seconds/3600)}h{(int(raw_seconds/60)-int(raw_seconds/3600)*60)}m\n{int(raw_seconds)-int(raw_seconds/60)*60}s'
                         if not int(raw_seconds)==int(GRAPH_WIDGET.xmin) and (dt%60==0): 
                             child.text=f'{int(raw_seconds//60-(raw_seconds//3600)*60)}m' #{int(raw_seconds%60)}s'
                         #if not ("." in str(dt/3600)): 

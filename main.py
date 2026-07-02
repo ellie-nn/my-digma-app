@@ -371,7 +371,7 @@ if True:
                         if GRAPH_WIDGET.xlabel=="Часы": 
                             child.text = str(int(minutes/60))
                         dt=(raw_seconds)-int(GRAPH_WIDGET.xmin)
-                        child.text=str(int(dt))
+                        child.text=str(int(raw_seconds%60))
                         if int(raw_seconds)==int(GRAPH_WIDGET.xmin):
                             child.text=f'\n{int(raw_seconds/3600)}h{(int(raw_seconds/60)-int(raw_seconds/3600)*60)}m\n{int(raw_seconds)-int(raw_seconds/60)*60}s'
                         if not int(raw_seconds)==int(GRAPH_WIDGET.xmin) and (dt%60==0): 

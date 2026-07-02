@@ -71,6 +71,7 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
+BASE_DIR=os.environ.get('EXTERNAL_STORAGE')
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button

@@ -1,6 +1,13 @@
 #import warnings
 # ДАЕМ КОМАНДУ ПИТОНУ: ПОЛНОСТЬЮ ИГНОРИРОВАТЬ ЛЮБЫЕ ДЕКОРАТИВНЫЕ WARNINGS
 #warnings.filterwarnings("ignore")
+import time
+from jnius import autoclass #, cast
+
+vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+vibrator.vibrate(500) 
+time.sleep(1.0)
 
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
@@ -9,7 +16,7 @@ logging.disable(logging.CRITICAL)
 import tinytuya
 #if 'tinytuya' in sys.modules:
 
-import time
+
 import os
 #import signal
 #import csv
@@ -25,7 +32,7 @@ from kivy.utils import platform
 
 from kivy.core.window import Window
 
-from jnius import autoclass #, cast
+
 #from jnius import autoclass #, cast
 
 from oscpy.server import OSCThreadServer

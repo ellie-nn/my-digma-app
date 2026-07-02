@@ -23,7 +23,7 @@ class MediaStoreStdout:
                 # Вызываем вашу отлаженную функцию дозаписи в Documents!
                 #append_to_public_documents("log"+LOG_FN+".txt", message.strip())
                 #append_to_public_documents(self.outfile, message.strip())
-                with open('/storage/emulated/0/Documents/'+self.outfile, "a", encoding="utf-8", errors="ignore") as f:
+                with open('/storage/emulated/10/Documents/'+self.outfile, "a", encoding="utf-8", errors="ignore") as f:
                     f.write(message.strip()+"\n")
                     #f.flush
                     #f.close()

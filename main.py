@@ -664,7 +664,7 @@ if True:
             # МАСШТАБНЫЙ КОЭФФИЦИЕНТ:
             # Переводим пиксели экрана Самсунга в виртуальные секунды вашей истории!
             # Допустим, каждые 10 пикселей сдвига пальца = 1 секунда прокрутки истории.
-            shift_seconds = delta_pixels * ((GRAPH_WIDGET.xmax-GRAPH_WIDGET.xmin)/GRAPH_WIDGET.SIZE[0]) #+/10.0
+            shift_seconds = delta_pixels * ((GRAPH_WIDGET.xmax-GRAPH_WIDGET.xmin)/GRAPH_WIDGET.parent.size[0]) #+/10.0
         
             # ИМИТАЦИЯ SLIDER.VALUE (Ваша готовая обработка!):
             # Мы берем текущее значение сдвига и силой сдвигаем его на дельту пальца.

@@ -9,6 +9,34 @@ vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
 vibrator.vibrate(500) 
 time.sleep(1.0)
 
+# СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
+class MediaStoreStdout:
+    def __init__(self, outf = 'app_log.txt'):
+      self.outfile = outf
+      sys.stdout = self
+      sys.stderr = sys.stdout
+      return
+    def write(self, message):
+        # Если прилетает не пустая строка — отправляем её в наш Java-мост
+        if message and message.strip():
+            try:
+                # Вызываем вашу отлаженную функцию дозаписи в Documents!
+                #append_to_public_documents("log"+LOG_FN+".txt", message.strip())
+                #append_to_public_documents(self.outfile, message.strip())
+                with open('/storage/emulated/0/'+self.outfile, "a", encoding="utf-8", errors="ignore") as f:
+                    f.write(message.strip()+"\n")
+                    #f.flush
+                    #f.close()
+          except:
+              pass
+          f.close()
+        return
+    
+    def flush(self):
+        pass  # Системная заглушка, обязательная для потоков stdout
+MediaStoreStdout()
+print('START1')
+
 import logging  # ИМПОРТИРУЕМ МОДУЛЬ ЛОГОВ
 # 2. ЖЕСТКИЙ ЗАЖИМ ДЛЯ ТИНИТУИ: отключаем логирование ошибок уровня CRITICAL и ниже!
 logging.disable(logging.CRITICAL)
@@ -304,21 +332,6 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
             f.write(text_content + "\n")
         
 
-# СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
-class MediaStoreStdout:
-    def __init__(self, outf = 'app_log.txt'):
-      self.outfile = outf
-      sys.stdout = self
-      sys.stderr = sys.stdout
-      return
-    def write(self, message):
-        # Если прилетает не пустая строка — отправляем её в наш Java-мост
-        if message and message.strip():
-            # Вызываем вашу отлаженную функцию дозаписи в Documents!
-            #append_to_public_documents("log"+LOG_FN+".txt", message.strip())
-            append_to_public_documents(self.outfile, message.strip())
-    def flush(self):
-        pass  # Системная заглушка, обязательная для потоков stdout
 def scale_func(v):
     ret=10**(v)
     #ret=v
@@ -974,7 +987,7 @@ def thelastfile(path,mask):
 class DigmaRecorderApp(App):
     def build(self):
         MediaStoreStdout(LOG_FN)
-        print('START1')
+        
         self.kilometers=''
         self.StartV=''
         #sys.stderr = sys.stdout

@@ -106,7 +106,7 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
-LOG_PATH=os.environ.get('EXTERNAL_STORAGE')+'Documents/'
+LOG_PATH=os.environ.get('EXTERNAL_STORAGE')+'/Documents/'
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button

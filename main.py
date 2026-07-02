@@ -315,7 +315,7 @@ def scale_func(v):
     ret=10**(-v)
     return ret
 def scale_revfunc(ret):
-    v=-log10(ret)
+    v=-math.log10(ret)
     return v
 if True:
     def apply_vertical_minutes_hack():

@@ -311,7 +311,12 @@ class MediaStoreStdout:
             append_to_public_documents(self.outfile, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
-            
+def scale_func(v)
+    ret=10**(-v)
+    return ret
+def scale_func(ret)
+    v=-log10(ret)
+    return v
 if True:
     def apply_vertical_minutes_hack():
         """
@@ -577,9 +582,10 @@ if True:
 
     # Каждый раз, когда вы тащите бегунок, Kivy АВТОМАТИЧЕСКИ вызовет 
     # нашу микро-функцию move_window и сдвинет сетку!
-    def scale_window(instance, value, hf = False):
+    def scale_window(instance, val, hf = False):
         #with instance.gw as q:
-        instance.value = value
+        value=scale_func(val)
+        #instance.value = value
         if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((instance.gw.xmax - value))
         instance.mov.min = value-0.1
             
@@ -604,7 +610,7 @@ if True:
         #with instance.gw as q:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
         print(f'{HOLD_LEFT} {IN_LIVEDATA} {not HOLD_LEFT or not IN_LIVEDATA}')
-        if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((value - instance.scl.value))
+        if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((value - scale_func(instance.scl.value)))
         instance.gw.xmax = value 
         #apply_vertical_minutes_hack()
         return
@@ -753,7 +759,7 @@ if True:
 
         # range - это пределы прокрутки (например, от 0 до 3600 секунд истории)
         # value - стартовая позиция ползунка
-        scroll_bar = Slider(min=scroll_bar_scale.value, max=mainclass.tmax, value=mainclass.tmax, orientation='horizontal')
+        scroll_bar = Slider(min=scale_func(scroll_bar_scale.value), max=mainclass.tmax, value=mainclass.tmax, orientation='horizontal')
         scroll_bar.gw = graph_widget
         scroll_bar.bind(value=move_window)
         # Наш график занимает 80% ширины экрана, 60% высоты и приподнят на 20% снизу
@@ -1231,14 +1237,14 @@ class DigmaRecorderApp(App):
             self.mywin.sbarm.max = tmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
-            self.mywin.sbars.max = tmax
+            self.mywin.sbars.max = scale_revfunc(tmax)
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             if abs(tmax-self.mywin.sbarm.value) <=5:
                 print(f'{q} if xmin -> {GRAPH_WIDGET.xmin}'); q+=1
                 self.mywin.sbarm.value = tmax
                 print(f'{q} if xmin > {GRAPH_WIDGET.xmin}'); q+=1
                  
-                if HOLD_LEFT: self.mywin.sbars.value = tmax-self.mywin.graph_widget.xmin
+                if HOLD_LEFT: self.mywin.sbars.value = scale_revfunc(tmax-self.mywin.graph_widget.xmin)
        #        self.mywin.xmax = tmax
                 
             #self.mywin.xmax = self.mywin.xmax 

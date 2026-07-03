@@ -1030,6 +1030,7 @@ class DigmaRecorderApp(App):
             # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
             # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
             service_is_running = True
+            print('1033 thelastfile: ',LOG_PATH[:-1])
             self.datafn=f'{thelastfile(LOG_PATH[:-1],'data*.txt').name}'
             print(self.datafn)
             shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 

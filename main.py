@@ -971,7 +971,7 @@ def thelastfile(path,mask):
 
     # Define directory and mask
     directory = Path(path)
-    mask = 'data*.txt'
+    #mask = 'data*.txt'
 
     # 1. Get matching files recursively (use .glob() if not searching subfolders)
     files = list(directory.rglob(mask))

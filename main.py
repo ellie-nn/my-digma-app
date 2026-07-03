@@ -10,6 +10,8 @@ vibrator.vibrate(500)
 time.sleep(1.0)
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
+LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Documents/'
+print(LOG_PATH)
 class MediaStoreStdout:
     def __init__(self, outf = 'app_log.txt'):
       self.outfile = outf
@@ -23,7 +25,7 @@ class MediaStoreStdout:
                 # Вызываем вашу отлаженную функцию дозаписи в Documents!
                 #append_to_public_documents("log"+LOG_FN+".txt", message.strip())
                 #append_to_public_documents(self.outfile, message.strip())
-                with open('/storage/emulated/10/Documents/'+self.outfile, "a", encoding="utf-8", errors="ignore") as f:
+                with open(LOG_PATH+self.outfile, "a", encoding="utf-8", errors="ignore") as f:
                     f.write(message.strip()+"\n")
                     #f.flush
                     #f.close()
@@ -106,8 +108,6 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
-LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Documents/'
-print(LOG_PATH)
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 # Импортируем легальный Kivy-движок для графиков
@@ -364,7 +364,7 @@ if True:
                     print(f"Класс: {child.__class__.__name__} | Служебное имя в коде: '{found_name}'")
      
             # Шпионский фильтр: отсекаем всё, что не является текстовым блоком Label
-            if child.__class__.__name__ == 'GraphRotatedLabel' or child.__class__.__name__ == 'Label':
+            if child.__class__.__name__ == 'GraphRotatedLabel': # or child.__class__.__name__ == 'Label':
                 
                 # ТОЧКА УДАРА №1: Проверяем наш бинарный семафор от рекурсии!
                 # Если на конце строки уже стоит наш секретный пробел — значит, 

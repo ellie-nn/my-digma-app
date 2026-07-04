@@ -1001,7 +1001,7 @@ def thelastfile(path,mask):
 
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
-    def build(self):
+    def build(self,mode=None):
         MediaStoreStdout(LOG_FN)
         
         self.kilometers=''

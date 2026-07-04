@@ -760,7 +760,7 @@ def g_init(mainclass):
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
         graph_widget = build_voltage_graph('mock.txt',mainclass)
-        
+        return main_layout
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (1.0, 0.90) 
         graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
@@ -821,7 +821,7 @@ def g_init(mainclass):
             
         scroll_bar.scl=scroll_bar_scale
         scroll_bar_scale.mov=scroll_bar
-        return main_layout
+        
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
         # ========================================================

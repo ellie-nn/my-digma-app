@@ -747,7 +747,7 @@ def question(main_layout):
       
     return
         
-    def g_init(mainclass):
+def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
         #mainclass.kilometers = ""

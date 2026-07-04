@@ -746,14 +746,14 @@ def question(main_layout):
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_test.bind(on_release=test_btn)
     main_layout.add_widget(btn_test)
-    while True:
-        time.sleep(100)
     return
         
 def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
-    
+        if not MODE:
+            question(main_layout)
+            return main_layout
         #mainclass.kilometers = ""
         #question(main_layout)
         # ========================================================

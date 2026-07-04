@@ -730,13 +730,24 @@ if True:
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
         #apply_vertical_minutes_hack()
         return ret
-
+def question(main_layout)
+    btn_holdleft = Button(
+        text="Тест",
+        size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
+        pos_hint=('left':0.1, 'center_y': 0.5),   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+        background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+        )
+        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
+        btn_holdleft.bind(on_release=test_btn)
+        main_layout.add_widget(btn_holdleft)
+      
+    return
         
     def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
         #mainclass.kilometers = ""
-        
+        question(main_layout)
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================

@@ -108,6 +108,8 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
+MODE=None
+
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 # Импортируем легальный Kivy-движок для графиков
@@ -751,6 +753,7 @@ def question(main_layout):
 def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
+    
         #mainclass.kilometers = ""
         #question(main_layout)
         # ========================================================
@@ -1092,6 +1095,7 @@ class DigmaRecorderApp(App):
         
         #sys.exit()
         self.mywin = g_init(self)
+        if MODE!="work": return self.mywin
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)

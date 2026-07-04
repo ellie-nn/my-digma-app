@@ -746,6 +746,7 @@ def question(main_layout):
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_test.bind(on_release=test_btn)
     main_layout.add_widget(btn_test)
+    Window.canvas.ask_update()
     return
         
 def g_init(mainclass):

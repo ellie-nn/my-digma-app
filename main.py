@@ -730,8 +730,12 @@ if True:
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
         #apply_vertical_minutes_hack()
         return ret
+def test_btn():
+    
+    return
+    
 def question(main_layout):
-    btn_holdleft = Button(
+    btn_test = Button(
         text="Тест",
         size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
         pos_hint={'x':0.1, 'center_y': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
@@ -739,7 +743,7 @@ def question(main_layout):
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_holdleft.bind(on_release=test_btn)
-    main_layout.add_widget(btn_holdleft)
+    main_layout.add_widge(btn_test)
       
     return
         

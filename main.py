@@ -821,7 +821,7 @@ def g_init(mainclass):
             
         scroll_bar.scl=scroll_bar_scale
         scroll_bar_scale.mov=scroll_bar
-
+        return main_layout
         # ========================================================
         # СЛОЙ 2 (ВЕРХНИЙ): ПОЛУПРОЗРАЧНАЯ ШАПКА ПОВЕРХ СЕТКИ [↑]
         # ========================================================
@@ -920,7 +920,7 @@ def g_init(mainclass):
         # main_layout.add_widget(my_graph)
         # main_layout.add_widget(scroll_bar)
         # main_layout.add_widget(user_input) 
-        return main_layout
+        
         # НАМЕРТВО ПРИКЛЕИВАЕМ НАШИ ФУНКЦИИ ВНУТРЬ ОБЪЕКТА MY_GRAPH:
         global GRAPH_WIDGET
         GRAPH_WIDGET = graph_widget

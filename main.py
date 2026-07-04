@@ -454,6 +454,16 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
+        graph = Graph(
+            xlabel='Время', ylabel='Ватты  &  Джоули',
+            x_ticks_minor=6, x_ticks_major=60,
+            y_ticks_minor=5, y_ticks_major=10,
+            y_grid_label=True, x_grid_label=True,
+            padding=10, x_grid=True, y_grid=True,
+            xmin=0, xmax=120,  
+            ymin=0, ymax=300
+        )
+        if not MODE: return graph
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
@@ -526,15 +536,7 @@ if True:
             
         mainclass.tmax = m[-1][0]
             
-        graph = Graph(
-            xlabel='Время', ylabel='Ватты  &  Джоули',
-            x_ticks_minor=6, x_ticks_major=60,
-            y_ticks_minor=5, y_ticks_major=10,
-            y_grid_label=True, x_grid_label=True,
-            padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=mainclass.tmax,  
-            ymin=0, ymax=300
-        )
+        graph.xmax=mainclass.tmax
 
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
         plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
@@ -752,9 +754,6 @@ def question(main_layout):
 def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         main_layout = FloatLayout()
-        if not MODE:
-            question(main_layout)
-            #return main_layout
         #mainclass.kilometers = ""
         #question(main_layout)
         # ========================================================
@@ -768,7 +767,10 @@ def g_init(mainclass):
         
         main_layout.add_widget(graph_widget)
         graph_widget.opacity=0
-        return main_layout
+        if not MODE:
+            question(main_layout)
+            return main_layout
+        
         main_layout.graph_widget=graph_widget
         graph_widget.parent=main_layout
         from kivy.uix.label import Label

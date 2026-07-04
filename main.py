@@ -742,7 +742,7 @@ def question(main_layout):
         background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
-    btn_holdleft.bind(on_release=test_btn)
+    btn_test.bind(on_release=test_btn)
     main_layout.add_widge(btn_test)
       
     return

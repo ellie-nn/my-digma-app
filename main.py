@@ -746,7 +746,7 @@ def question(main_layout):
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_test.bind(on_release=test_btn)
     main_layout.add_widget(btn_test)
-    Window.canvas.ask_update()
+    #Window.canvas.ask_update()
     return
         
 def g_init(mainclass):
@@ -765,9 +765,10 @@ def g_init(mainclass):
         # Занимает 100% ширины и 100% высоты окна [↑]
         graph_widget.size_hint = (1.0, 0.90) 
         graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
-        return main_layout
-        main_layout.add_widget(graph_widget)
         
+        main_layout.add_widget(graph_widget)
+        graph_widget.opacity=0
+        return main_layout
         main_layout.graph_widget=graph_widget
         graph_widget.parent=main_layout
         from kivy.uix.label import Label

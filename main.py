@@ -730,7 +730,7 @@ if True:
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
         #apply_vertical_minutes_hack()
         return ret
-def test_btn():
+def test_btn(instance):
     
     return
     

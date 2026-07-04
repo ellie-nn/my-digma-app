@@ -730,7 +730,7 @@ if True:
         ret=super(GRAPH_WIDGET.__class__, GRAPH_WIDGET).update_ticks()
         #apply_vertical_minutes_hack()
         return ret
-def question(main_layout)
+def question(main_layout):
     btn_holdleft = Button(
         text="Тест",
         size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]

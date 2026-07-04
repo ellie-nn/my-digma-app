@@ -753,7 +753,7 @@ def g_init(mainclass):
         main_layout = FloatLayout()
         if not MODE:
             question(main_layout)
-            return main_layout
+            #return main_layout
         #mainclass.kilometers = ""
         #question(main_layout)
         # ========================================================

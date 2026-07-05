@@ -776,7 +776,7 @@ def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         if not MODE:
             main_layout = FloatLayout()
-            main_layout.parent=mainclass
+            #main_layout.parent=mainclass
             #mainclass.kilometers = ""
             #question(main_layout)
         # ========================================================

@@ -989,6 +989,7 @@ def g_init(mainclass):
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТ БАЗОВОГО МЕТОДА:
         # Заменяем оригинальный _update_labels на наш контролируемый custom_update_labels
         global ORIGINAL_KIVY_UPDATER
+        print('992 mode;',MODE)
         ORIGINAL_KIVY_UPDATER=graph_widget._update_labels
         graph_widget._update_labels = custom_update_labels
         global GRAPH_INITED_FLAG

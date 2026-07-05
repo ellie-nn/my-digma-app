@@ -1146,7 +1146,7 @@ class DigmaRecorderApp(App):
         
         #sys.exit()
         self.mywin = g_init(self)
-        if MODE!="Работа": return self.mywin
+        if MODE!="Тест": return self.mywin
         self.mywin.graph.opacity=1
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))

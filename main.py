@@ -454,16 +454,19 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
-        graph = Graph(
-            xlabel='Время', ylabel='Ватты  &  Джоули',
-            x_ticks_minor=6, x_ticks_major=60,
-            y_ticks_minor=5, y_ticks_major=10,
-            y_grid_label=True, x_grid_label=True,
-            padding=10, x_grid=True, y_grid=True,
-            xmin=0, xmax=120,  
-            ymin=0, ymax=300
-        )
-        if not MODE: return graph
+        if not MODE:
+            graph = Graph(
+                xlabel='Время', ylabel='Ватты  &  Джоули',
+                x_ticks_minor=6, x_ticks_major=60,
+                y_ticks_minor=5, y_ticks_major=10,
+                y_grid_label=True, x_grid_label=True,
+                padding=10, x_grid=True, y_grid=True,
+                xmin=0, xmax=120,  
+                ymin=0, ymax=300
+            )
+            return graph
+        else:
+            graph=GRAPH_WIDGET
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
         print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
@@ -797,7 +800,7 @@ def g_init(mainclass):
         
             question(main_layout)
             return main_layout
-            
+        graph_widget=GRAPH_WIDGET    
         main_layout=mainclass.mywin
             #mainclass.kilometers = ""
             #question(main_layout)
@@ -1148,6 +1151,7 @@ class DigmaRecorderApp(App):
         self.mywin = g_init(self)
         if MODE!="Тест": return self.mywin
         self.mywin.graph_widget.opacity=1
+        g_init(self)
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)

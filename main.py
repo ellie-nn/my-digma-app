@@ -740,7 +740,7 @@ def test_btn(instance):
     GRAPH_WIDGET.parent.remove_widget(instance.bro)
     GRAPH_WIDGET.parent.remove_widget(instance)
     GRAPH_WIDGET.opacity=0.5
-    GRAPH_WIDGET.parent.build(mode=MODE)
+    GRAPH_WIDGET.parent.parent.build(mode=MODE)
     
     return
     
@@ -776,6 +776,7 @@ def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         if not MODE:
             main_layout = FloatLayout()
+            main_layout.parent=mainclass
             #mainclass.kilometers = ""
             #question(main_layout)
         # ========================================================

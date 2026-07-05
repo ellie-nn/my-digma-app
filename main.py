@@ -469,7 +469,7 @@ if True:
             graph=GRAPH_WIDGET
         tcut=append_to_public_documents("mock.txt", "", 1,100)
         #try:# Grabs indices 2 and 4 from each line
-        print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
+        #print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
         #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
         #print(m)
         # Grabs indices 2 and 4 from each line
@@ -739,6 +739,7 @@ if True:
         return ret
 def test_btn(instance):
     global MODE
+    if MODE: return
     MODE=instance.text
     instance.unbind(on_release=test_btn)
     instance.bro.unbind(on_release=test_btn)

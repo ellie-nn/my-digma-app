@@ -772,6 +772,7 @@ def question(main_layout):
     return
         
 def g_init(mainclass):
+        global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         if not MODE:
             main_layout = FloatLayout()
@@ -788,7 +789,7 @@ def g_init(mainclass):
         
             main_layout.add_widget(graph_widget)
             graph_widget.parent=main_layout
-            global GRAPH_WIDGET
+            #global GRAPH_WIDGET
             GRAPH_WIDGET = graph_widget
             graph_widget.opacity=0
         
@@ -809,7 +810,7 @@ def g_init(mainclass):
         
             #main_layout.add_widget(graph_widget)
             #graph_widget.parent=main_layout
-        global GRAPH_WIDGET
+        
             #GRAPH_WIDGET = graph_widget
         graph_widget.opacity=1
         

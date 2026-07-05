@@ -740,11 +740,13 @@ if True:
 def test_btn(instance):
     global MODE
     MODE=instance.text
+    instance.unbind(on_release=test_btn)
+    instance.bro.unbind(on_release=test_btn)
     GRAPH_WIDGET.parent.remove_widget(instance.bro)
     GRAPH_WIDGET.parent.remove_widget(instance)
     GRAPH_WIDGET.opacity=0.5
     GRAPH_WIDGET.parent.mainclass.build(mode=MODE)
-    
+    print('749 build done')
     return
     
 def question(main_layout):

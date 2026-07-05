@@ -750,6 +750,8 @@ def test_btn(instance):
     return
     
 def question(main_layout):
+    if MODE:
+        return
     btn_test = Button(
         text="Тест",
         size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]

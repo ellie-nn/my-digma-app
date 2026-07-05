@@ -739,7 +739,8 @@ def test_btn(instance):
     MODE=instance.text
     GRAPH_WIDGET.parent.remove_widget(instance.bro)
     GRAPH_WIDGET.parent.remove_widget(instance)
-    #GRAPH_WIDGET.parent.build(MODE)
+    GRAPH_WIDGET.opacity=0.5
+    GRAPH_WIDGET.parent.build(mode=MODE)
     
     return
     
@@ -757,7 +758,7 @@ def question(main_layout):
     btn_work = Button(
         text="Работа",
         size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
-        pos_hint={'right':0.1, 'center_y': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+        pos_hint={'right': 0.9, 'center_y': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
         background_color=[int(HOLD_LEFT), 0.3, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
@@ -772,28 +773,50 @@ def question(main_layout):
         
 def g_init(mainclass):
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        main_layout = FloatLayout()
-        #mainclass.kilometers = ""
-        #question(main_layout)
+        if not MODE:
+            main_layout = FloatLayout()
+            #mainclass.kilometers = ""
+            #question(main_layout)
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
-        graph_widget = build_voltage_graph('mock.txt',mainclass)
+            graph_widget = build_voltage_graph('mock.txt',mainclass)
         
-        # Занимает 100% ширины и 100% высоты окна [↑]
-        graph_widget.size_hint = (1.0, 0.90) 
-        graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
+            # Занимает 100% ширины и 100% высоты окна [↑]
+            graph_widget.size_hint = (1.0, 0.90) 
+            graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
         
-        main_layout.add_widget(graph_widget)
-        graph_widget.parent=main_layout
-        global GRAPH_WIDGET
-        GRAPH_WIDGET = graph_widget
-        graph_widget.opacity=0
-        if not MODE:
+            main_layout.add_widget(graph_widget)
+            graph_widget.parent=main_layout
+            global GRAPH_WIDGET
+            GRAPH_WIDGET = graph_widget
+            graph_widget.opacity=0
+        
             question(main_layout)
             return main_layout
+            
+        main_layout=mainclass.mywin
+            #mainclass.kilometers = ""
+            #question(main_layout)
+        # ========================================================
+        # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
+        # ========================================================
+        graph_widget=main_layout.graph_widget
         
-        main_layout.graph_widget=graph_widget
+            # Занимает 100% ширины и 100% высоты окна [↑]
+            #graph_widget.size_hint = (1.0, 0.90) 
+            #graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
+        
+            #main_layout.add_widget(graph_widget)
+            #graph_widget.parent=main_layout
+        global GRAPH_WIDGET
+            #GRAPH_WIDGET = graph_widget
+        graph_widget.opacity=1
+        
+            #question(main_layout)
+            #return main_layout
+        
+        #main_layout.graph_widget=graph_widget
         from kivy.uix.label import Label
 
         # =====================================================================
@@ -1120,7 +1143,8 @@ class DigmaRecorderApp(App):
         
         #sys.exit()
         self.mywin = g_init(self)
-        if MODE!="work": return self.mywin
+        if MODE!="Работа": return self.mywin
+        self.mywin.graph.opacity=1
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)

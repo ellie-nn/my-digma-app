@@ -786,6 +786,8 @@ def g_init(mainclass):
         
         main_layout.add_widget(graph_widget)
         graph_widget.parent=main_layout
+        global GRAPH_WIDGET
+        GRAPH_WIDGET = graph_widget
         graph_widget.opacity=0
         if not MODE:
             question(main_layout)
@@ -947,8 +949,6 @@ def g_init(mainclass):
         # main_layout.add_widget(user_input) 
         
         # НАМЕРТВО ПРИКЛЕИВАЕМ НАШИ ФУНКЦИИ ВНУТРЬ ОБЪЕКТА MY_GRAPH:
-        global GRAPH_WIDGET
-        GRAPH_WIDGET = graph_widget
         graph_widget.touch_start_x = 0.0
         graph_widget.scroll_bar=scroll_bar
         graph_widget.on_touch_down = graph_touch_down

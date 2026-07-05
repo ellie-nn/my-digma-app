@@ -735,6 +735,11 @@ if True:
         #apply_vertical_minutes_hack()
         return ret
 def test_btn(instance):
+    global MODE
+    MODE=instance.text
+    GRAPH_WIDGET.parent.remove_widget(instance.bro)
+    GRAPH_WIDGET.parent.remove_widget(instance)
+    #GRAPH_WIDGET.parent.build(MODE)
     
     return
     
@@ -748,7 +753,21 @@ def question(main_layout):
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_test.bind(on_release=test_btn)
     main_layout.add_widget(btn_test)
+    
+    btn_work = Button(
+        text="Работа",
+        size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
+        pos_hint={'right':0.1, 'center_y': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+        background_color=[int(HOLD_LEFT), 0.3, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+        )
+        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
+    btn_work.bind(on_release=test_btn)
+    main_layout.add_widget(btn_work)
     #Window.canvas.ask_update()
+    btn_test.bro=btn_work
+    btn_work.bro=btn_test
+    btn_test.parent=main_layout
+    btn_work.parent=main_layout
     return
         
 def g_init(mainclass):

@@ -477,16 +477,16 @@ if True:
         mA=m
         #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-        print(inspect.currentframe().f_lineno,'422 m:',m)
+        #print(inspect.currentframe().f_lineno,'422 m:',m)
         for x in reversed(m): x[0]-=m[0][0]
-        print(inspect.currentframe().f_lineno,'424 m:',m)
+        #print(inspect.currentframe().f_lineno,'424 m:',m)
         print(inspect.currentframe().f_lineno,'425 m[0][0]:',m[0][0])
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
             print(mainclass.datafn,inspect.currentframe().f_lineno)
-            print(tcut,inspect.currentframe().f_lineno)
+            #print(tcut,inspect.currentframe().f_lineno)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
             #g=open(f'/storage/emulated/0/Documents/svcdata.txt','a', encoding="utf-8", errors="ignore")
             #m1 = [g.write("."+w+"\n") for line in tcut.splitlines() if len(w := line)>3 and w[0] in "0123456789"]
@@ -500,7 +500,7 @@ if True:
         #try:# Grabs indices 2 and 4 from each line
         if mainclass.datafn:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')
-            print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
+            #print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
             print(inspect.currentframe().f_lineno,'440 - /настоящая история')
       
             #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
@@ -523,7 +523,7 @@ if True:
             m1A = [[sum(values)/step/5 for values in zip(*matrix)] for matrix in zip(*xm1A)]
             #m1=result
             
-            print('m1A:',m1A,inspect.currentframe().f_lineno)
+            #print('m1A:',m1A,inspect.currentframe().f_lineno)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
             for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
@@ -533,7 +533,7 @@ if True:
             #for x in m: x[0]/=60
             #for x in mA: x[0]/=60
             
-        print(inspect.currentframe().f_lineno,'460 m:',m)
+        #print(inspect.currentframe().f_lineno,'460 m:',m)
         #print(m1[0][0])
         
             
@@ -589,7 +589,7 @@ if True:
             # Заглушка, если мотор еще не успел создать файл на чистой установке
         if not points:
             points = [(0, 120), (20, 220)]
-        print(inspect.currentframe().f_lineno,'524 points:',points)
+        #print(inspect.currentframe().f_lineno,'524 points:',points)
         plot.points = points
         graph.add_plot(plot)
         plotA.points = pointsA

@@ -789,7 +789,8 @@ def g_init(mainclass):
             graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
         
             main_layout.add_widget(graph_widget)
-            graph_widget.parent=main_layout
+            #graph_widget=main_layout.graph_widget
+            main_layout.graph_widget=graph_widget
             #global GRAPH_WIDGET
             GRAPH_WIDGET = graph_widget
             graph_widget.opacity=0

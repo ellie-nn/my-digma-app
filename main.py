@@ -1071,95 +1071,97 @@ class DigmaRecorderApp(App):
     def build(self,mode=None):
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
-        self.kilometers=''
-        self.StartV=''
-        #sys.stderr = sys.stdout
-        self.tmax = 120
-        self.datafn=''
-        #append_to_public_documents("servrk.txt","dfvhjggyjj")
-        #print('.﻿1 20:29:10 11.4 0.001 -1')
-        #print('.2 20:29:11 0.0 0.001 -1')
-        #print('.3 20:29:13 11.1 0.006 -1')
-        #print('.4 20:29:15 11.1 0.011 -1')
-        #print('.5 20:29:11 0.0 0.001 -1')
-        #print(read_alien("service_work.txt"))
-        #print(append_to_public_documents("service_work.txt","",1,2))
+        if MODE!="Тест":
+            self.kilometers=''
+            self.StartV=''
+            #sys.stderr = sys.stdout
+            self.tmax = 120
+            self.datafn=''
+            #append_to_public_documents("servrk.txt","dfvhjggyjj")
+            #print('.﻿1 20:29:10 11.4 0.001 -1')
+            #print('.2 20:29:11 0.0 0.001 -1')
+            #print('.3 20:29:13 11.1 0.006 -1')
+            #print('.4 20:29:15 11.1 0.011 -1')
+            #print('.5 20:29:11 0.0 0.001 -1')
+            #print(read_alien("service_work.txt"))
+            #print(append_to_public_documents("service_work.txt","",1,2))
 
-        #from oscpy.server import OSCThreadServer
-        import socket # Всего одна короткая строчка в самом верху файла!
+            #from oscpy.server import OSCThreadServer
+            import socket # Всего одна короткая строчка в самом верху файла!
 
         # =====================================================================
         # НАШ УЛЬТИМАТИВНЫЙ OSC-РАДАР (Без импорта socket!)
         # Допустим, ваш фоновый мотор держит OSC-порт 3001
         # =====================================================================
 
-        # 1. Создаем летучий временный проверочный сервер в окне
-        check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        #OSCThreadServer()
-        import shutil
-        try:
-            # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
-            check_server.bind(("127.0.0.1", 3001))
-            #listen(address='127.0.0.1', port=3001, default=True)
+            # 1. Создаем летучий временный проверочный сервер в окне
+            check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            #OSCThreadServer()
+            import shutil
+            try:
+                # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
+                check_server.bind(("127.0.0.1", 3001))
+                #listen(address='127.0.0.1', port=3001, default=True)
     
-            # ТРИУМФ 1: Если порт оказался СВОБОДЕН, команда прошла успешно!
-            # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
-            check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
-            service_is_running = False
-            self.datafn=''
-        except:
+                # ТРИУМФ 1: Если порт оказался СВОБОДЕН, команда прошла успешно!
+                # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
+                check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
+                self.service_is_running = False
+                self.datafn=''
+            except:
             
-            # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
-            # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
-            # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
+                # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
+                # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
+                # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
+                self.service_is_running = True
+                print('1033 thelastfile: ',LOG_PATH[:-1])
+                self.datafn=f'{thelastfile(LOG_PATH[:-1],'svcdata*.txt').name}'
+                self.datafn=self.datafn[3:]
+                print(self.datafn)
+                shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 
+                #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
+            #self.datafn='svcdata1782698598.txt'
+                         #svcdata1782698598.txt
+            
+            #Тестовая имитация ранее запущенного сервис-мотора
+            self.datafn="AppDataTest.txt"
             service_is_running = True
-            print('1033 thelastfile: ',LOG_PATH[:-1])
-            self.datafn=f'{thelastfile(LOG_PATH[:-1],'svcdata*.txt').name}'
-            self.datafn=self.datafn[3:]
-            print(self.datafn)
-            shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 
-            #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
-        #self.datafn='svcdata1782698598.txt'
-                     #svcdata1782698598.txt
-            
-        #Тестовая имитация ранее запущенного сервис-мотора
-        self.datafn="AppDataTest.txt"
-        service_is_running = True
-        shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
+            shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
             
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
         # =====================================================================
-        if service_is_running:
-            # ПОВТОРНЫЙ ВХОД: Мотор уже пашет, просто подключаемся к его эфиру! [↑]
-            print("[РАДАР] Фоновый OSC-сервер на порту 3001 обнаружен. Подключение...")
-        else:
-            # ХОЛОДНЫЙ СТАРТ: В памяти пусто, официально запускаем службу! [↑]
-            print("[РАДАР] Порт 3001 пуст. Запуск фонового сервиса...")
-            # Здесь вызываем ваш запуск службы через mActivity [↑]
+            if service_is_running:
+                # ПОВТОРНЫЙ ВХОД: Мотор уже пашет, просто подключаемся к его эфиру! [↑]
+                print("[РАДАР] Фоновый OSC-сервер на порту 3001 обнаружен. Подключение...")
+            else:
+                # ХОЛОДНЫЙ СТАРТ: В памяти пусто, официально запускаем службу! [↑]
+                print("[РАДАР] Порт 3001 пуст. Запуск фонового сервиса...")
+                # Здесь вызываем ваш запуск службы через mActivity [↑]
 
-        generate_mock_log_stream()
+            generate_mock_log_stream()
         
-        print('START2')
-        try:
-            f = open(LOG_PATH+"ini.txt","r",encoding="utf-8", errors="ignore")
-            run = f.read()
-            f.close()
+            print('START2')
             try:
-                exec(run)
-                print(f'ini found,\n{run}executed, self.kilometers is set to {self.kilometers}')
-            except Exception as e: print(f'Could not run\n{run}{e}')
-        except: print('no file or could not open ini.txt')
+                f = open(LOG_PATH+"ini.txt","r",encoding="utf-8", errors="ignore")
+                run = f.read()
+                f.close()
+                try:
+                    exec(run)
+                    print(f'ini found,\n{run}executed, self.kilometers is set to {self.kilometers}')
+                except Exception as e: print(f'Could not run\n{run}{e}')
+            except: print('no file or could not open ini.txt')
         
-        print('START3')
-        print('START4')
-        print('START5')
-        print('START6')
-        print('SUB TIME:',SUB_TIME)
+            print('START3')
+            print('START4')
+            print('START5')
+            print('START6')
+            print('SUB TIME:',SUB_TIME)
         
-        #sys.exit()
-        self.mywin = g_init(self)
-        if MODE!="Тест": return self.mywin
+            #sys.exit()
+            self.mywin = g_init(self)
+            return self.mywin
+        
         self.mywin.graph_widget.opacity=1
         g_init(self)
         print('self.histtmax:',self.histtmax)

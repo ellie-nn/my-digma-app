@@ -68,6 +68,7 @@ from kivy.core.window import Window
 from oscpy.server import OSCThreadServer
 import inspect
 import shutil
+import traceback
 
 # === СПИСОК УДАЛЕННЫХ И НЕНУЖНЫХ МОДУЛЕЙ ===
 # import csv           # Больше не нужен, пишем строки через Java-стрим напрямую [↑]
@@ -1068,7 +1069,7 @@ def thelastfile(path,mask):
 class DigmaRecorderApp(App):
     def build(self,mode=None):
         MediaStoreStdout(LOG_FN)
-        
+        traceback.print_stack()
         self.kilometers=''
         self.StartV=''
         #sys.stderr = sys.stdout

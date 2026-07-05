@@ -213,6 +213,7 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
                 f.close()
                 return
         else:
+            traceback.print_stack()
             print('filename:',filename,inspect.currentframe().f_lineno)
             with open(LOG_PATH+filename, "r", encoding="utf-8", errors="ignore") as f:
                 ret=f.read()

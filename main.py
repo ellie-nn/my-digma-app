@@ -549,9 +549,10 @@ if True:
         
             
         mainclass.tmax = m[-1][0]
-            
+        print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
         graph.xmax=max(mainclass.tmax,graph.xmax)
-
+        print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
+        
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
         plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
         points = []

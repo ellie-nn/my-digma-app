@@ -492,7 +492,8 @@ if True:
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
-            tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            #tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
+            tcut=append_to_public_documents(file_path, "", 1,100)
             print(mainclass.datafn,inspect.currentframe().f_lineno)
             #print(tcut,inspect.currentframe().f_lineno)
             #tcut=append_to_public_documents("svcdata1782698598.txt", "", 1,100)
@@ -502,12 +503,13 @@ if True:
             #sys.exit()
         except Exception as e:     
             
-            print(f"line 505 Could not read {mainclass.datafn}","service_work_{int(SUB_TIME)}.txt\n{e}")
+            print(f"line 505 Could not read {file_path}","service_work_{int(SUB_TIME)}.txt\n{e}")
             mainclass.datafn=""
             #tcut=append_to_public_documents("mock.txt", "", 1,100)
         
         #try:# Grabs indices 2 and 4 from each line
         if mainclass.datafn:
+        if file_path:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')
             #print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
             print(inspect.currentframe().f_lineno,'440 - /настоящая история')

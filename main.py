@@ -1143,13 +1143,13 @@ class DigmaRecorderApp(App):
             if MODE=="Тест":
                 #Тестовая имитация ранее запущенного сервис-мотора
                 self.datafn="AppDataTest.txt"
-                service_is_running = True
+                self.service_is_running = True
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
             
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:
         # =====================================================================
-            if service_is_running:
+            if self.service_is_running:
                 # ПОВТОРНЫЙ ВХОД: Мотор уже пашет, просто подключаемся к его эфиру! [↑]
                 print("[РАДАР] Фоновый OSC-сервер на порту 3001 обнаружен. Подключение...")
             else:

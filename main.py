@@ -470,7 +470,7 @@ if True:
             return graph
         else:
             graph=GRAPH_WIDGET
-        if file_path:
+        if False: #file_path:
             #tcut=append_to_public_documents("mock.txt", "", 1,100)
             tcut=append_to_public_documents(file_path, "", 1,100)
             #try:# Grabs indices 2 and 4 from each line
@@ -821,7 +821,7 @@ def g_init(mainclass):
             return main_layout
         else:
             #build_voltage_graph('mock.txt',mainclass)
-            build_voltage_graph(file_path,mainclass)
+            build_voltage_graph(mainclass.datafn,mainclass)
             graph_widget=GRAPH_WIDGET    
         main_layout=mainclass.mywin
             #mainclass.kilometers = ""

@@ -1085,7 +1085,7 @@ class DigmaRecorderApp(App):
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         
-        if MODE!="Тест":
+        if not MODE:
             self.mywin = g_init(self)
             return self.mywin
 

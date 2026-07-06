@@ -1133,13 +1133,13 @@ class DigmaRecorderApp(App):
                 print(self.datafn)
                 shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 
                 #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
-            #self.datafn='svcdata1782698598.txt'
+                #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
             if MODE=="Тест"
-            #Тестовая имитация ранее запущенного сервис-мотора
-            self.datafn="AppDataTest.txt"
-            service_is_running = True
-            shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
+                #Тестовая имитация ранее запущенного сервис-мотора
+                self.datafn="AppDataTest.txt"
+                service_is_running = True
+                shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
             
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:

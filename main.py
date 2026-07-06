@@ -798,7 +798,8 @@ def g_init(mainclass):
         # ========================================================
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
-            graph_widget = build_voltage_graph('mock.txt',mainclass)
+            #graph_widget = build_voltage_graph('mock.txt',mainclass)
+            graph_widget = build_voltage_graph('',mainclass)
         
             # Занимает 100% ширины и 100% высоты окна [↑]
             graph_widget.size_hint = (1.0, 0.90) 
@@ -815,6 +816,7 @@ def g_init(mainclass):
             return main_layout
         else:
             #build_voltage_graph('mock.txt',mainclass)
+            build_voltage_graph('',mainclass)
             graph_widget=GRAPH_WIDGET    
         main_layout=mainclass.mywin
             #mainclass.kilometers = ""

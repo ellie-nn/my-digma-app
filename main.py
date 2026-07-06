@@ -1144,7 +1144,7 @@ class DigmaRecorderApp(App):
                 print("[РАДАР] Порт 3001 пуст. Запуск фонового сервиса...")
                 # Здесь вызываем ваш запуск службы через mActivity [↑]
 
-            generate_mock_log_stream()
+            #generate_mock_log_stream()
         
             print('START2')
             try:

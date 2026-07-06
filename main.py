@@ -161,7 +161,7 @@ def freadln_range(uri,min,max):
         InputStreamReader = autoclass('java.io.InputStreamReader')
         BufferedReader = autoclass('java.io.BufferedReader')
         reader = BufferedReader(InputStreamReader(input_stream, "UTF-8"))
-        # ПУЛЬСИРУЮЩИЙ ПОСТРОЧНЫЙ ПЕРЕБОР:
+        # ПОСТРОЧНЫЙ ПЕРЕБОР:
         # Память телефона не нагружается, файл не блокируется для фонового мотора!
         line_count = 0
         retline = ""
@@ -871,7 +871,7 @@ def g_init(mainclass):
         #main_layout.add_widget(log_screen) 
 
         print('869 mainclass.tmax,xmax-xmin',mainclass.tmax,graph_widget.xmax-graph_widget.xmin)
-        scroll_bar_scale = Slider(min=scale_revfunc(10), max=scale_revfunc(max(mainclass.tmax,graph_widget.xmax), value=scale_revfunc(graph_widget.xmax-graph_widget.xmin), orientation='horizontal')
+        scroll_bar_scale = Slider(min=scale_revfunc(10), max=scale_revfunc(max(mainclass.tmax,graph_widget.xmax)), value=scale_revfunc(graph_widget.xmax-graph_widget.xmin), orientation='horizontal')
         scroll_bar_scale.gw = graph_widget
         scroll_bar_scale.bind(value=scale_window)
 

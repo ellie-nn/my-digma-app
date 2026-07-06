@@ -1136,7 +1136,7 @@ class DigmaRecorderApp(App):
                 #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
                 #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
-            if MODE=="Тест"
+            if MODE=="Тест":
                 #Тестовая имитация ранее запущенного сервис-мотора
                 self.datafn="AppDataTest.txt"
                 service_is_running = True

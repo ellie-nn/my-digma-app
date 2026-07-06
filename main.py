@@ -508,7 +508,7 @@ if True:
             #tcut=append_to_public_documents("mock.txt", "", 1,100)
         
         #try:# Grabs indices 2 and 4 from each line
-        if mainclass.datafn:
+        #if mainclass.datafn:
         if file_path:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')
             #print(inspect.currentframe().f_lineno,'439 tcut:',tcut)

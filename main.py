@@ -469,20 +469,26 @@ if True:
             return graph
         else:
             graph=GRAPH_WIDGET
-        tcut=append_to_public_documents("mock.txt", "", 1,100)
-        #try:# Grabs indices 2 and 4 from each line
-        #print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
-        #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
-        #print(m)
-        # Grabs indices 2 and 4 from each line
-        m = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.' or w[0][0]==',']
-        mA=m
-        #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+        if file_path:
+            #tcut=append_to_public_documents("mock.txt", "", 1,100)
+            tcut=append_to_public_documents(file_path, "", 1,100)
+            #try:# Grabs indices 2 and 4 from each line
+            #print(inspect.currentframe().f_lineno,'414 tcut:',tcut)
+            #m = [(w[2], w[4]) for line in tcut.splitlines() if len(w := line.split()) > 3]
+            #print(m)
+            # Grabs indices 2 and 4 from each line
+            m = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.' or w[0][0]==',']
+            mA=m
+            #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-        #print(inspect.currentframe().f_lineno,'422 m:',m)
-        for x in reversed(m): x[0]-=m[0][0]
-        #print(inspect.currentframe().f_lineno,'424 m:',m)
-        print(inspect.currentframe().f_lineno,'425 m[0][0]:',m[0][0])
+            #print(inspect.currentframe().f_lineno,'422 m:',m)
+            for x in reversed(m): x[0]-=m[0][0]
+            #print(inspect.currentframe().f_lineno,'424 m:',m)
+            print(inspect.currentframe().f_lineno,'425 m[0][0]:',m[0][0])
+        else:
+            m=[[0][0]]
+            mA=m
+            print(inspect.currentframe().f_lineno,'490 m[0][0]:',m[0][0])
         
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)

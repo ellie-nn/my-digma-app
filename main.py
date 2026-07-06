@@ -501,8 +501,9 @@ if True:
             #g.close()
             #sys.exit()
         except Exception as e:     
+            
+            print(f"line 505 Could not read {mainclass.datafn}","service_work_{int(SUB_TIME)}.txt\n{e}")
             mainclass.datafn=""
-            print(f"line 327 Could not read service_work_{int(SUB_TIME)}.txt\n{e}")
             #tcut=append_to_public_documents("mock.txt", "", 1,100)
         
         #try:# Grabs indices 2 and 4 from each line
@@ -1117,14 +1118,14 @@ class DigmaRecorderApp(App):
                 check_server.bind(("127.0.0.1", 3001))
                 #listen(address='127.0.0.1', port=3001, default=True)
     
-                # ТРИУМФ 1: Если порт оказался СВОБОДЕН, команда прошла успешно!
-                # Значит, сервис спит в темноте. Нам нужно его будить! [↑]
+                # порт СВОБОДЕН,
+                # сервис спит в темноте. Нам нужно его будить! [↑]
                 check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
                 self.service_is_running = False
                 self.datafn=''
             except:
             
-                # ТРИУМФ 2: Если OSC-порт 3001 уже мёртвой хваткой держит фоновый мотор,
+                # OSC-порт 3001 уже занят сервисом,
                 # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
                 # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
                 self.service_is_running = True

@@ -808,7 +808,7 @@ def g_init(mainclass):
             question(main_layout)
             return main_layout
         else:
-            build_voltage_graph('mock.txt',mainclass)
+            #build_voltage_graph('mock.txt',mainclass)
             graph_widget=GRAPH_WIDGET    
         main_layout=mainclass.mywin
             #mainclass.kilometers = ""

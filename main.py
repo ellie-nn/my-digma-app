@@ -1071,7 +1071,12 @@ class DigmaRecorderApp(App):
     def build(self,mode=None):
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
+        
         if MODE!="Тест":
+            self.mywin = g_init(self)
+            return self.mywin
+
+        if True:
             self.kilometers=''
             self.StartV=''
             #sys.stderr = sys.stdout
@@ -1159,8 +1164,8 @@ class DigmaRecorderApp(App):
             print('SUB TIME:',SUB_TIME)
         
             #sys.exit()
-            self.mywin = g_init(self)
-            return self.mywin
+            #self.mywin = g_init(self)
+            #return self.mywin
         
         self.mywin.graph_widget.opacity=1
         g_init(self)

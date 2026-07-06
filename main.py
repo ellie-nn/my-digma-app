@@ -486,7 +486,7 @@ if True:
             #print(inspect.currentframe().f_lineno,'424 m:',m)
             print(inspect.currentframe().f_lineno,'425 m[0][0]:',m[0][0])
         else:
-            m=[[0][0]]
+            m=[[0.0][0.0]]
             mA=m
             print(inspect.currentframe().f_lineno,'490 m[0][0]:',m[0][0])
         

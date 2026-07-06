@@ -456,6 +456,7 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
+        print('459 file_path',file_path,'-')
         if not MODE:
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',

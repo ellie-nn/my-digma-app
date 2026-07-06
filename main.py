@@ -489,7 +489,8 @@ if True:
             m=[[0.0,0.0]]
             mA=m
             print(inspect.currentframe().f_lineno,'490 m[0][0]:',m[0][0])
-        
+            
+        if file_path:
         try:
             #tcut=append_to_public_documents(f"service_work_{int(SUB_TIME)}.txt", "", 1,100)
             #tcut=append_to_public_documents(mainclass.datafn, "", 1,100)
@@ -503,7 +504,7 @@ if True:
             #sys.exit()
         except Exception as e:     
             
-            print(f"line 505 Could not read {file_path}","service_work_{int(SUB_TIME)}.txt\n{e}")
+            print(f"line 505 Could not read {file_path}",f"service_work_{int(SUB_TIME)}.txt\n{e}")
             mainclass.datafn=""
             #tcut=append_to_public_documents("mock.txt", "", 1,100)
         

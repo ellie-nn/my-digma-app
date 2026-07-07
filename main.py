@@ -527,7 +527,7 @@ if True:
 
             step=int(len(m1)/2500+1)
             xm1=[]
-            for i in range(0,step-1): xm1.append(m1[i::step]) 
+            for i in range(0,step): xm1.append(m1[i::step]) 
             m1 = [[sum(values)/step for values in zip(*matrix)] for matrix in zip(*xm1)]
             #m1=result
             print('533 xm1:', xm1)
@@ -535,7 +535,7 @@ if True:
             print('535 m1:', m1)
             
             xm1A=[]
-            for i in range(0,step-1): xm1A.append(m1A[i::step]) 
+            for i in range(0,step): xm1A.append(m1A[i::step]) 
             m1A = [[sum(values)/step/5 for values in zip(*matrix)] for matrix in zip(*xm1A)]
             #m1=result
             

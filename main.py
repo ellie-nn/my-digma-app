@@ -1165,6 +1165,7 @@ def thelastfile(path,mask):
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self,mode=None):
+        global MODE1
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         

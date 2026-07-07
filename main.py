@@ -1166,7 +1166,7 @@ class DigmaRecorderApp(App):
         
         import shutil
         print(SUB_TIME)
-        if not MODE:
+        if not MODE1:
             try:
                 # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
                 check_server.bind(("127.0.0.1", 3001))

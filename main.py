@@ -449,7 +449,62 @@ def custom_update_labels(*args, **kwargs):
     apply_vertical_minutes_hack()
     #for label in GRAPH_WIDGET._labels:
     return ret
-                
+
+def update_points_from_file(graph,fn)
+    tcut=append_to_public_documents(fn, "", 1,100)
+    if True:
+        if True:
+            m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+            #print('522 m1:', m1)
+            m1A = [[float(w[1])*5, float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+            #m1=m1[2500:5000]
+            #m1A=m1A[2500:5000]
+            #u = time.mktime(time.strptime(s, "%H:%M:%S"))
+
+            step=int(len(m1)/2500+1)
+            xm1=[]
+            for i in range(0,step): xm1.append(m1[i::step]) 
+            m1 = [[sum(values)/step for values in zip(*matrix)] for matrix in zip(*xm1)]
+            #m1=result
+            #print('533 xm1:', xm1)
+            
+            #print('535 m1:', m1)
+            
+            xm1A=[]
+            for i in range(0,step): xm1A.append(m1A[i::step]) 
+            m1A = [[sum(values)/step/5 for values in zip(*matrix)] for matrix in zip(*xm1A)]
+            #m1=result
+            
+            #print('m1A:',m1A,inspect.currentframe().f_lineno)
+            #if os.path.isfile(file_path)
+            #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
+            for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
+            for x in reversed(m1A): x[0]+=-m1A[0][0]+m[-1][0]+1
+            mA=mA+m1A
+            m=m+m1
+            #for x in m: x[0]/=60
+            #for x in mA: x[0]/=60
+            
+        #print(inspect.currentframe().f_lineno,'460 m:',m)
+        #print(m1[0][0])
+        
+            
+        mainclass.tmax = m[-1][0]
+        #print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
+        graph.xmax=max(mainclass.tmax,graph.xmax)
+        #print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
+         
+        #import os
+
+        #time.sleep(10.0)
+        #for x in m: points.append(x)
+        #for x in mA: pointsA.append(x)
+       
+        graph.plot.points=m
+        graph.plotA.points=mA
+        
+    return
+    
 if True:
 
     def build_voltage_graph(file_path,mainclass):

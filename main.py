@@ -864,7 +864,8 @@ def btn_refresh_data_f(instance):
     return
         
 def g_init(mainclass):
-    global MODE1
+    if True:
+        global MODE1
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         if not MODE1:
@@ -1099,7 +1100,7 @@ def g_init(mainclass):
         btn_refresh_data.bind(on_release = btn_refresh_data_f)
         main_layout.add_widget(btn_refresh_data)
    
-        return main_layout
+    return main_layout
           
 import math
 import time

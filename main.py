@@ -109,7 +109,7 @@ GRAPH_INITED_FLAG=None
 X_SYMBOLS_LENGTH=35
 HOLD_LEFT=True
 IN_LIVEDATA=False
-MODE=False
+MODE1=False
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
@@ -1192,7 +1192,7 @@ class DigmaRecorderApp(App):
                 #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
         if not self.service_is_running:
-            if not MODE:
+            if not MODE1:
                 self.mywin = g_init(self)
                 return self.mywin
             elif MODE=="Тест":

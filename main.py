@@ -1093,7 +1093,7 @@ def g_init(mainclass):
             background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
             )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
-        btn_test.bind(on_release = btn_refresh_data_f)
+        btn_refresh_data.bind(on_release = btn_refresh_data_f)
         main_layout.add_widget(btn_refresh_data)
    
         return main_layout

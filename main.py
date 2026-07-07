@@ -1165,6 +1165,7 @@ class DigmaRecorderApp(App):
         traceback.print_stack()
         
         import shutil
+        print(SUB_TIME)
         if not MODE:
             try:
                 # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:

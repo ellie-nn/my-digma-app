@@ -670,8 +670,8 @@ if True:
                 # end path exists
             # end False os file method
             # Заглушка, если мотор еще не успел создать файл на чистой установке
-        if not points:
-            points = [(0, 120), (20, 220)]
+        #if not points:
+            #points = [(0, 120), (20, 220)]
         #print(inspect.currentframe().f_lineno,'524 points:',points)
         mainclass.histtmax = mainclass.tmax #m[-1][0]
         return graph

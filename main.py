@@ -858,7 +858,7 @@ def question(main_layout):
     return
 
 def btn_refresh_data_f(instance,mainclass)
-    upload_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.fname)
+    upload_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.datafn)
     return
         
 def g_init(mainclass):

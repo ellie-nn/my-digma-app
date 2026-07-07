@@ -1072,7 +1072,7 @@ def thelastfile(path,mask):
 
     # 1. Get matching files recursively (use .glob() if not searching subfolders)
     files = list(directory.rglob(mask))
-
+    print('1075 files:',files)
     # 2. Sort by modification time
     files.sort(key=lambda x: x.stat().st_mtime)
     return files[0]

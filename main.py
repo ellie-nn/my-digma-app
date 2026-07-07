@@ -857,7 +857,7 @@ def question(main_layout):
     btn_work.parent=main_layout
     return
 
-def btn_refresh_data_f(instance,mainclass):
+def btn_refresh_data_f(instance):
     upload_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.datafn)
     return
         

@@ -856,6 +856,10 @@ def question(main_layout):
     btn_test.parent=main_layout
     btn_work.parent=main_layout
     return
+
+def btn_refresh_data_f(instance,mainclass)
+    upload_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.fname)
+    return
         
 def g_init(mainclass):
         global GRAPH_WIDGET
@@ -1082,7 +1086,16 @@ def g_init(mainclass):
         #GRAPH_INITED_FLAG=0
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         
-
+        btn_reftesh_data = Button(
+            text="Обновить",
+            size_hint=(0.2, 0.1),            # 50% ширины экрана, 8% высоты [↑]
+            pos_hint={'x':0.1, 'top': 0.9},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+            background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+            )
+        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
+        btn_test.bind(on_release = btn_refresh_data_f)
+        main_layout.add_widget(btn_refresh_data)
+   
         return main_layout
           
 import math

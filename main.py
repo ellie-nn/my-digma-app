@@ -1075,7 +1075,7 @@ def thelastfile(path,mask):
     print('1075 files:',files)
     # 2. Sort by modification time
     files.sort(key=lambda x: x.stat().st_mtime)
-    return files[0]
+    return files[-1]
 
 #for file in files:
     #print(file)

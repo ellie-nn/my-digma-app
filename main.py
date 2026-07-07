@@ -1333,7 +1333,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start('service')
+            service.start(f'{int(SUB_TIME)}')
             print('Успех запуска службы')  
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"

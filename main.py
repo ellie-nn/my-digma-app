@@ -1086,7 +1086,7 @@ def g_init(mainclass):
         #GRAPH_INITED_FLAG=0
         # Attach the formatting function to the graph
         #graph_widget.x_ticks_func = format_x_axis         
-        btn_reftesh_data = Button(
+        btn_refresh_data = Button(
             text="Обновить",
             size_hint=(0.2, 0.1),            # 50% ширины экрана, 8% высоты [↑]
             pos_hint={'x':0.1, 'top': 0.9},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]

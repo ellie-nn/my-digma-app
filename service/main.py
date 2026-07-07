@@ -284,10 +284,10 @@ class DigmaServiceEngine:
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
          
-            printout = f"{self.counter} {utime} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            printout = f".{self.counter} {utime} {vatt} {self.vatt_sum:.3f} {kwh_17}"
             sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
         else:
-            printout = f".{self.counter} {utime} {self.counter} -1 -1"
+            printout = f",{self.counter} {utime} {self.counter} -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, self.counter, self.counter *2, -1]
          
    #         printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"

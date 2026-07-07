@@ -101,7 +101,8 @@ LOG_FNw = str(time.time()//300)
 LOG_FN = str(time.time()//300)
 LOG_FN = 'logapp.txt'
 #FILE_CSV = 'power_history.csv'
-SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+#SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+SUB_TIME = int(time.time())
 GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
@@ -1166,6 +1167,7 @@ def thelastfile(path,mask):
 class DigmaRecorderApp(App):
     def build(self,mode=None):
         global MODE1
+        global SUB_TIME
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         
@@ -1195,6 +1197,7 @@ class DigmaRecorderApp(App):
                 print('1033 thelastfile: ',LOG_PATH[:-1])
                 self.datafn=f'{thelastfile(LOG_PATH[:-1],'svcdata*.txt').name}'
                 self.datafn=self.datafn[3:]
+                SUB_TIME=int(self.datafn[4:-4])
                 print(self.datafn)
                 shutil.copy(LOG_PATH+'svc'+self.datafn, LOG_PATH+self.datafn) 
                 #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
@@ -1209,7 +1212,7 @@ class DigmaRecorderApp(App):
             elif MODE1=="Тест":
                 print('1206 MODE1 is set to TEST',MODE1)
                 self.datafn=f'data{SUB_TIME}.txt'
-                shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+'svcdata'+SUB_TIME+'.txt') 
+                shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+f'svcdata{SUB_TIME}.txt') 
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
         elif not MODE1:
             print('1211 service is running')

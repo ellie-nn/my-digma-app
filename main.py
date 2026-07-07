@@ -1164,37 +1164,8 @@ class DigmaRecorderApp(App):
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         
+        import shutil
         if not MODE:
-            self.mywin = g_init(self)
-            return self.mywin
-
-        if True:
-            self.kilometers=''
-            self.StartV=''
-            #sys.stderr = sys.stdout
-            self.tmax = 120
-            self.datafn=''
-            #append_to_public_documents("servrk.txt","dfvhjggyjj")
-            #print('.﻿1 20:29:10 11.4 0.001 -1')
-            #print('.2 20:29:11 0.0 0.001 -1')
-            #print('.3 20:29:13 11.1 0.006 -1')
-            #print('.4 20:29:15 11.1 0.011 -1')
-            #print('.5 20:29:11 0.0 0.001 -1')
-            #print(read_alien("service_work.txt"))
-            #print(append_to_public_documents("service_work.txt","",1,2))
-
-            #from oscpy.server import OSCThreadServer
-            import socket # Всего одна короткая строчка в самом верху файла!
-
-        # =====================================================================
-        # НАШ УЛЬТИМАТИВНЫЙ OSC-РАДАР (Без импорта socket!)
-        # Допустим, ваш фоновый мотор держит OSC-порт 3001
-        # =====================================================================
-
-            # 1. Создаем летучий временный проверочный сервер в окне
-            check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            #OSCThreadServer()
-            import shutil
             try:
                 # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
                 check_server.bind(("127.0.0.1", 3001))
@@ -1219,11 +1190,45 @@ class DigmaRecorderApp(App):
                 #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
                 #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
-            if MODE=="Тест":
-                #Тестовая имитация ранее запущенного сервис-мотора
-                self.datafn="AppDataTest.txt"
-                self.service_is_running = True
+        if not self.service_is_running:
+            if not MODE:
+                self.mywin = g_init(self)
+                return self.mywin
+            elif MODE=="Тест":
+                self.datafn=f'data{SUB_TIME}.txt'
+                shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+'svcdata'+SUB_TIME+'.txt') 
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
+        elif not MODE:
+            MODE="Работа"
+            
+        if True:
+            self.kilometers=''
+            self.StartV=''
+            #sys.stderr = sys.stdout
+            self.tmax = 120
+            self.datafn=''
+            #append_to_public_documents("servrk.txt","dfvhjggyjj")
+            #print('.﻿1 20:29:10 11.4 0.001 -1')
+            #print('.2 20:29:11 0.0 0.001 -1')
+            #print('.3 20:29:13 11.1 0.006 -1')
+            #print('.4 20:29:15 11.1 0.011 -1')
+            #print('.5 20:29:11 0.0 0.001 -1')
+            #print(read_alien("service_work.txt"))
+            #print(append_to_public_documents("service_work.txt","",1,2))
+
+            #from oscpy.server import OSCThreadServer
+            import socket # Всего одна короткая строчка в самом верху файла!
+
+        # =====================================================================
+        # НАШ УЛЬТИМАТИВНЫЙ OSC-РАДАР (Без импорта socket!)
+        # Допустим, ваш фоновый мотор держит OSC-порт 3001
+        # =====================================================================
+
+            # 1. Создаем летучий временный проверочный сервер в окне
+            #check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            #OSCThreadServer()
+            #import shutil
+            
             
         # =====================================================================
         # ИТОГОВЫЙ ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОСЕЙ:

@@ -1172,10 +1172,10 @@ class DigmaRecorderApp(App):
         import shutil
         print(SUB_TIME)
         if not MODE1:
-            # 1. Создаем летучий временный проверочный сервер в окне
+            #from oscpy.server import OSCThreadServer
+            import socket # Всего одна короткая строчка в самом верху файла!
             check_server =  socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            OSCThreadServer()
-            
+            #OSCThreadServer()
             try:
                 # Окно пытается нагло встать на чужой OSC-порт (на порт 3001) [↑]:
                 check_server.bind(("127.0.0.1", 3001))

@@ -494,7 +494,7 @@ def update_points_from_file(graph,fn):
             
         graph.parent.mainclass.tmax = m[-1][0]
         #print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
-        graph.xmax=max(mainclass.tmax,graph.xmax)
+        graph.xmax=max(graph.parent.mainclass.tmax,graph.xmax)
         #print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
          
         #import os

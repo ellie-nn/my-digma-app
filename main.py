@@ -514,8 +514,9 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
+        global MODE1
         print('459 file_path',file_path,'-')
-        if not MODE:
+        if not MODE1:
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
                 x_ticks_minor=6, x_ticks_major=60,
@@ -816,20 +817,21 @@ if True:
         #apply_vertical_minutes_hack()
         return ret
 def test_btn(instance):
-    global MODE
-    if MODE: return
-    MODE=instance.text
+    global MODE1
+    if MODE1: return
+    MODE1=instance.text
     instance.unbind(on_release=test_btn)
     instance.bro.unbind(on_release=test_btn)
     GRAPH_WIDGET.parent.remove_widget(instance.bro)
     GRAPH_WIDGET.parent.remove_widget(instance)
     GRAPH_WIDGET.opacity=0.5
-    GRAPH_WIDGET.parent.mainclass.build(mode=MODE)
+    GRAPH_WIDGET.parent.mainclass.build(mode=MODE1)
     print('749 build done')
     return
     
 def question(main_layout):
-    if MODE:
+    global MODE1
+    if MODE1:
         return
     btn_test = Button(
         text="Тест",
@@ -862,9 +864,10 @@ def btn_refresh_data_f(instance):
     return
         
 def g_init(mainclass):
+    global MODE1
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        if not MODE:
+        if not MODE1:
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
             #mainclass.kilometers = ""
@@ -1079,7 +1082,7 @@ def g_init(mainclass):
         # АКТИВИРУЕМ ТОТАЛЬНЫЙ ПЕРЕХВАТ БАЗОВОГО МЕТОДА:
         # Заменяем оригинальный _update_labels на наш контролируемый custom_update_labels
         global ORIGINAL_KIVY_UPDATER
-        print('992 mode;',MODE,ORIGINAL_KIVY_UPDATER,graph_widget._update_labels,custom_update_labels)
+        print('992 mode;',MODE1,ORIGINAL_KIVY_UPDATER,graph_widget._update_labels,custom_update_labels)
         ORIGINAL_KIVY_UPDATER=graph_widget._update_labels
         graph_widget._update_labels = custom_update_labels
         global GRAPH_INITED_FLAG
@@ -1195,12 +1198,12 @@ class DigmaRecorderApp(App):
             if not MODE1:
                 self.mywin = g_init(self)
                 return self.mywin
-            elif MODE=="Тест":
+            elif MODE1=="Тест":
                 self.datafn=f'data{SUB_TIME}.txt'
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+'svcdata'+SUB_TIME+'.txt') 
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
-        elif not MODE:
-            MODE="Работа"
+        elif not MODE1:
+            MODE1="Работа"
             
         if True:
             self.kilometers=''

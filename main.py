@@ -1269,7 +1269,7 @@ class DigmaRecorderApp(App):
             #sys.exit()
             #self.mywin = g_init(self)
             #return self.mywin
-        
+        print('1272 self.service_is_running',self.service_is_running)
         self.mywin.graph_widget.opacity=1
         g_init(self)
         print('self.histtmax:',self.histtmax)

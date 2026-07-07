@@ -451,7 +451,7 @@ def custom_update_labels(*args, **kwargs):
     #for label in GRAPH_WIDGET._labels:
     return ret
 
-def update_points_from_file(graph,fn)
+def update_points_from_file(graph,fn):
     tcut=append_to_public_documents(fn, "", 1,100)
     if True:
         if True:

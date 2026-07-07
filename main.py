@@ -346,6 +346,7 @@ def scale_revfunc(ret):
     #v=ret
     #print(f'f={ret} v={v}')
     return v #int(v)
+    
 if True:
     def apply_vertical_minutes_hack():
         """
@@ -489,7 +490,7 @@ def update_points_from_file(graph,fn)
         #print(m1[0][0])
         
             
-        mainclass.tmax = m[-1][0]
+        graph.parent.mainclass.tmax = m[-1][0]
         #print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
         graph.xmax=max(mainclass.tmax,graph.xmax)
         #print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
@@ -565,7 +566,21 @@ if True:
         
         #try:# Grabs indices 2 and 4 from each line
         #if mainclass.datafn:
+
+        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
+        plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
+        #points = []
+        #pointsA = []
+        #plot.points = points
+        #plotA.points = pointsA
+        graph.add_plot(plot)
+        graph.add_plot(plotA)
+        graph.plot=plot
+        graph.plotA=plotA
+        
         if file_path:
+           update_points_from_file(graph,file_path)
+        if False:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')
             #print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
             print(inspect.currentframe().f_lineno,'440 - /настоящая история')
@@ -607,22 +622,18 @@ if True:
         #print(inspect.currentframe().f_lineno,'460 m:',m)
         #print(m1[0][0])
         
-            
-        mainclass.tmax = m[-1][0]
+        #mainclass.tmax = m[-1][0]
+
         print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
         graph.xmax=max(mainclass.tmax,graph.xmax)
         print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
         
-        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
-        plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
-        points = []
-        pointsA = []
         
         #import os
 
         #time.sleep(10.0)
-        for x in m: points.append(x)
-        for x in mA: pointsA.append(x)
+        #for x in m: points.append(x)
+        #for x in mA: pointsA.append(x)
        
         if False:                        
             file_path = os.path.join(base_dir, 'Documents', 'servicework.txt')
@@ -662,14 +673,7 @@ if True:
         if not points:
             points = [(0, 120), (20, 220)]
         #print(inspect.currentframe().f_lineno,'524 points:',points)
-        plot.points = points
-        graph.add_plot(plot)
-        plotA.points = pointsA
-        graph.add_plot(plot)
-        graph.add_plot(plotA)
-        graph.plot=plot
-        graph.plotA=plotA
-        mainclass.histtmax = m[-1][0]
+        mainclass.histtmax = mainclass.tmax #m[-1][0]
         return graph
 
     def hold_left_btn(instance):

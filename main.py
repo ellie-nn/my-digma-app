@@ -479,10 +479,10 @@ def update_points_from_file(graph,fn):
             #print('m1A:',m1A,inspect.currentframe().f_lineno)
             #if os.path.isfile(file_path)
             #mainclass.datafn=f'data_{int(m1[0][1])}.txt'
-            for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
-            for x in reversed(m1A): x[0]+=-m1A[0][0]+m[-1][0]+1
             m=[[0.0,0.0]]
             mA=m
+            for x in reversed(m1): x[0]+=-m1[0][0]+m[-1][0]+1
+            for x in reversed(m1A): x[0]+=-m1A[0][0]+m[-1][0]+1
             mA=mA+m1A
             m=m+m1
             #for x in m: x[0]/=60

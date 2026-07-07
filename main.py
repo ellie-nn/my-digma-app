@@ -519,6 +519,7 @@ if True:
             #print(m)
             # Grabs indices 2 and 4 from each line
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+            print('522 m1:', m1)
             m1A = [[float(w[1])*5, float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             #m1=m1[2500:5000]
             #m1A=m1A[2500:5000]

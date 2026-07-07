@@ -1197,14 +1197,18 @@ class DigmaRecorderApp(App):
                 #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
         if not self.service_is_running:
+            print('1200 service not running')
             if not MODE1:
+                print('1202 MODE1 is False',MODE1)
                 self.mywin = g_init(self)
                 return self.mywin
             elif MODE1=="Тест":
+                print('1206 MODE1 is set to TEST',MODE1)
                 self.datafn=f'data{SUB_TIME}.txt'
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+'svcdata'+SUB_TIME+'.txt') 
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
         elif not MODE1:
+            print('1211 service is running')
             MODE1="Работа"
             
         if True:

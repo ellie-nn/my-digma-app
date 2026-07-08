@@ -1280,7 +1280,7 @@ class DigmaRecorderApp(App):
             #self.mywin = g_init(self)
             #return self.mywin
         print('1272 self.service_is_running',self.service_is_running)
-        if not self.mywin:
+        if not GRAPH_WIDGET:
             self.mywin=g_init(self)
         else:
             g_init(self)

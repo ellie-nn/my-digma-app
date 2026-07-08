@@ -126,15 +126,7 @@ from kivy.uix.slider import Slider
 #LOG_PATH = "/storage/emulated/0/Documents/"
 #from jnius import autoclass, cast
 
-def count_instructions(canvas_group):
-    count = 0
-    # canvas_group can be self.canvas, self.canvas.before, etc.
-    for instr in canvas_group.children:
-        count += 1
-        # If it's a nested Canvas or InstructionGroup, look deeper
-        if hasattr(instr, 'children'):
-            count += count_instructions(instr)
-    return count
+
 
 # Example usage inside a widget to monitor growth:
 print(f"Current instruction count: {count_instructions(self.canvas)}")

@@ -588,7 +588,10 @@ if True:
         graph.plotA=plotA
         
         if file_path:
+           print('591 build voltage calls update points')
            update_points_from_file(graph,file_path)
+           print('889 ret from update points to build voltage')
+            
         if False:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')
             #print(inspect.currentframe().f_lineno,'439 tcut:',tcut)
@@ -831,8 +834,10 @@ def test_btn(instance):
     GRAPH_WIDGET.parent.remove_widget(instance.bro)
     GRAPH_WIDGET.parent.remove_widget(instance)
     GRAPH_WIDGET.opacity=0.5
+    print('834 button calls build')
     GRAPH_WIDGET.parent.mainclass.build(mode=MODE1)
-    print('749 build done')
+    print('837 ret from build to button')
+    print('838 build done')
     return
     
 def question(main_layout):
@@ -866,7 +871,9 @@ def question(main_layout):
     return
 
 def btn_refresh_data_f(instance):
+    print('874 refresh btn calls build update points')   
     update_points_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.datafn)
+    print('877 ret from update points to refresh btn')
     return
         
 def g_init(mainclass):
@@ -884,8 +891,10 @@ def g_init(mainclass):
         # СЛОЙ 1 (НИЖНИЙ): НАШ ГРАФИК РАСТЯНУТ НА 100% ЭКРАНА [↑]
         # ========================================================
             #graph_widget = build_voltage_graph('mock.txt',mainclass)
+            print('887 ginit calls build voltage')
             graph_widget = build_voltage_graph('',mainclass)
-        
+            print('889 ret from build voltage to ginit')
+            
             # Занимает 100% ширины и 100% высоты окна [↑]
             graph_widget.size_hint = (1.0, 0.90) 
             graph_widget.pos_hint = {'center_x': 0.5, 'y':0.05}
@@ -903,7 +912,9 @@ def g_init(mainclass):
         if True:
         #else:
             #build_voltage_graph('mock.txt',mainclass)
+            print('908 ginit calls build voltage')
             build_voltage_graph(mainclass.datafn,mainclass)
+            print('910 ret from build voltage to ginit')
             graph_widget=GRAPH_WIDGET    
         try:
             main_layout=mainclass.mywin
@@ -1221,7 +1232,9 @@ class DigmaRecorderApp(App):
             print('1200 service not running')
             if not MODE1:
                 print('1202 MODE1 is False',MODE1)
+                print('1235 main build calls ginit')
                 self.mywin = g_init(self)
+                print('1238 ret from ginit to main build')
                 return self.mywin
             elif MODE1=="Тест":
                 print('1206 MODE1 is set to TEST',MODE1)
@@ -1294,9 +1307,13 @@ class DigmaRecorderApp(App):
             #return self.mywin
         print('1272 self.service_is_running',self.service_is_running)
         if not GRAPH_WIDGET:
+            print('1310 main build calls ginit')
             self.mywin=g_init(self)
+            print('1312 ret from ginit to main build')
         else:
+            print('1314 main build calls ginit')
             g_init(self)
+            print('1316 ret from ginit to main build')
         self.mywin.graph_widget.opacity=1
         
         print('self.histtmax:',self.histtmax)

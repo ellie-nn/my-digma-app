@@ -527,8 +527,9 @@ if True:
                 xmin=0, xmax=120,  
                 ymin=0, ymax=300
             )
+        if not MODE1:
             return graph
-        else:
+        elif GRAPH_WIDGET:
             graph=GRAPH_WIDGET
         if False: #file_path:
             #tcut=append_to_public_documents("mock.txt", "", 1,100)

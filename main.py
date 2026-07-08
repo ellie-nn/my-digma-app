@@ -893,7 +893,7 @@ def g_init(mainclass):
             graph_widget.opacity=0
         
             question(main_layout)
-        if not MODE1;
+        if not MODE1:
             return main_layout
         if True:
         #else:

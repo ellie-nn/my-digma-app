@@ -1224,7 +1224,7 @@ class DigmaRecorderApp(App):
             self.StartV=''
             #sys.stderr = sys.stdout
             self.tmax = 120
-            self.datafn=''
+            #self.datafn=''
             #append_to_public_documents("servrk.txt","dfvhjggyjj")
             #print('.﻿1 20:29:10 11.4 0.001 -1')
             #print('.2 20:29:11 0.0 0.001 -1')

@@ -1369,6 +1369,7 @@ class DigmaRecorderApp(App):
         
         return self.mywin
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
+        if not self.datafn: return
         global IN_LIVEDATA
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin

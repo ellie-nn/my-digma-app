@@ -453,6 +453,7 @@ def custom_update_labels(*args, **kwargs):
     return ret
 
 def update_points_from_file(graph,fn):
+    print('456 update points start')
     tcut=append_to_public_documents(fn, "", 1,100)
     if True:
         if True:
@@ -515,6 +516,7 @@ if True:
         #"""
         #ФУНКЦИЯ-ПРОЖЕКТОР: Читает файл, собирает вольтаж и строит график.
         #"""
+        print('518 build voltage start')
         global MODE1
         print('459 file_path',file_path,'-')
         if not MODE1 or not GRAPH_WIDGET:
@@ -866,6 +868,7 @@ def btn_refresh_data_f(instance):
     return
         
 def g_init(mainclass):
+    print('869 ginit start')
     if True:
         global MODE1
         global GRAPH_WIDGET
@@ -1173,6 +1176,7 @@ def thelastfile(path,mask):
 # ИМПОРТИРУЕМ ДАТЧИК ОКНА
 class DigmaRecorderApp(App):
     def build(self,mode=None):
+        print('1179 main build start')
         global MODE1
         global SUB_TIME
         #self.mywin=False
@@ -1385,7 +1389,7 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         print('1374 self.datafn',self.datafn)
         if not self.datafn: return
-        if self.histtmax>1000: return
+        #if self.histtmax>1000: return
         global IN_LIVEDATA
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin

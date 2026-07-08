@@ -1367,9 +1367,11 @@ class DigmaRecorderApp(App):
  #       else:
   #          self.start_background_service()
         #import tinytuya    
-        
+        print('1370 self.datafn',self.datafn)
         return self.mywin
+        
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
+        print('1374 self.datafn',self.datafn)
         if not self.datafn: return
         global IN_LIVEDATA
         IN_LIVEDATA=True

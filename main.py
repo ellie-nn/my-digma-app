@@ -532,6 +532,7 @@ if True:
         global MODE1
         print('521 file_path',file_path,'-')
         if not MODE1 or not GRAPH_WIDGET:
+            print('535 new graph widget')
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
                 x_ticks_minor=6, x_ticks_major=60,
@@ -585,7 +586,7 @@ if True:
         
         #try:# Grabs indices 2 and 4 from each line
         #if mainclass.datafn:
-
+        print('589 new plot widget')
         plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
         plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
         #points = []
@@ -893,6 +894,7 @@ def g_init(mainclass):
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
         if not MODE1 or not GRAPH_WIDGET:
+            print('897 new floatlayout')
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
             #mainclass.kilometers = ""

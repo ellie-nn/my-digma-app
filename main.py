@@ -900,7 +900,11 @@ def g_init(mainclass):
             #build_voltage_graph('mock.txt',mainclass)
             build_voltage_graph(mainclass.datafn,mainclass)
             graph_widget=GRAPH_WIDGET    
-        main_layout=mainclass.mywin
+        try:
+            main_layout=mainclass.mywin
+        except:
+            pass
+            
             #mainclass.kilometers = ""
             #question(main_layout)
         # ========================================================

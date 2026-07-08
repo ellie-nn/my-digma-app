@@ -1168,7 +1168,7 @@ class DigmaRecorderApp(App):
     def build(self,mode=None):
         global MODE1
         global SUB_TIME
-        self.mywin=False
+        #self.mywin=False
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         

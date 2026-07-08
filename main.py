@@ -126,10 +126,15 @@ from kivy.uix.slider import Slider
 #LOG_PATH = "/storage/emulated/0/Documents/"
 #from jnius import autoclass, cast
 
-
-
-# Example usage inside a widget to monitor growth:
-print(f"Current instruction count: {count_instructions(self.canvas)}")
+def count_instructions(canvas_group):
+    count = 0
+    # canvas_group can be self.canvas, self.canvas.before, etc.
+    for instr in canvas_group.children:
+        count += 1
+        # If it's a nested Canvas or InstructionGroup, look deeper
+        if hasattr(instr, 'children'):
+            count += count_instructions(instr)
+    return count
 
 def is_full_storage_allowed():
     try:
@@ -1411,7 +1416,7 @@ class DigmaRecorderApp(App):
         return self.mywin
         
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
-        #print('1374 self.datafn',self.datafn)
+        print('1374 self.datafn',self.datafn)
         if not self.datafn: return
         print('1424 instructions:',count_instructions(Window))
         #if self.histtmax>1000: return

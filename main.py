@@ -490,7 +490,7 @@ def update_points_from_file(graph,fn):
             #for x in m: x[0]/=60
             #for x in mA: x[0]/=60
         else:
-            m=[[0.0,0.0]
+            m=[[0.0,0.0]]
             mA=m
         #print(inspect.currentframe().f_lineno,'460 m:',m)
         #print(m1[0][0])

@@ -517,7 +517,7 @@ if True:
         #"""
         global MODE1
         print('459 file_path',file_path,'-')
-        if not MODE1:
+        if not MODE1 or not GRAPH_WIDGET:
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
                 x_ticks_minor=6, x_ticks_major=60,

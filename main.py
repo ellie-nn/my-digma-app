@@ -1218,6 +1218,7 @@ class DigmaRecorderApp(App):
             print('1211 service is running')
             MODE1="Работа"
             
+        print('1221 self.datafn',self.datafn)    
         if True:
             self.kilometers=''
             self.StartV=''

@@ -1507,8 +1507,10 @@ class DigmaRecorderApp(App):
                   
             self.mywin.graph_widget.plot.points.append([ tmax, vatt])
             self.mywin.graph_widget.plotA.points.append([ tmax, integral])
-            self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
-            self.mywin.graph_widget.plotA=self.mywin.graph_widget.plotA
+            #self.mywin.graph_widget.plot=self.mywin.graph_widget.plot
+            #self.mywin.graph_widget.plotA=self.mywin.graph_widget.plotA
+            self.mywin.graph_widget.plot.points=self.mywin.graph_widget.plot.points
+            self.mywin.graph_widget.plotA.points=self.mywin.graph_widget.plotA.points
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
               #if (tmax-self.mywin.sbarm.value)**2 <=3 and HOLD_LEFT: 
              #   self.mywin.sbars.value = tmax-self.mywin.xmin

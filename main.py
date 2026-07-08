@@ -463,7 +463,7 @@ def update_points_from_file(graph,fn):
             #m1A=m1A[2500:5000]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-            step=int(len(m1)/2500+1)
+            step=int(len(m1)/1000+1)
             xm1=[]
             for i in range(0,step): xm1.append(m1[i::step]) 
             m1 = [[sum(values)/step for values in zip(*matrix)] for matrix in zip(*xm1)]

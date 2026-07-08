@@ -531,7 +531,7 @@ if True:
         print('518 build voltage start')
         global MODE1
         print('521 file_path',file_path,'-')
-        if not MODE1 or not GRAPH_WIDGET:
+        if not MODE1 or MODE1=='Продолжение':
             print('535 new graph widget')
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
@@ -893,7 +893,7 @@ def g_init(mainclass):
         global MODE1
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        if not MODE1 or not GRAPH_WIDGET:
+        if not MODE1 or MODE1=='Продолжение':
             print('897 new floatlayout')
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
@@ -921,7 +921,7 @@ def g_init(mainclass):
             question(main_layout)
         if not MODE1:
             return main_layout
-        if True:
+        elif not MODE1=='Продолжение':
         #else:
             #build_voltage_graph('mock.txt',mainclass)
             print('908 ginit calls build voltage')
@@ -1255,7 +1255,7 @@ class DigmaRecorderApp(App):
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
         elif not MODE1:
             print('1211 service is running')
-            MODE1="Работа"
+            MODE1="Продолжение"
             
         print('1221 self.datafn',self.datafn)    
         if True:

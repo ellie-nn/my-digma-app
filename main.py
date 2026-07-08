@@ -1168,6 +1168,7 @@ class DigmaRecorderApp(App):
     def build(self,mode=None):
         global MODE1
         global SUB_TIME
+        self.mywin=False
         MediaStoreStdout(LOG_FN)
         traceback.print_stack()
         
@@ -1279,8 +1280,12 @@ class DigmaRecorderApp(App):
             #self.mywin = g_init(self)
             #return self.mywin
         print('1272 self.service_is_running',self.service_is_running)
+        if not self.mywin:
+            self.mywin=g_init(self)
+        else:
+            g_init(self)
         self.mywin.graph_widget.opacity=1
-        g_init(self)
+        
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)

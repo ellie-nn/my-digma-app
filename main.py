@@ -456,7 +456,7 @@ def update_points_from_file(graph,fn):
     print('456 update points start')
     tcut=append_to_public_documents(fn, "", 1,100)
     if True:
-        if True:
+        if fn:
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             #print('522 m1:', m1)
             m1A = [[float(w[1])*5, float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
@@ -489,7 +489,9 @@ def update_points_from_file(graph,fn):
             m=m+m1
             #for x in m: x[0]/=60
             #for x in mA: x[0]/=60
-            
+        else:
+            m=[[0.0,0.0]
+            mA=m
         #print(inspect.currentframe().f_lineno,'460 m:',m)
         #print(m1[0][0])
         
@@ -518,7 +520,7 @@ if True:
         #"""
         print('518 build voltage start')
         global MODE1
-        print('459 file_path',file_path,'-')
+        print('521 file_path',file_path,'-')
         if not MODE1 or not GRAPH_WIDGET:
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
@@ -552,7 +554,7 @@ if True:
         else:
             m=[[0.0,0.0]]
             mA=m
-            print(inspect.currentframe().f_lineno,'490 m[0][0]:',m[0][0])
+            print('555 m00',inspect.currentframe().f_lineno,'490 m[0][0]:',m[0][0])
             
         if file_path:
             try:
@@ -1206,7 +1208,7 @@ class DigmaRecorderApp(App):
                 # библиотека oscpy выкинет официальный крэш RuntimeError (Address already in use)! [↑]
                 # Наш блок except ловит этот сигнал и выдает зрячий вердикт: мотор жив! [↑]
                 self.service_is_running = True
-                print('1033 thelastfile: ',LOG_PATH[:-1])
+                print('1209 thelastfile: ',LOG_PATH[:-1])
                 self.datafn=f'{thelastfile(LOG_PATH[:-1],'svcdata*.txt').name}'
                 self.datafn=self.datafn[3:]
                 SUB_TIME=int(self.datafn[4:-4])

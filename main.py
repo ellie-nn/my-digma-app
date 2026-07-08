@@ -870,7 +870,7 @@ def g_init(mainclass):
         global MODE1
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        if not MODE1:
+        if not MODE1 or not GRAPH_WIDGET:
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
             #mainclass.kilometers = ""
@@ -893,8 +893,10 @@ def g_init(mainclass):
             graph_widget.opacity=0
         
             question(main_layout)
+        if not MODE1;
             return main_layout
-        else:
+        if True:
+        #else:
             #build_voltage_graph('mock.txt',mainclass)
             build_voltage_graph(mainclass.datafn,mainclass)
             graph_widget=GRAPH_WIDGET    

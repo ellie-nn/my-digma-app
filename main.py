@@ -904,7 +904,11 @@ def g_init(mainclass):
         # ========================================================
             #graph_widget = build_voltage_graph('mock.txt',mainclass)
             print('887 ginit calls build voltage')
-            graph_widget = build_voltage_graph('',mainclass)
+            if MODE1!='Продолжение':
+                graph_widget = build_voltage_graph('',mainclass)
+            else:
+                graph_widget = build_voltage_graph(mainclass.datafn,mainclass)
+                
             print('889 ret from build voltage to ginit')
             
             # Занимает 100% ширины и 100% высоты окна [↑]

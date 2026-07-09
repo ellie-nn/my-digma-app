@@ -1486,8 +1486,8 @@ class DigmaRecorderApp(App):
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         print('1374 self.datafn',self.datafn)
         if not self.datafn: return
-        print('1424 instructions:',count_instructions(Window))
-        trace_opengl_indices(GRAPH_WIDGET)
+        #print('1424 instructions:',count_instructions(Window))
+        #trace_opengl_indices(GRAPH_WIDGET)
         #if self.histtmax>1000: return
         global IN_LIVEDATA
         IN_LIVEDATA=True

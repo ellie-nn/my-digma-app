@@ -132,25 +132,29 @@ def trace_opengl_indices(graph_instance):
     print("\n--- GRAPH OVERFLOW TRACE ---")
     
     # Kivy garden graph stores plots internally here
-    for i, plot in enumerate(graph_instance.plots):
-        print(i)
-        python_points = len(plot.points)
-        print(python_points)
-        gpu_indices = 0
-        gpu_vertices = 0
+    #for i, plot in enumerate(graph_instance.plots):
+        #print(i)
+        #python_points = len(plot.points)
+        #print(python_points)
+        #gpu_indices = 0
+        #gpu_vertices = 0
         
         # Look directly inside the low-level drawing instructions
         # where Kivy compiles Python lists into hardware buffers
         #for instr in plot.ask_draw_trigger.func.__self__.children:
     for instr in graph_instance.canvas.children:
+        print('146 instr', instr)
         if isinstance(instr, Mesh):
+            print('148 ok)
             mesh_counter += 1
+            print('150 mesh:',mesh_counter)
             indices_count = len(instr.indices)
+            print('152 indices_count:',indices_count)
             total_indices += indices_count
-            print(f"  [Mesh Object #{mesh_counter}] Indices inside GPU: {indices_count}", flush=True)
-            print(instr)
-    print('152 mesh:',mesh_counter)
-    print('153 total ind:',total_indices)
+            #print(f"  [Mesh Object #{mesh_counter}] Indices inside GPU: {indices_count}", flush=True)
+            print('155 total_indices',total_indices)
+    
+    #print('153 total ind:',total_indices)
            # if isinstance(instr, Mesh):
             #    print('ok')
             #    # This reads the actual array length sent to the GPU VRAM

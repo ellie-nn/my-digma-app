@@ -133,17 +133,23 @@ def trace_opengl_indices(graph_instance):
     
     # Kivy garden graph stores plots internally here
     for i, plot in enumerate(graph_instance.plots):
+        print(i)
         python_points = len(plot.points)
+        print(python_points)
         gpu_indices = 0
         gpu_vertices = 0
         
         # Look directly inside the low-level drawing instructions
         # where Kivy compiles Python lists into hardware buffers
         for instr in plot.ask_draw_trigger.func.__self__.children:
+            print(instr)
             if isinstance(instr, Mesh):
+                print('ok')
                 # This reads the actual array length sent to the GPU VRAM
                 gpu_indices += len(instr.indices)
+                print(gpu_indices)
                 gpu_vertices += len(instr.vertices) // 8  # 8 floats per vertex block
+                print(gpu_vertices)
                 
         print(f"Plot #{i} ({type(plot).__name__}):")
         print(f"  -> Points in Python array: {python_points}")

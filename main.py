@@ -589,16 +589,21 @@ if True:
         #try:# Grabs indices 2 and 4 from each line
         #if mainclass.datafn:
         print('589 new plot widget')
-        plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
-        plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
+        #plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
+        #plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
         #points = []
         #pointsA = []
         #plot.points = points
         #plotA.points = pointsA
-        graph.add_plot(plot)
-        graph.add_plot(plotA)
-        graph.plot=plot
-        graph.plotA=plotA
+        #graph.add_plot(plot)
+        #graph.add_plot(plotA)
+        #graph.plot=plot
+        #graph.plotA=plotA
+
+        graph.plot = LinePlot(color=[0, 0.6, 1, 1], line_width=2.5)
+        graph.plotA = LinePlot(color=[0, 1, 0.6, 1], line_width=2.5)
+        graph.add_plot(graph.plot)
+        graph.add_plot(graph.plotA)
         
         if file_path:
             print('591 build voltage calls update points')

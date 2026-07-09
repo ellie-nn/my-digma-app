@@ -145,7 +145,7 @@ def trace_opengl_indices(graph_instance):
     for instr in graph_instance.canvas.children:
         print('146 instr', instr)
         if isinstance(instr, Mesh):
-            print('148 ok)
+            print('148 ok')
             mesh_counter += 1
             print('150 mesh:',mesh_counter)
             indices_count = len(instr.indices)

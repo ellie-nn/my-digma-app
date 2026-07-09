@@ -142,6 +142,11 @@ def trace_opengl_indices(graph_instance):
         # Look directly inside the low-level drawing instructions
         # where Kivy compiles Python lists into hardware buffers
         #for instr in plot.ask_draw_trigger.func.__self__.children:
+    for i, plot in enumerate(graph_instance.plots):
+        points_len = len(plot.points) if hasattr(plot, 'points') else 0
+        print(f"  -> Plot #{i} ({type(plot).__name__}) Python points: {points_len}", flush=True)
+    if True: return
+        
     for instr in graph_instance.canvas.children:
         print('146 instr', instr)
         if isinstance(instr, Mesh):

@@ -126,6 +126,35 @@ from kivy.uix.slider import Slider
 #LOG_PATH = "/storage/emulated/0/Documents/"
 #from jnius import autoclass, cast
 
+from kivy.graphics import Mesh
+
+def trace_opengl_indices(graph_instance):
+    print("\n--- GRAPH OVERFLOW TRACE ---")
+    
+    # Kivy garden graph stores plots internally here
+    for i, plot in enumerate(graph_instance.plots):
+        python_points = len(plot.points)
+        gpu_indices = 0
+        gpu_vertices = 0
+        
+        # Look directly inside the low-level drawing instructions
+        # where Kivy compiles Python lists into hardware buffers
+        for instr in plot.ask_draw_trigger.func.__self__.children:
+            if isinstance(instr, Mesh):
+                # This reads the actual array length sent to the GPU VRAM
+                gpu_indices += len(instr.indices)
+                gpu_vertices += len(instr.vertices) // 8  # 8 floats per vertex block
+                
+        print(f"Plot #{i} ({type(plot).__name__}):")
+        print(f"  -> Points in Python array: {python_points}")
+        print(f"  -> Vertices in GPU buffer: {gpu_vertices}")
+        print(f"  -> INDICES IN OPENGL:      {gpu_indices} / 65535 limit")
+        
+        if gpu_indices > 60000:
+            print(" CRITICAL: This specific plot is causing the overflow!")
+            
+    return
+
 def count_instructions(canvas_group):
     count = 0
     # canvas_group can be self.canvas, self.canvas.before, etc.
@@ -1435,6 +1464,7 @@ class DigmaRecorderApp(App):
         print('1374 self.datafn',self.datafn)
         if not self.datafn: return
         print('1424 instructions:',count_instructions(Window))
+        trace_opengl_indices(GRAPH_WIDGET,1.0)
         #if self.histtmax>1000: return
         global IN_LIVEDATA
         IN_LIVEDATA=True

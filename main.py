@@ -913,7 +913,7 @@ def test_btn(instance):
     return
     
 def question(main_layout):
-    if main_layout.parent.servise_is_running: return
+    if main_layout.mainclass.servise_is_running: return
     global MODE1
     if MODE1:
         return

@@ -584,7 +584,7 @@ if True:
         print('518 build voltage start')
         global MODE1
         print('521 file_path',file_path,'-')
-        if not MODE1 or MODE1=='Продолжение':
+        if not MODE1: # or MODE1=='Продолжение':
             print('535 new graph widget')
             graph = Graph(
                 xlabel='Время', ylabel='Ватты  &  Джоули',
@@ -913,6 +913,7 @@ def test_btn(instance):
     return
     
 def question(main_layout):
+    if main_layout.parent.servise_is_running: return
     global MODE1
     if MODE1:
         return
@@ -954,7 +955,7 @@ def g_init(mainclass):
         global MODE1
         global GRAPH_WIDGET
         # ГЛАВНЫЙ КОНТЕЙНЕР: Свободный слой на всё окно [↑]
-        if not MODE1 or MODE1=='Продолжение':
+        if not MODE1: # or MODE1=='Продолжение':
             print('897 new floatlayout')
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
@@ -966,10 +967,10 @@ def g_init(mainclass):
         # ========================================================
             #graph_widget = build_voltage_graph('mock.txt',mainclass)
             print('887 ginit calls build voltage')
-            if MODE1!='Продолжение':
+            if True: #MODE1!='Продолжение':
                 graph_widget = build_voltage_graph('',mainclass)
-            else:
-                graph_widget = build_voltage_graph(mainclass.datafn,mainclass)
+            #else:
+             #   graph_widget = build_voltage_graph(mainclass.datafn,mainclass)
                 
             print('889 ret from build voltage to ginit')
             
@@ -987,8 +988,9 @@ def g_init(mainclass):
             question(main_layout)
         if not MODE1:
             return main_layout
-        elif not MODE1=='Продолжение':
+       # elif not MODE1=='Продолжение':
         #else:
+        if True:
             #build_voltage_graph('mock.txt',mainclass)
             print('908 ginit calls build voltage')
             build_voltage_graph(mainclass.datafn,mainclass)
@@ -1306,22 +1308,25 @@ class DigmaRecorderApp(App):
                 #shutil.copy('/storage/emulated/0/Documents/svcdata1782698598.txt', '/storage/emulated/0/Documents/'+self.datafn) 
                 #self.datafn='svcdata1782698598.txt'
                          #svcdata1782698598.txt
-        if not self.service_is_running:
-            print('1200 service not running')
+        if True: #not self.service_is_running:
+            #print('1200 service not running')
             if not MODE1:
                 print('1202 MODE1 is False',MODE1)
                 print('1235 main build calls ginit')
                 self.mywin = g_init(self)
                 print('1238 ret from ginit to main build')
+                if self.service_is_running:
+                    MODE1='Продолжение'
+                    self.build()
                 return self.mywin
             elif MODE1=="Тест":
                 print('1206 MODE1 is set to TEST',MODE1)
                 self.datafn=f'data{SUB_TIME}.txt'
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+f'svcdata{SUB_TIME}.txt') 
                 shutil.copy(LOG_PATH+'svcdata1782698598.txt', LOG_PATH+self.datafn) 
-        elif not MODE1:
-            print('1211 service is running')
-            MODE1="Продолжение"
+        #elif not MODE1:
+        #    print('1211 service is running')
+         #   MODE1="Продолжение"
             
         print('1221 self.datafn',self.datafn)    
         if True:

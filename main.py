@@ -542,6 +542,7 @@ if True:
                 xmin=0, xmax=120,  
                 ymin=0, ymax=300
             )
+            graph.parent=mainclass.mywin
         if not MODE1:
             return graph
         elif GRAPH_WIDGET:
@@ -897,6 +898,7 @@ def g_init(mainclass):
             print('897 new floatlayout')
             main_layout = FloatLayout()
             main_layout.mainclass=mainclass
+            mainclass.mywin=main_layout
             #mainclass.kilometers = ""
             #question(main_layout)
         # ========================================================

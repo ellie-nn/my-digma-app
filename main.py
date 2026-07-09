@@ -141,23 +141,31 @@ def trace_opengl_indices(graph_instance):
         
         # Look directly inside the low-level drawing instructions
         # where Kivy compiles Python lists into hardware buffers
-        for instr in plot.ask_draw_trigger.func.__self__.children:
+        #for instr in plot.ask_draw_trigger.func.__self__.children:
+    for instr in graph_instance.canvas.children:
+        if isinstance(instr, Mesh):
+            mesh_counter += 1
+            indices_count = len(instr.indices)
+            total_indices += indices_count
+            print(f"  [Mesh Object #{mesh_counter}] Indices inside GPU: {indices_count}", flush=True)
             print(instr)
-            if isinstance(instr, Mesh):
-                print('ok')
-                # This reads the actual array length sent to the GPU VRAM
-                gpu_indices += len(instr.indices)
-                print(gpu_indices)
-                gpu_vertices += len(instr.vertices) // 8  # 8 floats per vertex block
-                print(gpu_vertices)
+    print('152 mesh:',mesh_counter)
+    print('153 total ind:',total_indices)
+           # if isinstance(instr, Mesh):
+            #    print('ok')
+            #    # This reads the actual array length sent to the GPU VRAM
+            #    gpu_indices += len(instr.indices)
+             #   print(gpu_indices)
+             #   gpu_vertices += len(instr.vertices) // 8  # 8 floats per vertex block
+             #   print(gpu_vertices)
                 
-        print(f"Plot #{i} ({type(plot).__name__}):")
-        print(f"  -> Points in Python array: {python_points}")
-        print(f"  -> Vertices in GPU buffer: {gpu_vertices}")
-        print(f"  -> INDICES IN OPENGL:      {gpu_indices} / 65535 limit")
+        #print(f"Plot #{i} ({type(plot).__name__}):")
+        #print(f"  -> Points in Python array: {python_points}")
+        #print(f"  -> Vertices in GPU buffer: {gpu_vertices}")
+        #print(f"  -> INDICES IN OPENGL:      {gpu_indices} / 65535 limit")
         
-        if gpu_indices > 60000:
-            print(" CRITICAL: This specific plot is causing the overflow!")
+        #if gpu_indices > 60000:
+            #print(" CRITICAL: This specific plot is causing the overflow!")
             
     return
 

@@ -506,7 +506,7 @@ def update_points_from_file(graph,fn):
         #print(m1[0][0])
         
             
-        graph.parent.mainclass.tmax = m[-1][0]
+        #graph.parent.mainclass.tmax = m[-1][0]
         #print('552 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
         graph.xmax=max(graph.parent.mainclass.tmax,graph.xmax)
         #print('554 mainclass.tmax,graph.xmax)',mainclass.tmax,graph.xmax)
@@ -542,7 +542,7 @@ if True:
                 xmin=0, xmax=120,  
                 ymin=0, ymax=300
             )
-            graph.parent=mainclass.mywin
+            
         if not MODE1:
             return graph
         elif GRAPH_WIDGET:
@@ -602,6 +602,7 @@ if True:
         if file_path:
            print('591 build voltage calls update points')
            update_points_from_file(graph,file_path)
+           graph.parent.mainclass.tmax = graph.plot.points[-1][0]
            print('889 ret from update points to build voltage')
             
         if False:

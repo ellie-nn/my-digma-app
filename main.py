@@ -526,6 +526,7 @@ def update_points_from_file(graph,fn):
             #m1A=m1A[2500:5000]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
+            graph.mainclass.firstStamp=float(m[0][0])
             step=int(len(m1)/1000+1)
             xm1=[]
             for i in range(0,step): xm1.append(m1[i::step]) 
@@ -595,7 +596,7 @@ if True:
                 xmin=0, xmax=120,  
                 ymin=0, ymax=300
             )
-            
+            graph.mainclass=mainclass
         if not MODE1:
             return graph
         elif GRAPH_WIDGET:
@@ -1471,7 +1472,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start(f'{int(SUB_TIME)}_{self.mywin.graph.plot.points[-1][0]}')
+            service.start(f'{int(SUB_TIME)}_{self.mywin.graph.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph.plot.points[-1][0]')
             print('Успех запуска службы')  
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"

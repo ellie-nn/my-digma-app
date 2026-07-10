@@ -310,6 +310,7 @@ class DigmaServiceEngine:
         print('Fdatanamee')
         append_to_public_documents(FDATA_NAME,printout)
         print('Fdatanamef')
+        print(int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')))
        
         try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000

@@ -1472,7 +1472,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start(f'{int(SUB_TIME)}_{self.mywin.graph.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph.plot.points[-1][0]')
+            service.start(f'{int(SUB_TIME)}_{self.mywin.graph.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph.plot.points[-1][0]}')
             print('Успех запуска службы')  
         except Exception as e:
             self.ttext = f"Ошибка запуска службы: {e}"

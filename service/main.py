@@ -26,8 +26,8 @@ LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
 #SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-ADD_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[1]
-MISS_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[2]
+#ADD_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[1]
+#MISS_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[2]
 
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
 #FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
@@ -187,6 +187,8 @@ class MediaStoreStdout:
 sys.stdout = MediaStoreStdout()
 sys.stderr = sys.stdout
 SUB_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[0]
+ADD_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[1]
+MISS_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[2]
 
 class DigmaServiceEngine:
     def __init__(self):

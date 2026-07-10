@@ -304,7 +304,7 @@ class DigmaServiceEngine:
  #       else:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"
    #         sendout =  [self.counter, utime - SUB_TIME, -1, -1, -1]
-         if not FDATA_NAME:
+        if not FDATA_NAME:
             print('Fdatanameb')
        
             FDATA_NAME=f"svcdata{int(utime)}.txt"

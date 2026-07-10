@@ -570,7 +570,7 @@ def update_points_from_file(graph,fn):
         #time.sleep(10.0)
         #for x in m: points.append(x)
         #for x in mA: pointsA.append(x)
-       
+        print('573 m,mA [0,-1]:',m[0],m[-1],mA[0],mA[-1])
         graph.plot.points=m
         graph.plotA.points=mA
         
@@ -1614,7 +1614,7 @@ class DigmaRecorderApp(App):
             #self.mywin.sbars.bind(value=scale_window)
             #self.mywin.sbarm.value=self.mywin.sbarm.value
             #self.mywin.sbars.value=self.mywin.sbars.value
-                  
+            print('1617 points[-1]',tmax) 
             self.mywin.graph_widget.plot.points.append([ tmax, vatt])
             self.mywin.graph_widget.plotA.points.append([ tmax, integral])
             #self.mywin.graph_widget.plot=self.mywin.graph_widget.plot

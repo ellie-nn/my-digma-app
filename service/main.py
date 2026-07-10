@@ -25,8 +25,11 @@ DEVICE_ID = "bf1a864dc80b65d878lv65"
 LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
-SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-#SUB_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0'))
+#SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
+SUB_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[0])
+ADD_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[1])
+MISS_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[2])
+
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
 #FDATA_NAME = f"service_work_{int(SUB_TIME)}.txt"
 FDATA_NAME = '' 
@@ -285,8 +288,8 @@ class DigmaServiceEngine:
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
          
-            printout = f".{self.counter} {utime} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-            sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
+            printout = f".{self.counter} {utime - MISS_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            sendout =  [self.counter, utime - SUB_TIME + ADD_TIME, vatt, self.vatt_sum, kwh_17]
         else:
             printout = f",{self.counter} {utime} {self.counter} -1 -1"
             sendout =  [self.counter, utime - SUB_TIME, self.counter, self.counter *2, -1]
@@ -310,7 +313,6 @@ class DigmaServiceEngine:
         print('Fdatanamee')
         append_to_public_documents(FDATA_NAME,printout)
         print('Fdatanamef')
-        print(int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')))
        
         try:
             # Стреляем пакетом по внутреннему адресу телефона (127.0.0.1) на порт 3000

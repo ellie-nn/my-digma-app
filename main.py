@@ -526,7 +526,7 @@ def update_points_from_file(graph,fn):
             #m1A=m1A[2500:5000]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
-            graph.mainclass.firstStamp=float(m[0][0])
+            graph.mainclass.firstStamp=float(m1[0][0])
             step=int(len(m1)/1000+1)
             xm1=[]
             for i in range(0,step): xm1.append(m1[i::step]) 

@@ -26,7 +26,6 @@ LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 #SUB_DIR = "digma/" if os.android.get('ANDROID_ARGUMENT','')=='digmarecorderok' else ''
 SUB_DIR=''
 #SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
-SUB_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[0]
 ADD_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[1]
 MISS_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[2]
 
@@ -185,6 +184,9 @@ class MediaStoreStdout:
             append_to_public_documents(FSVC_LOG, message.strip())
     def flush(self):
         pass  # Системная заглушка, обязательная для потоков stdout
+sys.stdout = MediaStoreStdout()
+sys.stderr = sys.stdout
+SUB_TIME= int(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0')).split('_')[0]
 
 class DigmaServiceEngine:
     def __init__(self):

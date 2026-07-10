@@ -571,6 +571,7 @@ def update_points_from_file(graph,fn):
         #for x in m: points.append(x)
         #for x in mA: pointsA.append(x)
         print('573 m,mA [0,-1]:',m[0],m[-1],mA[0],mA[-1])
+        print('573 m:',m)
         graph.plot.points=m
         graph.plotA.points=mA
         

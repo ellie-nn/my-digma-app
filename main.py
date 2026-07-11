@@ -669,6 +669,8 @@ if True:
             #graph.parent.mainclass.tmax = graph.plot.points[-1][0]
             mainclass.tmax = graph.plot.points[-1][0]
             print('889 ret from update points to build voltage')
+        else:
+            mainclass.firstStamp=0
             
         if False:
             print(inspect.currentframe().f_lineno,'438 настоящая история:')

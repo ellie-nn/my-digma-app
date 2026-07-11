@@ -279,6 +279,8 @@ def append_to_public_documents(filename, text_content, min = None, max = None):
         else:
             traceback.print_stack()
             print('filename:',filename,inspect.currentframe().f_lineno)
+            print('282 traceback')
+            traceback.print_stack()
             with open(LOG_PATH+filename, "r", encoding="utf-8", errors="ignore") as f:
                 ret=f.read()
                 f.close()
@@ -1282,7 +1284,6 @@ class DigmaRecorderApp(App):
         global SUB_TIME
         #self.mywin=False
         MediaStoreStdout(LOG_FN)
-        traceback.print_stack()
         
         import shutil
         print(SUB_TIME)

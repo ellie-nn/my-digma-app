@@ -256,6 +256,7 @@ class DigmaServiceEngine:
 
     def update_data(self):
         global FDATA_NAME
+        global ADD_TIME_CORR
         print('Fdatanamea')
         
         self.counter +=1

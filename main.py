@@ -522,14 +522,15 @@ def update_points_from_file(graph,fn):
     if True:
         if fn:
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
-            ADD_TIME=str(m1[-1][0])
             #print('522 m1:', m1)
             m1A = [[float(w[1])*5, float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             #m1=m1[2500:5000]
             #m1A=m1A[2500:5000]
             #u = time.mktime(time.strptime(s, "%H:%M:%S"))
 
+            ADD_TIME=str(m1[-1][0])        
             graph.mainclass.firstStamp=float(m1[0][0])
+            
             step=int(len(m1)/1000+1)
             xm1=[]
             for i in range(0,step): xm1.append(m1[i::step]) 
@@ -1476,7 +1477,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
+            service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{self.firstStamp}')
             #service.start(f'{int(SUB_TIME)}')
             print(f'{int(SUB_TIME)}_{ADD_TIME}')
             print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}'.split('_')[2])

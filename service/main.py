@@ -27,9 +27,9 @@ LOCAL_KEY = "X@o=_T>sgCfWGeEz"
 SUB_DIR=''
 #SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 SUB_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[0]))
-ADD_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[1]))
+ADD_TIME= float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[1])
 MISS_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[2]))
-#ADD_TIME=0
+ADD_TIME_CORR=0
 #MISS_TIME =0
 
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
@@ -257,7 +257,7 @@ class DigmaServiceEngine:
     def update_data(self):
         global FDATA_NAME
         print('Fdatanamea')
-       
+        
         self.counter +=1
         #current_time = time.strftime('%H:%M:%S')
         
@@ -268,6 +268,9 @@ class DigmaServiceEngine:
         except:
             print('line 154, probably no self.rosette')
         utime = time.time()
+        if ADD_TIME_CORR==0:
+            ADD_TIME_CORR=utime-ADD_TIME-1
+       
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             
@@ -292,14 +295,14 @@ class DigmaServiceEngine:
                 
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
          
-            printout = f".{self.counter} {utime - MISS_TIME} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-            sendout =  [self.counter, utime - SUB_TIME + ADD_TIME, vatt, self.vatt_sum, kwh_17]
+            printout = f".{self.counter} {utime - ADD_TIME_CORR} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+            sendout =  [self.counter, utime - SUB_TIME - ADD_TIME_CORR, vatt, self.vatt_sum, kwh_17]
         else:
-            printout = f",{self.counter} {utime} {self.counter} -1 -1"
-            sendout =  [self.counter, utime - SUB_TIME, self.counter, self.counter *2, -1]
+            printout = f",{self.counter} {utime - ADD_TIME_CORR} {self.counter} -1 -1"
+            sendout =  [self.counter, utime - SUB_TIME - ADD_TIME_CORR, self.counter, self.counter *2, -1]
          
-   #         printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-   #         sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
+   #         #printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
+   #         #sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]
           
  #       else:
   #          printout = f".{self.counter} {time.strftime('%H:%M:%S')} -1 -1 -1"

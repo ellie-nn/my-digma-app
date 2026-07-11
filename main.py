@@ -1301,9 +1301,8 @@ class DigmaRecorderApp(App):
                 # сервис спит в темноте. Нам нужно его будить! [↑]
                 check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
                 self.service_is_running = False
-                #self.datafn=''
-                self.datafn=f'data{SUB_TIME}.txt'
-            
+                self.datafn=''
+                
             except:
             
                 # OSC-порт 3001 уже занят сервисом,
@@ -1409,7 +1408,9 @@ class DigmaRecorderApp(App):
             g_init(self)
             print('1316 ret from ginit to main build')
         self.mywin.graph_widget.opacity=1
-        
+        if not self.service_is_running and self.datafn=='':
+            self.datafn=f'data{SUB_TIME}.txt'
+            
         print('self.histtmax:',self.histtmax)
         #print(append_to_public_documents('servicework.txt', '', 1,2))
         #time.sleep(10.0)

@@ -1300,7 +1300,9 @@ class DigmaRecorderApp(App):
                 # сервис спит в темноте. Нам нужно его будить! [↑]
                 check_server.close() # Сразу гасим наш проверочный сервер, освобождая порт обратно
                 self.service_is_running = False
-                self.datafn=''
+                #self.datafn=''
+                self.datafn=f'data{SUB_TIME}.txt'
+            
             except:
             
                 # OSC-порт 3001 уже занят сервисом,
@@ -1503,8 +1505,11 @@ class DigmaRecorderApp(App):
         
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         print('1374 self.datafn',self.datafn)
-        print('1504 time points before:',self.mywin.graph_widget.plot.points[-2])
-        print('1505 time points before:',self.mywin.graph_widget.plot.points[-1])
+        try:
+            print('1504 time points before:',self.mywin.graph_widget.plot.points[-2])
+            print('1505 time points before:',self.mywin.graph_widget.plot.points[-1])
+        except:
+            pass
         if not self.datafn: return
         #print('1424 instructions:',count_instructions(Window))
         #trace_opengl_indices(GRAPH_WIDGET)
@@ -1523,8 +1528,8 @@ class DigmaRecorderApp(App):
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
         #tstamp += SUB_TIME
         tstamp += self.firstStamp
-        if not self.datafn:
-            self.datafn=f'data{int(tstamp)}.txt'
+        #if not self.datafn:
+            #self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'{LOG_PATH}{self.datafn}','a', encoding="utf-8", errors="ignore")
         if self.kilometers:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 

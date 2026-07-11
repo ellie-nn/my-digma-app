@@ -28,7 +28,7 @@ SUB_DIR=''
 #SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 SUB_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[0]))
 ADD_TIME= float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[1])
-MISS_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[2]))
+MISS_TIME= float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[2])
 ADD_TIME_CORR=0
 #MISS_TIME =0
 
@@ -297,10 +297,10 @@ class DigmaServiceEngine:
             #printout = f".{self.count} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum/3600:.3f} {kwh_17}"
          
             printout = f".{self.counter} {utime - ADD_TIME_CORR} {vatt} {self.vatt_sum:.3f} {kwh_17}"
-            sendout =  [self.counter, utime - SUB_TIME - ADD_TIME_CORR, vatt, self.vatt_sum, kwh_17]
+            sendout =  [self.counter, utime - SUB_TIME*0 - ADD_TIME_CORR - MISS_TIME, vatt, self.vatt_sum, kwh_17]
         else:
             printout = f",{self.counter} {utime - ADD_TIME_CORR} {self.counter} -1 -1"
-            sendout =  [self.counter, utime - SUB_TIME - ADD_TIME_CORR, self.counter, self.counter *2, -1]
+            sendout =  [self.counter, utime - SUB_TIME*0 - ADD_TIME_CORR - MISS_TIME, self.counter, self.counter *2, -1]
          
    #         #printout = f"{self.counter} {utime} {time.strftime('%H:%M:%S')} {vatt} {self.vatt_sum:.3f} {kwh_17}"
    #         #sendout =  [self.counter, utime - SUB_TIME, vatt, self.vatt_sum, kwh_17]

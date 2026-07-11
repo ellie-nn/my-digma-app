@@ -1478,7 +1478,7 @@ class DigmaRecorderApp(App):
             # Запускаем файл service.py в изолированном потоке памяти
             service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
             #service.start(f'{int(SUB_TIME)}')
-            print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
+            print(f'{int(SUB_TIME)}_{ADD_TIME}')
             print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}'.split('_')[2])
             
             
@@ -1601,7 +1601,8 @@ class DigmaRecorderApp(App):
             #self.mywin.sbarm.unbind(value=move_window)
             #self.mywin.sbars.unbind(value=scale_window)
             
-            tmax = tstamp-self.launchtime+self.histtmax
+            #tmax = tstamp-self.launchtime+self.histtmax
+            tmax = tstamp-self.launchtime #+self.histtmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             self.mywin.sbarm.max = tmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1

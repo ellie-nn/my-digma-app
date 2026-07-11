@@ -815,7 +815,7 @@ if True:
         #instance.gw.xmin = (value - (instance.gw.xmax-instance.gw.xmin))
         print(f'{HOLD_LEFT} {IN_LIVEDATA} {not HOLD_LEFT or not IN_LIVEDATA}')
         if not HOLD_LEFT or not IN_LIVEDATA: instance.gw.xmin = int((value - scale_func(instance.scl.value)))
-        instance.gw.xmax = value 
+        instance.gw.xmax = max(value,120)
         #apply_vertical_minutes_hack()
         return
             

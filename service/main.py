@@ -29,7 +29,7 @@ SUB_DIR=''
 SUB_TIME= int(float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[0]))
 ADD_TIME= float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[1])
 MISS_TIME= float(os.environ.get('PYTHON_SERVICE_ARGUMENT', '0.0').split('_')[2])
-ADD_TIME_CORR=0
+ADD_TIME_CORR=None
 #MISS_TIME =0
 
 #FDATA_NAME = "servicework1.txt" +str(time.time()//60)+".txt"
@@ -257,6 +257,7 @@ class DigmaServiceEngine:
     def update_data(self):
         global FDATA_NAME
         global ADD_TIME_CORR
+        global MISS_TIME
         print('Fdatanamea')
         
         self.counter +=1
@@ -269,9 +270,11 @@ class DigmaServiceEngine:
         except:
             print('line 154, probably no self.rosette')
         utime = time.time()
-        if ADD_TIME_CORR==0:
+        if ADD_TIME_CORR==None:
             ADD_TIME_CORR=utime-ADD_TIME-1
-       
+        if MISS_TIME==0:
+            MISS_TIME = utime
+            ADD_TIME_CORR=0
         #print('!!! SERVICE LUNCHED !!!')
         printout = f"{time.strftime('%H:%M:%S')}"
             

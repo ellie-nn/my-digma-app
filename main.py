@@ -1628,7 +1628,7 @@ class DigmaRecorderApp(App):
                 self.mywin.sbarm.value = tmax
                 print(f'{q} if xmin > {GRAPH_WIDGET.xmin}'); q+=1
                  
-                if HOLD_LEFT: self.mywin.sbars.value = scale_revfunc(tmax-self.mywin.graph_widget.xmin)
+                if HOLD_LEFT: self.mywin.sbars.value = scale_revfunc(max(tmax-self.mywin.graph_widget.xmin,120))
        #        self.mywin.xmax = tmax
                 
             #self.mywin.xmax = self.mywin.xmax 

@@ -103,6 +103,7 @@ LOG_FN = 'logapp.txt'
 #FILE_CSV = 'power_history.csv'
 #SUB_TIME = os.path.getmtime(__file__) # Узнаем точное время создания/изменения нашего файла
 SUB_TIME = int(time.time())
+ADD_TIME = 0
 GRAPH_WIDGET = None
 # 1. Глобальная ячейка памяти для оригинального Си-метода Kivy
 ORIGINAL_KIVY_UPDATER = None
@@ -515,11 +516,13 @@ def custom_update_labels(*args, **kwargs):
     return ret
 
 def update_points_from_file(graph,fn):
+    global ADD_TIME
     print('456 update points start')
     tcut=append_to_public_documents(fn, "", 1,100)
     if True:
         if fn:
             m1 = [[float(w[1]), float(w[2])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
+            ADD_TIME=str(m1[-1][0])
             #print('522 m1:', m1)
             m1A = [[float(w[1])*5, float(w[3])] for line in tcut.splitlines() if len(w := line.split())>3 and w[0][0]=='.']
             #m1=m1[2500:5000]
@@ -1473,7 +1476,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
+            service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
             #service.start(f'{int(SUB_TIME)}')
             print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}')
             print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}'.split('_')[2])

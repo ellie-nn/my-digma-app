@@ -1501,6 +1501,7 @@ class DigmaRecorderApp(App):
         
     def display_live_data(self,count,tstamp, vatt, integral,kwh):
         print('1374 self.datafn',self.datafn)
+        print('1504 time five points before:',self.mywin.graph_widget.plot.points[-5])
         if not self.datafn: return
         #print('1424 instructions:',count_instructions(Window))
         #trace_opengl_indices(GRAPH_WIDGET)

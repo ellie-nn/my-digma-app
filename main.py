@@ -1520,7 +1520,7 @@ class DigmaRecorderApp(App):
         IN_LIVEDATA=True
         xmn=GRAPH_WIDGET.xmin
         q=2
-        print(f'1 xmin -- {xmn}')
+        print(f'1523 q2 1 xmin -- {xmn}')
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         #vibrator.vibrate(200); time.sleep(0.5)
@@ -1593,7 +1593,7 @@ class DigmaRecorderApp(App):
         text = f"N = {count}\n{tstamp}\nP = {vatt}\nΣP = {integral}\nP alternate = {kwh}"
         print(text)
         #print(f'>>{self.mywin.graph_widget.plot.points}')
-        print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+        print(f'1596 q2 {q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             
         if False:    
             tmax = tstamp-self.launchtime+self.histtmax
@@ -1617,12 +1617,12 @@ class DigmaRecorderApp(App):
             #tmax = tstamp-self.launchtime+self.histtmax
             #tmax = tstamp-self.launchtime #+self.histtmax
             tmax = tstamp-self.firstStamp #self.launchtime #+self.histtmax
-            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+            print(f'1620 q3 {q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             self.mywin.sbarm.max = tmax
-            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+            print(f'1622 q4 {q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             print(f'{tmax}') #{self.mywin.sbarm.value}')# {tmax} {(self.mywin.sbarm.max-self.mywin.sbarm.value)^2}')
-            self.mywin.sbars.max = scale_revfunc(tmax)
-            print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
+            self.mywin.sbars.max = max(scale_revfunc(tmax),scale_revfunc(120))
+            print(f'1625 q5 {q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             if abs(tmax-self.mywin.sbarm.value) <=5:
                 print(f'{q} if xmin -> {GRAPH_WIDGET.xmin}'); q+=1
                 self.mywin.sbarm.value = tmax

@@ -1519,7 +1519,8 @@ class DigmaRecorderApp(App):
         # Эта функция сама мгновенно сработает в ту же миллисекунду, 
         # когда служба пришлет свежий замер розетки!
         #current_time=time.strftime('%H:%M:%S', time.localtime(tstamp))
-        tstamp += SUB_TIME
+        #tstamp += SUB_TIME
+        tstamp += self.firstStamp
         if not self.datafn:
             self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'{LOG_PATH}{self.datafn}','a', encoding="utf-8", errors="ignore")
@@ -1605,7 +1606,8 @@ class DigmaRecorderApp(App):
             #self.mywin.sbars.unbind(value=scale_window)
             
             #tmax = tstamp-self.launchtime+self.histtmax
-            tmax = tstamp-self.launchtime #+self.histtmax
+            #tmax = tstamp-self.launchtime #+self.histtmax
+            tmax = tstamp-self.firstStamp #self.launchtime #+self.histtmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1
             self.mywin.sbarm.max = tmax
             print(f'{q} xmin > {GRAPH_WIDGET.xmin}'); q+=1

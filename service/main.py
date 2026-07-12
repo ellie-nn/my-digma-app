@@ -37,7 +37,7 @@ ADD_TIME_CORR=None
 FDATA_NAME = '' 
 #FDATA_NAME = "-"
 FDATA_NAME = 'svcdata'+str(SUB_TIME)+'.txt'
-
+LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Documents/'
 
 #Context = autoclass('org.kivy.android.PythonService').mService
 #vibrator = Context.getSystemService(Context.VIBRATOR_SERVICE)
@@ -148,7 +148,7 @@ def append_to_public_documents(filename, text_content):
         collection_uri = MediaStoreFiles.getContentUri("external")
         
         # Ищем файл по имени, а папку — по маске "содержит слово Documents"
-        selection = f"_display_name='{filename}' AND relative_path LIKE '%Digma/"+SUB_DIR+"%'"
+        selection = f"_display_name='{filename}' AND relative_path LIKE '%Documents/"+SUB_DIR+"%'"
 
         cursor = resolver.query(collection_uri, ["_id"], selection, None, None)
         if cursor and cursor.moveToFirst():
@@ -164,7 +164,7 @@ def append_to_public_documents(filename, text_content):
             values = ContentValues()
             values.put("_display_name", filename)
             values.put("mime_type", "application/octet-stream")
-            values.put("relative_path", "Digma/"+SUB_DIR)
+            values.put("relative_path", "Documents/"+SUB_DIR)
             file_uri = resolver.insert(collection_uri, values)
         
         # 2. ОТКРЫВАЕМ СИСТЕМНЫЙ СТРИМ В РЕЖИМЕ СТРОГОЙ ДОЗАПИСИ "wa"

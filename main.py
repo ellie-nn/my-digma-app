@@ -962,8 +962,8 @@ def btn_refresh_data_f(instance):
     
 def btn_StopSave_act(instance):
     print('957 btn_StopSave presseed')  
-    mainclass.service.stop()
-    shutil.copy(LOG_PATH+'svc'+mainclass.datafn,READY_PATH+'svc'+mainclass.datafn)
+    GRAPH_WIDGET.parent.mainclass.service.stop()
+    shutil.copy(LOG_PATH+'svc'+GRAPH_WIDGET.parent.mainclass.datafn,READY_PATH+'svc'+GRAPH_WIDGET.parent.mainclass.datafn)
     print('959 ret from StopSave')
     return
 def btn_StopSave_cr(main_layout):

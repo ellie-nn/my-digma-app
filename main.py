@@ -823,6 +823,10 @@ if True:
     # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
     def on_text_submitted(instance):
+        vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+        vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+        vibrator.vibrate(200); time.sleep(0.5)
+
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил пробег: '{instance.text}'")
         instance.mainclass.kilometers = instance.text
@@ -830,6 +834,10 @@ if True:
         return
             
     def on_text_submitted2(instance):
+        vContext = autoclass('org.kivy.android.PythonActivity').mActivity
+        vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
+        vibrator.vibrate(200); time.sleep(0.5)
+
         #if instance.mainclass.kilometers == instance.text: return
         print(f"[ВВОД] Пользователь вбил вольтаж: '{instance.text}'")
         instance.mainclass.StartV = instance.text

@@ -1234,7 +1234,7 @@ def g_init(mainclass):
         btn_refresh_data.bind(on_release = btn_refresh_data_f)
         main_layout.add_widget(btn_refresh_data)
         
-        btn_StopSave_cr(self)
+        btn_StopSave_cr(mainclass)
         
     return main_layout
           

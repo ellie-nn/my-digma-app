@@ -1580,10 +1580,14 @@ class DigmaRecorderApp(App):
         #if not self.datafn:
             #self.datafn=f'data{int(tstamp)}.txt'
         f=open(f'{LOG_PATH}{self.datafn}','a', encoding="utf-8", errors="ignore")
+        
         if self.kilometers:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
           
-            f.write(f'-{self.kilometers} -\n')   
+            f.write(f'- self.kilometers = {self.kilometers}\n')   
+            h=open(f'{LOG_PATH}svc{self.datafn}','a', encoding="utf-8", errors="ignore")
+            h.write(f'- self.kilometers = {self.kilometers}\n')   
+            h.close()
             g=open(f'{LOG_PATH}ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.kilometers = {self.kilometers}\n')
             g.close()
@@ -1597,7 +1601,10 @@ class DigmaRecorderApp(App):
             #self.mywin.user_input.bind(on_text_validate=on_text_submitted) 
         if self.StartV:
             #self.mywin.user_input.unbind(on_text_validate=on_text_submitted) 
-            f.write(f'-{StartV} -\n')   
+            f.write(f'- self.StartV = {self.StartV}\n')   
+            h=open(f'{LOG_PATH}svc{self.datafn}','a', encoding="utf-8", errors="ignore")
+            h.write(f'- self.StartV = {self.StartV}\n')   
+            h.close()
             g=open(f'{LOG_PATH}ini.txt','a', encoding="utf-8", errors="ignore")
             g.write(f'self.StartV = {self.StartV}\n')
             g.close()

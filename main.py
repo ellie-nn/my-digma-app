@@ -953,7 +953,13 @@ def question(main_layout):
     btn_test.parent=main_layout
     btn_work.parent=main_layout
     return
-
+    
+def btn_refresh_data_f(instance):
+    print('874 refresh btn calls build update points')   
+    update_points_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.datafn)
+    print('877 ret from update points to refresh btn')
+    return
+    
 def btn_StopSave_act(instance):
     print('957 btn_StopSave presseed')  
     mainclass.service.stop()

@@ -969,8 +969,8 @@ def btn_StopSave_act(instance):
 def btn_StopSave_cr(main_layout):
     btn_StopSave = Button(
         text="Stop&Save",
-        size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
-        pos_hint={'x':0.2, 'top': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+        size_hint=(0.2, 0.05),            # 50% ширины экрана, 8% высоты [↑]
+        pos_hint={'x':0.1, 'top': 0.8},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
         background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
@@ -1226,7 +1226,7 @@ def g_init(mainclass):
         #graph_widget.x_ticks_func = format_x_axis         
         btn_refresh_data = Button(
             text="Обновить",
-            size_hint=(0.2, 0.1),            # 50% ширины экрана, 8% высоты [↑]
+            size_hint=(0.2, 0.05),            # 50% ширины экрана, 8% высоты [↑]
             pos_hint={'x':0.1, 'top': 0.9},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
             background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
             )

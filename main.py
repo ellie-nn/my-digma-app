@@ -971,12 +971,12 @@ def btn_StopSave_cr(main_layout):
         text="Stop&Save",
         size_hint=(0.2, 0.05),            # 50% ширины экрана, 8% высоты [↑]
         pos_hint={'x':0.1, 'top': 0.8},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
-        background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+        background_color=[0.3, 0.7, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_StopSave.bind(on_release=btn_StopSave_act)
     main_layout.graph_widget.add_widget(btn_StopSave)
-    btn_StopSave.parent=main_layout
+    btn_StopSave.parent=main_layout.graph_widget
     return
         
 def g_init(mainclass):
@@ -1234,8 +1234,18 @@ def g_init(mainclass):
         btn_refresh_data.bind(on_release = btn_refresh_data_f)
         main_layout.add_widget(btn_refresh_data)
         
-        btn_StopSave_cr(main_layout)
-        
+        #btn_StopSave_cr(main_layout)
+        btn_StopSave = Button(
+            text="Stop&Save",
+            size_hint=(0.2, 0.05),            # 50% ширины экрана, 8% высоты [↑]
+            pos_hint={'x':0.1, 'top': 0.8},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+            background_color=[0.3, 0.7, 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+            )
+        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
+        btn_StopSave.bind(on_release=btn_StopSave_act)
+        main_layout.add_widget(btn_StopSave)
+        btn_StopSave.parent=main_layout
+
     return main_layout
           
 import math

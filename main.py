@@ -1233,7 +1233,9 @@ def g_init(mainclass):
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
         btn_refresh_data.bind(on_release = btn_refresh_data_f)
         main_layout.add_widget(btn_refresh_data)
-   
+        
+        btn_StopSave_cr(self)
+        
     return main_layout
           
 import math

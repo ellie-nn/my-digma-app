@@ -10,8 +10,9 @@ vibrator.vibrate(500)
 time.sleep(1.0)
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
-LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Digma/'
-print(LOG_PATH)
+LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Documents/'
+READY_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Digma/'
+#print(LOG_PATH)
 class MediaStoreStdout:
     def __init__(self, outf = 'app_log.txt'):
       self.outfile = outf
@@ -953,10 +954,23 @@ def question(main_layout):
     btn_work.parent=main_layout
     return
 
-def btn_refresh_data_f(instance):
-    print('874 refresh btn calls build update points')   
-    update_points_from_file(GRAPH_WIDGET,GRAPH_WIDGET.parent.mainclass.datafn)
-    print('877 ret from update points to refresh btn')
+def btn_StopSave_act(instance):
+    print('957 btn_StopSave presseed')  
+    mainclass.service.stop()
+    shutil.copy(LOG_PATH+'svc'+mainclass.datafn,READY_PATH+'svc'+mainclass.datafn)
+    print('959 ret from StopSave')
+    return
+def btn_StopSave_cr(main_layout):
+    btn_StopSave = Button(
+        text="Stop&Save",
+        size_hint=(0.25, 0.1),            # 50% ширины экрана, 8% высоты [↑]
+        pos_hint={'x':0.2, 'top': 0.5},   # Центрируем внизу (отступ 25% слева, 5% вверх) [↑]
+        background_color=[0.3, int(HOLD_LEFT), 0.2, 0.7] # Красный полупрозрачный оттенок кнопок старой школы
+        )
+        # Привязываем кнопку к нашей будущей функции очистки файла [↑]
+    btn_StopSave.bind(on_release=btn_StopSave_act)
+    main_layout.add_widget(btn_StopSave)
+    btn_StopSave.parent=main_layout
     return
         
 def g_init(mainclass):
@@ -1472,7 +1486,7 @@ class DigmaRecorderApp(App):
         from android import AndroidService
                 
         #Создаем службу. Имя должно СТРОГО совпадать с тем, что в buildozer.spec!
-        service = AndroidService('digmaservice', 'fore ground')
+        self.service = AndroidService('digmaservice', 'fore ground')
         
         # 1. Включаем наш внутренний радиоприемник
         self.server = OSCThreadServer()
@@ -1483,7 +1497,7 @@ class DigmaRecorderApp(App):
         
         try:       
             # Запускаем файл service.py в изолированном потоке памяти
-            service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{self.firstStamp}')
+            self.service.start(f'{int(SUB_TIME)}_{ADD_TIME}_{self.firstStamp}')
             #service.start(f'{int(SUB_TIME)}')
             print(f'{int(SUB_TIME)}_{ADD_TIME}')
             print(f'{int(SUB_TIME)}_{self.mywin.graph_widget.plot.points[-1][0]}_{int(SUB_TIME) - self.firstStamp - self.mywin.graph_widget.plot.points[-1][0]}'.split('_')[2])

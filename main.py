@@ -10,7 +10,7 @@ vibrator.vibrate(500)
 time.sleep(1.0)
 
 # СТРОИМ КЛАСС-ПЕРЕХВАТЧИК
-LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Download/'
+LOG_PATH=os.path.realpath(os.environ.get('EXTERNAL_STORAGE'))+'/Digma/'
 print(LOG_PATH)
 class MediaStoreStdout:
     def __init__(self, outf = 'app_log.txt'):

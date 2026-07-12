@@ -975,7 +975,7 @@ def btn_StopSave_cr(main_layout):
         )
         # Привязываем кнопку к нашей будущей функции очистки файла [↑]
     btn_StopSave.bind(on_release=btn_StopSave_act)
-    main_layout.add_widget(btn_StopSave)
+    main_layout.graph_widget.add_widget(btn_StopSave)
     btn_StopSave.parent=main_layout
     return
         

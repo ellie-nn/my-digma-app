@@ -822,7 +822,10 @@ if True:
             
     # 4. НАШ ЗРЯЧИЙ ПЕРЕХВАТЧИК ВВОДА (Триггер на нажатие Enter на клавиатуре телефона):
         # Как только вы вбили данные и нажали "Готово/Enter" — Kivy сам выполнит эту микро-функцию!
-    def on_text_submitted(instance):
+    def on_text_submitted(instance,value):
+        if value: return
+        if not instance.text: return
+        
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         vibrator.vibrate(200); time.sleep(0.5)
@@ -833,7 +836,9 @@ if True:
         #apply_vertical_minutes_hack()
         return
             
-    def on_text_submitted2(instance):
+    def on_text_submitted2(instance,value):
+        if value: return
+        if not instance.text: return
         vContext = autoclass('org.kivy.android.PythonActivity').mActivity
         vibrator = vContext.getSystemService(vContext.VIBRATOR_SERVICE)
         vibrator.vibrate(200); time.sleep(0.5)
@@ -1175,8 +1180,9 @@ def g_init(mainclass):
         main_layout.add_widget(user_input2)
         main_layout.user_input=user_input2
         user_input2.mainclass=mainclass
-        user_input2.bind(on_text_validate=on_text_submitted2)
-
+        #user_input2.bind(on_text_validate=on_text_submitted2)
+        user_input2.bind(focus=on_text_submitted2)
+        
         user_input = TextInput(
             # 1. Стартовый невидимый текст-подсказка (исчезает, когда вы тапаете пальцем)
             hint_text="Километры",
@@ -1206,8 +1212,9 @@ def g_init(mainclass):
         main_layout.add_widget(user_input)
         main_layout.user_input=user_input
         user_input.mainclass=mainclass
-        user_input.bind(on_text_validate=on_text_submitted)
-   
+        #user_input.bind(on_text_validate=on_text_submitted)
+        user_input.bind(focus=on_text_submitted)
+        
         # ДОБАВЛЕНИЕ В КОРЕНЬ ИНТЕРФЕЙСА:
         # Важно! Добавляйте user_input САМЫМ ПОСЛЕДНИМ в ваш FloatLayout (даже после Label лога),
         # чтобы Android положил его самым верхним, приоритетным слоем для тапов пальца!
